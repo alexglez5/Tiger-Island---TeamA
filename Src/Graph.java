@@ -6,5 +6,6 @@ public class Graph {
     int horizontalLength;
 
     public void changeTileIdentifier(int x, int y) {
+        Hex hexToBeChanged = board[x][y];
     }
 }
