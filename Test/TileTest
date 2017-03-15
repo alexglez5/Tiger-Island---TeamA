@@ -6,12 +6,9 @@ import static org.junit.Assert.*;
  * Created by NotKali on 3/15/2017.
  */
 public class TileTest {
-    private Hex.TerrainType firstTerrainType = Hex.TerrainType.VOLCANO;
-    Hex firstHex = new Hex(firstTerrainType);
-    private Hex.TerrainType secondTerrainType = Hex.TerrainType.MOUNTAIN;
-    Hex secondHex = new Hex(secondTerrainType);
-    private Hex.TerrainType thirdTerrainType = Hex.TerrainType.JUNGLE;
-    Hex thirdHex = new Hex(thirdTerrainType);
+    Hex firstHex = new Hex(Hex.TerrainType.VOLCANO);
+    Hex secondHex = new Hex(Hex.TerrainType.MOUNTAIN);
+    Hex thirdHex = new Hex(Hex.TerrainType.JUNGLE);
 
     Hex [] threeHexes = {firstHex, secondHex, thirdHex};
 
