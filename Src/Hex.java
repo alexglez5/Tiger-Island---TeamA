@@ -4,11 +4,12 @@
 
 public class Hex {
     public enum Feature{
-        VOLCANO, DESERT, WATER, JUNGLE, PLAIN;
+        VOLCANO, WATER, JUNGLE, PLAIN, MOUNTAIN;
     }
 
 
     private Feature features;
+    private boolean occupied;
 
     public Hex(Feature features) {
         this.features = features;
@@ -19,6 +20,10 @@ public class Hex {
             return true;
         }
         return false;
+    }
+
+    public boolean hasVillagers() {
+        return occupied;
     }
 
 }
