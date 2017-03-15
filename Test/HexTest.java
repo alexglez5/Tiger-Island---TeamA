@@ -10,10 +10,12 @@ public class HexTest {
     private Hex.Feature features = Hex.Feature.VOLCANO;
 
     Hex firstTile = new Hex(features);
-
     @Test
-    public void testFeatures() throws Exception {
+    public void hasFeatures() throws Exception {
         assertTrue(firstTile.hasFeatures());
     }
-}
 
+    @Test
+    public void hasVillagers() throws Exception {
+    }
+}
