@@ -1,7 +1,5 @@
 import org.junit.Test;
-import org.junit.Before;
 
-import static java.sql.JDBCType.NULL;
 import static org.junit.Assert.*;
 
 /**
