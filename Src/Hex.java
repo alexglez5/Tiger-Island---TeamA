@@ -9,6 +9,8 @@ public class Hex {
 
     private TerrainType terrain;
 
+    private int TileIdentifier;
+
     public Hex(TerrainType terrain) {
         this.terrain = terrain;
     }
