@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
  * Created by NotKali on 3/14/2017.
  */
 public class HexTest {
-    private Hex.Feature[] features = {Hex.Feature.VOLCANO,Hex.Feature.DESERT, Hex.Feature.PLAIN};
+    private Hex.Feature features = Hex.Feature.VOLCANO;
     int [] sidesConnected = {0,0,0,0,0,1};
 
     Hex firstTile = new Hex(sidesConnected, features);
