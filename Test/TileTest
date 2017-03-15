@@ -6,19 +6,19 @@ import static org.junit.Assert.*;
  * Created by NotKali on 3/15/2017.
  */
 public class TileTest {
-    private Hex.Feature firstFeature = Hex.Feature.VOLCANO;
-    Hex firstTile = new Hex(firstFeature);
-    private Hex.Feature secondFeature = Hex.Feature.MOUNTAIN;
-    Hex secondTile = new Hex(secondFeature);
-    private Hex.Feature thirdFeature = Hex.Feature.JUNGLE;
-    Hex thirdTile = new Hex(thirdFeature);
+    private Hex.TerrainType firstTerrainType = Hex.TerrainType.VOLCANO;
+    Hex firstHex = new Hex(firstTerrainType);
+    private Hex.TerrainType secondTerrainType = Hex.TerrainType.MOUNTAIN;
+    Hex secondHex = new Hex(secondTerrainType);
+    private Hex.TerrainType thirdTerrainType = Hex.TerrainType.JUNGLE;
+    Hex thirdHex = new Hex(thirdTerrainType);
 
-    Hex [] threeHexes = {firstTile, secondTile, thirdTile};
+    Hex [] threeHexes = {firstHex, secondHex, thirdHex};
+
     Tile testingTile = new Tile(threeHexes);
 
     @Test
     public void hasThreeHexes() throws Exception {
         assertTrue(testingTile.hasThreeHexes());
     }
-
 }
