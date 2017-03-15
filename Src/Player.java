@@ -4,14 +4,14 @@
  */
 public class Player{
 
-    private int numberOfVillagers;
-    private int numberOfTotoros;
+    private int villagersLeft;
+    private int totorosLeft;
     private int playerScore;
 
     //constructor for player at beginning of the game
-    public Player(){
-        numberOfVillagers = 20;
-        numberOfTotoros = 3;
+    public Player() {
+        villagersLeft = 20;
+        totorosLeft = 3;
         playerScore = 0;
     }
 
