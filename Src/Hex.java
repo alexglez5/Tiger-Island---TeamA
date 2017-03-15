@@ -9,6 +9,7 @@ public class Hex {
     public int level;
     private boolean occupied;
     private TerrainType terrain;
+
     private int TileIdentifier;
 
     public Hex(TerrainType terrain, int TileIdentifier, boolean occupied, int level) {
@@ -32,6 +33,10 @@ public class Hex {
 
     public int whichLevel(){
         return level;
+    }
+
+    public void setTileIdentifier(int tileIdentifier) {
+        TileIdentifier = tileIdentifier;
     }
 }
 
