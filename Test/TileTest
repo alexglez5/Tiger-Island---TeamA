@@ -1,0 +1,24 @@
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by NotKali on 3/15/2017.
+ */
+public class TileTest {
+    private Hex.Feature firstFeature = Hex.Feature.VOLCANO;
+    Hex firstTile = new Hex(firstFeature);
+    private Hex.Feature secondFeature = Hex.Feature.MOUNTAIN;
+    Hex secondTile = new Hex(secondFeature);
+    private Hex.Feature thirdFeature = Hex.Feature.JUNGLE;
+    Hex thirdTile = new Hex(thirdFeature);
+
+    Hex [] threeHexes = {firstTile, secondTile, thirdTile};
+    Tile testingTile = new Tile(threeHexes);
+
+    @Test
+    public void hasThreeHexes() throws Exception {
+        assertTrue(testingTile.hasThreeHexes());
+    }
+
+}
