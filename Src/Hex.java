@@ -10,9 +10,9 @@ public class Hex {
     }
 
 
-    private Feature [] features;
+    private Feature features;
 
-    public Hex(int[] sidesConnected, Feature[] features) {
+    public Hex(int[] sidesConnected, Feature features) {
         this.sidesConnected = sidesConnected;
         this.features = features;
     }
@@ -31,7 +31,7 @@ public class Hex {
     }
 
     public boolean hasFeatures() {
-        if(features.length!=0){
+        if(features!=null){
             return true;
         }
         return false;
