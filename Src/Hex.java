@@ -3,27 +3,18 @@
  */
 
 public class Hex {
-    public enum Feature{
+    public enum TerrainType{
         VOLCANO, WATER, JUNGLE, PLAIN, MOUNTAIN;
     }
 
+    private TerrainType terrain;
 
-    private Feature features;
-    private boolean occupied;
-
-    public Hex(Feature features) {
-        this.features = features;
+    public Hex(TerrainType terrain) {
+        this.terrain = terrain;
     }
 
     public boolean hasFeatures() {
-        if(features!=null){
-            return true;
-        }
-        return false;
+        return (terrain!=null);
     }
-
-    public boolean hasVillagers() {
-        return occupied;
-    }
-
 }
+
