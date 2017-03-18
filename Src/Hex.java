@@ -4,7 +4,7 @@
 
 public class Hex {
     public enum TerrainType{
-        VOLCANO, WATER, JUNGLE, PLAIN, MOUNTAIN;
+        VOLCANO, LAKE, JUNGLE, GRASSLANDS, ROCKY;
     }
     public int level;
     private boolean occupied;
