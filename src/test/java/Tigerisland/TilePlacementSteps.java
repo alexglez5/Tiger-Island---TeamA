@@ -1,7 +1,12 @@
 package Tigerisland;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
 /**
- * Created by Alexander Gonzalez on 3/18/2017.
+ * Created by nathanbarnavon on 3/18/17.
  */
 public class TilePlacementSteps {
 
