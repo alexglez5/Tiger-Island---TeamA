@@ -1,7 +1,4 @@
-package teama.tigerisland;
-
-import teama.tigerisland.Hex;
-import teama.tigerisland.TerrainType;
+package Tigerisland;
 
 /**
  * Created by Alexander Gonzalez on 3/17/2017.

@@ -1,4 +1,4 @@
-package teama.tigerisland;
+package Tigerisland;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

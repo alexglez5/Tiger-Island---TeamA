@@ -1,4 +1,4 @@
-package teama.tigerisland;
+package Tigerisland;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;

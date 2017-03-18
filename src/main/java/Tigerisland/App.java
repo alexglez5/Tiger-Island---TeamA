@@ -1,4 +1,4 @@
-package teama.tigerisland;
+package Tigerisland;
 
 /**
  * Hello world!

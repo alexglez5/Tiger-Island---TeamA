@@ -1,4 +1,4 @@
-package teama.tigerisland;
+package Tigerisland;
 
 import java.util.HashMap;
 import java.util.Map;
