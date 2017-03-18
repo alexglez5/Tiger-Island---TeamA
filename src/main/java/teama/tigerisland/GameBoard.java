@@ -1,3 +1,5 @@
+package teama.tigerisland;
+
 import java.util.HashMap;
 import java.util.Map;
 
