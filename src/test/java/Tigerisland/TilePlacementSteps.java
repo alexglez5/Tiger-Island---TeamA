@@ -22,6 +22,4 @@ public class TilePlacementSteps {
     public void the_volcano_hex_is_placed_at_coordinate(int xCord, int yCord) throws Throwable {
 
     }
-
-
 }
