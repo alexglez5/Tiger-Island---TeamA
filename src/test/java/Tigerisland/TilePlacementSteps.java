@@ -10,22 +10,17 @@ import cucumber.api.java.en.When;
  */
 public class TilePlacementSteps {
 
-    @Given("^the gameboard is empty$")
-    public void the_gameboard_is_empty() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
+    private GameBoard map = new GameBoard();
+    private Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle);
 
-    @When("^the player places a tile$")
-    public void the_player_places_a_tile() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @When("^the player places a tile with identifier \"([^\"]*)\"$")
+    public void the_player_places_a_tile_with_identifier(String firstTileID) throws Throwable {
+
     }
 
     @Then("^the volcano hex is placed at coordinate \\((\\d+),(\\d+)\\)$")
-    public void the_volcano_hex_is_placed_at_coordinate(int arg1, int arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void the_volcano_hex_is_placed_at_coordinate(int xCord, int yCord) throws Throwable {
+
     }
 
 

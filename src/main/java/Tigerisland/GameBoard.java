@@ -26,5 +26,9 @@ public class GameBoard {
         return new Coordinate(0,0);
     }
 
+    public boolean checkForHex(Coordinate cord) {
+        return (gameBoard.get(cord) != null);
+    }
+
     //TODO counter to get id of tile
 }
