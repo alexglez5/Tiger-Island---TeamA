@@ -9,21 +9,27 @@ import java.util.Map;
 public class GameBoard {
     private static Map<Coordinate, Hex> gameBoard = new HashMap<>();
 
-    public void placeTile(Tile tile){
+    public void placeTile(Tile tile, Orientation orientation){
+        Coordinate [] coordinates = determineOrientation(orientation);
         //Assuming terrains are below volcano
-        gameBoard.put(new Coordinate(-1,1),
+        gameBoard.put(coordinates[0],
                 tile.getLeftOfMainTerrain());
-        gameBoard.put(new Coordinate(0,0),
+        gameBoard.put(coordinates[1],
                 tile.getMainTerrain());
-        gameBoard.put(new Coordinate(0,1),
+        gameBoard.put(coordinates[2],
                 tile.getRightOfMainTerrain());
         //Coordinate trial = gameBoard.get(tile.getMainTerrain())
     }
 
 
-    private Coordinate determineCoordinate(){
+    private Coordinate[] determineOrientation(Orientation orientation){
         //TODO based on position of two other terrains compared to volcano
-        return new Coordinate(0,0);
+        Coordinate [] coordinates = {
+                new Coordinate(-1, 1),
+                new Coordinate(0, 0),
+                new Coordinate(0, 1)
+        };
+        return coordinates;
     }
 
     public boolean checkForHex(Coordinate cord) {
