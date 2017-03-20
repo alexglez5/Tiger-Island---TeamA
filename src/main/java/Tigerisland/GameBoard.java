@@ -36,7 +36,18 @@ public class GameBoard {
         return coordinates;
     }
 
+
+//    private Coordinate[] determineOrientation(Orientation orientation){
+//        Coordinate [] coordinates = {
+//                new Coordinate(-1, 1),
+//                new Coordinate(0, 0),
+//                new Coordinate(0, 1)
+//        };
+//        return coordinates;
+//    }
+//
     public boolean checkForHex(Coordinate cord) {
+        System.out.println(gameBoard.get(cord) != null);
         return (gameBoard.get(cord) != null);
     }
 

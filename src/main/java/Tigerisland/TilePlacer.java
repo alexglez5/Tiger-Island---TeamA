@@ -41,11 +41,12 @@ public class TilePlacer extends GameBoard{
         }
     }
 
+    /*
     //TODO check if it's legal to place hex at given location
-//    private boolean isTaken(){
-//        return gameBoard.containsKey(new Coordinate(mainTerrainXCoordinate,
-//                mainTerrainYCoordinate));
-//    }
+    private boolean isTaken(mainTerrainXCoordinate, mainTerrainYCoordinate){
+        return gameBoard.containsKey(new Coordinate(mainTerrainXCoordinate,
+                mainTerrainYCoordinate));
+    }*/
 
     private Coordinate belowAndToTheLeftOfMain(){
         return new Coordinate(mainTerrainXCoordinate - 1, mainTerrainYCoordinate + 1);
