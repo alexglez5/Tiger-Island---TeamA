@@ -10,5 +10,30 @@ public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
     private static TilePlacer placer = new TilePlacer();
 
+//    public void placeTile(Tile tile, Orientation orientation){
+//        Coordinate [] coordinates = determineOrientation(orientation);
+//        //Assuming terrains are below volcano
+//        gameBoard.put(coordinates[0],
+//                tile.getLeftOfMainTerrain());
+//        gameBoard.put(coordinates[1],
+//                tile.getMainTerrain());
+//        gameBoard.put(coordinates[2],
+//                tile.getRightOfMainTerrain());
+//        //Coordinate trial = gameBoard.get(tile.getMainTerrain())
+//    }
+
+//    private Coordinate[] determineOrientation(Orientation orientation){
+//        Coordinate [] coordinates = {
+//                new Coordinate(-1, 1),
+//                new Coordinate(0, 0),
+//                new Coordinate(0, 1)
+//        };
+//        return coordinates;
+//    }
+
+    public boolean checkForHex(Coordinate cord) {
+        return (gameBoard.get(cord) != null);
+    }
+
     //TODO counter to get id of tile
 }

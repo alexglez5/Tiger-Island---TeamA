@@ -4,6 +4,5 @@ Feature: Tile Placement
   I want a successful game board state
 
   Scenario: First tile placement
-    Given the gameboard is empty
-    When the player places a tile
-    Then the volcano hex is placed at coordinate (0,0)
+    When the player places a tile with identifier "1"
+    Then the volcano hex of that tile is placed at coordinate (0,0)
