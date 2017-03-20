@@ -17,21 +17,57 @@ public class GameBoardTest {
     }
 
     @Test
-    public void testHexesArePlacedAtTheRightCoordinate()throws Exception{
+    public void testHexesPlacementWithRotation1()throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), 1);
-        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,1)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,1)));
-        Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(2,3)));
     }
 
     @Test
-    public void testHexesAreNotPlacedAtTheWrongCoordinate()throws Exception{
+    public void testHexesPlacementWithRotation2()throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
-                new Coordinate(0,0), 1);
-        Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
-        Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(-1,0)));
+                new Coordinate(0,0), 2);
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,1)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,0)));
+    }
+
+    @Test
+    public void testHexesPlacementWithRotation3()throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), 3);
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,-1)));
+    }
+
+    @Test
+    public void testHexesPlacementWithRotation4()throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), 4);
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,-1)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,-1)));
+    }
+
+    @Test
+    public void testHexesPlacementWithRotation5()throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), 5);
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,-1)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,0)));
+    }
+
+    @Test
+    public void testHexesPlacementWithRotation6()throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), 6);
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,1)));
     }
 
     @Test

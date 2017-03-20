@@ -14,6 +14,7 @@ public class GameBoard {
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
     }
 
+    //TODO delete commented code below
 //    public void placeTile(Tile tile, Orientation orientation){
 //        Coordinate [] coordinates = determineOrientation(orientation);
 //        //Assuming terrains are below volcano
@@ -34,10 +35,10 @@ public class GameBoard {
 //        };
 //        return coordinates;
 //    }
-
-    public boolean checkForHex(Coordinate cord) {
-        return (gameBoard.get(cord) != null);
-    }
+//
+//    public boolean checkForHex(Coordinate cord) {
+//        return (gameBoard.get(cord) != null);
+//    }
 
     //TODO counter to get id of tile
 }
