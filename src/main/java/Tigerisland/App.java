@@ -21,4 +21,9 @@ public class App {
         newTile.setTileID(ID);
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky), new Coordinate(0,0), Orientation.FromTop);
     }
+
+    public boolean checkTile(int coordinate1, int coordinate2) {
+        Coordinate cord = new Coordinate ( coordinate1, coordinate2);
+        return map.checkForHex(cord);
+    }
 }
