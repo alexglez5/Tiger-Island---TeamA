@@ -6,7 +6,7 @@ public class TilePlacer extends GameBoard{
     private int mainTerrainXCoordinate;
     private int mainTerrainYCoordinate;
 
-    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, int terrainsOrientation){
+    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
         mainTerrainXCoordinate = mainTerrainCoordinate.getXCoordinate();
         mainTerrainYCoordinate = mainTerrainCoordinate.getYCoordinate();
 
@@ -14,27 +14,27 @@ public class TilePlacer extends GameBoard{
                 tile.getMainTerrain());
 
         switch (terrainsOrientation){
-            case 1:
+            case FromBottom:
                 gameBoard.put(belowAndToTheLeftOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(belowAndToTheRightOfMain(), tile.getRightOfMainTerrain());
                 break;
-            case 2:
+            case FromBottomRight:
                 gameBoard.put(belowAndToTheRightOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(toTheRightOfMain(), tile.getRightOfMainTerrain());
                 break;
-            case 3:
+            case FromTopRight:
                 gameBoard.put(toTheRightOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(overAndToTheRightOfMain(), tile.getRightOfMainTerrain());
                 break;
-            case 4:
+            case FromTop:
                 gameBoard.put(overAndToTheRightOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(overAndToTheLeftOfMain(), tile.getRightOfMainTerrain());
                 break;
-            case 5:
+            case FromTopLeft:
                 gameBoard.put(overAndToTheLeftOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(toTheLeftOfMain(), tile.getRightOfMainTerrain());
                 break;
-            case 6:
+            case FromBottomLeft:
                 gameBoard.put(toTheLeftOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(belowAndToTheLeftOfMain(), tile.getRightOfMainTerrain());
                 break;
