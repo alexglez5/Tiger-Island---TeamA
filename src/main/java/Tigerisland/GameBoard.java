@@ -36,9 +36,10 @@ public class GameBoard {
 //        return coordinates;
 //    }
 //
-//    public boolean checkForHex(Coordinate cord) {
-//        return (gameBoard.get(cord) != null);
-//    }
+    public boolean checkForHex(Coordinate cord) {
+        System.out.println(gameBoard.get(cord) != null);
+        return (gameBoard.get(cord) != null);
+    }
 
     //TODO counter to get id of tile
 }
