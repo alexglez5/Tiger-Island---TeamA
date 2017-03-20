@@ -22,18 +22,20 @@ public class Coordinate {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o == this)
-            return true;
-        if(!(o instanceof Coordinate))
-            return false;
-        Coordinate coord = (Coordinate) o;
-        return x == coord.x &&
-                Objects.equals(y, coord.y);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Coordinate that = (Coordinate) o;
+
+        if (x != that.x) return false;
+        return y == that.y;
     }
 
     @Override
-    public int hashCode(){
-        return Objects.hash(x, y);
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 }
