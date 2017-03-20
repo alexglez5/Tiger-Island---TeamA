@@ -10,7 +10,7 @@ Feature: Tile Placement
   Scenario: First tile placement hexes exist
     Given the player chooses an orientation FromBottom
     When the player places the first tile
-    Then the left terrain of that tile should be placed at (-1,1)
-    And the right terrain of that tile should be placed at (0,1)
+    Then the tile's left hex should be placed at (-1,1)
+    And the tile's right hex should be placed at (0,1)
 
   #Scenario: Invalid subsequent tile placements
