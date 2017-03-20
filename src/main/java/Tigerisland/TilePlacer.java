@@ -3,71 +3,131 @@ package Tigerisland;
  * Created by Alexander Gonzalez on 3/19/2017.
  */
 public class TilePlacer extends GameBoard{
-    private int mainTerrainXCoordinate;
-    private int mainTerrainYCoordinate;
+    final int sidesOfAHex = 6;
+    private int currentTerrainXCoordinate;
+    private int currentTerrainYCoordinate;
+    private Coordinate leftOfMainTerrainCoordinate;
+    private Coordinate mainTerrainCoordinate;
+    private Coordinate rightOfMainTerrainCoordinate;
+    private Coordinate[] counterClockwiseCoordinatesAroundCoordinate;
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
-        mainTerrainXCoordinate = mainTerrainCoordinate.getXCoordinate();
-        mainTerrainYCoordinate = mainTerrainCoordinate.getYCoordinate();
-
-        gameBoard.put(mainTerrainCoordinate,
-                tile.getMainTerrain());
+        this.mainTerrainCoordinate = mainTerrainCoordinate;
+        currentTerrainXCoordinate = mainTerrainCoordinate.getXCoordinate();
+        currentTerrainYCoordinate = mainTerrainCoordinate.getYCoordinate();
 
         switch (terrainsOrientation){
             case FromBottom:
-                gameBoard.put(belowAndToTheLeftOfMain(), tile.getLeftOfMainTerrain());
-                gameBoard.put(belowAndToTheRightOfMain(), tile.getRightOfMainTerrain());
+                leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
                 break;
             case FromBottomRight:
-                gameBoard.put(belowAndToTheRightOfMain(), tile.getLeftOfMainTerrain());
-                gameBoard.put(toTheRightOfMain(), tile.getRightOfMainTerrain());
+                leftOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
                 break;
             case FromTopRight:
-                gameBoard.put(toTheRightOfMain(), tile.getLeftOfMainTerrain());
-                gameBoard.put(overAndToTheRightOfMain(), tile.getRightOfMainTerrain());
+                leftOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
                 break;
             case FromTop:
-                gameBoard.put(overAndToTheRightOfMain(), tile.getLeftOfMainTerrain());
-                gameBoard.put(overAndToTheLeftOfMain(), tile.getRightOfMainTerrain());
+                leftOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
             case FromTopLeft:
-                gameBoard.put(overAndToTheLeftOfMain(), tile.getLeftOfMainTerrain());
-                gameBoard.put(toTheLeftOfMain(), tile.getRightOfMainTerrain());
+                leftOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
                 break;
             case FromBottomLeft:
-                gameBoard.put(toTheLeftOfMain(), tile.getLeftOfMainTerrain());
-                gameBoard.put(belowAndToTheLeftOfMain(), tile.getRightOfMainTerrain());
+                leftOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
+        }
+
+        if(tileCanBePlaced() || tile.getID() == 1){
+            gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
+            gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
+            gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
         }
     }
 
-    //TODO check if it's legal to place hex at given location
-//    private boolean isTaken(){
-//        return gameBoard.containsKey(new Coordinate(mainTerrainXCoordinate,
-//                mainTerrainYCoordinate));
+    private Boolean tileCanBePlaced(){
+        findCounterClockwiseCoordinatesAroundCoordinate(leftOfMainTerrainCoordinate);
+        if (AtLeastOneAdjacentCoordinateExists())
+            return true;
+        findCounterClockwiseCoordinatesAroundCoordinate(rightOfMainTerrainCoordinate);
+        if (AtLeastOneAdjacentCoordinateExists())
+            return true;
+        findCounterClockwiseCoordinatesAroundCoordinate(mainTerrainCoordinate);
+        if (AtLeastOneAdjacentCoordinateExists())
+            return true;
+        return false;
+    }
+
+    private boolean AtLeastOneAdjacentCoordinateExists() {
+        for(int i = 0; i < sidesOfAHex; i++){
+            if(gameBoard.containsKey(counterClockwiseCoordinatesAroundCoordinate[i]))
+                return true;
+        }
+        return false;
+    }
+
+    private void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate){
+        counterClockwiseCoordinatesAroundCoordinate = new Coordinate[sidesOfAHex];
+        counterClockwiseCoordinatesAroundCoordinate[0] = belowAndToTheLeftOfMain(terrainCoordinate);
+        counterClockwiseCoordinatesAroundCoordinate[1] = belowAndToTheRightOfMain(terrainCoordinate);
+        counterClockwiseCoordinatesAroundCoordinate[2] = toTheRightOfMain(terrainCoordinate);
+        counterClockwiseCoordinatesAroundCoordinate[3] = overAndToTheRightOfMain(terrainCoordinate);
+        counterClockwiseCoordinatesAroundCoordinate[4] = overAndToTheLeftOfMain(terrainCoordinate);
+        counterClockwiseCoordinatesAroundCoordinate[5] = toTheLeftOfMain(terrainCoordinate);
+    }
+
+//    private Boolean hexesAreAdjacent(Coordinate c1, Coordinate c2){
+//        return c2 == belowAndToTheLeftOfMain(c1) ||
+//                c2 == belowAndToTheRightOfMain(c1) ||
+//                c2 == toTheRightOfMain(c1) ||
+//                c2 == overAndToTheRightOfMain(c1) ||
+//                c2 == overAndToTheLeftOfMain(c1) ||
+//                c2 == toTheLeftOfMain(c1);
 //    }
 
-    private Coordinate belowAndToTheLeftOfMain(){
-        return new Coordinate(mainTerrainXCoordinate - 1, mainTerrainYCoordinate + 1);
+    //TODO check if it's legal to place hex at given location
+//    private boolean isTaken(){
+//        return gameBoard.containsKey(new Coordinate(currentTerrainXCoordinate,
+//                currentTerrainYCoordinate));
+//    }
+
+    private Coordinate belowAndToTheLeftOfMain(Coordinate terrainCoordinate){
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate - 1, currentTerrainYCoordinate + 1);
     }
 
-    private Coordinate belowAndToTheRightOfMain(){
-        return new Coordinate(mainTerrainXCoordinate, mainTerrainYCoordinate + 1);
+    private Coordinate belowAndToTheRightOfMain(Coordinate terrainCoordinate){
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate, currentTerrainYCoordinate + 1);
     }
 
-    private Coordinate toTheLeftOfMain(){
-        return new Coordinate(mainTerrainXCoordinate - 1, mainTerrainYCoordinate);
+    private Coordinate toTheLeftOfMain(Coordinate terrainCoordinate){
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate - 1, currentTerrainYCoordinate);
     }
 
-    private Coordinate toTheRightOfMain(){
-        return new Coordinate(mainTerrainXCoordinate + 1, mainTerrainYCoordinate);
+    private Coordinate toTheRightOfMain(Coordinate terrainCoordinate){
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate + 1, currentTerrainYCoordinate);
     }
 
-    private Coordinate overAndToTheLeftOfMain(){
-        return new Coordinate(mainTerrainXCoordinate, mainTerrainYCoordinate - 1);
+    private Coordinate overAndToTheLeftOfMain(Coordinate terrainCoordinate){
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate, currentTerrainYCoordinate - 1);
     }
 
-    private Coordinate overAndToTheRightOfMain(){
-        return new Coordinate(mainTerrainXCoordinate + 1, mainTerrainYCoordinate - 1);
+    private Coordinate overAndToTheRightOfMain(Coordinate terrainCoordinate){
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate + 1, currentTerrainYCoordinate - 1);
+    }
+
+    private void updateXAndYCoordinateOfCurrentTerrain(Coordinate terrainCoordinate){
+        this.currentTerrainXCoordinate = terrainCoordinate.getXCoordinate();
+        this.currentTerrainYCoordinate = terrainCoordinate.getYCoordinate();
     }
 }

@@ -18,7 +18,7 @@ public class GameBoardTest {
 
     @Test
     public void testTerrainTypeOfEveryHexOfTilePlaced() throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getTerrainType(),
                 TerrainType.Volcano);
@@ -30,7 +30,7 @@ public class GameBoardTest {
 
     @Test
     public void testPlacementWithFromBottomRotation()throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,1)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
@@ -39,7 +39,7 @@ public class GameBoardTest {
 
     @Test
     public void testPlacementWithFromBottomRightRotation()throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottomRight);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,1)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,0)));
@@ -47,7 +47,7 @@ public class GameBoardTest {
 
     @Test
     public void testPlacementWithFromTopRightRotation()throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromTopRight);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,0)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,-1)));
@@ -55,7 +55,7 @@ public class GameBoardTest {
 
     @Test
     public void testPlacementWithFromTopRotation()throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromTop);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,-1)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,-1)));
@@ -63,7 +63,7 @@ public class GameBoardTest {
 
     @Test
     public void testPlacementWithFromTopLeftRotation()throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromTopLeft);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,-1)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,0)));
@@ -71,7 +71,7 @@ public class GameBoardTest {
 
     @Test
     public void testPlacementWithFromBottomLeftRotation()throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottomLeft);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,0)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,1)));
