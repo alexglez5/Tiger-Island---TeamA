@@ -29,7 +29,5 @@ public class Tile {
 
     public void setTileID(int tileID) {this.tileID = tileID;    }
 
-    public int getID() {
-        return tileID;
-    }
+    public int getTileID() {return tileID;     }
 }

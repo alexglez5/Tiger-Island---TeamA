@@ -90,11 +90,6 @@ public class TilePlacer extends GameBoard{
 //                c2 == toTheLeftOfMain(c1);
 //    }
 
-    //TODO check if it's legal to place hex at given location
-//    private boolean isTaken(){
-//        return gameBoard.containsKey(new Coordinate(currentTerrainXCoordinate,
-//                currentTerrainYCoordinate));
-//    }
 
     private Coordinate belowAndToTheLeftOfMain(Coordinate terrainCoordinate){
         updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
