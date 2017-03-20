@@ -6,7 +6,7 @@ package Tigerisland;
  */
 public class App {
     GameBoard map = new GameBoard();
-    Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle);
+    Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle, 1);
     Coordinate newCord = new Coordinate(0,0);
     Orientation orientation = Orientation.FromBottom;
 
@@ -19,7 +19,7 @@ public class App {
 
     public void placeTile(int ID) {
         newTile.setTileID(ID);
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky), new Coordinate(0,0), Orientation.FromTop);
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1), new Coordinate(0,0), Orientation.FromTop);
     }
 
     public boolean checkTile(int coordinate1, int coordinate2) {

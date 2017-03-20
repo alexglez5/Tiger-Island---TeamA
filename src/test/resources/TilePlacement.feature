@@ -13,4 +13,8 @@ Feature: Tile Placement
     Then the tile's left hex should be placed at (-1,1)
     And the tile's right hex should be placed at (0,1)
 
+  Scenario: Additional Tile is added
+    Given the player chooses an orientation
+    When
+
   #Scenario: Invalid subsequent tile placements
