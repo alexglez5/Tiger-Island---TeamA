@@ -17,6 +17,18 @@ public class GameBoardTest {
     }
 
     @Test
+    public void testTerrainTypeOfEveryHexOfTilePlaced() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), Orientation.FromBottom);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getTerrainType(),
+                TerrainType.Volcano);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
+                TerrainType.Lake);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
+                TerrainType.Rocky);
+    }
+
+    @Test
     public void testPlacementWithFromBottomRotation()throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);
@@ -63,17 +75,5 @@ public class GameBoardTest {
                 new Coordinate(0,0), Orientation.FromBottomLeft);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,0)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,1)));
-    }
-
-    @Test
-    public void testTerrainTypeOfEveryHexOfTilePlaced() throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
-                new Coordinate(0,0), Orientation.FromBottom);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getTerrainType(),
-                TerrainType.Volcano);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
-                TerrainType.Lake);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
-                TerrainType.Rocky);
     }
 }
