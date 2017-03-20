@@ -1,13 +1,12 @@
 package Tigerisland;
-
 /**
  * Created by Alexander Gonzalez on 3/19/2017.
  */
 public class TilePlacer extends GameBoard{
-    private static int mainTerrainXCoordinate;
-    private static int mainTerrainYCoordinate;
+    private int mainTerrainXCoordinate;
+    private int mainTerrainYCoordinate;
 
-    public static void placeTile(Tile tile, Coordinate mainTerrainCoordinate, int terrainsOrientation){
+    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, int terrainsOrientation){
         mainTerrainXCoordinate = mainTerrainCoordinate.getXCoordinate();
         mainTerrainYCoordinate = mainTerrainCoordinate.getYCoordinate();
 
@@ -18,52 +17,57 @@ public class TilePlacer extends GameBoard{
             case 1:
                 gameBoard.put(belowAndToTheLeftOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(belowAndToTheRightOfMain(), tile.getRightOfMainTerrain());
+                break;
             case 2:
                 gameBoard.put(belowAndToTheRightOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(toTheRightOfMain(), tile.getRightOfMainTerrain());
+                break;
             case 3:
                 gameBoard.put(toTheRightOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(overAndToTheRightOfMain(), tile.getRightOfMainTerrain());
+                break;
             case 4:
                 gameBoard.put(overAndToTheRightOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(overAndToTheLeftOfMain(), tile.getRightOfMainTerrain());
+                break;
             case 5:
                 gameBoard.put(overAndToTheLeftOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(toTheLeftOfMain(), tile.getRightOfMainTerrain());
+                break;
             case 6:
                 gameBoard.put(toTheLeftOfMain(), tile.getLeftOfMainTerrain());
                 gameBoard.put(belowAndToTheLeftOfMain(), tile.getRightOfMainTerrain());
-
+                break;
         }
     }
 
-    //TODO check if you can place hex at given location
+    //TODO check if it's legal to place hex at given location
     private boolean isTaken(){
         return gameBoard.containsKey(new Coordinate(mainTerrainXCoordinate,
                 mainTerrainYCoordinate));
     }
 
-    private static Coordinate belowAndToTheLeftOfMain(){
+    private Coordinate belowAndToTheLeftOfMain(){
         return new Coordinate(mainTerrainXCoordinate - 1, mainTerrainYCoordinate + 1);
     }
 
-    private static Coordinate belowAndToTheRightOfMain(){
+    private Coordinate belowAndToTheRightOfMain(){
         return new Coordinate(mainTerrainXCoordinate, mainTerrainYCoordinate + 1);
     }
 
-    private static Coordinate toTheLeftOfMain(){
+    private Coordinate toTheLeftOfMain(){
         return new Coordinate(mainTerrainXCoordinate - 1, mainTerrainYCoordinate);
     }
 
-    private static Coordinate toTheRightOfMain(){
+    private Coordinate toTheRightOfMain(){
         return new Coordinate(mainTerrainXCoordinate + 1, mainTerrainYCoordinate);
     }
 
-    private static Coordinate overAndToTheLeftOfMain(){
+    private Coordinate overAndToTheLeftOfMain(){
         return new Coordinate(mainTerrainXCoordinate, mainTerrainYCoordinate - 1);
     }
 
-    private static Coordinate overAndToTheRightOfMain(){
+    private Coordinate overAndToTheRightOfMain(){
         return new Coordinate(mainTerrainXCoordinate + 1, mainTerrainYCoordinate - 1);
     }
 }

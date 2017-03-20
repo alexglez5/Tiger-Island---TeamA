@@ -8,7 +8,11 @@ import java.util.Map;
  */
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
-    private static TilePlacer placer = new TilePlacer();
+
+    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, int terrainsOrientation){
+        TilePlacer placer = new TilePlacer();
+        placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
+    }
 
 //    public void placeTile(Tile tile, Orientation orientation){
 //        Coordinate [] coordinates = determineOrientation(orientation);
