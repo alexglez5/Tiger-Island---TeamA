@@ -15,12 +15,12 @@ public class TilePlacementSteps {
 
     @When("^the player places a tile with identifier \"([^\"]*)\"$")
     public void the_player_places_a_tile_with_identifier(String firstTileID) throws Throwable {
-        
+        newTile.setTileID(firstTileID);
+        map.placeTile(newTile, Orientation.FromBottom);
     }
 
     @Then("^the volcano hex is placed at coordinate \\((\\d+),(\\d+)\\)$")
     public void the_volcano_hex_is_placed_at_coordinate(int xCord, int yCord) throws Throwable {
 
-        throw new PendingException();
     }
 }

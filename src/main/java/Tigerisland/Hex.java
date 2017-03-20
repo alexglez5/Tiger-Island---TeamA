@@ -9,8 +9,4 @@ public class Hex {
     public Hex(TerrainType terrainType){
         this.terrainType = terrainType;
     }
-
-    public boolean isEmpty() {
-        return terrainType != null; //TerrainType.Volcano;
-    }
 }
