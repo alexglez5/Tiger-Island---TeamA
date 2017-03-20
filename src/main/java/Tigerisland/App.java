@@ -24,6 +24,6 @@ public class App {
 
     public boolean checkTile(int coordinate1, int coordinate2) {
         Coordinate cord = new Coordinate ( coordinate1, coordinate2);
-        return map.checkForHex(cord);
+        return map.gameBoard.containsKey(cord);
     }
 }
