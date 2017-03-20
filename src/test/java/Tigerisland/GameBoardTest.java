@@ -10,20 +10,16 @@ import org.junit.Test;
 
 public class GameBoardTest {
     GameBoard map;
-    TilePlacer placer;
 
     @Before
     public void initializeGameBoard() throws Exception{
         map = new GameBoard();
-        placer = new TilePlacer();
     }
 
     @Test
     public void testHexesPlacementWithRotation1()throws Exception{
-        Tile tile = new Tile(TerrainType.Lake, TerrainType.Rocky);
-        Coordinate Cord = new Coordinate(0,0);
-
-        placer.placeTile(tile, Cord, 1);
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), 1);
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(-1,1)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,0)));
         Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,1)));
