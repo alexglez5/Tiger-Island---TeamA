@@ -43,7 +43,7 @@ public class TilePlacer extends GameBoard{
                 break;
         }
 
-        if(tileCanBePlaced() || tile.getID() == 1){
+        if(tileCanBePlaced() || tile.getTileID() == 1){
             gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
             gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
             gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
