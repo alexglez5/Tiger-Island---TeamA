@@ -4,6 +4,8 @@ package Tigerisland;
  * Created by Alexander Gonzalez on 3/17/2017.
  */
 public class Tile {
+
+
     private int tileID;
     private Hex leftOfMainTerrain;
     private final Hex mainTerrain = new Hex(TerrainType.Volcano);
@@ -27,4 +29,6 @@ public class Tile {
     }
 
     public void setTileID(int tileID) {this.tileID = tileID;    }
+
+    public int getTileID() {return tileID;     }
 }

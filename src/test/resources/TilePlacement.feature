@@ -6,3 +6,11 @@ Feature: Tile Placement
   Scenario: First tile placement
     When the player places a tile with identifier 1
     Then the volcano hex of that tile is placed at coordinate (0,0)
+
+  Scenario: First tile placement hexes exist
+    Given the player chooses an orientation FromBottom
+    When the player places the first tile
+    Then the left terrain of that tile should be placed at (-1,1)
+    And the right terrain of that tile should be placed at (0,1)
+
+  #Scenario: Invalid subsequent tile placements
