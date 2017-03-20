@@ -11,4 +11,12 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
 }

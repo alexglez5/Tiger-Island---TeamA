@@ -7,8 +7,8 @@ public class TilePlacer extends GameBoard{
     private int mainTerrainYCoordinate;
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, int terrainsOrientation){
-        mainTerrainXCoordinate = mainTerrainCoordinate.getXCoordinate();
-        mainTerrainYCoordinate = mainTerrainCoordinate.getYCoordinate();
+        mainTerrainXCoordinate = mainTerrainCoordinate.getX();
+        mainTerrainYCoordinate = mainTerrainCoordinate.getY();
 
         gameBoard.put(mainTerrainCoordinate,
                 tile.getMainTerrain());
