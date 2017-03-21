@@ -15,11 +15,6 @@ public class GameBoard {
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
     }
 
-    public void nuke(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
-        placer = new TilePlacer();
-        placer.nuke(tile, mainTerrainCoordinate, terrainsOrientation);
-    }
-
-    //TODO add checks so that tile is is not placed perfectly on top of another
-    //TODO checks so that tile is only placed on full ground
+    //TODO add acceptance test for placeTile on different levels
+    //TODO
 }

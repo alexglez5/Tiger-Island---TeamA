@@ -12,11 +12,6 @@ public class TilePlacer extends GameBoard{
     private Orientation orientation;
     private Coordinate[] counterClockwiseCoordinatesAroundCoordinate;
 
-    public void nuke(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        if(canNuke())
-            placeTile(tile,mainTerrainCoordinate,terrainsOrientation);
-    }
-
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
         this.mainTerrainCoordinate = mainTerrainCoordinate;
         this.orientation = terrainsOrientation;
@@ -31,6 +26,11 @@ public class TilePlacer extends GameBoard{
         if(tileIsPlacedOnLevelOne())
             placeHexesOfTileInMap(tile);
         else
+            nuke(tile);
+    }
+
+    private void nuke(Tile tile){
+        if(canNuke())
             placeHexesOnTopOfOtherHexes(tile);
     }
 

@@ -139,7 +139,7 @@ public class TilePlacerTest {
     public void testTileIsNotPerfectlyOnTopOfOtherTile() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
-        map.nuke(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
                 new Coordinate(0,0), Orientation.FromBottomLeft);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
                 TerrainType.Lake);
@@ -149,11 +149,11 @@ public class TilePlacerTest {
     public void testTileCompletelyCoversHexesBeneathIt() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
-        map.nuke(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
                 new Coordinate(0,0), Orientation.FromBottomRight);
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
 
-        map.nuke(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
                 new Coordinate(1,0), Orientation.FromBottomLeft);
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
         Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
