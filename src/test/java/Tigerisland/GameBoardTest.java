@@ -34,9 +34,9 @@ public class GameBoardTest {
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,2), Orientation.FromBottom);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,3)).getTerrainType(),
-                TerrainType.Volcano);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,2)).getTerrainType(),
                 TerrainType.Lake);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,2)).getTerrainType(),
+                TerrainType.Volcano);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(0,3)).getTerrainType(),
                 TerrainType.Rocky);
     }
