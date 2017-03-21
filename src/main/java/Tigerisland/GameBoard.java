@@ -13,4 +13,7 @@ public class GameBoard {
         TilePlacer placer = new TilePlacer();
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
     }
+
+    //TODO add checks so that tile is is not placed perfectly on top of another
+    //TODO checks so that tile is only placed on full ground
 }

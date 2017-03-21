@@ -49,21 +49,30 @@ public class TilePlacer extends GameBoard{
             gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
         }
     }
+    
 
     private Boolean tileCanBePlaced(){
+        return atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge();
+    }
+
+    private Boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge(){
+        return atLeastOneCoordinateAroundOneHexOfTheTileContainsAHex();
+    }
+
+    private boolean atLeastOneCoordinateAroundOneHexOfTheTileContainsAHex() {
         findCounterClockwiseCoordinatesAroundCoordinate(leftOfMainTerrainCoordinate);
-        if (AtLeastOneAdjacentCoordinateExists())
+        if (AtLeasOneAdjacentCoordinateContainsAHex())
             return true;
         findCounterClockwiseCoordinatesAroundCoordinate(rightOfMainTerrainCoordinate);
-        if (AtLeastOneAdjacentCoordinateExists())
+        if (AtLeasOneAdjacentCoordinateContainsAHex())
             return true;
         findCounterClockwiseCoordinatesAroundCoordinate(mainTerrainCoordinate);
-        if (AtLeastOneAdjacentCoordinateExists())
+        if (AtLeasOneAdjacentCoordinateContainsAHex())
             return true;
         return false;
     }
 
-    private boolean AtLeastOneAdjacentCoordinateExists() {
+    private boolean AtLeasOneAdjacentCoordinateContainsAHex() {
         for(int i = 0; i < sidesOfAHex; i++){
             if(gameBoard.containsKey(counterClockwiseCoordinatesAroundCoordinate[i]))
                 return true;
