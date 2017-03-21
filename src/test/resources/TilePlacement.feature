@@ -2,17 +2,25 @@ Feature: Tile Placement
   In order to play a successful game
   As a player of the game
   I want a successful game board state
-
-  Scenario: First tile placement
-    When the player places a tile with identifier 1
-    Then the volcano hex of that tile is placed at coordinate (0,0)
-
-    #needs acceptance tests to reflect unit tests
+  
   Scenario: First tile placement hexes exist
-    Given the player chooses an orientation FromBottom
-    When the player places the first tile
-    Then the tile's left hex should be placed at (-1,1)
-    And the tile's right hex should be placed at (0,1)
+    Given the board is empty
+    When the player places the number 1 tile at (0,0) and orientation "FromBottom"
+    Then the tile left hex should be placed at (-1,1)
+    And the tile right hex should be placed at (0,1)
+    And the tile volcano hex should be placed at (0,0)
+
+  Scenario: It is the start of a player's turn
+    Given the player is given a random tile
+    When the player places a tile with any Orientation
+    And the tile will have no connections to any other tiles
+    Then the gameboard should reject the tile
+
+  Scenario: It is the start of a player's turn
+    Given the player is given a random tile
+    When the player places a tile with any Orientation
+    And the tile will have more than zero connections to any other tile
+    Then the gameboard should reject the tile
 
     #not coded yet
   Scenario: A Settlement was placed at a chosen hex
