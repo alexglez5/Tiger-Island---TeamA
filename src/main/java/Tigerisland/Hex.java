@@ -5,13 +5,29 @@ package Tigerisland;
  */
 public class Hex {
     private TerrainType terrainType;
+    private int tileID;
+    private int level;
 
-    public Hex(TerrainType terrainType){
+    public Hex(TerrainType terrainType, int tileID){
         this.terrainType = terrainType;
+        this.tileID = tileID;
+        level = 1;
     }
 
     public TerrainType getTerrainType(){
         return terrainType;
+    }
+
+    public int getTileID() {
+        return tileID;
+    }
+
+    public void increaseLevel(){
+        level++;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     @Override

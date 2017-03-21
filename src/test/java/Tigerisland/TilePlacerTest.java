@@ -68,7 +68,7 @@ public class TilePlacerTest {
     }
 
     @Test
-    public void testAtLeastOneEdgeTouchesEdgeOfPreviouslyPlacedTile() throws Exception{
+    public void testAtLeastOneEdgeTouchesEdgeOfPreviouslyPlacedTileIfPlacingInLevelOne() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Jungle, 2),
@@ -89,7 +89,7 @@ public class TilePlacerTest {
     }
 
     @Test
-    public void testTileIsNotPlacedIfNoEdgeTouchesPreviouslyPlacedTile() throws Exception{
+    public void testTileIsNotPlacedIfNoEdgeTouchesPreviouslyPlacedTileIfPlacingInLevelOne() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
 
@@ -104,6 +104,60 @@ public class TilePlacerTest {
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(-1,3)));
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(3,0)));
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(2,0)));
+    }
+
+    @Test
+    public void testNukeOverwritesTerrainTypeOfHexes() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 3),
+                new Coordinate(1,0), Orientation.FromBottom);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
+                TerrainType.Rocky);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,0)).getTerrainType(),
+                TerrainType.Volcano);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,1)).getTerrainType(),
+                TerrainType.Grasslands);
+    }
+
+    @Test
+    public void testNukeIncreasesHexLevel() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 3),
+                new Coordinate(1,0), Orientation.FromBottom);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(),2);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,0)).getLevel(),2);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,1)).getLevel(),2);
+    }
+
+    @Test
+    public void testTileIsNotPerfectlyOnTopOfOtherTile() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.nuke(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(0,0), Orientation.FromBottomLeft);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
+                TerrainType.Lake);
+    }
+
+    @Test
+    public void testTileCompletelyCoversHexesBeneathIt() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.nuke(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(0,0), Orientation.FromBottomRight);
+        Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
+
+        map.nuke(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
+                new Coordinate(1,0), Orientation.FromBottomLeft);
+        Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
+                TerrainType.Lake);
     }
 
     @After

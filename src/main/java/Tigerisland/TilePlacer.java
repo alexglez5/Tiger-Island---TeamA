@@ -42,17 +42,91 @@ public class TilePlacer extends GameBoard{
                 rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
         }
+        
+        if(tileIsPlacedOnLevelOne())
+            placeHexesOfTileInMap(tile);
+        else
+            placeHexesOnTopOfOtherHexes(tile);
+    }
 
-        if(tileCanBePlaced() || tile.getTileID() == 1){
-            gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
-            gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
-            gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
+    private void placeHexesOnTopOfOtherHexes(Tile tile) {
+        putInMap(tile);
+        increaseLevelOfHexesOfATile();
+    }
+
+    private void increaseLevelOfHexesOfATile() {
+        gameBoard.get(leftOfMainTerrainCoordinate).increaseLevel();
+        gameBoard.get(mainTerrainCoordinate).increaseLevel();
+        gameBoard.get(rightOfMainTerrainCoordinate).increaseLevel();
+    }
+
+    private boolean tileIsPlacedOnLevelOne(){
+        return !gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
+                !gameBoard.containsKey(mainTerrainCoordinate) &&
+                !gameBoard.containsKey(rightOfMainTerrainCoordinate);
+    }
+
+    public void nuke(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+        if(canNuke())
+            placeTile(tile,mainTerrainCoordinate,terrainsOrientation);
+    }
+
+    private void placeHexesOfTileInMap(Tile tile) {
+        if(tileCanBePlacedInLevelOne() || firstTileInTheGame(tile)){
+            putInMap(tile);
         }
     }
-    
 
-    private Boolean tileCanBePlaced(){
+    private void putInMap(Tile tile) {
+        gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
+        gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
+        gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
+    }
+
+    private boolean firstTileInTheGame(Tile tile) {
+        return tile.getTileID() == 1;
+    }
+
+    private Boolean tileCanBePlacedInLevelOne(){
         return atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge();
+    }
+
+    private Boolean canNuke(){
+        return tileCompletelyCoversHexes() &&
+                tileIsNotPerfectlyOnTopOfAnotherTile();
+    }
+
+    private boolean hexesAreTaken(){
+        return gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
+                gameBoard.containsKey(mainTerrainCoordinate) &&
+                gameBoard.containsKey(rightOfMainTerrainCoordinate);
+    }
+
+    private boolean hexesAreAtTheSameLevel(){
+        return hexesAreTaken() &&
+                gameBoard.get(leftOfMainTerrainCoordinate).getLevel() ==
+                gameBoard.get(mainTerrainCoordinate).getLevel() &&
+                gameBoard.get(mainTerrainCoordinate).getLevel() ==
+                gameBoard.get(rightOfMainTerrainCoordinate).getLevel();
+
+    }
+
+    private boolean tileCompletelyCoversHexes() {
+        return hexesAreAtTheSameLevel();
+
+    }
+
+    private Boolean tileIsNotPerfectlyOnTopOfAnotherTile(){
+        return atLeastOneHexIsOnTopAnotherHexWithDifferentTileIDAsTheOthers();
+    }
+
+    private Boolean atLeastOneHexIsOnTopAnotherHexWithDifferentTileIDAsTheOthers(){
+        return gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
+                gameBoard.get(mainTerrainCoordinate).getTileID() ||
+                gameBoard.get(mainTerrainCoordinate).getTileID() !=
+                gameBoard.get(rightOfMainTerrainCoordinate).getTileID() ||
+                gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
+                gameBoard.get(rightOfMainTerrainCoordinate).getTileID();
     }
 
     private Boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge(){
