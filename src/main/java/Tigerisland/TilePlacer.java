@@ -3,20 +3,39 @@ package Tigerisland;
  * Created by Alexander Gonzalez on 3/19/2017.
  */
 public class TilePlacer extends GameBoard{
-    final int sidesOfAHex = 6;
+    private final int sidesOfAHex = 6;
     private int currentTerrainXCoordinate;
     private int currentTerrainYCoordinate;
     private Coordinate leftOfMainTerrainCoordinate;
     private Coordinate mainTerrainCoordinate;
     private Coordinate rightOfMainTerrainCoordinate;
+    private Orientation orientation;
     private Coordinate[] counterClockwiseCoordinatesAroundCoordinate;
+
+    public void nuke(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+        if(canNuke())
+            placeTile(tile,mainTerrainCoordinate,terrainsOrientation);
+    }
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
         this.mainTerrainCoordinate = mainTerrainCoordinate;
-        currentTerrainXCoordinate = mainTerrainCoordinate.getXCoordinate();
-        currentTerrainYCoordinate = mainTerrainCoordinate.getYCoordinate();
+        this.orientation = terrainsOrientation;
+        updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
 
-        switch (terrainsOrientation){
+        determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+
+        placeTileInLevelOneOrNuke(tile);
+    }
+
+    private void placeTileInLevelOneOrNuke(Tile tile) {
+        if(tileIsPlacedOnLevelOne())
+            placeHexesOfTileInMap(tile);
+        else
+            placeHexesOnTopOfOtherHexes(tile);
+    }
+
+    private void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
+        switch (orientation){
             case FromBottom:
                 leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
@@ -42,33 +61,11 @@ public class TilePlacer extends GameBoard{
                 rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
         }
-        
-        if(tileIsPlacedOnLevelOne())
-            placeHexesOfTileInMap(tile);
-        else
-            placeHexesOnTopOfOtherHexes(tile);
     }
 
-    private void placeHexesOnTopOfOtherHexes(Tile tile) {
-        putInMap(tile);
-        increaseLevelOfHexesOfATile();
-    }
-
-    private void increaseLevelOfHexesOfATile() {
-        gameBoard.get(leftOfMainTerrainCoordinate).increaseLevel();
-        gameBoard.get(mainTerrainCoordinate).increaseLevel();
-        gameBoard.get(rightOfMainTerrainCoordinate).increaseLevel();
-    }
-
-    private boolean tileIsPlacedOnLevelOne(){
-        return !gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
-                !gameBoard.containsKey(mainTerrainCoordinate) &&
-                !gameBoard.containsKey(rightOfMainTerrainCoordinate);
-    }
-
-    public void nuke(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        if(canNuke())
-            placeTile(tile,mainTerrainCoordinate,terrainsOrientation);
+    private Boolean canNuke(){
+        return tileCompletelyCoversHexes() &&
+                tileIsNotPerfectlyOnTopOfAnotherTile();
     }
 
     private void placeHexesOfTileInMap(Tile tile) {
@@ -77,10 +74,9 @@ public class TilePlacer extends GameBoard{
         }
     }
 
-    private void putInMap(Tile tile) {
-        gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
-        gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
-        gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
+    private void placeHexesOnTopOfOtherHexes(Tile tile) {
+        putInMap(tile);
+        increaseLevelOfHexesOfATile();
     }
 
     private boolean firstTileInTheGame(Tile tile) {
@@ -91,24 +87,10 @@ public class TilePlacer extends GameBoard{
         return atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge();
     }
 
-    private Boolean canNuke(){
-        return tileCompletelyCoversHexes() &&
-                tileIsNotPerfectlyOnTopOfAnotherTile();
-    }
-
-    private boolean hexesAreTaken(){
-        return gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
-                gameBoard.containsKey(mainTerrainCoordinate) &&
-                gameBoard.containsKey(rightOfMainTerrainCoordinate);
-    }
-
-    private boolean hexesAreAtTheSameLevel(){
-        return hexesAreTaken() &&
-                gameBoard.get(leftOfMainTerrainCoordinate).getLevel() ==
-                gameBoard.get(mainTerrainCoordinate).getLevel() &&
-                gameBoard.get(mainTerrainCoordinate).getLevel() ==
-                gameBoard.get(rightOfMainTerrainCoordinate).getLevel();
-
+    private boolean tileIsPlacedOnLevelOne(){
+        return !gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
+                !gameBoard.containsKey(mainTerrainCoordinate) &&
+                !gameBoard.containsKey(rightOfMainTerrainCoordinate);
     }
 
     private boolean tileCompletelyCoversHexes() {
@@ -117,16 +99,43 @@ public class TilePlacer extends GameBoard{
     }
 
     private Boolean tileIsNotPerfectlyOnTopOfAnotherTile(){
-        return atLeastOneHexIsOnTopAnotherHexWithDifferentTileIDAsTheOthers();
+        return hexesArePartOfAtLeastTwoDifferentTiles();
     }
 
-    private Boolean atLeastOneHexIsOnTopAnotherHexWithDifferentTileIDAsTheOthers(){
+    private void putInMap(Tile tile) {
+        gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
+        gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
+        gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
+    }
+
+    private void increaseLevelOfHexesOfATile() {
+        gameBoard.get(leftOfMainTerrainCoordinate).increaseLevel();
+        gameBoard.get(mainTerrainCoordinate).increaseLevel();
+        gameBoard.get(rightOfMainTerrainCoordinate).increaseLevel();
+    }
+
+    private boolean hexesAreAtTheSameLevel(){
+        return hexesOfTileAreOccupied() &&
+                gameBoard.get(leftOfMainTerrainCoordinate).getLevel() ==
+                        gameBoard.get(mainTerrainCoordinate).getLevel() &&
+                gameBoard.get(mainTerrainCoordinate).getLevel() ==
+                        gameBoard.get(rightOfMainTerrainCoordinate).getLevel();
+
+    }
+
+    private Boolean hexesArePartOfAtLeastTwoDifferentTiles(){
         return gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
                 gameBoard.get(mainTerrainCoordinate).getTileID() ||
                 gameBoard.get(mainTerrainCoordinate).getTileID() !=
                 gameBoard.get(rightOfMainTerrainCoordinate).getTileID() ||
                 gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
                 gameBoard.get(rightOfMainTerrainCoordinate).getTileID();
+    }
+
+    private boolean hexesOfTileAreOccupied(){
+        return gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
+                gameBoard.containsKey(mainTerrainCoordinate) &&
+                gameBoard.containsKey(rightOfMainTerrainCoordinate);
     }
 
     private Boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge(){
@@ -163,16 +172,6 @@ public class TilePlacer extends GameBoard{
         counterClockwiseCoordinatesAroundCoordinate[4] = overAndToTheLeftOfMain(terrainCoordinate);
         counterClockwiseCoordinatesAroundCoordinate[5] = toTheLeftOfMain(terrainCoordinate);
     }
-
-//    private Boolean hexesAreAdjacent(Coordinate c1, Coordinate c2){
-//        return c2 == belowAndToTheLeftOfMain(c1) ||
-//                c2 == belowAndToTheRightOfMain(c1) ||
-//                c2 == toTheRightOfMain(c1) ||
-//                c2 == overAndToTheRightOfMain(c1) ||
-//                c2 == overAndToTheLeftOfMain(c1) ||
-//                c2 == toTheLeftOfMain(c1);
-//    }
-
 
     private Coordinate belowAndToTheLeftOfMain(Coordinate terrainCoordinate){
         updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
