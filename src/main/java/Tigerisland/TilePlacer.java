@@ -65,7 +65,8 @@ public class TilePlacer extends GameBoard{
 
     private Boolean canNuke(){
         return tileCompletelyCoversHexes() &&
-                tileIsNotPerfectlyOnTopOfAnotherTile();
+                tileIsNotPerfectlyOnTopOfAnotherTile() &&
+                mainTerrainIsOnTopOfAnotherMainTerrain();
     }
 
     private void placeHexesOfTileInMap(Tile tile) {
@@ -96,6 +97,10 @@ public class TilePlacer extends GameBoard{
     private boolean tileCompletelyCoversHexes() {
         return hexesAreAtTheSameLevel();
 
+    }
+
+    private boolean mainTerrainIsOnTopOfAnotherMainTerrain() {
+        return gameBoard.get(mainTerrainCoordinate).getTerrainType() == TerrainType.Volcano;
     }
 
     private Boolean tileIsNotPerfectlyOnTopOfAnotherTile(){

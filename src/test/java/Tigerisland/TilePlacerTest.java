@@ -106,22 +106,7 @@ public class TilePlacerTest {
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(2,0)));
     }
 
-    @Test
-    public void testNukeOverwritesTerrainTypeOfHexes() throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
-                new Coordinate(0,0), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 3),
-                new Coordinate(1,0), Orientation.FromBottom);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
-                TerrainType.Rocky);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,0)).getTerrainType(),
-                TerrainType.Volcano);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,1)).getTerrainType(),
-                TerrainType.Grasslands);
-    }
-
+    //TODO tile contains a Volcano
     @Test
     public void testNukeIncreasesHexLevel() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
@@ -129,10 +114,38 @@ public class TilePlacerTest {
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 3),
-                new Coordinate(1,0), Orientation.FromBottom);
+                new Coordinate(0,0), Orientation.FromBottomRight);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(),2);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getLevel(),2);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(1,0)).getLevel(),2);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,1)).getLevel(),2);
+    }
+
+    @Test
+    public void testNukeOverwritesTerrainTypeOfHexes() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 3),
+                new Coordinate(0,0), Orientation.FromBottomRight);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
+                TerrainType.Rocky);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getTerrainType(),
+                TerrainType.Volcano);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,0)).getTerrainType(),
+                TerrainType.Grasslands);
+    }
+
+    @Test
+    public void testVolcanoIsPlacedOnTopOfAnotherVolcano() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(1,1), Orientation.FromTop);
+        map.placeTile(new Tile(TerrainType.Jungle, TerrainType.Lake, 3),
+                new Coordinate(1,0), Orientation.FromBottom);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,0)).getTerrainType(),
+                TerrainType.Rocky);
     }
 
     @Test
