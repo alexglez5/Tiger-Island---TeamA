@@ -5,18 +5,18 @@ package Tigerisland;
  */
 public class Settlement {
     private Player Player;  //what player settlement belongs to
-    private int settlementNumber;   //what settlement it is
+    private int settlementID;   //what settlement it is
     private int size;   //size of settlement
 
     public void Settlement(Player Player, int settlementNumber, int size){
         this.Player = Player;
-        this.settlementNumber = settlementNumber;
+        this.settlementID = settlementNumber;
         this.size = size;
     }
 
     public Player getPlayer(){return this.Player;}
 
-    public int getSettlementNumber(){return this.settlementNumber;}
+    public int getSettlementID(){return this.settlementID;}
 
     public int getsize(){return this.size;}
 }

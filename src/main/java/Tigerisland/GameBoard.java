@@ -9,10 +9,16 @@ import java.util.Map;
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
     private TilePlacer placer;
+    private Builder builder;
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
         placer = new TilePlacer();
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
+    }
+
+    public void foundNewSettlement(Coordinate coordinate){
+        builder = new Builder();
+        builder.foundNewSettlement(coordinate);
     }
 
     //TODO add acceptance test for placeTile on different levels
