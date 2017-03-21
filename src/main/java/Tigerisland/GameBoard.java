@@ -16,5 +16,5 @@ public class GameBoard {
     }
 
     //TODO add acceptance test for placeTile on different levels
-    //TODO
+    //TODO settlement
 }
