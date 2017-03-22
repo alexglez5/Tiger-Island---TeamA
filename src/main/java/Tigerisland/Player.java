@@ -31,4 +31,6 @@ public class Player {
     public void grantTile(Tile currentTile) {this.currentTile = currentTile;}
 
     public void removeCurrentTile() {this.currentTile = null;}
+
+    public Tile getCurrentTile(){return this.currentTile;}
 }
