@@ -20,10 +20,9 @@ public class GameBoard {
         builder.foundNewSettlement(coordinate);
     }
 
-    public void expandASettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType){
-        builder.expandASettlement(coordinateOfAnyHexInSettlement, terrainType);
+    public void expandSettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType){
+        builder.expandSettlement(coordinateOfAnyHexInSettlement, terrainType);
     }
 
     //TODO add acceptance test for placeTile on different levels
-    //TODO settlement
 }

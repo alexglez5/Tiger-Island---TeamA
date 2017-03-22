@@ -17,10 +17,6 @@ public class Settlement {
         this.size = size;
     }
 
-    //some new code
-//    private Map<Coordinate, Hex> settlement;
-//    public
-
     public Player getPlayer(){return this.Player;}
 
     public int getSettlementID(){return this.settlementID;}
