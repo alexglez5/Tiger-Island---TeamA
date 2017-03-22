@@ -9,7 +9,7 @@ import java.lang.Error;
 /**
  * Created by NotKali on 3/22/2017.
  */
-public class StartOfTurnTilePlacement {
+public class StartOfTurnTilePlacementStepdefTest {
     App app = new App();
 
     @Given("^the player is given a tile with terrains \"([^\"]*)\" and \"([^\"]*)\"$")

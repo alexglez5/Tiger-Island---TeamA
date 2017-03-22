@@ -12,7 +12,7 @@ import java.lang.Error;
 
 
 
-public class FirstTilePlacementStepsATest {
+public class FirstTilePlacementStepdefTest {
 
     App app = new App();
 
