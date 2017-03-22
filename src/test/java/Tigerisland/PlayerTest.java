@@ -25,9 +25,12 @@ public class PlayerTest {
     }
     @Test
     public void placedVilagers(){
-        System.out.println(player.getNumberOfVilagersLeft());
         player.updatePlacedVilagers(5);
-        System.out.println(player.getNumberOfVilagersLeft());
         Assert.assertTrue(player.getNumberOfVilagersLeft() == 15);
+    }
+    @Test
+    public void placedTotoro(){
+        player.updatePlacedTotoro();
+        Assert.assertTrue((player.getNumberOfTotoroLeft() == 2));
     }
 }

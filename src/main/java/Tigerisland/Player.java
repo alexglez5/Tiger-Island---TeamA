@@ -24,9 +24,9 @@ public class Player {
 
     public void updatePlacedVilagers(int numberOfVilagersPlaced){this.numberOfVilagersLeft -= numberOfVilagersPlaced;}
 
-    public void updatePlacedTotoro(int numberOfTotoroPlaced){this.numberOfTotoroLeft -= numberOfTotoroPlaced;}
+    public void updatePlacedTotoro(){this.numberOfTotoroLeft -= 1;}
 
-    public void updateTigersPlaced(int numberOfTigerPlaced){this.numberOfTigersLeft -= numberOfTigerPlaced;}
+    public void updateTigersPlaced(){this.numberOfTigersLeft -= 1;}
 
     public void grantTile(Tile currentTile) {this.currentTile = currentTile;}
 
