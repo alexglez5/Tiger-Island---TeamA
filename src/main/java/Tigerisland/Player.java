@@ -4,17 +4,13 @@ package Tigerisland;
  * Created by Reed on 3/20/2017.
  */
 public class Player {
-    Tile currentTile;
-    private int points;
-    int numberOfVilagersLeft;
-    int numberOfTotoroLeft;
-    int numberOfTigersLeft;
+    private Tile currentTile;
+    private int points = 0;
+    private int numberOfVilagersLeft = 20;
+    private int numberOfTotoroLeft = 3;
+    private int numberOfTigersLeft = 2;
 
-    public void Player(){
-        this.numberOfVilagersLeft = 20;
-        this.numberOfTotoroLeft = 3;
-        this.numberOfTigersLeft = 2;
-    }
+    public void Player(){}
 
     public int getPoints(){return this.points;}
 
