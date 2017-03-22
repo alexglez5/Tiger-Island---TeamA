@@ -11,13 +11,13 @@ Feature: Tile Placement
     And the tile volcano hex should be placed at (0,0)
 
   Scenario: It is the start of a player's turn
-    Given the player is given a random tile
-    When the player places a tile with any Orientation
-    And the tile will have no connections to any other tiles
+    Given the player is given a tile with terrains "Lakes" and "Rocky"
+    When the player places a tile with next tile ID 2 and orientation "FromTop"
+    And the tile will have 0 connections to any other tiles
     Then the gameboard should reject the tile
 
   Scenario: It is the start of a player's turn
-    Given the player is given a random tile
+    Given the player is given a tile with terrains "Lakes" and "Rocky"
     When the player places a tile with any Orientation
     And the tile will have more than zero connections to any other tile
     Then the gameboard should reject the tile
