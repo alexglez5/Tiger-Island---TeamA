@@ -25,7 +25,7 @@ public class App {
         isBoardEmpty = false;
         newTile.setTileID(ID);
         map.placeTile(
-                player1.currentTile,
+                player1.getCurrentTile(),
                 new Coordinate(xcoordinate,ycoordinate),
                 checkOrientation(orientaiton)
         );
