@@ -4,6 +4,7 @@ package Tigerisland;
  * Created by Reed on 3/20/2017.
  */
 public class Player {
+    Tile currentTile;
     private int points;
     int numberOfVilagersLeft;
     int numberOfTotoroLeft;
@@ -30,4 +31,8 @@ public class Player {
     public void updatePlacedTotoro(int numberOfTotoroPlaced){this.numberOfTotoroLeft -= numberOfTotoroPlaced;}
 
     public void updateTigersPlaced(int numberOfTigerPlaced){this.numberOfTigersLeft -= numberOfTigerPlaced;}
+
+    public void grantTile(Tile currentTile) {this.currentTile = currentTile;}
+
+    public void removeCurrentTile() {this.currentTile = null;}
 }
