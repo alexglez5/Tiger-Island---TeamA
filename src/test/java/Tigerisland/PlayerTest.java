@@ -1,15 +1,12 @@
 package Tigerisland;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Created by Reed on 3/22/2017.
  */
 public class PlayerTest {
-    Player player = new Player();
+    static Player player = new Player();
     @Test
     public void getPoints() throws Exception{
         Assert.assertTrue(player.getPoints() == 0);
@@ -31,7 +28,6 @@ public class PlayerTest {
     }
     @Test
     public void placedTiger() {
-        System.out.println(player.getNumberOfVillagersLeft());
         player.updatePlacedTiger();
         Assert.assertTrue(player.getNumberOfTigersLeft() == 1);
     }
