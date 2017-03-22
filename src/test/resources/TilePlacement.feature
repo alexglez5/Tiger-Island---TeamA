@@ -10,15 +10,15 @@ Feature: Tile Placement
     And the tile right hex should be placed at (0,1)
     And the tile volcano hex should be placed at (0,0)
 
-  Scenario: It is the start of a player's turn
+  Scenario: It is the start of a player's turns on turn 2
     Given the player is given a tile with terrains "Lakes" and "Rocky"
-    When the player places the tile with next tile ID 2 and orientation "FromTop"
-    And the tile will have 0 connections to any other tiles
-    Then the gameboard should reject the tile
+    When the player places the tile with next tile ID 2 and orientation "FromTop" at (2,0)
+    And the tile at (2,0) will have no connections to any other tiles
+    Then the gameboard should reject the tile at (2, 0)
 
-  Scenario: It is the start of a player's turn
+  Scenario: It is the start of a player's turn on turn 2
     Given the player is given a tile with terrains "Lakes" and "Rocky"
-    When the player places the tile with next tile ID 2 and orientaiton "FromTop"
+    When the player places the tile with next tile ID 2 and orientaiton "FromTop" at (1,0)
     And the tile will have more than zero connections to any other tile
     Then the gameboard should accept the tile
 
