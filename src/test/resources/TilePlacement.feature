@@ -12,15 +12,15 @@ Feature: Tile Placement
 
   Scenario: It is the start of a player's turn
     Given the player is given a tile with terrains "Lakes" and "Rocky"
-    When the player places a tile with next tile ID 2 and orientation "FromTop"
+    When the player places the tile with next tile ID 2 and orientation "FromTop"
     And the tile will have 0 connections to any other tiles
     Then the gameboard should reject the tile
 
   Scenario: It is the start of a player's turn
     Given the player is given a tile with terrains "Lakes" and "Rocky"
-    When the player places a tile with any Orientation
+    When the player places the tile with next tile ID 2 and orientaiton "FromTop"
     And the tile will have more than zero connections to any other tile
-    Then the gameboard should reject the tile
+    Then the gameboard should accept the tile
 
     #not coded yet
   Scenario: A Settlement was placed at a chosen hex
