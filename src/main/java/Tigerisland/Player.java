@@ -6,7 +6,7 @@ package Tigerisland;
 public class Player {
     private Tile currentTile;
     private int points = 0;
-    private int numberOfVilagersLeft = 20;
+    private int numberOfVillagersLeft = 20;
     private int numberOfTotoroLeft = 3;
     private int numberOfTigersLeft = 2;
 
@@ -16,17 +16,17 @@ public class Player {
 
     public void addPlayerPoints(int pointsAdded){this.points += pointsAdded;}
 
-    public int getNumberOfVilagersLeft(){ return this.numberOfVilagersLeft;}
+    public int getNumberOfVillagersLeft(){ return this.numberOfVillagersLeft;}
 
     public int getNumberOfTotoroLeft(){return this.numberOfTotoroLeft;}
 
     public int getNumberOfTigersLeft(){return this.numberOfTigersLeft;}
 
-    public void updatePlacedVilagers(int numberOfVilagersPlaced){this.numberOfVilagersLeft -= numberOfVilagersPlaced;}
+    public void updatePlacedVillagers(int numberOfVillagersPlaced){this.numberOfVillagersLeft -= numberOfVillagersPlaced;}
 
     public void updatePlacedTotoro(){this.numberOfTotoroLeft -= 1;}
 
-    public void updateTigersPlaced(){this.numberOfTigersLeft -= 1;}
+    public void updatePlacedTiger(){this.numberOfTigersLeft -= 1;}
 
     public void grantTile(Tile currentTile) {this.currentTile = currentTile;}
 
