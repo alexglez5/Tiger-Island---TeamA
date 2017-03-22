@@ -1,5 +1,6 @@
 package Tigerisland;
 
+import cucumber.api.java.en.When;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
