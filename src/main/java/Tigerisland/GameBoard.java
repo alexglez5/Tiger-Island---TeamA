@@ -24,5 +24,9 @@ public class GameBoard {
         builder.expandSettlement(coordinateOfAnyHexInSettlement, terrainType);
     }
 
+    public void placeTotoro(Coordinate coordinate){
+        builder.placeTotoro(coordinate);
+    }
+
     //TODO add acceptance test for placeTile on different levels
 }
