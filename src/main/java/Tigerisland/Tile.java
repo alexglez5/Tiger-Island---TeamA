@@ -8,6 +8,7 @@ public class Tile {
     private Hex leftOfMainTerrain;
     private final Hex mainTerrain = new Hex(TerrainType.Volcano, tileID);
     private Hex rightOfMainTerrain;
+    private Orientation orientation;
 
     public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType, int tileID){
         leftOfMainTerrain = new Hex(leftTerrainType, tileID);
@@ -30,4 +31,5 @@ public class Tile {
     public void setTileID(int tileID) {this.tileID = tileID;    }
 
     public int getTileID() {return tileID;     }
+
 }
