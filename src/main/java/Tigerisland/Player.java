@@ -9,7 +9,7 @@ public class Player {
     int numberOfTotoroLeft;
     int numberOfTigersLeft;
 
-    public void Player(String playerType){
+    public void Player(){
         this.numberOfVilagersLeft = 20;
         this.numberOfTotoroLeft = 3;
         this.numberOfTigersLeft = 2;
@@ -19,27 +19,15 @@ public class Player {
 
     public void addPlayerPoints(int pointsAdded){this.points += pointsAdded;}
 
-    public int getNumberOfVilagersLeft(){
-        return this.numberOfVilagersLeft;
-    }
+    public int getNumberOfVilagersLeft(){ return this.numberOfVilagersLeft;}
 
-    public int getNumberOfTotoroLeft(){
-        return this.numberOfTotoroLeft;
-    }
+    public int getNumberOfTotoroLeft(){return this.numberOfTotoroLeft;}
 
-    public int getNumberOfTigersLeft(){
-        return this.numberOfTigersLeft;
-    }
+    public int getNumberOfTigersLeft(){return this.numberOfTigersLeft;}
 
-    public void updatePlacedVilagers(int numberOfVilagersPlaced){
-        this.numberOfVilagersLeft -= numberOfVilagersPlaced;
-    }
+    public void updatePlacedVilagers(int numberOfVilagersPlaced){this.numberOfVilagersLeft -= numberOfVilagersPlaced;}
 
-    public void updatePlacedTotoro(int numberOfTotoroPlaced){
-        this.numberOfTotoroLeft -= numberOfTotoroPlaced;
-    }
+    public void updatePlacedTotoro(int numberOfTotoroPlaced){this.numberOfTotoroLeft -= numberOfTotoroPlaced;}
 
-    public void updateTigersPlaced(int numberOfTigerPlaced){
-        this.numberOfTigersLeft -= numberOfTigerPlaced;
-    }
+    public void updateTigersPlaced(int numberOfTigerPlaced){this.numberOfTigersLeft -= numberOfTigerPlaced;}
 }
