@@ -99,7 +99,7 @@ public class BuilderTest {
         Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
     }
 
-
+    //TODO test there is not other Totoro in settlement
     //TODO test settlements are properly merged
 
     @After
