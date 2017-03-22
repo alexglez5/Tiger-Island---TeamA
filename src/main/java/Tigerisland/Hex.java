@@ -5,8 +5,9 @@ package Tigerisland;
  */
 public class Hex {
     private TerrainType terrainType;
-    private boolean hasVillager;
+    private boolean hasVillagers;
     private boolean hasTotoro;
+    private int settlementID;
     private int tileID;
     private int level;
 
@@ -16,8 +17,8 @@ public class Hex {
         level = 1;
     }
 
-    public void placeVillager(){
-        hasVillager = true;
+    public void placeVillagers(){
+        hasVillagers = true;
     }
 
     public void placeTotoro(){
@@ -25,11 +26,19 @@ public class Hex {
     }
 
     public boolean hasVillager(){
-        return hasVillager;
+        return hasVillagers;
     }
 
     public boolean hasTotoro(){
         return hasTotoro;
+    }
+
+    public int getSettlementID(){
+        return settlementID;
+    }
+
+    public void setSettlementID(int settlementID){
+        this.settlementID = settlementID;
     }
 
     public TerrainType getTerrainType(){

@@ -8,17 +8,20 @@ import java.util.Map;
  */
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
-    private TilePlacer placer;
-    private Builder builder;
+    private static TilePlacer placer = new TilePlacer();
+    private static Builder builder = new Builder();
+
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
-        placer = new TilePlacer();
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
     }
 
     public void foundNewSettlement(Coordinate coordinate){
-        builder = new Builder();
         builder.foundNewSettlement(coordinate);
+    }
+
+    public void expandASettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType){
+        builder.expandASettlement(coordinateOfAnyHexInSettlement, terrainType);
     }
 
     //TODO add acceptance test for placeTile on different levels
