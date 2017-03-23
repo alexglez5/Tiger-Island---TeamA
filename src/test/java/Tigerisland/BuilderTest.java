@@ -87,7 +87,8 @@ public class BuilderTest {
 
         map.foundNewSettlement(new Coordinate(1,1));
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-        map.placeTotoro(new Coordinate(-1,3));
+        int settlementID = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
+        map.placeTotoro(new Coordinate(-1,3), settlementID);
 
         Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
         Assert.assertTrue(map.gameBoard.get(new Coordinate(1,1)).hasVillager());
@@ -113,7 +114,8 @@ public class BuilderTest {
 
         map.foundNewSettlement(new Coordinate(1,1));
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-        map.placeTotoro(new Coordinate(-1,3));
+        int settlementID = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
+        map.placeTotoro(new Coordinate(-1,3), settlementID);
 
         Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
         Assert.assertTrue(map.gameBoard.get(new Coordinate(1,1)).hasVillager());
@@ -140,17 +142,17 @@ public class BuilderTest {
         map.foundNewSettlement(new Coordinate(1,1));
         map.foundNewSettlement(new Coordinate(-2,3));
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-        map.placeTotoro(new Coordinate(-1,3));
+        int settlementID = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
+        map.placeTotoro(new Coordinate(-1,3), settlementID);
 
         Assert.assertTrue(map.gameBoard.get(new Coordinate(-2 ,3)).hasVillager());
 
-        Assert.assertEquals(map.gameBoard.get(new Coordinate( 0,2)).getSettlementID(),
+        Assert.assertEquals(map.gameBoard.get(new Coordinate( -2,3)).getSettlementID(),
                 map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());
         Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
     }
 
-    
-    //TODO when you found new settlement you can't expand around you
+
     //TODO test there is not other Totoro in settlement
     //TODO test settlements are properly merged
 
@@ -159,3 +161,4 @@ public class BuilderTest {
         map.gameBoard.clear();
     }
 }
+

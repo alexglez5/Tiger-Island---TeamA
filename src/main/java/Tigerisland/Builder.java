@@ -12,7 +12,7 @@ public class Builder extends ActionHelper {
     private Set<Coordinate> visitedCoordinates;
     private int settlementSize;
     private int minimumSizeOfSettlementAdjacentToTotoro;
-    private TreeSet<Integer> uniqueIDsOfSettlementsOnGameBoard;
+    private TreeSet<Integer> uniqueIDsOfSettlementsAroundCoordinate;
     private TreeSet<Integer> idsOfsettlementsToBeMerged;
     private int amountOfSettlements;
 
@@ -32,20 +32,38 @@ public class Builder extends ActionHelper {
             expandSettlement();
     }
 
-    public void placeTotoro(Coordinate coordinate){
-        processCoordinate(coordinate);
-        //getIDFromAdjacentSettlement();
-        getIdFromAnyOfTheSettlementsAroundCoordinate();
-        mergeSettlementsThatCanBeMerged();
+    public void placeTotoro(Coordinate coordinate, int settlementID){
+        processCoordinate(coordinate, settlementID);
         if(totoroCanBePlaced())
             placeTotoroAtGivenCoordinate();
+
+        mergeSettlementsThatCanBeMerged(coordinate);
+    }
+
+    private void mergeSettlementsThatCanBeMerged(Coordinate coordinate) {
+        uniqueIDsOfSettlementsAroundCoordinate = new TreeSet<>();
+        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        idsOfsettlementsToBeMerged = new TreeSet<>();
+        for(Coordinate tempCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
+            if (gameBoard.containsKey(tempCoordinate)
+                    && gameBoard.get(tempCoordinate).hasVillager()
+                    && gameBoard.get(tempCoordinate).getSettlementID() != settlementID) {
+                idsOfsettlementsToBeMerged.add(gameBoard.get(tempCoordinate).getSettlementID());
+            }
+        }
+
+        for (Coordinate tempCoordinate : gameBoard.keySet()) {
+            if (gameBoard.containsKey(tempCoordinate)
+                    && idsOfsettlementsToBeMerged.contains(gameBoard.get(tempCoordinate).getSettlementID())) {
+                gameBoard.get(tempCoordinate).setSettlementID(settlementID);
+            }
+        }
     }
 
     private boolean totoroCanBePlaced() {
         return terrainIsNotAVolcano()
                 && terrainIsNotTaken()
-                && isAdjacentToSettlementOfAtLeastSizeFive()
-                && thereIsNoOtherTotoroInSettlement();
+                && isAdjacentToSettlementOfAtLeastSizeFiveThatDoesNotContainATotoro();
     }
 
     private void placeTotoroAtGivenCoordinate() {
@@ -53,7 +71,7 @@ public class Builder extends ActionHelper {
         gameBoard.get(coordinate).setSettlementID(settlementID);
     }
 
-    private boolean isAdjacentToSettlementOfAtLeastSizeFive() {
+    private boolean isAdjacentToSettlementOfAtLeastSizeFiveThatDoesNotContainATotoro() {
         settlementSize = 0;
         minimumSizeOfSettlementAdjacentToTotoro = 5;
         for(Coordinate coordinate : gameBoard.keySet()){
@@ -66,13 +84,13 @@ public class Builder extends ActionHelper {
         return false;
     }
 
-    private boolean thereIsNoOtherTotoroInSettlement() {
-        for(Coordinate tempCoordinate : gameBoard.keySet()){
-            if(ifCoordinateIsInSettlementAndHasATotoro(tempCoordinate))
-                return false;
-        }
-        return true;
-    }
+//    private boolean thereIsNoOtherTotoroInSettlement() {
+//        for(Coordinate tempCoordinate : gameBoard.keySet()){
+//            if(ifCoordinateIsInSettlementAndHasATotoro(tempCoordinate))
+//                return false;
+//        }
+//        return true;
+//    }
 
     private void ifCoordinateBelongsToSettlemnetIncreaseSettlementSize(Coordinate coordinate) {
         if(gameBoard.containsKey(coordinate) && gameBoard.get(coordinate).getSettlementID() == settlementID)
@@ -133,58 +151,58 @@ public class Builder extends ActionHelper {
 
 
 
-    private void getIdFromAnyOfTheSettlementsAroundCoordinate() {
-        uniqueIDsOfSettlementsOnGameBoard = new TreeSet<>();
-        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for(Coordinate tempCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
-            getIdOfSettlementsAdjacentToCoordinate(tempCoordinate);
-        }
-    }
+//    private void getIdFromAnyOfTheSettlementsAroundCoordinate() {
+//        uniqueIDsOfSettlementsAroundCoordinate = new TreeSet<>();
+//        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+//        for(Coordinate tempCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
+//            getIdOfSettlementsAdjacentToCoordinate(tempCoordinate);
+//        }
+//    }
 
-    private void mergeSettlementsThatCanBeMerged() {
-        idsOfsettlementsToBeMerged = new TreeSet<>();
-        amountOfSettlements = 0;
-        for(int currentSettlementID : uniqueIDsOfSettlementsOnGameBoard)
-            getIdOfFirstSettlementAndGetIDsOfSettlementsThatCanBeMerged(currentSettlementID);
+//    private void mergeSettlementsThatCanBeMerged() {
+//        idsOfsettlementsToBeMerged = new TreeSet<>();
+//        amountOfSettlements = 0;
+//        for(int currentSettlementID : uniqueIDsOfSettlementsAroundCoordinate)
+//            getIdOfFirstSettlementAndGetIDsOfSettlementsThatCanBeMerged(currentSettlementID);
+//
+//        ifThereIsMoreThanOneSettlementMergeThem();
+//    }
 
-        ifThereIsMoreThanOneSettlementMergeThem();
-    }
+//    private void getIdOfSettlementsAdjacentToCoordinate(Coordinate tempCoordinate) {
+//        if (coordinateHasVillagerOnTheSameTerrainType(tempCoordinate)){
+//            if (!uniqueIDsOfSettlementsAroundCoordinate.contains(tempCoordinate.hashCode()))
+//                uniqueIDsOfSettlementsAroundCoordinate.add(tempCoordinate.hashCode());
+//        }
+//    }
 
-    private void getIdOfSettlementsAdjacentToCoordinate(Coordinate tempCoordinate) {
-        if (coordinateHasVillagerOnTheSameTerrainType(tempCoordinate)){
-            if (!uniqueIDsOfSettlementsOnGameBoard.contains(tempCoordinate.hashCode()))
-                uniqueIDsOfSettlementsOnGameBoard.add(tempCoordinate.hashCode());
-        }
-    }
+//    private void getIdOfFirstSettlementAndGetIDsOfSettlementsThatCanBeMerged(int currentSettlementID) {
+//        if(amountOfSettlements == 0)
+//            this.settlementID = currentSettlementID;
+//        else {
+//            idsOfsettlementsToBeMerged.add(currentSettlementID);
+//            amountOfSettlements++;
+//        }
+//    }
 
-    private void getIdOfFirstSettlementAndGetIDsOfSettlementsThatCanBeMerged(int currentSettlementID) {
-        if(amountOfSettlements == 0)
-            this.settlementID = currentSettlementID;
-        else {
-            idsOfsettlementsToBeMerged.add(currentSettlementID);
-            amountOfSettlements++;
-        }
-    }
+//    private void ifThereIsMoreThanOneSettlementMergeThem() {
+//        if(amountOfSettlements > 0)
+//            mergeSettlement(idsOfsettlementsToBeMerged);
+//    }
 
-    private void ifThereIsMoreThanOneSettlementMergeThem() {
-        if(amountOfSettlements > 0)
-            mergeSettlement(idsOfsettlementsToBeMerged);
-    }
+//    private boolean coordinateHasVillagerOnTheSameTerrainType(Coordinate tempCoordinate) {
+//        return gameBoard.containsKey(tempCoordinate)
+//                && gameBoard.get(tempCoordinate).hasVillager()
+//                && gameBoard.get(tempCoordinate).getTerrainType() == terrainType;
+//    }
 
-    private boolean coordinateHasVillagerOnTheSameTerrainType(Coordinate tempCoordinate) {
-        return gameBoard.containsKey(tempCoordinate)
-                && gameBoard.get(tempCoordinate).hasVillager()
-                && gameBoard.get(tempCoordinate).getTerrainType() == terrainType;
-    }
-
-    private void mergeSettlement(TreeSet<Integer> idsOfsettlementsToBeMerged) {
-        for(Coordinate tempCoordinate : gameBoard.keySet()){
-            if(gameBoard.containsKey(tempCoordinate)
-                    && idsOfsettlementsToBeMerged.contains(gameBoard.get(tempCoordinate).getSettlementID())){
-                gameBoard.get(tempCoordinate).setSettlementID(settlementID);
-            }
-        }
-    }
+//    private void mergeSettlement(TreeSet<Integer> idsOfsettlementsToBeMerged) {
+//        for(Coordinate tempCoordinate : gameBoard.keySet()){
+//            if(gameBoard.containsKey(tempCoordinate)
+//                    && idsOfsettlementsToBeMerged.contains(gameBoard.get(tempCoordinate).getSettlementID())){
+//                gameBoard.get(tempCoordinate).setSettlementID(settlementID);
+//            }
+//        }
+//    }
 
     private boolean settlementCanBeFound() {
         return terrainIsNotTaken()
@@ -200,9 +218,10 @@ public class Builder extends ActionHelper {
         return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
     }
 
-    private void processCoordinate(Coordinate coordinate) {
+    private void processCoordinate(Coordinate coordinate, int settlementID) {
         this.coordinate = coordinate;
-        this.terrainType = gameBoard.get(coordinate).getTerrainType();
+        this.settlementID = settlementID;
+//        this.terrainType = gameBoard.get(coordinate).getTerrainType();
     }
 
     private boolean terrainIsInLevelOne(){
