@@ -1,4 +1,8 @@
 package Tigerisland;
+
+import java.util.InputMismatchException;
+import java.util.TreeSet;
+
 /**
  * Created by Alexander Gonzalez on 3/19/2017.
  */
@@ -86,9 +90,11 @@ public class TilePlacer extends ActionHelper{
     }
 
     private Boolean canNuke(){
-        return tileCompletelyCoversHexes() &&
-                tileIsNotPerfectlyOnTopOfAnotherTile() &&
-                mainTerrainIsOnTopOfAnotherMainTerrain();
+        return tileCompletelyCoversHexes()
+                && tileIsNotPlacedOnTopOfTotoroOrTiger()
+                && tileIsNotPerfectlyOnTopOfAnotherTile()
+                && mainTerrainIsOnTopOfAnotherMainTerrain()
+                && tileDoesNotCompletelyWipeOutASettlement();
     }
 
     private void placeHexesOnTopOfOtherHexes(Tile tile) {
@@ -105,12 +111,45 @@ public class TilePlacer extends ActionHelper{
 
     }
 
+    private boolean tileIsNotPlacedOnTopOfTotoroOrTiger(){
+        return coordinateDoesNotContainTotoroOrTiger(leftOfMainTerrainCoordinate)
+                && coordinateDoesNotContainTotoroOrTiger(mainTerrainCoordinate)
+                && coordinateDoesNotContainTotoroOrTiger(rightOfMainTerrainCoordinate);
+    }
+
     private Boolean tileIsNotPerfectlyOnTopOfAnotherTile(){
         return hexesArePartOfAtLeastTwoDifferentTiles();
     }
 
     private boolean mainTerrainIsOnTopOfAnotherMainTerrain() {
         return gameBoard.get(mainTerrainCoordinate).getTerrainType() == TerrainType.Volcano;
+    }
+
+    private boolean tileDoesNotCompletelyWipeOutASettlement() {
+        TreeSet<Integer> settlementIdsOfHexesInTile = new TreeSet<>();
+        if(gameBoard.containsKey(leftOfMainTerrainCoordinate) && gameBoard.get(leftOfMainTerrainCoordinate).hasVillager())
+            settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
+        if(gameBoard.containsKey(mainTerrainCoordinate) && gameBoard.get(mainTerrainCoordinate).hasVillager())
+            settlementIdsOfHexesInTile.add(gameBoard.get(mainTerrainCoordinate).getSettlementID());
+        if(gameBoard.containsKey(rightOfMainTerrainCoordinate) && gameBoard.get(rightOfMainTerrainCoordinate).hasVillager())
+            settlementIdsOfHexesInTile.add(gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID());
+
+        if(settlementIdsOfHexesInTile.size() == 0)
+            return true;
+
+        for(int idOfSettlementThanMightBeWipeOut : settlementIdsOfHexesInTile) {
+            int sizeLeftOfCurrentSettlement = 0;
+            for (Coordinate tempCoordinate : gameBoard.keySet()) {
+                if (gameBoard.get(tempCoordinate).hasVillager()
+                        && gameBoard.get(tempCoordinate).getSettlementID() == idOfSettlementThanMightBeWipeOut
+                        && isNotOneOfCoordinatesThatWillBeWipedOut(tempCoordinate)) {
+                    sizeLeftOfCurrentSettlement++;
+                }
+            }
+            if(sizeLeftOfCurrentSettlement < 1)
+                return false;
+        }
+        return true;
     }
 
     private void increaseLevelOfHexesOfATile() {
@@ -141,6 +180,12 @@ public class TilePlacer extends ActionHelper{
 
     }
 
+    private boolean coordinateDoesNotContainTotoroOrTiger(Coordinate terrainCoordinate){
+        return !(gameBoard.containsKey(terrainCoordinate)
+                && (gameBoard.get(terrainCoordinate).hasTotoro() || gameBoard.get(terrainCoordinate).hasTiger()));
+
+    }
+
     private Boolean hexesArePartOfAtLeastTwoDifferentTiles(){
         return gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
                 gameBoard.get(mainTerrainCoordinate).getTileID() ||
@@ -148,6 +193,12 @@ public class TilePlacer extends ActionHelper{
                 gameBoard.get(rightOfMainTerrainCoordinate).getTileID() ||
                 gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
                 gameBoard.get(rightOfMainTerrainCoordinate).getTileID();
+    }
+
+    private boolean isNotOneOfCoordinatesThatWillBeWipedOut(Coordinate tempCoordinate) {
+        return tempCoordinate == leftOfMainTerrainCoordinate
+                || tempCoordinate == mainTerrainCoordinate
+                || tempCoordinate == rightOfMainTerrainCoordinate;
     }
 
     private boolean AtLeasOneAdjacentCoordinateContainsAHex() {

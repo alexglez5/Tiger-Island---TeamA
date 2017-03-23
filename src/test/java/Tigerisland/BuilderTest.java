@@ -145,7 +145,6 @@ public class BuilderTest {
         int settlementID = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
         map.placeTotoro(new Coordinate(-1,3), settlementID);
 
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(-2 ,3)).hasVillager());
 
         Assert.assertEquals(map.gameBoard.get(new Coordinate( -2,3)).getSettlementID(),
                 map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());

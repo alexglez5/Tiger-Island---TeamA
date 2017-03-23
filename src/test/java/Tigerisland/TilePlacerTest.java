@@ -173,6 +173,74 @@ public class TilePlacerTest {
                 TerrainType.Lake);
     }
 
+    @Test
+    public void testNukingIsNotDoneIfItReducesAnySettlementSizeToZero() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.foundNewSettlement(new Coordinate(0,1));
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
+                new Coordinate(1,0), Orientation.FromBottom);
+
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
+        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
+                TerrainType.Grasslands);
+        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(1,1)).getTerrainType(),
+                TerrainType.Rocky);
+    }
+
+    @Test
+    public void testTileIsNeverPlacedOnTopOfTotoro() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 2),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
+                new Coordinate(-1,2), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake, 4),
+                new Coordinate(2,1), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle, 5),
+                new Coordinate(1,3), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle, 6),
+                new Coordinate(-2,2), Orientation.FromBottom);
+
+        map.foundNewSettlement(new Coordinate(1,1));
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
+        int settlementID = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
+        map.placeTotoro(new Coordinate(-1,3), settlementID);
+
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(1,1)).hasVillager());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,2)).hasVillager());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(1 ,2)).hasVillager());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,3)).hasVillager());
+
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(1 ,2)).getSettlementID() ==
+                map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle, 7),
+                new Coordinate(-1,2), Orientation.FromBottom);
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
+    }
+
+//    @Test
+//    public void testTileIsNeverPlaceInTopOfTiger() throws Exception{
+//        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+//                new Coordinate(0,0), Orientation.FromBottom);
+//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
+//                new Coordinate(1,0), Orientation.FromBottomRight);
+//        map.foundNewSettlement(new Coordinate(0,1));
+//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
+//                new Coordinate(1,0), Orientation.FromBottom);
+//
+//        Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
+//        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
+//                TerrainType.Grasslands);
+//        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(1,1)).getTerrainType(),
+//                TerrainType.Rocky);
+//    }
+
     @After
     public void deallocateHexesInMap() throws Exception{
         map.gameBoard.clear();

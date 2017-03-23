@@ -7,6 +7,7 @@ public class Hex {
     private TerrainType terrainType;
     private boolean hasVillagers;
     private boolean hasTotoro;
+    private boolean hasTiger;
     private int settlementID;
     private int tileID;
     private int level;
@@ -25,12 +26,20 @@ public class Hex {
         hasTotoro = true;
     }
 
+    public void placeTiger(){
+        hasTiger = true;
+    }
+
     public boolean hasVillager(){
         return hasVillagers;
     }
 
     public boolean hasTotoro(){
         return hasTotoro;
+    }
+
+    public boolean hasTiger(){
+        return hasTiger;
     }
 
     public int getSettlementID(){
