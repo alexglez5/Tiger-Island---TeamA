@@ -30,22 +30,25 @@ public class FirstTilePlacementStepsATest {
 
     @Then("^the tile left hex should be placed at \\((-?\\d+),(\\d+)\\)$")
     public void the_tile_left_hex_should_be_placed_at(int coordinate1x, int coordinate1y) throws Throwable {
-        if(!app.checkTile(coordinate1x, coordinate1y)){
+        if(!app.doesTileExist(coordinate1x, coordinate1y)){
             throw new Error("didn't work");
         }
     }
 
     @Then("^the tile right hex should be placed at \\((\\d+),(\\d+)\\)$")
     public void the_tile_right_hex_should_be_placed_at(int coordinate2x, int coordinate2y) throws Throwable {
-        if(!app.checkTile(coordinate2x, coordinate2y)){
+        if(!app.doesTileExist(coordinate2x, coordinate2y)){
             throw new Error("didn't work");
         }
     }
 
     @Then("^the tile volcano hex should be placed at \\((\\d+),(\\d+)\\)$")
     public void the_tile_volcano_hex_should_be_placed_at(int coordinate3x, int coordinate3y) throws Throwable {
-        if(!app.checkTile(coordinate3x, coordinate3y)){
+        if(!app.doesTileExist(coordinate3x, coordinate3y)){
             throw new Error("didn't work");
         }
     }
+
+    //Next Acceptance Test
+
 }

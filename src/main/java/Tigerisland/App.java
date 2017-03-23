@@ -12,6 +12,7 @@ public class App {
     Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle, 1);
     Coordinate newCord = new Coordinate(0,0);
     Orientation orientation = Orientation.FromBottom;
+    Player player1 = new Player();
 
     public static void main( String[] args ) {
         System.out.println("random change");
@@ -24,15 +25,14 @@ public class App {
         isBoardEmpty = false;
         newTile.setTileID(ID);
         map.placeTile(
-                new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                player1.getCurrentTile(),
                 new Coordinate(xcoordinate,ycoordinate),
                 checkOrientation(orientaiton)
         );
+        player1.removeCurrentTile();
     }
 
-    public boolean checkTile(int coordinate1, int coordinate2) {
-        System.out.println(coordinate1);
-        System.out.println(coordinate2);
+    public boolean doesTileExist(int coordinate1, int coordinate2) {
         Coordinate cord = new Coordinate ( coordinate1, coordinate2);
         return map.gameBoard.containsKey(cord);
     }
@@ -60,6 +60,33 @@ public class App {
             System.out.println("Invalid Orientation");
             return null;
         }
+    }
+
+    public TerrainType checkTerrain(String terrain) {
+        if(orientation.equals("Jungle")){
+            return TerrainType.Jungle;
+        }
+        else if(orientation.equals("Rocky")) {
+            return TerrainType.Rocky;
+        }
+        else if(orientation.equals("Lake")) {
+            return TerrainType.Lake;
+        }
+        else if(orientation.equals("Grassland")) {
+            return TerrainType.Grasslands;
+        }
+        else if(orientation.equals("Volcano")) {
+            return TerrainType.Volcano;
+        }
+        else {
+            System.out.println("Invalid Terrain");
+            return null;
+        }
+    }
+
+    public void givePlayerTile(String terrain1, String terrain2) {
+        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2),1);
+        player1.grantTile(currentTile);
     }
 
     public boolean isEmptyBoard(){return isBoardEmpty;}

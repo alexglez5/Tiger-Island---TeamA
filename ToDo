@@ -1,0 +1,10 @@
+ToDo
+
+Player class:
+    - Inventory based
+    - Builder will have to be able to check inventory
+        - This will check for valid placements
+
+Villager acceptance test:
+    - ***ADD STEP DEFINITIONS***
+    - add subtracting villagers
