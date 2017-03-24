@@ -37,5 +37,27 @@ public class StartOfTurnTilePlacement {
         throw new PendingException();
     }
 
+    //next Test given same senario
+
+    @When("^the player places the tile with next tile ID (\\d+) and orientaiton \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
+    public void the_player_places_the_tile_with_next_tile_ID_and_orientaiton_at(int id, String orientation, int coordinate1, int coordinate2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        app.placeTile(orientation, id, coordinate1, coordinate2);
+    }
+
+    @When("^the tile at \\((\\d+),(\\d+)\\) will have more than zero connections to any other tile$")
+    public void the_tile_at_will_have_more_than_zero_connections_to_any_other_tile(int coordinate1, int coordinate2) throws Throwable {
+        if(!app.doesTileExist(coordinate1, coordinate2)){
+            throw new Error("tile did not have connections");
+        };
+    }
+
+    @Then("^the gameboard should accept the tile at \\((\\d+),(\\d+)\\)$")
+    public void the_gameboard_should_accept_the_tile_at(int coordinate1, int coordinate2) throws Throwable {
+        if(!app.doesTileExist(coordinate1, coordinate2)){
+            throw new Error("tile did not have connections");
+        };
+    }
+
 }
 
