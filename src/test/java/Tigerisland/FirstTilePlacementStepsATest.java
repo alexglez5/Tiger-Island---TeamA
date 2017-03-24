@@ -25,8 +25,10 @@ public class FirstTilePlacementStepsATest {
 
     @When("^the player places the number (\\d+) tile at \\((\\d+),(\\d+)\\) and orientation \"([^\"]*)\"$")
     public void the_player_places_the_number_tile_at_and_orientation(int ID, int xcoordinate, int ycoordinate, String orientation) throws Throwable {
-        app.givePlayerTile("Lakes", "Grasslands");
-        app.placeTile(orientation, ID,xcoordinate, ycoordinate );
+        app.givePlayerTile("Lakes", "Grasslands", 1);
+        app.placeTile("FromBottom", 1, 0,0);
+        app.givePlayerTile("Lakes", "Grasslands", 2);
+        app.placeTile(orientation, ID,xcoordinate, ycoordinate);
     }
 
     @Then("^the tile left hex should be placed at \\((-?\\d+),(\\d+)\\)$")

@@ -11,7 +11,6 @@ public class App {
     GameBoard map = new GameBoard();
     Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle, 1);
     Coordinate newCord = new Coordinate(0,0);
-    Orientation orientation = Orientation.FromBottom;
     Player player1 = new Player();
 
     public static void main( String[] args ) {
@@ -63,19 +62,20 @@ public class App {
     }
 
     public TerrainType checkTerrain(String terrain) {
-        if(orientation.equals("Jungle")){
+        System.out.println(terrain);
+        if(terrain.equals("Jungle")){
             return TerrainType.Jungle;
         }
-        else if(orientation.equals("Rocky")) {
+        else if(terrain.equals("Rocky")) {
             return TerrainType.Rocky;
         }
-        else if(orientation.equals("Lake")) {
+        else if(terrain.equals("Lakes")) {
             return TerrainType.Lake;
         }
-        else if(orientation.equals("Grassland")) {
+        else if(terrain.equals("Grasslands")) {
             return TerrainType.Grasslands;
         }
-        else if(orientation.equals("Volcano")) {
+        else if(terrain.equals("Volcano")) {
             return TerrainType.Volcano;
         }
         else {
@@ -84,7 +84,7 @@ public class App {
         }
     }
 
-    public void givePlayerTile(String terrain1, String terrain2) {
+    public void givePlayerTile(String terrain1, String terrain2, int ID) {
         Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2),1);
         player1.grantTile(currentTile);
     }

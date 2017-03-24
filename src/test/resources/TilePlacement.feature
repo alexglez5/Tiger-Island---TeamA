@@ -21,12 +21,4 @@ Feature: Tile Placement
     When the player places the tile with next tile ID 2 and orientaiton "FromTop" at (1,0)
     And the tile at (1,0) will have more than zero connections to any other tile
     Then the gameboard should accept the tile at (1,0)
-
-    #not coded yet
-  Scenario: A Settlement was placed at a chosen hex
-    Given the player choose to create a new settlement
-    When the player placed a tile
-    And has to choose between expanding a settlement and creating a settlement
-    Then the hex chosen should now have a villager of the player's color
-
   #Scenario: Invalid subsequent tile placements

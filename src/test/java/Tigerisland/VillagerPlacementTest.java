@@ -13,7 +13,7 @@ public class VillagerPlacementTest{
 
         @Given("^the player chooses to found a settlement at \\((\\d+),(\\d+)\\)$")
         public void the_player_chooses_to_found_a_settlement(int coordinatex, int coordinatey) throws Throwable {
-            app.givePlayerTile("Lakes", "Grasslands");
+            app.givePlayerTile("Lakes", "Grasslands", 1);
             app.placeTile("FromTop", 1,0, 0 );
             if(app.isEmptyBoard()){
                 throw new Error("board is empty");
