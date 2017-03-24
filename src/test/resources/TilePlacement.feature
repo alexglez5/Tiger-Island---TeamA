@@ -19,8 +19,8 @@ Feature: Tile Placement
   Scenario: It is the start of a player's turn on turn 2
     Given the player is given a tile with terrains "Lakes" and "Rocky"
     When the player places the tile with next tile ID 2 and orientaiton "FromTop" at (1,0)
-    And the tile will have more than zero connections to any other tile
-    Then the gameboard should accept the tile
+    And the tile at (1,0) will have more than zero connections to any other tile
+    Then the gameboard should accept the tile at (1,0)
 
     #not coded yet
   Scenario: A Settlement was placed at a chosen hex
