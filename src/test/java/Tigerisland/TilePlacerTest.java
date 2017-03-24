@@ -225,7 +225,7 @@ public class TilePlacerTest {
     }
 
 //    @Test
-//    public void testTileIsNeverPlaceInTopOfTiger() throws Exception{
+//    public void testTileIsNeverPlaceOnTopOfTiger() throws Exception{
 //        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
 //                new Coordinate(0,0), Orientation.FromBottom);
 //        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
