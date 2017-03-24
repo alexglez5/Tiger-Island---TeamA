@@ -16,18 +16,21 @@ public class FirstTilePlacementStepsATest {
 
     App app = new App();
 
-    @Given("^the board is empty$")
-    public void the_board_is_empty() throws Throwable {    // Write code here that turns the phrase above into concrete actions
+
+    @Given("^the board is empty and player is given tile with terrains \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void the_board_is_empty_and_player_is_given_tile_with_terrains_and(String terrain1, String terrain2) throws Throwable {
         if(!app.isEmptyBoard()){
             throw new Error("didn't work");
         }
+        app.givePlayerTile(terrain1, terrain2);
+    }
+    @Given("^the board is empty$")
+    public void the_board_is_empty() throws Throwable {    // Write code here that turns the phrase above into concrete actions
+
     }
 
     @When("^the player places the number (\\d+) tile at \\((\\d+),(\\d+)\\) and orientation \"([^\"]*)\"$")
     public void the_player_places_the_number_tile_at_and_orientation(int ID, int xcoordinate, int ycoordinate, String orientation) throws Throwable {
-        app.givePlayerTile("Lakes", "Grasslands", 1);
-        app.placeTile("FromBottom", 1, 0,0);
-        app.givePlayerTile("Lakes", "Grasslands", 2);
         app.placeTile(orientation, ID,xcoordinate, ycoordinate);
     }
 

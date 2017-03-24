@@ -9,7 +9,6 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 public class App {
     Boolean isBoardEmpty = true;
     GameBoard map = new GameBoard();
-    Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle, 1);
     Coordinate newCord = new Coordinate(0,0);
     Player player1 = new Player();
 
@@ -22,7 +21,8 @@ public class App {
 
     public void placeTile(String orientaiton, int ID, int xcoordinate, int ycoordinate) {
         isBoardEmpty = false;
-        newTile.setTileID(ID);
+        player1.getCurrentTile().setTileID(ID);
+        System.out.println(player1.getCurrentTile().getTileID());
         map.placeTile(
                 player1.getCurrentTile(),
                 new Coordinate(xcoordinate,ycoordinate),
@@ -84,8 +84,8 @@ public class App {
         }
     }
 
-    public void givePlayerTile(String terrain1, String terrain2, int ID) {
-        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2),1);
+    public void givePlayerTile(String terrain1, String terrain2) {
+        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2), 99);
         player1.grantTile(currentTile);
     }
 

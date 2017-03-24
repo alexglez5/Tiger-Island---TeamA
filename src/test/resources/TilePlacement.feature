@@ -4,7 +4,7 @@ Feature: Tile Placement
   I want a successful game board state
   
   Scenario: First tile placement hexes exist
-    Given the board is empty
+    Given the board is empty and player is given tile with terrains "Lakes" and "Rocky"
     When the player places the number 1 tile at (0,0) and orientation "FromBottom"
     Then the tile left hex should be placed at (-1,1)
     And the tile right hex should be placed at (0,1)
