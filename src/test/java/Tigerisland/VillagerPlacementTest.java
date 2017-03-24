@@ -9,12 +9,17 @@ import cucumber.api.java.en.When;
  * Created by vincentibarrola on 3/24/17.
  */
 public class VillagerPlacementTest{
-        GameBoard map;
+        App app = new App();
 
-        @Given("^the player chooses to found a settlement$")
-        public void the_player_chooses_to_found_a_settlement() throws Throwable {
-            // Write code here that turns the phrase above into concrete actions
-            throw new PendingException();
+        @Given("^the player chooses to found a settlement at \\((\\d+),(\\d+)\\)$")
+        public void the_player_chooses_to_found_a_settlement(int coordinatex, int coordinatey) throws Throwable {
+            app.givePlayerTile("Lakes", "Grasslands");
+            app.placeTile("FromTop", 1,0, 0 );
+//            if(app.isEmptyBoard()){
+//                throw new Error("board is empty");
+//            }
+//            app.buildVillager(coordinatex, coordinatey);
+
         }
 
         @When("^there is a open hex on level one$")

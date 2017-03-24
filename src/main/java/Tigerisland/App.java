@@ -90,4 +90,8 @@ public class App {
     }
 
     public boolean isEmptyBoard(){return isBoardEmpty;}
+
+    public void buildVillager(int x, int y) {
+        map.foundNewSettlement(new Coordinate(x,y));
+    }
 }

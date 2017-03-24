@@ -2,7 +2,7 @@ Feature: Villager Placement
 #add more description
 
   Scenario: Founding a settlement (valid)
-    Given the player chooses to found a settlement
+    Given the player chooses to found a settlement at (0,0)
     When there is a open hex on level one
       And the tile is not of volcano terrain
       And the player has a villager left
