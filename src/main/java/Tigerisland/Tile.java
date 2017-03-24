@@ -32,4 +32,7 @@ public class Tile {
 
     public int getTileID() {return tileID;     }
 
+    public void rotateTileClockwise() {
+
+    }
 }
