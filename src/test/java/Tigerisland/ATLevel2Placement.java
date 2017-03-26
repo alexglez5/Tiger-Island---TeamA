@@ -10,10 +10,23 @@ import java.lang.Error;
  * Created by NotKali on 3/25/2017.
  */
 public class ATLevel2Placement {
+    App app = new App();
+
     @Given("^that the board has at least (\\d+) tiles$")
     public void that_the_board_has_at_least_tiles(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        if(!app.isEmptyBoard()){
+            throw new Error("The Board already has tiles");
+        }
+        app.givePlayerTile("Grassland", "Grassland");
+        app.placeTile("FromBottom",1,0,0);
+        if(!app.doesTileExist(0, 0)){
+            throw new Error("could'nt place tile");
+        }
+        app.givePlayerTile("Grassland", "Grassland");
+        app.placeTile("FromBottom", 2, 1,-2);
+        if(!app.doesTileExist(1, -2)){
+            throw new Error("could'nt place tile");
+        }
     }
 
     @Given("^a valid level two placement option exists at \\((\\d+),(\\d+)\\)$")
