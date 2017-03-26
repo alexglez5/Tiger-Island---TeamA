@@ -21,4 +21,10 @@ Feature: Tile Placement
     When the player places the tile with next tile ID 2 and orientaiton "FromTop" at (1,0)
     And the tile at (1,0) will have more than zero connections to any other tile
     Then the gameboard should accept the tile at (1,0)
-  #Scenario: Invalid subsequent tile placements
+
+  Scenario: The player wants to place a tile on level 2 thus erupting a volcano
+    Given that the board has at least 2 tiles
+    And a valid level two placement option exists at (0,0)
+    When the player places a tile on level 2 at a valid level two location
+    And the level two tile's origin will be at (0,0) with orientation "FromTop"
+    Then the gameboard should accept the tile at (0,0) at level 2
