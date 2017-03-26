@@ -24,36 +24,49 @@ public class FirstTilePlacementStepsATest {
         }
         app.givePlayerTile(terrain1, terrain2);
     }
-    @Given("^the board is empty$")
-    public void the_board_is_empty() throws Throwable {    // Write code here that turns the phrase above into concrete actions
-
-    }
 
     @When("^the player places the number (\\d+) tile at \\((\\d+),(\\d+)\\) and orientation \"([^\"]*)\"$")
     public void the_player_places_the_number_tile_at_and_orientation(int ID, int xcoordinate, int ycoordinate, String orientation) throws Throwable {
         app.placeTile(orientation, ID,xcoordinate, ycoordinate);
     }
 
-    @Then("^the tile left hex should be placed at \\((-?\\d+),(\\d+)\\)$")
-    public void the_tile_left_hex_should_be_placed_at(int coordinate1x, int coordinate1y) throws Throwable {
-        if(!app.doesTileExist(coordinate1x, coordinate1y)){
+    @Then("^the tile left hex should be placed at \\((-?\\d+),(-?\\d+)\\) with terrain \"([^\"]*)\"$")
+    public void the_tile_left_hex_should_be_placed_at_with_terrain(int x, int y, String correctTerrain) throws Throwable {
+        if(!app.doesTileExist(x, y)){
             throw new Error("didn't work");
+        }
+        if(!app.isCorrectTerrain(x,y, correctTerrain)){
+            throw new Error("Wrong Terrain");
+        }
+
+    }
+
+    @Then("^the tile right hex should be placed at \\((-?\\d+),(-?\\d+)\\) with terrain \"([^\"]*)\"$")
+    public void the_tile_right_hex_should_be_placed_at_with_terrain(int x, int y, String correctTerrain) throws Throwable {
+        if(!app.doesTileExist(x, y)){
+            throw new Error("didn't work");
+        }
+        if(!app.isCorrectTerrain(x,y, correctTerrain)){
+            throw new Error("Wrong Terrain");
         }
     }
 
-    @Then("^the tile right hex should be placed at \\((\\d+),(\\d+)\\)$")
-    public void the_tile_right_hex_should_be_placed_at(int coordinate2x, int coordinate2y) throws Throwable {
-        if(!app.doesTileExist(coordinate2x, coordinate2y)){
+    @Then("^the tile volcano hex should be placed at \\((-?\\d+),(-?\\d+)\\) with terrain \"([^\"]*)\"$")
+    public void the_tile_volcano_hex_should_be_placed_at_with_terrain(int x, int y, String correctTerrain) throws Throwable {
+        if(!app.doesTileExist(x, y)){
             throw new Error("didn't work");
+        }
+        if(!app.isCorrectTerrain(x,y,correctTerrain)){
+            throw new Error("Wrong Terrain");
         }
     }
 
-    @Then("^the tile volcano hex should be placed at \\((\\d+),(\\d+)\\)$")
+    /*@Then("^the tile volcano hex should be placed at \\((\\d+),(\\d+)\\)$")
     public void the_tile_volcano_hex_should_be_placed_at(int coordinate3x, int coordinate3y) throws Throwable {
         if(!app.doesTileExist(coordinate3x, coordinate3y)){
             throw new Error("didn't work");
         }
-    }
+    }*/
 
     //Next Acceptance Test
 

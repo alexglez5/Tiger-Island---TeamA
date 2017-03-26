@@ -6,9 +6,9 @@ Feature: Tile Placement
   Scenario: First tile placement hexes exist
     Given the board is empty and player is given tile with terrains "Lakes" and "Rocky"
     When the player places the number 1 tile at (0,0) and orientation "FromBottom"
-    Then the tile left hex should be placed at (-1,1)
-    And the tile right hex should be placed at (0,1)
-    And the tile volcano hex should be placed at (0,0)
+    Then the tile left hex should be placed at (-1,1) with terrain "Lakes"
+    And the tile right hex should be placed at (0,1) with terrain "Rocky"
+    And the tile volcano hex should be placed at (0,0) with terrain "Volcano"
 
   Scenario: It is the start of a player's turns on turn 2
     Given the player is given a tile with terrains "Lakes" and "Rocky"

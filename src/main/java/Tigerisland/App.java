@@ -22,7 +22,6 @@ public class App {
     public void placeTile(String orientaiton, int ID, int xcoordinate, int ycoordinate) {
         isBoardEmpty = false;
         player1.getCurrentTile().setTileID(ID);
-        System.out.println(player1.getCurrentTile().getTileID());
         map.placeTile(
                 player1.getCurrentTile(),
                 new Coordinate(xcoordinate,ycoordinate),
@@ -62,7 +61,6 @@ public class App {
     }
 
     public TerrainType checkTerrain(String terrain) {
-        System.out.println(terrain);
         if(terrain.equals("Jungle")){
             return TerrainType.Jungle;
         }
@@ -91,7 +89,10 @@ public class App {
 
     public boolean isEmptyBoard(){return isBoardEmpty;}
 
-    public void buildVillager(int x, int y) {
-        map.foundNewSettlement(new Coordinate(x,y));
+    public void buildVillager(int x, int y) {map.foundNewSettlement(new Coordinate(x,y));}
+
+    public boolean isCorrectTerrain(int x, int y, String correctTerrain) {
+        TerrainType correctTerrainType = checkTerrain(correctTerrain);
+        return correctTerrainType.equals(map.gameBoard.get(new Coordinate(x,y)).getTerrainType());
     }
 }
