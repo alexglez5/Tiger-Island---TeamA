@@ -1,8 +1,7 @@
 package Tigerisland;
 
-/**
- * Created by nathanbarnavon on 3/27/17.
- */
+import java.util.ArrayList;
+
 public class Player {
 
     private Tile currentTile;
@@ -10,6 +9,7 @@ public class Player {
     private int numberOfVillagersLeft;
     private int numberOfTotoroLeft;
     private int numberOfTigersLeft;
+    private ArrayList<Settlement> settlements;
 
     public Player() {
         score = 0;
@@ -37,4 +37,9 @@ public class Player {
     public Tile getCurrentTile() { return currentTile; }
 
     public void setCurrentTile(Tile t) { currentTile = t; }
+
+    public void addSettlement(Settlement s) { settlements.add(s); }
+
+    public void removeSettlement(Settlement s) { settlements.remove(s); }
+
 }

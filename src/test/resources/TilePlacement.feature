@@ -3,9 +3,12 @@ Feature: Tile Placement
   As a player of the game
   I need to place tiles correctly
 
-  Scenario: First tile placement
-    Given the game board is empty
-    When a player places a tile with orientation "FromBottom"
-    Then A hex should occupy coordinate (0, 0)
-    And A hex should occupy coordinate (0, 1)
-    And A hex should occupy coordinate (-1, 1)
+  Scenario Outline: First tile placement
+    When a player places a tile with tileID 1 and orientation <orient>
+    Then a hex should occupy coordinate <main>
+    And a hex should occupy coordinate <left>
+    And a hex should occupy coordinate <right>
+
+    Examples:
+       | orient      | main   | left   | right   |
+       |"FromBottom" | (0, 0) | (0, 1) | (-1, 1) |

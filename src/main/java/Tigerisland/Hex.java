@@ -1,13 +1,10 @@
 package Tigerisland;
 
-/**
- * Created by Alexander Gonzalez on 3/17/2017.
- */
 public class Hex {
     private TerrainType terrainType;
     private boolean hasVillagers;
     private boolean hasTotoro;
-    private int settlementID;
+    private boolean hasTiger;
     private int tileID;
     private int level;
 
@@ -25,6 +22,8 @@ public class Hex {
         hasTotoro = true;
     }
 
+    public void placeTiger() { hasTiger = true; }
+
     public boolean hasVillager(){
         return hasVillagers;
     }
@@ -33,13 +32,7 @@ public class Hex {
         return hasTotoro;
     }
 
-    public int getSettlementID(){
-        return settlementID;
-    }
-
-    public void setSettlementID(int settlementID){
-        this.settlementID = settlementID;
-    }
+    public boolean hasTiger() { return hasTiger; }
 
     public TerrainType getTerrainType(){
         return terrainType;
@@ -56,6 +49,5 @@ public class Hex {
     public int getLevel() {
         return level;
     }
-
 
 }
