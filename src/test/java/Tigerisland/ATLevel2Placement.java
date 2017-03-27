@@ -49,23 +49,8 @@ public class ATLevel2Placement {
 
     @Then("^the gameboard should accept the tile at \\((\\d+),(\\d+)\\) at level (\\d+)$")
     public void the_gameboard_should_accept_the_tile_at_at_level(int coordinateX, int coordinateY, int level) throws Throwable {
-        if(!app.doesTileExist(coordinateX, coordinateY)){
-            throw new Error("could'nt place tile at (0, 0)");
-        }
         if(!(app.returnLevel(coordinateX,coordinateY)==level)){
             throw new Error("Tile is not on level 2");
         }
     }
-
-    @When("^the player places a tile on level (\\d+) at a invalid level two location$")
-    public void the_player_places_a_tile_on_level_at_a_invalid_level_two_location(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^the gameboard should not accept the tile at \\((\\d+),(\\d+)\\) at level (\\d+)$")public void the_gameboard_should_not_accept_the_tile_at_at_level(int arg1, int arg2, int arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
 }
