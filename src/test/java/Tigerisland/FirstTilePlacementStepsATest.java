@@ -1,9 +1,7 @@
 package Tigerisland;
 
 import cucumber.api.PendingException;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import cucumber.api.java.en.*;
 import org.junit.Assert;
 import java.lang.Error;
 /**
@@ -19,10 +17,11 @@ public class FirstTilePlacementStepsATest {
 
     @Given("^the board is empty and player is given tile with terrains \"([^\"]*)\" and \"([^\"]*)\"$")
     public void the_board_is_empty_and_player_is_given_tile_with_terrains_and(String terrain1, String terrain2) throws Throwable {
+        app.map.gameBoard.clear();
         if(!app.isEmptyBoard()){
             throw new Error("didn't work");
         }
-        app.givePlayerTile(terrain1, terrain2);
+        app.givePlayerTile(terrain1, terrain2, app.currentTurnNumber);
     }
 
     @When("^the player places the number (\\d+) tile at \\((\\d+),(\\d+)\\) and orientation \"([^\"]*)\"$")
@@ -60,6 +59,8 @@ public class FirstTilePlacementStepsATest {
             throw new Error("Wrong Terrain");
         }
     }
+
+
 
     /*@Then("^the tile volcano hex should be placed at \\((\\d+),(\\d+)\\)$")
     public void the_tile_volcano_hex_should_be_placed_at(int coordinate3x, int coordinate3y) throws Throwable {

@@ -9,8 +9,8 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 public class App {
     Boolean isBoardEmpty = true;
     GameBoard map = new GameBoard();
-    Coordinate newCord = new Coordinate(0,0);
     Player player1 = new Player();
+    int currentTurnNumber = 1;
 
     public static void main( String[] args ) {
         System.out.println("random change");
@@ -27,6 +27,7 @@ public class App {
                 new Coordinate(xcoordinate,ycoordinate),
                 checkOrientation(orientaiton)
         );
+        currentTurnNumber++;
         player1.removeCurrentTile();
     }
 
@@ -67,7 +68,7 @@ public class App {
         else if(terrain.equals("Rocky")) {
             return TerrainType.Rocky;
         }
-        else if(terrain.equals("Lakes")) {
+        else if(terrain.equals("Lake")) {
             return TerrainType.Lake;
         }
         else if(terrain.equals("Grassland")) {
@@ -82,8 +83,8 @@ public class App {
         }
     }
 
-    public void givePlayerTile(String terrain1, String terrain2) {
-        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2), 99);
+    public void givePlayerTile(String terrain1, String terrain2, int ID) {
+        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2), ID);
         player1.grantTile(currentTile);
     }
 
@@ -94,5 +95,10 @@ public class App {
     public boolean isCorrectTerrain(int x, int y, String correctTerrain) {
         TerrainType correctTerrainType = checkTerrain(correctTerrain);
         return correctTerrainType.equals(map.gameBoard.get(new Coordinate(x,y)).getTerrainType());
+    }
+
+    public int returnLevel(int coordinatex, int coordinatey) {
+        Coordinate coordinate = new Coordinate ( coordinatex, coordinatey);
+        return map.gameBoard.get(coordinate).getLevel();
     }
 }

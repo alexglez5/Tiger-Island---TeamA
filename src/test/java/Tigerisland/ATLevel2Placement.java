@@ -14,41 +14,56 @@ public class ATLevel2Placement {
 
     @Given("^that the board has at least (\\d+) tiles$")
     public void that_the_board_has_at_least_tiles(int arg1) throws Throwable {
+        app.map.gameBoard.clear();
         if(!app.isEmptyBoard()){
             throw new Error("The Board already has tiles");
         }
-        app.givePlayerTile("Grassland", "Grassland");
+        app.givePlayerTile("Grassland", "Grassland", app.currentTurnNumber);
         app.placeTile("FromBottom",1,0,0);
         if(!app.doesTileExist(0, 0)){
-            throw new Error("could'nt place tile");
+            throw new Error("could'nt place tile at (0, 0)");
         }
-        app.givePlayerTile("Grassland", "Grassland");
+        app.givePlayerTile("Grassland", "Grassland", app.currentTurnNumber);
         app.placeTile("FromBottom", 2, 1,-2);
         if(!app.doesTileExist(1, -2)){
-            throw new Error("could'nt place tile");
+            throw new Error("could'nt place tile at (1, -2)");
         }
     }
 
     @Given("^a valid level two placement option exists at \\((\\d+),(\\d+)\\)$")
     public void a_valid_level_two_placement_option_exists_at(int arg1, int arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        if(true) {}; // need to implement return valid options
     }
 
     @When("^the player places a tile on level (\\d+) at a valid level two location$")
     public void the_player_places_a_tile_on_level_at_a_valid_level_two_location(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        if(true) {}; // need to implement player choices
+        app.givePlayerTile("Lake", "Grassland", app.currentTurnNumber);
     }
 
     @When("^the level two tile's origin will be at \\((\\d+),(\\d+)\\) with orientation \"([^\"]*)\"$")
-    public void the_level_two_tile_s_origin_will_be_at_with_orientation(int arg1, int arg2, String arg3) throws Throwable {
+    public void the_level_two_tile_s_origin_will_be_at_with_orientation(int x, int y, String orientation) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        app.placeTile(orientation, app.currentTurnNumber, x, y);
+    }
+
+    @Then("^the gameboard should accept the tile at \\((\\d+),(\\d+)\\) at level (\\d+)$")
+    public void the_gameboard_should_accept_the_tile_at_at_level(int coordinateX, int coordinateY, int level) throws Throwable {
+        if(!app.doesTileExist(coordinateX, coordinateY)){
+            throw new Error("could'nt place tile at (0, 0)");
+        }
+        if(!(app.returnLevel(coordinateX,coordinateY)==level)){
+            throw new Error("Tile is not on level 2");
+        }
+    }
+
+    @When("^the player places a tile on level (\\d+) at a invalid level two location$")
+    public void the_player_places_a_tile_on_level_at_a_invalid_level_two_location(int arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
-    @Then("^the gameboard should accept the tile at \\((\\d+),(\\d+)\\) at level (\\d+)$")
-    public void the_gameboard_should_accept_the_tile_at_at_level(int arg1, int arg2, int arg3) throws Throwable {
+    @Then("^the gameboard should not accept the tile at \\((\\d+),(\\d+)\\) at level (\\d+)$")public void the_gameboard_should_not_accept_the_tile_at_at_level(int arg1, int arg2, int arg3) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }

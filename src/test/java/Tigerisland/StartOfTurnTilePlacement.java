@@ -14,12 +14,13 @@ public class StartOfTurnTilePlacement {
 
     @Given("^the player is given a tile with terrains \"([^\"]*)\" and \"([^\"]*)\"$")
     public void the_player_is_given_a_tile_with_terrains_and(String firstTerrain, String secondTerrain) throws Throwable {
-        app.givePlayerTile(firstTerrain, secondTerrain);
+        app.map.gameBoard.clear();
+        app.givePlayerTile(firstTerrain, secondTerrain, app.currentTurnNumber);
         app.placeTile("FromBottom", 1,0, 0 );
         if(app.isEmptyBoard()){
             throw new Error("Empty Board");
         }
-        app.givePlayerTile(firstTerrain, secondTerrain);
+        app.givePlayerTile(firstTerrain, secondTerrain, app.currentTurnNumber);
     }
 
     @When("^the player places the tile with next tile ID (\\d+) and orientation \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
