@@ -70,7 +70,7 @@ public class App {
         else if(terrain.equals("Lakes")) {
             return TerrainType.Lake;
         }
-        else if(terrain.equals("Grasslands")) {
+        else if(terrain.equals("Grassland")) {
             return TerrainType.Grasslands;
         }
         else if(terrain.equals("Volcano")) {
