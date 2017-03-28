@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
 public class BuilderTest {
     GameBoard map;
 
+    //TODO merge settlements after expansion?
+
     @Before
     public void initializeGameBoard() throws Exception{
         map = new GameBoard();
