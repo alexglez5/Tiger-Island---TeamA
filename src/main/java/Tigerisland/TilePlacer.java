@@ -1,18 +1,18 @@
 package Tigerisland;
 
-import java.util.InputMismatchException;
 import java.util.TreeSet;
 
 /**
  * Created by Alexander Gonzalez on 3/19/2017.
  */
-public class TilePlacer extends ActionHelper{
+public class TilePlacer extends ActionHelper {
+    //TODO more refactoring make tileID random and not required in tile's constructor
     private Coordinate leftOfMainTerrainCoordinate;
     private Coordinate mainTerrainCoordinate;
     private Coordinate rightOfMainTerrainCoordinate;
     private Orientation orientation;
 
-    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
+    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         this.mainTerrainCoordinate = mainTerrainCoordinate;
         this.orientation = terrainsOrientation;
         updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
@@ -23,7 +23,7 @@ public class TilePlacer extends ActionHelper{
     }
 
     private void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
-        switch (orientation){
+        switch (orientation) {
             case FromBottom:
                 leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
@@ -52,30 +52,29 @@ public class TilePlacer extends ActionHelper{
     }
 
     private void placeTileInLevelOneOrNuke(Tile tile) {
-        if(tileIsPlacedOnLevelOne())
+        if (tileIsPlacedOnLevelOne())
             placeHexesOfTileInMap(tile);
         else
             nuke(tile);
     }
 
-    private boolean tileIsPlacedOnLevelOne(){
+    private boolean tileIsPlacedOnLevelOne() {
         return !gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
                 !gameBoard.containsKey(mainTerrainCoordinate) &&
                 !gameBoard.containsKey(rightOfMainTerrainCoordinate);
     }
 
     private void placeHexesOfTileInMap(Tile tile) {
-        if(tileCanBePlacedInLevelOne() || firstTileInTheGame(tile)){
+        if (tileCanBePlacedInLevelOne() || firstTileInTheGame(tile))
             putInMap(tile);
-        }
     }
 
-    private void nuke(Tile tile){
-        if(canNuke())
+    private void nuke(Tile tile) {
+        if (canNuke())
             placeHexesOnTopOfOtherHexes(tile);
     }
 
-    private Boolean tileCanBePlacedInLevelOne(){
+    private Boolean tileCanBePlacedInLevelOne() {
         return atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge();
     }
 
@@ -89,9 +88,10 @@ public class TilePlacer extends ActionHelper{
         gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
     }
 
-    private Boolean canNuke(){
+    private Boolean canNuke() {
         return tileCompletelyCoversHexes()
-                && tileIsNotPlacedOnTopOfTotoroOrTiger()
+                && tileIsNotPlacedOnTopOfTotoro()
+                && tileIsNotPlacedOnTopOfTiger()
                 && tileIsNotPerfectlyOnTopOfAnotherTile()
                 && mainTerrainIsOnTopOfAnotherMainTerrain()
                 && tileDoesNotCompletelyWipeOutASettlement();
@@ -102,22 +102,27 @@ public class TilePlacer extends ActionHelper{
         increaseLevelOfHexesOfATile();
     }
 
-    private Boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge(){
+    private Boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge() {
         return atLeastOneCoordinateAroundOneHexOfTheTileContainsAHex();
     }
 
     private boolean tileCompletelyCoversHexes() {
         return hexesAreAtTheSameLevel();
-
     }
 
-    private boolean tileIsNotPlacedOnTopOfTotoroOrTiger(){
-        return coordinateDoesNotContainTotoroOrTiger(leftOfMainTerrainCoordinate)
-                && coordinateDoesNotContainTotoroOrTiger(mainTerrainCoordinate)
-                && coordinateDoesNotContainTotoroOrTiger(rightOfMainTerrainCoordinate);
+    private boolean tileIsNotPlacedOnTopOfTotoro() {
+        return coordinateDoesNotContainTotoro(leftOfMainTerrainCoordinate)
+                && coordinateDoesNotContainTotoro(mainTerrainCoordinate)
+                && coordinateDoesNotContainTotoro(rightOfMainTerrainCoordinate);
     }
 
-    private Boolean tileIsNotPerfectlyOnTopOfAnotherTile(){
+    private boolean tileIsNotPlacedOnTopOfTiger() {
+        return coordinateDoesNotContainTiger(leftOfMainTerrainCoordinate)
+                && coordinateDoesNotContainTiger(mainTerrainCoordinate)
+                && coordinateDoesNotContainTiger(rightOfMainTerrainCoordinate);
+    }
+
+    private Boolean tileIsNotPerfectlyOnTopOfAnotherTile() {
         return hexesArePartOfAtLeastTwoDifferentTiles();
     }
 
@@ -127,17 +132,17 @@ public class TilePlacer extends ActionHelper{
 
     private boolean tileDoesNotCompletelyWipeOutASettlement() {
         TreeSet<Integer> settlementIdsOfHexesInTile = new TreeSet<>();
-        if(gameBoard.containsKey(leftOfMainTerrainCoordinate) && gameBoard.get(leftOfMainTerrainCoordinate).hasVillager())
+        if (gameBoard.containsKey(leftOfMainTerrainCoordinate) && gameBoard.get(leftOfMainTerrainCoordinate).hasVillager())
             settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
-        if(gameBoard.containsKey(mainTerrainCoordinate) && gameBoard.get(mainTerrainCoordinate).hasVillager())
+        if (gameBoard.containsKey(mainTerrainCoordinate) && gameBoard.get(mainTerrainCoordinate).hasVillager())
             settlementIdsOfHexesInTile.add(gameBoard.get(mainTerrainCoordinate).getSettlementID());
-        if(gameBoard.containsKey(rightOfMainTerrainCoordinate) && gameBoard.get(rightOfMainTerrainCoordinate).hasVillager())
+        if (gameBoard.containsKey(rightOfMainTerrainCoordinate) && gameBoard.get(rightOfMainTerrainCoordinate).hasVillager())
             settlementIdsOfHexesInTile.add(gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID());
 
-        if(settlementIdsOfHexesInTile.size() == 0)
+        if (settlementIdsOfHexesInTile.size() == 0)
             return true;
 
-        for(int idOfSettlementThanMightBeWipeOut : settlementIdsOfHexesInTile) {
+        for (int idOfSettlementThanMightBeWipeOut : settlementIdsOfHexesInTile) {
             int sizeLeftOfCurrentSettlement = 0;
             for (Coordinate tempCoordinate : gameBoard.keySet()) {
                 if (gameBoard.get(tempCoordinate).hasVillager()
@@ -146,7 +151,7 @@ public class TilePlacer extends ActionHelper{
                     sizeLeftOfCurrentSettlement++;
                 }
             }
-            if(sizeLeftOfCurrentSettlement < 1)
+            if (sizeLeftOfCurrentSettlement < 1)
                 return false;
         }
         return true;
@@ -171,7 +176,7 @@ public class TilePlacer extends ActionHelper{
         return false;
     }
 
-    private boolean hexesAreAtTheSameLevel(){
+    private boolean hexesAreAtTheSameLevel() {
         return hexesOfTileAreOccupied() &&
                 gameBoard.get(leftOfMainTerrainCoordinate).getLevel() ==
                         gameBoard.get(mainTerrainCoordinate).getLevel() &&
@@ -180,19 +185,23 @@ public class TilePlacer extends ActionHelper{
 
     }
 
-    private boolean coordinateDoesNotContainTotoroOrTiger(Coordinate terrainCoordinate){
+    private boolean coordinateDoesNotContainTotoro(Coordinate terrainCoordinate) {
         return !(gameBoard.containsKey(terrainCoordinate)
-                && (gameBoard.get(terrainCoordinate).hasTotoro() || gameBoard.get(terrainCoordinate).hasTiger()));
-
+                && gameBoard.get(terrainCoordinate).hasTotoro());
     }
 
-    private Boolean hexesArePartOfAtLeastTwoDifferentTiles(){
-        return gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
-                gameBoard.get(mainTerrainCoordinate).getTileID() ||
-                gameBoard.get(mainTerrainCoordinate).getTileID() !=
-                gameBoard.get(rightOfMainTerrainCoordinate).getTileID() ||
-                gameBoard.get(leftOfMainTerrainCoordinate).getTileID() !=
-                gameBoard.get(rightOfMainTerrainCoordinate).getTileID();
+    private boolean coordinateDoesNotContainTiger(Coordinate terrainCoordinate) {
+        return !(gameBoard.containsKey(terrainCoordinate)
+                && gameBoard.get(terrainCoordinate).hasTiger());
+    }
+
+    private Boolean hexesArePartOfAtLeastTwoDifferentTiles() {
+        return gameBoard.get(leftOfMainTerrainCoordinate).getTileID()
+                    != gameBoard.get(mainTerrainCoordinate).getTileID()
+                || gameBoard.get(mainTerrainCoordinate).getTileID()
+                    != gameBoard.get(rightOfMainTerrainCoordinate).getTileID()
+                || gameBoard.get(leftOfMainTerrainCoordinate).getTileID()
+                    != gameBoard.get(rightOfMainTerrainCoordinate).getTileID();
     }
 
     private boolean isNotOneOfCoordinatesThatWillBeWipedOut(Coordinate tempCoordinate) {
@@ -202,14 +211,13 @@ public class TilePlacer extends ActionHelper{
     }
 
     private boolean AtLeasOneAdjacentCoordinateContainsAHex() {
-        for(int i = 0; i < sidesOfAHex; i++){
-            if(gameBoard.containsKey(counterClockwiseCoordinatesAroundCoordinate[i]))
+        for (int i = 0; i < sidesOfAHex; i++)
+            if (gameBoard.containsKey(counterClockwiseCoordinatesAroundCoordinate[i]))
                 return true;
-        }
         return false;
     }
 
-    private boolean hexesOfTileAreOccupied(){
+    private boolean hexesOfTileAreOccupied() {
         return gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
                 gameBoard.containsKey(mainTerrainCoordinate) &&
                 gameBoard.containsKey(rightOfMainTerrainCoordinate);

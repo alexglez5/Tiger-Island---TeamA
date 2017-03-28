@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 public class TilePlacerTest {
     GameBoard map;
 
+    //TODO  refactor this test using what Dave said
+
     @Before
     public void initializeGameBoard() throws Exception{
         map = new GameBoard();
@@ -106,7 +108,6 @@ public class TilePlacerTest {
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(2,0)));
     }
 
-    //TODO tile contains a Volcano
     @Test
     public void testNukeIncreasesHexLevel() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
@@ -162,6 +163,7 @@ public class TilePlacerTest {
     public void testTileCompletelyCoversHexesBeneathIt() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
+
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
                 new Coordinate(0,0), Orientation.FromBottomRight);
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
@@ -169,6 +171,7 @@ public class TilePlacerTest {
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
                 new Coordinate(1,0), Orientation.FromBottomLeft);
         Assert.assertFalse(map.gameBoard.containsKey(new Coordinate(1,0)));
+
         Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(),
                 TerrainType.Lake);
     }
@@ -196,50 +199,26 @@ public class TilePlacerTest {
                 new Coordinate(0,0), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 2),
                 new Coordinate(1,0), Orientation.FromBottomRight);
+        map.gameBoard.get(new Coordinate(0,1)).placeTotoro();
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake, 4),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle, 5),
-                new Coordinate(1,3), Orientation.FromBottomLeft);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle, 6),
-                new Coordinate(-2,2), Orientation.FromBottom);
+                new Coordinate(1,0), Orientation.FromBottom);
 
-        map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-        int settlementID = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
-        map.placeTotoro(new Coordinate(-1,3), settlementID);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 1);
 
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(1,1)).hasVillager());
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,2)).hasVillager());
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(1 ,2)).hasVillager());
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,3)).hasVillager());
-
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(1 ,2)).getSettlementID() ==
-                map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle, 7),
-                new Coordinate(-1,2), Orientation.FromBottom);
-        Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
     }
 
-//    @Test
-//    public void testTileIsNeverPlaceOnTopOfTiger() throws Exception{
-//        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
-//                new Coordinate(0,0), Orientation.FromBottom);
-//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 2),
-//                new Coordinate(1,0), Orientation.FromBottomRight);
-//        map.foundNewSettlement(new Coordinate(0,1));
-//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
-//                new Coordinate(1,0), Orientation.FromBottom);
-//
-//        Assert.assertTrue(map.gameBoard.get(new Coordinate(0,1)).hasVillager());
-//        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(),
-//                TerrainType.Grasslands);
-//        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(1,1)).getTerrainType(),
-//                TerrainType.Rocky);
-//    }
+    @Test
+    public void testTileIsNeverPlacedOnTopOfTiger() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 2),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.gameBoard.get(new Coordinate(0,1)).placeTiger();
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky, 3),
+                new Coordinate(1,0), Orientation.FromBottom);
+
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 1);
+    }
 
     @After
     public void deallocateHexesInMap() throws Exception{
