@@ -4,29 +4,34 @@ Feature: Tile Placement
   I want a successful game board state
   
   Scenario: First tile placement hexes exist
-    Given the board is empty
+    Given the board is empty and player is given tile with terrains "Lake" and "Rocky"
     When the player places the number 1 tile at (0,0) and orientation "FromBottom"
-    Then the tile left hex should be placed at (-1,1)
-    And the tile right hex should be placed at (0,1)
-    And the tile volcano hex should be placed at (0,0)
+    Then the tile left hex should be placed at (-1,1) with terrain "Lake"
+    And the tile right hex should be placed at (0,1) with terrain "Rocky"
+    And the tile volcano hex should be placed at (0,0) with terrain "Volcano"
 
   Scenario: It is the start of a player's turns on turn 2
-    Given the player is given a tile with terrains "Lakes" and "Rocky"
-    When the player places the tile with next tile ID 2 and orientation "FromTop" at (2,0)
-    And the tile at (2,0) will have no connections to any other tiles
-    Then the gameboard should reject the tile at (2, 0)
+    Given the player is given a tile with terrains "Lake" and "Rocky"
+    When the player places the tile with next tile ID 2 and orientation "FromTop" at (2,1)
+    And the tile at (2,1) will have no connections to any other tiles
+    Then the gameboard should reject the tile at (2, 1)
 
   Scenario: It is the start of a player's turn on turn 2
-    Given the player is given a tile with terrains "Lakes" and "Rocky"
+    Given the player is given a tile with terrains "Lake" and "Rocky"
     When the player places the tile with next tile ID 2 and orientaiton "FromTop" at (1,0)
-    And the tile will have more than zero connections to any other tile
-    Then the gameboard should accept the tile
+    And the tile at (1,0) will have more than zero connections to any other tile
+    Then the gameboard should accept the tile at (1,0)
 
-    #not coded yet
-  Scenario: A Settlement was placed at a chosen hex
-    Given the player choose to create a new settlement
-    When the player placed a tile
-    And has to choose between expanding a settlement and creating a settlement
-    Then the hex chosen should now have a villager of the player's color
+  Scenario: The player wants to place a tile on level 2 thus erupting a volcano
+    Given that the board has at least 2 tiles
+    And a valid level two placement option exists at (0,0)
+    When the player places a tile on level 2 at a valid level two location
+    And the level two tile's origin will be at (0,0) with orientation "FromTop"
+    Then the gameboard should accept the tile at (0,0) at level 2
 
-  #Scenario: Invalid subsequent tile placements
+  Scenario: The player wants to place a tile on level 2 thus erupting a volcano
+    Given that the board has at least 2 tiles from game start
+    When the player places a tile on level 2 at a invalid level two location
+    And the level two tile's origin will be at an incorrect coordinate (0,-1) with orientation "FromTopLeft"
+    Then the gameboard should not accept the tile at (0,0) at level 2
+

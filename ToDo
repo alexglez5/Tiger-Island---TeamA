@@ -8,3 +8,5 @@ Player class:
 Villager acceptance test:
     - ***ADD STEP DEFINITIONS***
     - add subtracting villagers
+
+Level 2 tile placement acceptance test:

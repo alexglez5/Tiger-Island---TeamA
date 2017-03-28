@@ -9,10 +9,8 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 public class App {
     Boolean isBoardEmpty = true;
     GameBoard map = new GameBoard();
-    Tile newTile = new Tile(TerrainType.Grasslands, TerrainType.Jungle, 1);
-    Coordinate newCord = new Coordinate(0,0);
-    Orientation orientation = Orientation.FromBottom;
     Player player1 = new Player();
+    int currentTurnNumber = 1;
 
     public static void main( String[] args ) {
         System.out.println("random change");
@@ -23,12 +21,13 @@ public class App {
 
     public void placeTile(String orientaiton, int ID, int xcoordinate, int ycoordinate) {
         isBoardEmpty = false;
-        newTile.setTileID(ID);
+        player1.getCurrentTile().setTileID(ID);
         map.placeTile(
                 player1.getCurrentTile(),
                 new Coordinate(xcoordinate,ycoordinate),
                 checkOrientation(orientaiton)
         );
+        currentTurnNumber++;
         player1.removeCurrentTile();
     }
 
@@ -63,19 +62,19 @@ public class App {
     }
 
     public TerrainType checkTerrain(String terrain) {
-        if(orientation.equals("Jungle")){
+        if(terrain.equals("Jungle")){
             return TerrainType.Jungle;
         }
-        else if(orientation.equals("Rocky")) {
+        else if(terrain.equals("Rocky")) {
             return TerrainType.Rocky;
         }
-        else if(orientation.equals("Lake")) {
+        else if(terrain.equals("Lake")) {
             return TerrainType.Lake;
         }
-        else if(orientation.equals("Grassland")) {
+        else if(terrain.equals("Grassland")) {
             return TerrainType.Grasslands;
         }
-        else if(orientation.equals("Volcano")) {
+        else if(terrain.equals("Volcano")) {
             return TerrainType.Volcano;
         }
         else {
@@ -84,10 +83,22 @@ public class App {
         }
     }
 
-    public void givePlayerTile(String terrain1, String terrain2) {
-        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2),1);
+    public void givePlayerTile(String terrain1, String terrain2, int ID) {
+        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2), ID);
         player1.grantTile(currentTile);
     }
 
     public boolean isEmptyBoard(){return isBoardEmpty;}
+
+    public void buildVillager(int x, int y) {map.foundNewSettlement(new Coordinate(x,y));}
+
+    public boolean isCorrectTerrain(int x, int y, String correctTerrain) {
+        TerrainType correctTerrainType = checkTerrain(correctTerrain);
+        return correctTerrainType.equals(map.gameBoard.get(new Coordinate(x,y)).getTerrainType());
+    }
+
+    public int returnLevel(int coordinatex, int coordinatey) {
+        Coordinate coordinate = new Coordinate ( coordinatex, coordinatey);
+        return map.gameBoard.get(coordinate).getLevel();
+    }
 }
