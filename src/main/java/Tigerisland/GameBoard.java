@@ -28,5 +28,9 @@ public class GameBoard {
         builder.placeTotoro(coordinate, settlementID);
     }
 
+    public void placeTiger(Coordinate coordinate, int settlementID){
+        builder.placeTiger(coordinate, settlementID);
+    }
+
     //TODO add acceptance test for placeTile on different levels
 }
