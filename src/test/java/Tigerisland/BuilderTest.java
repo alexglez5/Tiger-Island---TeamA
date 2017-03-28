@@ -180,8 +180,57 @@ public class BuilderTest {
                 map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());
     }
 
-    //TODO test there is not other Totoro in settlement
-    //TODO test settlements are properly merged
+    @Test
+    public void testTigerIsProperlyPlacedIfTheLevelIsAtLeastThree() throws Exception{
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 3);
+        map.placeTiger(new Coordinate(0,1),
+                map.gameBoard.get(new Coordinate(-1,1)).getSettlementID());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,1)).hasTiger());
+    }
+
+    @Test
+    public void testTigerIsNotPlacedIfLevelIsSmallerThanThree() throws Exception{
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 2);
+        map.placeTiger(new Coordinate(0,1),
+                map.gameBoard.get(new Coordinate(-1,1)).getSettlementID());
+        Assert.assertFalse(map.gameBoard.get(new Coordinate(0 ,1)).hasTiger());
+    }
+
+    @Test
+    public void testTigerIsNotPlacedOnTopOfAVolcano() throws Exception{
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.gameBoard.get(new Coordinate(0,0)).increaseLevel();
+        map.gameBoard.get(new Coordinate(0,0)).increaseLevel();
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getLevel(), 3);
+        map.placeTiger(new Coordinate(0,0),
+                map.gameBoard.get(new Coordinate(-1,1)).getSettlementID());
+        Assert.assertFalse(map.gameBoard.get(new Coordinate(0 ,0)).hasTiger());
+    }
+
+    @Test
+    public void testSettlementsAreMergedWhenTigerIsPlacedBetweenThem() throws Exception{
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands, 2),
+                new Coordinate(1,1), Orientation.FromTop);
+        map.foundNewSettlement(new Coordinate(1,0));
+        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
+                map.gameBoard.get(new Coordinate(1,0)).getSettlementID());
+
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 3);
+        map.placeTiger(new Coordinate(0,1),
+                map.gameBoard.get(new Coordinate(-1,1)).getSettlementID());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,1)).hasTiger());
+
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
+                map.gameBoard.get(new Coordinate(1,0)).getSettlementID());
+    }
 
     @After
     public void deallocateHexesInMap() throws Exception{
