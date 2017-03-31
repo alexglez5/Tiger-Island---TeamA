@@ -1,7 +1,5 @@
 package Tigerisland;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-
 /**
  * Hello world!
  *
@@ -61,20 +59,43 @@ public class App {
         }
     }
 
+    public PlayerChoice enumPlayerChoice(String choice){
+        if(choice.equals("Found Settlement")){
+            return PlayerChoice.foundSettlement;
+        }
+        else if(choice.equals("Expand Settlement")) {
+            return PlayerChoice.expandSettlement;
+        }
+        else if(choice.equals("Place Totoro")) {
+            return PlayerChoice.placeTotoro;
+        }
+        else if(choice.equals("Place Tiger")) {
+            return PlayerChoice.placeTiger;
+        }
+        else {
+            System.out.println("Invalid Player Choice");
+            return null;
+        }
+
+    }
+
+
     public TerrainType checkTerrain(String terrain) {
-        if(terrain.equals("Jungle")){
+        if(terrain.equals("Jungle") || terrain.equals("jungle") ){
             return TerrainType.Jungle;
         }
-        else if(terrain.equals("Rocky")) {
+        else if(terrain.equals("Rocky") || terrain.equals("rocky") ) {
             return TerrainType.Rocky;
         }
-        else if(terrain.equals("Lake")) {
+        else if(terrain.equals("Lake") || terrain.equals("lake")
+                || terrain.equals("Lakes") || terrain.equals("lakes")) {
             return TerrainType.Lake;
         }
-        else if(terrain.equals("Grassland")) {
+        else if(terrain.equals("Grassland") || terrain.equals("grassland")
+                || terrain.equals("grasslands") || terrain.equals("Grasslands")) {
             return TerrainType.Grasslands;
         }
-        else if(terrain.equals("Volcano")) {
+        else if(terrain.equals("Volcano") || terrain.equals("volcano") ) {
             return TerrainType.Volcano;
         }
         else {
@@ -105,5 +126,23 @@ public class App {
     public boolean checkVillagers(int coordinateX, int coordinateY) {
         Coordinate coordinate = new Coordinate ( coordinateX, coordinateY);
         return map.gameBoard.get(coordinate).hasVillager();
+    }
+
+    public void givePlayerChoice(String choice) {
+        player1.giveChoice(choice);
+    }
+
+    public boolean checkPlayerChoice( String choice) {
+        return player1.checkPlayerChoice().equals(choice);
+    }
+
+    public void expandSettlementAt(int coordinateX, int coordinateY, String terrain) {
+        Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
+        map.expandSettlement(coordinate, checkTerrain(terrain));
+    }
+
+    public boolean existsMultipleHexesOfTerrainTypeThatAreAdjacent (int coordinateX, int coordinateY) {
+        Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
+        return map.checkExpandSettlementHexes(coordinate);
     }
 }

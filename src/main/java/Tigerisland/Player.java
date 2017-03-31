@@ -9,6 +9,7 @@ public class Player {
     private int numberOfVillagersLeft = 20;
     private int numberOfTotoroLeft = 3;
     private int numberOfTigersLeft = 2;
+    private String choice;
 
     public void Player(){}
 
@@ -33,4 +34,10 @@ public class Player {
     public void removeCurrentTile() {this.currentTile = null;}
 
     public Tile getCurrentTile(){return this.currentTile;}
+
+    public void giveChoice(String choice) { this.choice = choice; }
+
+    public String checkPlayerChoice() {
+        System.out.println(this.choice + " at player");
+        return this.choice; }
 }
