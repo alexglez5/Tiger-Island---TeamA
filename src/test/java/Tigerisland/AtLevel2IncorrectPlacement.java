@@ -1,5 +1,6 @@
 package Tigerisland;
 
+import Tigerisland.App;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -31,7 +32,7 @@ public class AtLevel2IncorrectPlacement {
         }
     }
     @When("^the player places a tile on level (\\d+) at a invalid level two location$")
-    public void the_player_places_a_tile_on_level_at_a_invalid_level_two_location(int arg1) throws Throwable {
+    public void the_player_places_a_tile_on_level_at_a_invalid_level_two_location(int level) throws Throwable {
         app.givePlayerTile("Lake", "Grassland", app.currentTurnNumber);;
     }
 
@@ -39,11 +40,9 @@ public class AtLevel2IncorrectPlacement {
     public void the_level_two_tile_s_origin_will_be_at_an_incorrect_coordinate_with_orientation(int x, int y, String orientation) throws Throwable {
         app.placeTile(orientation, app.currentTurnNumber, x, y);
     }
-    @Then("^the gameboard should not accept the tile at \\((\\d+),(\\d+)\\) at level (\\d+)$")
+
+    @Then("^the gameboard should not accept the tile at \\((-?\\d+),(-?\\d+)\\) at level (\\d+)$")
     public void the_gameboard_should_not_accept_the_tile_at_at_level(int coordinateX, int coordinateY, int level) throws Throwable {
-        if(app.doesTileExist(coordinateX, coordinateY)){
-            throw new Error("tile was still placed despite incorrect placement");
-        }
         if((app.returnLevel(coordinateX,coordinateY)==level)){
             throw new Error("Tile is on level 2");
         }

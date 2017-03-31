@@ -33,5 +33,5 @@ Feature: Tile Placement
     Given that the board has at least 2 tiles from game start
     When the player places a tile on level 2 at a invalid level two location
     And the level two tile's origin will be at an incorrect coordinate (0,-1) with orientation "FromTopLeft"
-    Then the gameboard should not accept the tile at (0,0) at level 2
+    Then the gameboard should not accept the tile at (0,-1) at level 2
 
