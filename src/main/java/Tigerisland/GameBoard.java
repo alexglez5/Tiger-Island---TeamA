@@ -11,6 +11,9 @@ public class GameBoard {
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
 
+    public Player getPlayer(){
+        return builder.getPlayer();
+    }
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
