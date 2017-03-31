@@ -101,4 +101,9 @@ public class App {
         Coordinate coordinate = new Coordinate ( coordinatex, coordinatey);
         return map.gameBoard.get(coordinate).getLevel();
     }
+
+    public boolean checkVillagers(int coordinateX, int coordinateY) {
+        Coordinate coordinate = new Coordinate ( coordinateX, coordinateY);
+        return map.gameBoard.get(coordinate).hasVillager();
+    }
 }

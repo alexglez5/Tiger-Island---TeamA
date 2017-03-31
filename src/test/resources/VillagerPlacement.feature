@@ -4,9 +4,9 @@ Feature: Villager Placement
   Scenario: Founding a settlement (valid)
     Given the player chooses to found a settlement at (0,0)
     When there is a open hex on level one
-      And the hex is not of volcano terrain
+      And the hex at (0, 1) is not of "Volcano" terrain
       And the player has a villager left
-    Then the player will place 1 villager on that hex
+    Then the player will place 1 villager on that hex at (0, 1)
 
 #  Scenario: Founding a settlement (invalid)
 #    Given the player chooses to found a settlement
