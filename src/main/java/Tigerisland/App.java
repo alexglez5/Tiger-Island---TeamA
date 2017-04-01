@@ -143,6 +143,7 @@ public class App {
 
     public boolean existsMultipleHexesOfTerrainTypeThatAreAdjacent (int coordinateX, int coordinateY) {
         Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
-        return map.checkExpandSettlementHexes(coordinate);
+        return true;
+//                map.checkExpandSettlementHexes(coordinate);
     }
 }
