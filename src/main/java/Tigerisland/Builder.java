@@ -26,14 +26,15 @@ public class Builder extends ActionHelper {
         processParameters(coordinate);
         if (settlementCanBeFound())
             foundSettlement(coordinate);
-
     }
 
     public void expandSettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
         processParameters(coordinateOfAnyHexInSettlement, terrainType);
         findPossibleSettlementExpansion();
-        if (settlementCanBeExpanded())
+//        processParameters(coordinateOfAnyHexInSettlement, terrainType);
+        if (settlementCanBeExpanded()) {
             expandSettlement();
+        }
 
         mergeSettlementsThatCanBeMerged();
     }
@@ -104,6 +105,7 @@ public class Builder extends ActionHelper {
                 && isAdjacentToSettlementOfAtLeastSizeFive()
                 && adjacentSettlementDoesNotContainATotoro()
                 && thereIsATotoroLeft();
+
     }
 
     private boolean thereIsATotoroLeft() {
@@ -136,8 +138,9 @@ public class Builder extends ActionHelper {
 
     private void ifCoordinateBelongsToSettlementIncreaseSettlementSize(Coordinate coordinate) {
         if (gameBoard.containsKey(coordinate)
-                && gameBoard.get(coordinate).getSettlementID() == settlementID)
+                && gameBoard.get(coordinate).getSettlementID() == settlementID){
             settlementSize++;
+        }
     }
 
     private void processParameters(Coordinate coordinate, TerrainType terrainType) {
@@ -148,7 +151,12 @@ public class Builder extends ActionHelper {
     }
 
     private boolean settlementCanBeExpanded() {
-        return thereIsEnoughVillagersToExpand();
+        return thereIsAtLeastOneEmptyHexToExpand()
+                && thereIsEnoughVillagersToExpand();
+    }
+
+    private boolean thereIsAtLeastOneEmptyHexToExpand() {
+        return visitedCoordinates.size() > 0;
     }
 
     public boolean thereIsEnoughVillagersToExpand() {
@@ -170,9 +178,9 @@ public class Builder extends ActionHelper {
     }
 
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-        for (Coordinate terrainCoordinate : gameBoard.keySet()) {
-            if (terrainBelongsToTheSameSettlementAndHasTheSameType(terrainCoordinate)) {
-                findCounterClockwiseCoordinatesAroundCoordinate(terrainCoordinate);
+        for (Coordinate adjacentCoordinate : gameBoard.keySet()) {
+            if (terrainBelongsToTheSameSettlementAndHasTheSameType(adjacentCoordinate)) {
+                findCounterClockwiseCoordinatesAroundCoordinate(adjacentCoordinate);
                 expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
             }
         }
@@ -186,9 +194,9 @@ public class Builder extends ActionHelper {
         assignEveryHexThatShouldBeMergedTheSameID();
     }
 
-    private boolean terrainBelongsToTheSameSettlementAndHasTheSameType(Coordinate terrainCoordinate) {
-        return gameBoard.get(terrainCoordinate).getSettlementID() == settlementID
-                && gameBoard.get(terrainCoordinate).getTerrainType() == terrainType;
+    private boolean terrainBelongsToTheSameSettlementAndHasTheSameType(Coordinate adjacentCoordinate) {
+        return gameBoard.get(adjacentCoordinate).getSettlementID() == settlementID
+                && gameBoard.get(adjacentCoordinate).getTerrainType() == terrainType;
     }
 
     private void expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited() {
@@ -218,6 +226,10 @@ public class Builder extends ActionHelper {
 
     private void markCoordinateAsVisited(Coordinate neighborCoordinate) {
         visitedCoordinates.add(neighborCoordinate);
+        updateScoreAndPlayersInventory(neighborCoordinate);
+    }
+
+    private void updateScoreAndPlayersInventory(Coordinate neighborCoordinate) {
         int level = gameBoard.get(neighborCoordinate).getLevel();
         possiblePointsAdded += level * level;
         possibleVillagersPlaced += level;

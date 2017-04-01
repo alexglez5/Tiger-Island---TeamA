@@ -33,4 +33,11 @@ public class Player {
     public void removeCurrentTile() {this.currentTile = null;}
 
     public Tile getCurrentTile(){return this.currentTile;}
+
+    public void resetScoreAndInventory() {
+        this.points = 0;
+        this.numberOfVillagersLeft = 20;
+        this.numberOfTotoroLeft = 3;
+        this.numberOfTigersLeft = 2;
+    }
 }

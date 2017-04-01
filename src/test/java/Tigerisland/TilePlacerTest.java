@@ -223,5 +223,6 @@ public class TilePlacerTest {
     @After
     public void deallocateHexesInMap() throws Exception{
         map.gameBoard.clear();
+        map.getPlayer().resetScoreAndInventory();
     }
 }
