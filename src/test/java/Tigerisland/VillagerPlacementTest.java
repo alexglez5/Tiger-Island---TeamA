@@ -11,15 +11,14 @@ import cucumber.api.java.en.When;
 public class VillagerPlacementTest{
         App app = new App();
 
-        @Given("^the player chooses to found a settlement at \\((\\d+),(\\d+)\\)$")
-        public void the_player_chooses_to_found_a_settlement(int coordinatex, int coordinatey) throws Throwable {
+        @Given("^the player chooses to \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
+        public void the_player_chooses_to_at(String choice, int arg2, int arg3) throws Throwable {
             app.givePlayerTile("Lake", "Grassland", app.currentTurnNumber);
             app.placeTile("FromBottom", 1,0, 0 );
-            if(app.isEmptyBoard()){
-                throw new Error("board is empty");
+            app.givePlayerChoice(choice);
+            if(!app.checkPlayerChoice(choice)) {
+                throw new Error("Wrong Player Choice");
             }
-
-
         }
 
         @When("^there is a open hex on level one$")
@@ -30,9 +29,8 @@ public class VillagerPlacementTest{
         }
 
         @When("^the hex at \\((-?\\d+), (-?\\d+)\\) is not of \"([^\"]*)\" terrain$")
-        public void the_hex_at_is_not_of_terrain(int coordinateX, int coordinateY, String volcano) throws Throwable {
-            System.out.println(coordinateX + " " + coordinateY);
-            if(app.isCorrectTerrain(coordinateX, coordinateY, volcano)){
+        public void the_hex_at_is_not_of_terrain(int coordinateX, int coordinateY, String terrain) throws Throwable {
+            if(app.isCorrectTerrain(coordinateX, coordinateY, terrain)){
                 throw new Error("the terrain chosen was of type volcano");
             }
         }
@@ -48,7 +46,7 @@ public class VillagerPlacementTest{
         public void the_player_will_place_villager_on_that_hex_at(int numberOfVillagers, int coordinatex, int coordinatey) throws Throwable {
             app.buildVillager(coordinatex, coordinatey);
             if(!app.checkVillagers(coordinatex, coordinatey)) {
-                throw new Error("the tile doesn't have any villagers placed");
+                throw new Error("the hex doesn't have any villagers placed");
             }
         }
 }
