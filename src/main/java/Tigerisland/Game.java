@@ -7,10 +7,21 @@ public class Game {
     Player black = new Player();
     int turn = 1;
 
-    public static void main(String[] args) {
+    public boolean checkHexLocation(Coordinate cord) {
+        boolean existence = false;
+        gameBoard.checkForHex(cord);
+
+        return existence;
+    }
+
+    public void placeFirstTile() {
+        Hex main = new Hex(TerrainType.VOLCANO, turn);
+        Hex leftTop = new Hex(TerrainType.JUNGLE, turn);
+        Hex rightTop = new Hex(TerrainType.LAKE, turn);
 
     }
 
-
-
+    public void incrementTurn() {
+        turn++;
+    }
 }

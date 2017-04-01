@@ -4,11 +4,13 @@ Feature: Tile Placement
   I need to place tiles correctly
 
   Scenario Outline: First tile placement
-    When a player places a tile with tileID 1 and orientation <orient>
-    Then a hex should occupy coordinate <main>
-    And a hex should occupy coordinate <left>
-    And a hex should occupy coordinate <right>
+    When a player places the first tile
+    Then a hex should occupy location <x>,<y>,<z>
 
     Examples:
-       | orient      | main   | left   | right   |
-       |"FromBottom" | (0, 0) | (0, 1) | (-1, 1) |
+      | x  | y  | z  |
+      | 0  | 0  | 0  |
+      | -1 | 0  | 1  |
+      | -1 | 1  | 0  |
+      | 1  | -1 | 0  |
+      | 1  | 0  | -1 |
