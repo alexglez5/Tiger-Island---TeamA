@@ -12,45 +12,45 @@ public class Hex {
     private int tileID;
     private int level;
 
-    public Hex(TerrainType terrainType, int tileID){
+    public Hex(TerrainType terrainType, int tileID) {
         this.terrainType = terrainType;
         this.tileID = tileID;
         level = 1;
     }
 
-    public void placeVillagers(){
+    public void placeVillagers() {
         hasVillagers = true;
     }
 
-    public void placeTotoro(){
+    public void placeTotoro() {
         hasTotoro = true;
     }
 
-    public void placeTiger(){
+    public void placeTiger() {
         hasTiger = true;
     }
 
-    public boolean hasVillager(){
+    public boolean hasVillager() {
         return hasVillagers;
     }
 
-    public boolean hasTotoro(){
+    public boolean hasTotoro() {
         return hasTotoro;
     }
 
-    public boolean hasTiger(){
+    public boolean hasTiger() {
         return hasTiger;
     }
 
-    public int getSettlementID(){
+    public int getSettlementID() {
         return settlementID;
     }
 
-    public void setSettlementID(int settlementID){
+    public void setSettlementID(int settlementID) {
         this.settlementID = settlementID;
     }
 
-    public TerrainType getTerrainType(){
+    public TerrainType getTerrainType() {
         return terrainType;
     }
 
@@ -58,12 +58,17 @@ public class Hex {
         return tileID;
     }
 
-    public void increaseLevel(){
+    public void increaseLevel() {
         level++;
     }
 
     public int getLevel() {
         return level;
+    }
+
+    @Override
+    public int hashCode() {
+        return terrainType != null ? terrainType.hashCode() : 0;
     }
 
     @Override
@@ -74,10 +79,5 @@ public class Hex {
         Hex hex = (Hex) o;
 
         return terrainType == hex.terrainType;
-    }
-
-    @Override
-    public int hashCode() {
-        return terrainType != null ? terrainType.hashCode() : 0;
     }
 }

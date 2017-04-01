@@ -153,38 +153,6 @@ public class TilePlacer extends ActionHelper {
         return true;
     }
 
-    private int getSizeLeftOfCurrentSettlement(int idOfSettlementThanMightBeWipeOut) {
-        for (Coordinate tempCoordinate : gameBoard.keySet()) {
-            if (isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(tempCoordinate, idOfSettlementThanMightBeWipeOut))
-                sizeLeftOfCurrentSettlement++;
-        }
-        return sizeLeftOfCurrentSettlement;
-    }
-
-    private boolean isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(
-            Coordinate tempCoordinate, int idOfSettlementThanMightBeWipeOut) {
-        return terrainContainsAPiece(tempCoordinate)
-                && gameBoard.get(tempCoordinate).getSettlementID()
-                == idOfSettlementThanMightBeWipeOut
-                && isNotOneOfCoordinatesThatWillBeWipedOut(tempCoordinate);
-    }
-
-    private void getDifferentSettlementIDsOfATile() {
-        if (terrainContainsAPiece(leftOfMainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
-        if (terrainContainsAPiece(mainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(mainTerrainCoordinate).getSettlementID());
-        if (terrainContainsAPiece(rightOfMainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID());
-    }
-
-    private boolean terrainContainsAPiece(Coordinate terrainCoordinate){
-        return gameBoard.containsKey(terrainCoordinate)
-                && (gameBoard.get(terrainCoordinate).hasVillager()
-                || gameBoard.get(terrainCoordinate).hasTotoro()
-                || gameBoard.get(terrainCoordinate).hasTiger());
-    }
-
     private void increaseLevelOfTile() {
         gameBoard.get(leftOfMainTerrainCoordinate).increaseLevel();
         gameBoard.get(mainTerrainCoordinate).increaseLevel();
@@ -213,6 +181,38 @@ public class TilePlacer extends ActionHelper {
     private boolean coordinateDoesNotContainTiger(Coordinate terrainCoordinate) {
         return !(gameBoard.containsKey(terrainCoordinate)
                 && gameBoard.get(terrainCoordinate).hasTiger());
+    }
+
+    private void getDifferentSettlementIDsOfATile() {
+        if (terrainContainsAPiece(leftOfMainTerrainCoordinate))
+            settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
+        if (terrainContainsAPiece(mainTerrainCoordinate))
+            settlementIdsOfHexesInTile.add(gameBoard.get(mainTerrainCoordinate).getSettlementID());
+        if (terrainContainsAPiece(rightOfMainTerrainCoordinate))
+            settlementIdsOfHexesInTile.add(gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID());
+    }
+
+    private int getSizeLeftOfCurrentSettlement(int idOfSettlementThanMightBeWipeOut) {
+        for (Coordinate tempCoordinate : gameBoard.keySet()) {
+            if (isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(tempCoordinate, idOfSettlementThanMightBeWipeOut))
+                sizeLeftOfCurrentSettlement++;
+        }
+        return sizeLeftOfCurrentSettlement;
+    }
+
+    private boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
+        return gameBoard.containsKey(terrainCoordinate)
+                && (gameBoard.get(terrainCoordinate).hasVillager()
+                || gameBoard.get(terrainCoordinate).hasTotoro()
+                || gameBoard.get(terrainCoordinate).hasTiger());
+    }
+
+    private boolean isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(
+            Coordinate tempCoordinate, int idOfSettlementThanMightBeWipeOut) {
+        return terrainContainsAPiece(tempCoordinate)
+                && gameBoard.get(tempCoordinate).getSettlementID()
+                == idOfSettlementThanMightBeWipeOut
+                && isNotOneOfCoordinatesThatWillBeWipedOut(tempCoordinate);
     }
 
     private boolean isNotOneOfCoordinatesThatWillBeWipedOut(Coordinate tempCoordinate) {

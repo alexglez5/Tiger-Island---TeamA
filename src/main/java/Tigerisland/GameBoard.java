@@ -11,27 +11,27 @@ public class GameBoard {
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return builder.getPlayer();
     }
 
-    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
+    public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
     }
 
-    public void foundNewSettlement(Coordinate coordinate){
+    public void foundNewSettlement(Coordinate coordinate) {
         builder.foundNewSettlement(coordinate);
     }
 
-    public void expandSettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType){
+    public void expandSettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
         builder.expandSettlement(coordinateOfAnyHexInSettlement, terrainType);
     }
 
-    public void placeTotoro(Coordinate coordinate, int settlementID){
+    public void placeTotoro(Coordinate coordinate, int settlementID) {
         builder.placeTotoro(coordinate, settlementID);
     }
 
-    public void placeTiger(Coordinate coordinate, int settlementID){
+    public void placeTiger(Coordinate coordinate, int settlementID) {
         builder.placeTiger(coordinate, settlementID);
     }
 

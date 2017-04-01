@@ -11,29 +11,52 @@ public class Player {
     private int numberOfTigersLeft = 2;
     private String choice;
 
-    public void Player(){}
+    public void Player() {
+    }
 
-    public int getPoints(){return this.points;}
+    public int getPoints() {
+        return this.points;
+    }
 
-    public void addPlayerPoints(int pointsAdded){this.points += pointsAdded;}
+    public void addPlayerPoints(int pointsAdded) {
+        this.points += pointsAdded;
+    }
 
-    public int getNumberOfVillagersLeft(){ return this.numberOfVillagersLeft;}
+    public int getNumberOfVillagersLeft() {
+        return this.numberOfVillagersLeft;
+    }
 
-    public int getNumberOfTotoroLeft(){return this.numberOfTotoroLeft;}
+    public int getNumberOfTotoroLeft() {
+        return this.numberOfTotoroLeft;
+    }
 
-    public int getNumberOfTigersLeft(){return this.numberOfTigersLeft;}
+    public int getNumberOfTigersLeft() {
+        return this.numberOfTigersLeft;
+    }
 
-    public void updatePlacedVillagers(int numberOfVillagersPlaced){this.numberOfVillagersLeft -= numberOfVillagersPlaced;}
+    public void updatePlacedVillagers(int numberOfVillagersPlaced) {
+        this.numberOfVillagersLeft -= numberOfVillagersPlaced;
+    }
 
-    public void updatePlacedTotoro(){this.numberOfTotoroLeft -= 1;}
+    public void updatePlacedTotoro() {
+        this.numberOfTotoroLeft -= 1;
+    }
 
-    public void updatePlacedTiger(){this.numberOfTigersLeft -= 1;}
+    public void updatePlacedTiger() {
+        this.numberOfTigersLeft -= 1;
+    }
 
-    public void grantTile(Tile currentTile) {this.currentTile = currentTile;}
+    public void grantTile(Tile currentTile) {
+        this.currentTile = currentTile;
+    }
 
-    public void removeCurrentTile() {this.currentTile = null;}
+    public void removeCurrentTile() {
+        this.currentTile = null;
+    }
 
-    public Tile getCurrentTile(){return this.currentTile;}
+    public Tile getCurrentTile() {
+        return this.currentTile;
+    }
 
     public void resetScoreAndInventory() {
         this.points = 0;
@@ -41,9 +64,13 @@ public class Player {
         this.numberOfTotoroLeft = 3;
         this.numberOfTigersLeft = 2;
     }
-    public void giveChoice(String choice) { this.choice = choice; }
+
+    public void giveChoice(String choice) {
+        this.choice = choice;
+    }
 
     public String checkPlayerChoice() {
         System.out.println(this.choice + " at player");
-        return this.choice; }
+        return this.choice;
+    }
 }

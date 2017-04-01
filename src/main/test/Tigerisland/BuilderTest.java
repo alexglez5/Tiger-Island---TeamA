@@ -13,14 +13,12 @@ import static org.junit.Assert.*;
  */
 public class BuilderTest {
     GameBoard map;
-//    Player   player;
 
     //TODO merge settlements after expansion?
 
     @Before
     public void initializeGameBoard() throws Exception{
         map = new GameBoard();
-//        player = new Player();
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky, 1),
                 new Coordinate(0,0), Orientation.FromBottom);
     }
