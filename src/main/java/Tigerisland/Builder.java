@@ -21,7 +21,6 @@ public class Builder extends ActionHelper {
     private int possibleVillagersPlaced;
     private TreeSet<Integer> idOfSettlementsThatContainATiger;
     private ArrayList<Coordinate> settlement;
-    private int counter;
 
     public void foundNewSettlement(Coordinate coordinate) {
         processParameters(coordinate);
@@ -52,6 +51,44 @@ public class Builder extends ActionHelper {
             placeTigerAtGivenCoordinate();
 
         mergeSettlementsThatCanBeMerged(coordinate);
+    }
+
+    private void processParameters(Coordinate coordinate) {
+        this.coordinate = coordinate;
+        this.settlementID = coordinate.hashCode();
+    }
+
+    private boolean settlementCanBeFound() {
+        return terrainIsNotTaken()
+                && terrainIsNotAVolcano()
+                && terrainIsInLevelOne()
+                && thereIsAVillagerLeft();
+    }
+
+    private void foundSettlement(Coordinate coordinate) {
+        gameBoard.get(coordinate).placeVillagers();
+        gameBoard.get(coordinate).setSettlementID(settlementID);
+        settlement = new ArrayList<>();
+        settlement.add(coordinate);
+        settlements.put(settlementID, settlement);
+        player.addPlayerPoints(1);
+        player.updatePlacedVillagers(1);
+    }
+
+    private boolean terrainIsNotTaken() {
+        return gameBoard.containsKey(coordinate);
+    }
+
+    private boolean terrainIsNotAVolcano() {
+        return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
+    }
+
+    private boolean terrainIsInLevelOne() {
+        return gameBoard.get(coordinate).getLevel() == 1;
+    }
+
+    private boolean thereIsAVillagerLeft() {
+        return player.getNumberOfVillagersLeft() > 0;
     }
 
     private void processParameters(Coordinate coordinate, TerrainType terrainType) {
@@ -85,24 +122,10 @@ public class Builder extends ActionHelper {
             mergeSettlementsThatCanBeMerged(visitedCoordinate);
     }
 
-//    private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-//        for (Coordinate coordinateInSettlement : gameBoard.keySet()) {
-//            if (terrainBelongsToTheSameSettlementAndHasTheSameType(coordinateInSettlement)) {
-//                findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
-//                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
-//            }
-//        }
-//    }
-    
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-        counter = -1;
-
         for (Coordinate coordinateInSettlement : settlements.get(settlementID)) {
-//            while (counter != 0) {
-//                counter = 0;
-                findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
-                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
-//            }
+            findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
+            expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
         }
     }
 
@@ -122,20 +145,16 @@ public class Builder extends ActionHelper {
         assignEveryHexThatShouldBeMergedTheSameID();
     }
 
-//    private boolean terrainBelongsToTheSameSettlementAndHasTheSameType(Coordinate coordinateInSettlement) {
-//        return gameBoard.get(coordinateInSettlement).getSettlementID() == settlementID
-//                && gameBoard.get(coordinateInSettlement).getTerrainType() == terrainType;
-//    }
-
     private void expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited() {
-        for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
-            if (adjacentTerrainIsAsTheSameTypeAndHasNotBeenVisited(neighborCoordinate)) {
-                markCoordinateAsVisited(neighborCoordinate);
-                findCounterClockwiseCoordinatesAroundCoordinate(neighborCoordinate);
-                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
-//                counter++;
-            }
-        }
+        for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate)
+            if (adjacentTerrainIsAsTheSameTypeAndHasNotBeenVisited(neighborCoordinate))
+                expandAsLongAsThereIsAnAdjacentTerrainOfTheSameTipe(neighborCoordinate);
+    }
+
+    private void expandAsLongAsThereIsAnAdjacentTerrainOfTheSameTipe(Coordinate neighborCoordinate) {
+        markCoordinateAsVisited(neighborCoordinate);
+        findCounterClockwiseCoordinatesAroundCoordinate(neighborCoordinate);
+        expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
     }
 
     private void getAllDifferentSettlementIDsAroundACoordinate() {
@@ -177,44 +196,6 @@ public class Builder extends ActionHelper {
         int level = gameBoard.get(neighborCoordinate).getLevel();
         possiblePointsAdded += level * level;
         possibleVillagersPlaced += level;
-    }
-
-    private void processParameters(Coordinate coordinate) {
-        this.coordinate = coordinate;
-        this.settlementID = coordinate.hashCode();
-    }
-
-    private boolean settlementCanBeFound() {
-        return terrainIsNotTaken()
-                && terrainIsNotAVolcano()
-                && terrainIsInLevelOne()
-                && thereIsAVillagerLeft();
-    }
-
-    private void foundSettlement(Coordinate coordinate) {
-        gameBoard.get(coordinate).placeVillagers();
-        gameBoard.get(coordinate).setSettlementID(settlementID);
-        settlement = new ArrayList<>();
-        settlement.add(coordinate);
-        settlements.put(settlementID, settlement);
-        player.addPlayerPoints(1);
-        player.updatePlacedVillagers(1);
-    }
-
-    private boolean terrainIsNotTaken() {
-        return gameBoard.containsKey(coordinate);
-    }
-
-    private boolean terrainIsNotAVolcano() {
-        return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
-    }
-
-    private boolean terrainIsInLevelOne() {
-        return gameBoard.get(coordinate).getLevel() == 1;
-    }
-
-    private boolean thereIsAVillagerLeft() {
-        return player.getNumberOfVillagersLeft() > 0;
     }
 
     private boolean tigerCanBePlaced() {
