@@ -16,13 +16,13 @@ public class App {
         System.out.println("random change");
     }
 
-    public void placeTile(String orientaiton, int ID, int xcoordinate, int ycoordinate) {
+    public void placeTile(String orientation, int ID, int xcoordinate, int ycoordinate) {
         isBoardEmpty = false;
         player1.getCurrentTile().setTileID(ID);
         map.placeTile(
                 player1.getCurrentTile(),
-                new Coordinate(xcoordinate, ycoordinate),
-                checkOrientation(orientaiton)
+                new Coordinate(xcoordinate,ycoordinate),
+                checkOrientation(orientation)
         );
         currentTurnNumber++;
         player1.removeCurrentTile();
@@ -74,19 +74,25 @@ public class App {
     }
 
     public TerrainType checkTerrain(String terrain) {
-        if (terrain.equals("Jungle") || terrain.equals("jungle")) {
-            return TerrainType.Jungle;
-        } else if (terrain.equals("Rocky") || terrain.equals("rocky")) {
-            return TerrainType.Rocky;
-        } else if (terrain.equals("Lake") || terrain.equals("lake")
+
+        if(terrain.equals("JUNGLE") || terrain.equals("jungle") ){
+            return TerrainType.JUNGLE;
+        }
+        else if(terrain.equals("ROCK") || terrain.equals("rocky") ) {
+            return TerrainType.ROCK;
+        }
+        else if(terrain.equals("LAKE") || terrain.equals("lake")
                 || terrain.equals("Lakes") || terrain.equals("lakes")) {
-            return TerrainType.Lake;
-        } else if (terrain.equals("Grassland") || terrain.equals("grassland")
-                || terrain.equals("grasslands") || terrain.equals("Grasslands")) {
-            return TerrainType.Grasslands;
-        } else if (terrain.equals("Volcano") || terrain.equals("volcano")) {
-            return TerrainType.Volcano;
-        } else {
+            return TerrainType.LAKE;
+        }
+        else if(terrain.equals("Grassland") || terrain.equals("grassland")
+                || terrain.equals("grasslands") || terrain.equals("GRASS")) {
+            return TerrainType.GRASS;
+        }
+        else if(terrain.equals("VOLCANO") || terrain.equals("volcano") ) {
+            return TerrainType.VOLCANO;
+        }
+        else {
             System.out.println("Invalid Terrain");
             return null;
         }
@@ -102,7 +108,10 @@ public class App {
 
     public boolean isCorrectTerrain(int x, int y, String correctTerrain) {
         TerrainType correctTerrainType = checkTerrain(correctTerrain);
-        return correctTerrainType.equals(map.gameBoard.get(new Coordinate(x, y)).getTerrainType());
+        Coordinate toCheck = new Coordinate(x,y);
+        Hex hexToCheck = map.gameBoard.get(toCheck);
+        return correctTerrainType.equals(hexToCheck.getTerrainType());
+
     }
 
     public int returnLevel(int coordinatex, int coordinatey) {

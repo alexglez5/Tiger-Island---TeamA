@@ -13,7 +13,11 @@ public class InvalidVillagerPlacementTest {
 
     @Given("^the player chooses to \"([^\"]*)\"$")
     public void the_player_chooses_to(String choice) throws Throwable {
+<<<<<<< HEAD
         app.givePlayerTile("Lake", "Grassland");
+=======
+        app.givePlayerTile("LAKE", "GRASS", app.currentTurnNumber);
+>>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
         app.placeTile("FromBottom", 1, 0, 0);
         app.givePlayerChoice(choice);
         if (!app.checkPlayerChoice(choice)) {
