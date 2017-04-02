@@ -188,7 +188,7 @@ public class Builder extends ActionHelper {
     }
 
     private boolean terrainIsNotAVolcano() {
-        return gameBoard.get(coordinate).getTerrainType() != TerrainType.VOLCANO;
+        return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
     }
 
     private boolean terrainIsInLevelOne() {
@@ -318,7 +318,7 @@ public class Builder extends ActionHelper {
     }
 
     private boolean terrainTypeIsNotAVolcano() {
-        return terrainType != TerrainType.VOLCANO;
+        return terrainType != TerrainType.Volcano;
     }
 
 }

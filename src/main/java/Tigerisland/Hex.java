@@ -12,12 +12,6 @@ public class Hex {
     private int tileID;
     private int level;
 
-    public Hex(TerrainType terrainType, int tileID) {
-        this.terrainType = terrainType;
-        this.tileID = tileID;
-        level = 1;
-    }
-
     public Hex(TerrainType terrainType) {
         this.terrainType = terrainType;
         level = 1;

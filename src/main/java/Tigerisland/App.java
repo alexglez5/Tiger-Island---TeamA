@@ -76,21 +76,21 @@ public class App {
     public TerrainType checkTerrain(String terrain) {
 
         if(terrain.equals("JUNGLE") || terrain.equals("jungle") ){
-            return TerrainType.JUNGLE;
+            return TerrainType.Jungle;
         }
-        else if(terrain.equals("ROCK") || terrain.equals("rocky") ) {
-            return TerrainType.ROCK;
+        else if(terrain.equals("ROCKY") || terrain.equals("rocky") ) {
+            return TerrainType.Rocky;
         }
         else if(terrain.equals("LAKE") || terrain.equals("lake")
                 || terrain.equals("Lakes") || terrain.equals("lakes")) {
-            return TerrainType.LAKE;
+            return TerrainType.Lake;
         }
         else if(terrain.equals("Grassland") || terrain.equals("grassland")
                 || terrain.equals("grasslands") || terrain.equals("GRASS")) {
-            return TerrainType.GRASS;
+            return TerrainType.Grasslands;
         }
-        else if(terrain.equals("VOLCANO") || terrain.equals("volcano") ) {
-            return TerrainType.VOLCANO;
+        else if(terrain.equals("Volcano") || terrain.equals("volcano") ) {
+            return TerrainType.Volcano;
         }
         else {
             System.out.println("Invalid Terrain");

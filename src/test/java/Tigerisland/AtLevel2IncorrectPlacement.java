@@ -33,11 +33,8 @@ public class AtLevel2IncorrectPlacement {
     }
     @When("^the player places a tile on level (\\d+) at a invalid level two location$")
     public void the_player_places_a_tile_on_level_at_a_invalid_level_two_location(int level) throws Throwable {
-<<<<<<< HEAD
         app.givePlayerTile("Lake", "Grassland");
-=======
-        app.givePlayerTile("LAKE", "Grassland", app.currentTurnNumber);;
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
+        app.givePlayerTile("LAKE", "Grassland");;
     }
 
     @When("^the level two tile's origin will be at an incorrect coordinate \\((-?\\d+),(-?\\d+)\\) with orientation \"([^\"]*)\"$")

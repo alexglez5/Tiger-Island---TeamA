@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static javax.swing.text.html.HTML.Tag.HEAD;
+
 /**
  * Created by Alexander Gonzalez on 3/21/2017.
  */
@@ -18,12 +20,7 @@ public class BuilderTest {
     @Before
     public void initializeGameBoard() throws Exception{
         map = new GameBoard();
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
-=======
-//        player = new Player();
-        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(0,0), Orientation.FromBottom);
     }
 
@@ -41,15 +38,9 @@ public class BuilderTest {
 
     @Test
     public void testVillagerIsPlacedOnLevelOneWhenFindingNewSettlement() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
-=======
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(0,0), Orientation.FromBottomRight);
         map.foundNewSettlement(new Coordinate(1,0));
         Assert.assertFalse(map.gameBoard.get(new Coordinate(1,0)).hasVillager());
@@ -57,22 +48,14 @@ public class BuilderTest {
 
     @Test
     public void testSettlementFullyExpands() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(2,1), Orientation.FromBottom);
         map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
         Assert.assertTrue(map.gameBoard.get(new Coordinate(1,1)).hasVillager());
         Assert.assertEquals(map.gameBoard.get(new Coordinate(1,1)).getSettlementID(),
                 new Coordinate(1,1).hashCode());
@@ -84,18 +67,12 @@ public class BuilderTest {
 
     @Test
     public void testSettlementDoesNotExpandLongerThanExpected() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(-1,2), Orientation.FromBottomRight);
         map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
 
         Assert.assertFalse(map.gameBoard.get(new Coordinate(-1,3)).hasVillager());
         Assert.assertFalse(map.gameBoard.get(new Coordinate(1,0)).hasVillager());
@@ -105,7 +82,6 @@ public class BuilderTest {
 
     @Test
     public void testTotoroIsProperlyPlaced() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
@@ -113,19 +89,10 @@ public class BuilderTest {
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
                 new Coordinate(2,1), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(1,3), Orientation.FromBottomLeft);
 
         map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
         map.gameBoard.get(new Coordinate(0,3)).placeVillagers();
         map.gameBoard.get(new Coordinate(0,3)).
                 setSettlementID(map.gameBoard.get(new Coordinate(1,1)).getSettlementID());
@@ -135,7 +102,6 @@ public class BuilderTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void shouldNotPlaceTotoroIfNoAdjacentSettlementHasAtLeastSizeFive() throws Exception{
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
@@ -144,20 +110,10 @@ public class BuilderTest {
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
                 new Coordinate(2,1), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
-=======
-    public void testTotoroIsNotPlacedIfAdjacentSettlementIsLessThanSizeFive() throws Exception{
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.LAKE),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(1,3), Orientation.FromBottomLeft);
 
         map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
         map.gameBoard.get(new Coordinate(0,3)).placeVillagers();
         map.gameBoard.get(new Coordinate(0,3)).
                 setSettlementID(map.gameBoard.get(new Coordinate(1,1)).getSettlementID());
@@ -167,7 +123,6 @@ public class BuilderTest {
 
     @Test
     public void testTotoroIsNotPlacedOnTopOfAVolcano() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Lake),
@@ -175,19 +130,10 @@ public class BuilderTest {
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
                 new Coordinate(2,1), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.LAKE),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(1,3), Orientation.FromBottomLeft);
 
         map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
         map.gameBoard.get(new Coordinate(0,3)).placeVillagers();
         map.gameBoard.get(new Coordinate(0,3)).
                 setSettlementID(map.gameBoard.get(new Coordinate(1,1)).getSettlementID());
@@ -198,7 +144,6 @@ public class BuilderTest {
 
     @Test
     public void testTotoroIsNotPlaceIfThereIsAnotherTotoroInSettlement() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
@@ -206,30 +151,17 @@ public class BuilderTest {
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
                 new Coordinate(2,1), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(1,3), Orientation.FromBottomLeft);
 
         map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
         map.gameBoard.get(new Coordinate(0,3)).placeVillagers();
         map.gameBoard.get(new Coordinate(0,3)).
                 setSettlementID(map.gameBoard.get(new Coordinate(1,1)).getSettlementID());
         map.placeTotoro(new Coordinate(-1,3));
         Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
 
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-=======
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(-2,2), Orientation.FromBottom);
         map.placeTotoro(new Coordinate(-2,3));
         Assert.assertFalse(map.gameBoard.get(new Coordinate(-2 ,3)).hasTotoro());
@@ -237,7 +169,6 @@ public class BuilderTest {
 
     @Test
     public void testSettlementsAreMergedWhenTotoroIsPlacedBetweenThem() throws Exception{
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
@@ -247,22 +178,11 @@ public class BuilderTest {
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,3), Orientation.FromBottomLeft);
         map.placeTile(new Tile(TerrainType.Jungle, TerrainType.Rocky),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1,3), Orientation.FromBottomLeft);
-        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.ROCK),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(-2,2), Orientation.FromBottom);
 
         map.foundNewSettlement(new Coordinate(1,1));
         map.foundNewSettlement(new Coordinate(-2,3));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
         map.gameBoard.get(new Coordinate(0,3)).placeVillagers();
         map.gameBoard.get(new Coordinate(0,3)).
                 setSettlementID(map.gameBoard.get(new Coordinate(1,1)).getSettlementID());
@@ -305,11 +225,7 @@ public class BuilderTest {
     @Test
     public void testSettlementsAreMergedWhenTigerIsPlacedBetweenThem() throws Exception{
         map.foundNewSettlement(new Coordinate(-1,1));
-<<<<<<< HEAD
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
-=======
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
->>>>>>> 76f06a5f8615fd7deca6e6d6f7e66eafe03b8f95
                 new Coordinate(1,1), Orientation.FromTop);
         map.foundNewSettlement(new Coordinate(1,0));
         Assert.assertNotEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
