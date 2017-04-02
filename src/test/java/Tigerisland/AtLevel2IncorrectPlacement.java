@@ -23,12 +23,12 @@ public class AtLevel2IncorrectPlacement {
         app.givePlayerTile("Grassland", "Grassland");
         app.placeTile("FromBottom",1,0,0);
         if(!app.doesTileExist(0, 0)){
-            throw new Error("could'nt place tile at (0, 0)");
+            throw new Error("couldn't place tile at (0, 0)");
         }
         app.givePlayerTile("Grassland", "Grassland");
         app.placeTile("FromBottom", 2, 1,-2);
         if(!app.doesTileExist(1, -2)){
-            throw new Error("could'nt place tile at (1, -2)");
+            throw new Error("couldn't place tile at (1, -2)");
         }
     }
     @When("^the player places a tile on level (\\d+) at a invalid level two location$")
@@ -45,7 +45,7 @@ public class AtLevel2IncorrectPlacement {
     @Then("^the gameboard should not accept the tile at \\((-?\\d+),(-?\\d+)\\) at level (\\d+)$")
     public void the_gameboard_should_not_accept_the_tile_at_at_level(int coordinateX, int coordinateY, int level) throws Throwable {
         if((app.returnLevel(coordinateX,coordinateY)==level)){
-            throw new Error("Tile is on level 2");
+            throw new Error("Tile was placed on the level");
         }
     }
 }
