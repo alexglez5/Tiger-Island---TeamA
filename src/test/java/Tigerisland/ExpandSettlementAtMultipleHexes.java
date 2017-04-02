@@ -15,12 +15,7 @@ public class ExpandSettlementAtMultipleHexes {
         app.updateCurrentTile("Lake", "Grassland");
         app.placeTile("FromBottom", 0, 0);
         app.updateCurrentTile("Grassland", "Grassland");
-
         app.placeTile("FromTop", 1, 1);
-//        app.givePlayerChoice(choice);
-//        if (!app.checkPlayerChoice(choice)) {
-//            throw new Error("Wrong Player Choice");
-//        }
     }
 
     @When("^there is a settlement at \\((-?\\d+) , (-?\\d+)\\) that can be expanded$")

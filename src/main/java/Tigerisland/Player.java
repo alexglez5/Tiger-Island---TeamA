@@ -13,6 +13,7 @@ public class Player {
     private int numberOfTotoroLeft = 3;
     private int numberOfTigersLeft = 2;
     private String choice;
+    private String playerID;
 
 
     public int getPoints() {
@@ -73,5 +74,9 @@ public class Player {
     public String checkPlayerChoice() {
         System.out.println(this.choice + " at player");
         return this.choice;
+    }
+
+    public void setPlayerID(String playerID) {
+        this.playerID = playerID;
     }
 }
