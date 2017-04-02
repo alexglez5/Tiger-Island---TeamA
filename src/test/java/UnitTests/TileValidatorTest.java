@@ -1,6 +1,6 @@
 package UnitTests;
 
-import Tigerisland.TileValidator;
+import Tigerisland.*;
 import org.junit.Test;
 
 /**
@@ -8,7 +8,14 @@ import org.junit.Test;
  */
 public class TileValidatorTest {
 
+    Game game = new Game();
     TileValidator validator = new TileValidator();
+
+    @Test
+    public void testPlacementOnLevelOne() throws Exception {
+        game.placeFirstTile();
+    }
+
 
 
 }

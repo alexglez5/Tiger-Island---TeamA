@@ -53,7 +53,6 @@ public class Game {
     }
 
     public void placeTile(Tile tile, Coordinate target) {
-        gameBoard.placeHex(tile.getMainTerrain(), target);
         int orientation = tile.getOrientation();
     }
 }

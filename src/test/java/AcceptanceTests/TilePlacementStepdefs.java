@@ -15,7 +15,7 @@ public class TilePlacementStepdefs {
     Game app;
 
     @When("^a player places the first tile$")
-    public void a_player_places_a_tile_with_tileID() throws Throwable {
+    public void a_player_places_the_first_tile() throws Throwable {
         app = new Game();
         app.placeFirstTile();
     }

@@ -27,7 +27,7 @@ public class TileValidationStepdefs {
         tile.setOrientation(orientation);
     }
 
-    @When("^the player places the tile at (-?\\d+), (-?\\d+), (-?\\d+)$")
+    @When("^the player places the tile at (-?\\d+),(-?\\d+),(-?\\d+)$")
     public void the_player_places_the_tile_at(int xCord, int yCord, int zCord) throws Throwable {
         Coordinate target = new Coordinate(xCord,yCord,zCord);
         app.placeTile(tile, target);
