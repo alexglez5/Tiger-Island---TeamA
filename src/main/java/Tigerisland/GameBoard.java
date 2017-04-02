@@ -46,12 +46,34 @@ public class GameBoard {
         builder.placeTiger(coordinate);
     }
 
+    public boolean tileCanBePlacedOnLevelOne(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
+        placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+        return placer.tileCanBePlacedOnLevelOne();
+    }
+
+    public boolean tileCanNukeOtherTiles(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation){
+        placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+        return placer.tileCanNukeOtherTiles();
+    }
+
     public boolean settlementCanBeFound(Coordinate coordinate){
         builder.processParameters(coordinate);
         return builder.settlementCanBeFound();
     }
 
+    public boolean settlementCanBeExpanded(Coordinate coordinate, TerrainType terrainType) {
+        builder.processParameters(coordinate, terrainType);
+        return builder.settlementCanBeExpanded();
+    }
 
+    public boolean totoroCanBePlaced(Coordinate coordinate){
+        builder.processParameters(coordinate);
+        return builder.totoroCanBePlaced();
+    }
 
+    public boolean tigerCanBePlaced(Coordinate coordinate){
+        builder.processParameters(coordinate);
+        return builder.tigerCanBePlaced();
+    }
     //TODO add acceptance test for placeTile on different levels
 }
