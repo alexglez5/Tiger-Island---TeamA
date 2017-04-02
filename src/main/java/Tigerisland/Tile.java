@@ -5,14 +5,13 @@ package Tigerisland;
  */
 public class Tile {
     private int tileID;
-    private final Hex mainTerrain = new Hex(TerrainType.Volcano, tileID);
+    private final Hex mainTerrain = new Hex(TerrainType.Volcano);
     private Hex leftOfMainTerrain;
     private Hex rightOfMainTerrain;
 
-    public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType, int tileID) {
-        leftOfMainTerrain = new Hex(leftTerrainType, tileID);
-        rightOfMainTerrain = new Hex(rightTerrainType, tileID);
-        this.tileID = tileID;
+    public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType) {
+        leftOfMainTerrain = new Hex(leftTerrainType);
+        rightOfMainTerrain = new Hex(rightTerrainType);
     }
 
     public Hex getLeftOfMainTerrain() {
@@ -27,11 +26,10 @@ public class Tile {
         return rightOfMainTerrain;
     }
 
-    public int getTileID() {
-        return tileID;
-    }
-
     public void setTileID(int tileID) {
         this.tileID = tileID;
+        leftOfMainTerrain.setTileID(tileID);
+        mainTerrain.setTileID(tileID);
+        rightOfMainTerrain.setTileID(tileID);
     }
 }

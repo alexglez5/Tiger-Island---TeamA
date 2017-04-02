@@ -18,12 +18,12 @@ public class ATLevel2Placement {
         if(!app.isEmptyBoard()){
             throw new Error("The Board already has tiles");
         }
-        app.givePlayerTile("Grassland", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("Grassland", "Grassland");
         app.placeTile("FromBottom",1,0,0);
         if(!app.doesTileExist(0, 0)){
             throw new Error("could'nt place tile at (0, 0)");
         }
-        app.givePlayerTile("Grassland", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("Grassland", "Grassland");
         app.placeTile("FromBottom", 2, 1,-2);
         if(!app.doesTileExist(1, -2)){
             throw new Error("could'nt place tile at (1, -2)");
@@ -38,7 +38,7 @@ public class ATLevel2Placement {
     @When("^the player places a tile on level (\\d+) at a valid level two location$")
     public void the_player_places_a_tile_on_level_at_a_valid_level_two_location(int arg1) throws Throwable {
         if(true) {}; // need to implement player choices
-        app.givePlayerTile("Lake", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("Lake", "Grassland");
     }
 
     @When("^the level two tile's origin will be at \\((\\d+),(\\d+)\\) with orientation \"([^\"]*)\"$")

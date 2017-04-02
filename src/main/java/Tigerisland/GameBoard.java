@@ -27,12 +27,12 @@ public class GameBoard {
         builder.expandSettlement(coordinateOfAnyHexInSettlement, terrainType);
     }
 
-    public void placeTotoro(Coordinate coordinate, int settlementID) {
-        builder.placeTotoro(coordinate, settlementID);
+    public void placeTotoro(Coordinate coordinate) {
+        builder.placeTotoro(coordinate);
     }
 
-    public void placeTiger(Coordinate coordinate, int settlementID) {
-        builder.placeTiger(coordinate, settlementID);
+    public void placeTiger(Coordinate coordinate) {
+        builder.placeTiger(coordinate);
     }
 
     //TODO add acceptance test for placeTile on different levels

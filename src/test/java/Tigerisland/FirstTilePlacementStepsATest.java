@@ -21,7 +21,7 @@ public class FirstTilePlacementStepsATest {
         if(!app.isEmptyBoard()){
             throw new Error("didn't work");
         }
-        app.givePlayerTile(terrain1, terrain2, app.currentTurnNumber);
+        app.givePlayerTile(terrain1, terrain2);
     }
 
     @When("^the player places the number (\\d+) tile at \\((\\d+),(\\d+)\\) and orientation \"([^\"]*)\"$")

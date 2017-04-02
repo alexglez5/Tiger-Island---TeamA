@@ -11,6 +11,7 @@ public class TilePlacer extends ActionHelper {
     private Coordinate mainTerrainCoordinate;
     private Coordinate rightOfMainTerrainCoordinate;
     private Tile tile;
+    private int tileID;
     private Orientation orientation;
     private TreeSet<Integer> settlementIdsOfHexesInTile;
     private int sizeLeftOfCurrentSettlement;
@@ -25,10 +26,20 @@ public class TilePlacer extends ActionHelper {
     }
 
     private void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        this.tile = tile;
         this.mainTerrainCoordinate = mainTerrainCoordinate;
         this.orientation = terrainsOrientation;
+        this.tileID = getRandomTileID(mainTerrainCoordinate, terrainsOrientation);
+        tile.setTileID(tileID);
+        tile.getLeftOfMainTerrain().setSettlementID(tileID);
+        tile.getMainTerrain().setSettlementID(tileID);
+        tile.getRightOfMainTerrain().setSettlementID(tileID);
+        this.tile = tile;
         updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
+    }
+
+    private int getRandomTileID(Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+        return mainTerrainCoordinate.hashCode() + terrainsOrientation.hashCode()
+                + (int)System.currentTimeMillis();
     }
 
     private void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
@@ -82,10 +93,16 @@ public class TilePlacer extends ActionHelper {
     private void nuke() {
         placeTileOnMap();
         increaseLevelOfTile();
+        splitSettlementNukedIfNecessary();
+    }
+
+    private void splitSettlementNukedIfNecessary() {
+        //go around hexes of tile
+        //to be worked on
     }
 
     private boolean tileIsTheFirstTilePlacedOnTheGameBoard() {
-        return tile.getTileID() == 1;
+        return gameBoard.size() == 0;
     }
 
     private boolean thereIsNoTileBelow() {
@@ -193,10 +210,9 @@ public class TilePlacer extends ActionHelper {
     }
 
     private int getSizeLeftOfCurrentSettlement(int idOfSettlementThanMightBeWipeOut) {
-        for (Coordinate tempCoordinate : gameBoard.keySet()) {
+        for (Coordinate tempCoordinate : gameBoard.keySet())
             if (isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(tempCoordinate, idOfSettlementThanMightBeWipeOut))
                 sizeLeftOfCurrentSettlement++;
-        }
         return sizeLeftOfCurrentSettlement;
     }
 

@@ -14,7 +14,7 @@ public class ExpandSettlementTest {
 
     @Given("^the player wants to \"([^\"]*)\"$")
     public void the_player_wants_to(String choice) throws Throwable {
-        app.givePlayerTile("Lake", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("Lake", "Grassland");
         app.placeTile("FromBottom", 1, 0, 0);
         app.givePlayerChoice(choice);
         if (!app.checkPlayerChoice(choice)) {

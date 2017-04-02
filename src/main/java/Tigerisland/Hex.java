@@ -18,6 +18,11 @@ public class Hex {
         level = 1;
     }
 
+    public Hex(TerrainType terrainType) {
+        this.terrainType = terrainType;
+        level = 1;
+    }
+
     public void placeVillagers() {
         hasVillagers = true;
     }
@@ -48,6 +53,10 @@ public class Hex {
 
     public void setSettlementID(int settlementID) {
         this.settlementID = settlementID;
+    }
+
+    public void setTileID(int tileID){
+        this.tileID = tileID;
     }
 
     public TerrainType getTerrainType() {
