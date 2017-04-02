@@ -10,6 +10,7 @@ import java.util.Map;
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
     protected HashMap<Integer, ArrayList<Coordinate>> settlements = new HashMap<>();
+    public static ActionHelper helper = new ActionHelper();
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
     protected static Player player;
