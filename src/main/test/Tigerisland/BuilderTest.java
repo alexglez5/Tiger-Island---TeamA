@@ -76,7 +76,7 @@ public class BuilderTest {
 
         Assert.assertFalse(map.gameBoard.get(new Coordinate(-1,3)).hasVillager());
         Assert.assertFalse(map.gameBoard.get(new Coordinate(1,0)).hasVillager());
-        Assert.assertFalse(map.gameBoard.get(new Coordinate(0,0)).hasVillager());
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0,0)).hasVillager());
         Assert.assertFalse(map.gameBoard.get(new Coordinate(-1,1)).hasVillager());
     }
 

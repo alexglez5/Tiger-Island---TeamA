@@ -8,8 +8,8 @@ public class App {
     Tile currentTile;
     String currentBuildOption;
     GameBoard map = new GameBoard();
-    Player player1;
-    Player player2;
+    Player player1 = new Player();
+    Player player2 = new Player();
 
     public App() {
     }
@@ -128,21 +128,19 @@ public class App {
         map.expandSettlement(coordinate, checkTerrain(terrain));
     }
 
-    public boolean existsMultipleHexesOfTerrainTypeThatAreAdjacent(int coordinateX, int coordinateY) {
-        Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
-        return true;
-    }
-
     public void updateCurrentTile(String terrain1, String terrain2) {
         currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2));
     }
 
-    public void updateBuildOption(String choice) {
-        currentBuildOption = choice;
+    public void createPlayer1(String playerID){
+        player1.setPlayerID(playerID);
     }
 
-    public boolean checkBuildOption(String choice) {
-        if(currentBuildOption.equals(choice) ) return true;
-        else return false;
+    public void createPlayer2(String playerID){
+        player2.setPlayerID(playerID);
+    }
+
+    public void chooseBuildOption(String choice, String playerID) {
+
     }
 }

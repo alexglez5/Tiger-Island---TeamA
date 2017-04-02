@@ -12,12 +12,9 @@ public class VillagerPlacementTest{
 
         @Given("^the player \"([^\"]*)\" chooses to \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
         public void the_player_chooses_to_at(String playerID, String choice, int coordinateX, int coordinateY) throws Throwable {
+            app.createPlayer1(choice);
             app.updateCurrentTile("Lake", "Grassland");
             app.placeTile("FromBottom", coordinateX, coordinateY );
-            app.updateBuildOption(choice);
-            if(!app.checkBuildOption(choice)) {
-                throw new Error("Wrong Player Choice");
-            }
         }
 
         @When("^there is a open hex on level one$")
