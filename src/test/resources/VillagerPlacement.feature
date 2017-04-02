@@ -1,7 +1,7 @@
 Feature: Villager Placement
 
   Scenario: Founding a settlement (valid)
-    Given the player chooses to "Found Settlement" at (0,0)
+    Given the player "red" chooses to "Found Settlement" at (0,0)
     When there is a open hex on level one
       And the hex at (0, 1) is not of "Volcano" terrain
       And the player has a villager left
@@ -22,6 +22,5 @@ Feature: Villager Placement
 
   Scenario: Expand a settlement to multiple hexes (valid)
     Given the player has the desire to "Expand Settlement"
-      And more than one hex from (0, 1) is available of that terrain type to expand into
     When there is a settlement at (0 , 1) that can be expanded
-      And the hex at (0 , 1) is of "Lake" and has a settlement
+    Then the hexes at (1, -1) and (2, -1) have settlements

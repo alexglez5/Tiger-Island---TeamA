@@ -5,9 +5,11 @@ package Tigerisland;
  */
 public class App {
     Boolean isBoardEmpty = true;
+    Tile currentTile;
+    String currentBuildOption;
     GameBoard map = new GameBoard();
     Player player1 = new Player();
-    int currentTurnNumber = 1;
+    Player player2 = new Player();
 
     public App() {
     }
@@ -16,16 +18,18 @@ public class App {
         System.out.println("random change");
     }
 
-    public void placeTile(String orientation, int ID, int xcoordinate, int ycoordinate) {
+    public void placeTile(String orientation, int xcoordinate, int ycoordinate) {
         isBoardEmpty = false;
-        player1.getCurrentTile().setTileID(ID);
         map.placeTile(
-                player1.getCurrentTile(),
+                currentTile,
                 new Coordinate(xcoordinate,ycoordinate),
                 checkOrientation(orientation)
         );
-        currentTurnNumber++;
-        player1.removeCurrentTile();
+    }
+
+    public void doBuildOption (String playerID) {
+        if(currentBuildOption.equals("Found Settlement")){
+        }
     }
 
     public Orientation checkOrientation(String orientation) {
@@ -68,25 +72,20 @@ public class App {
 
     }
 
-    public void givePlayerTile(String terrain1, String terrain2) {
-        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2));
-        player1.grantTile(currentTile);
-    }
-
     public TerrainType checkTerrain(String terrain) {
 
-        if(terrain.equals("JUNGLE") || terrain.equals("jungle") ){
+        if(terrain.equals("Jungle") || terrain.equals("jungle") ){
             return TerrainType.Jungle;
         }
-        else if(terrain.equals("ROCKY") || terrain.equals("rocky") ) {
+        else if(terrain.equals("Rocky") || terrain.equals("rocky") ) {
             return TerrainType.Rocky;
         }
-        else if(terrain.equals("LAKE") || terrain.equals("lake")
+        else if(terrain.equals("Lake") || terrain.equals("lake")
                 || terrain.equals("Lakes") || terrain.equals("lakes")) {
             return TerrainType.Lake;
         }
         else if(terrain.equals("Grassland") || terrain.equals("grassland")
-                || terrain.equals("grasslands") || terrain.equals("GRASS")) {
+                || terrain.equals("Grasslands") || terrain.equals("grasslands")) {
             return TerrainType.Grasslands;
         }
         else if(terrain.equals("Volcano") || terrain.equals("volcano") ) {
@@ -124,22 +123,24 @@ public class App {
         return map.gameBoard.get(coordinate).hasVillager();
     }
 
-    public void givePlayerChoice(String choice) {
-        player1.giveChoice(choice);
-    }
-
-    public boolean checkPlayerChoice(String choice) {
-        return player1.checkPlayerChoice().equals(choice);
-    }
-
     public void expandSettlementAt(int coordinateX, int coordinateY, String terrain) {
         Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
         map.expandSettlement(coordinate, checkTerrain(terrain));
     }
 
-    public boolean existsMultipleHexesOfTerrainTypeThatAreAdjacent(int coordinateX, int coordinateY) {
-        Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
-        return true;
-//                map.checkExpandSettlementHexes(coordinate);
+    public void updateCurrentTile(String terrain1, String terrain2) {
+        currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2));
+    }
+
+    public void createPlayer1(String playerID){
+        player1.setPlayerID(playerID);
+    }
+
+    public void createPlayer2(String playerID){
+        player2.setPlayerID(playerID);
+    }
+
+    public void chooseBuildOption(String choice, String playerID) {
+
     }
 }

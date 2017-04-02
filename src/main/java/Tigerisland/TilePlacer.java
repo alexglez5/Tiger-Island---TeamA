@@ -32,7 +32,7 @@ public class TilePlacer extends ActionHelper {
             nuke();
     }
 
-    private void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+    public void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         this.mainTerrainCoordinate = mainTerrainCoordinate;
         this.orientation = terrainsOrientation;
         this.tileID = getRandomTileID(mainTerrainCoordinate, terrainsOrientation);
@@ -70,7 +70,7 @@ public class TilePlacer extends ActionHelper {
         }
     }
 
-    private Boolean tileCanBePlacedOnLevelOne() {
+    public Boolean tileCanBePlacedOnLevelOne() {
         return tileIsTheFirstTilePlacedOnTheGameBoard()
                 || (thereIsNoTileBelow()
                 && atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge());
@@ -80,7 +80,7 @@ public class TilePlacer extends ActionHelper {
         placeTileOnMap();
     }
 
-    private Boolean tileCanNukeOtherTiles() {
+    public Boolean tileCanNukeOtherTiles() {
         return hexesBelowAreAtTheSameLevel()
                 && volcanoIsPlacedOnTopOfAnotherVolcano()
                 && tileIsNotPerfectlyOnTopOfAnotherTile()

@@ -91,7 +91,7 @@ public class Builder extends ActionHelper {
         return player.getNumberOfVillagersLeft() > 0;
     }
 
-    private void processParameters(Coordinate coordinate, TerrainType terrainType) {
+    public void processParameters(Coordinate coordinate, TerrainType terrainType) {
         this.settlementID = coordinate.hashCode();
         this.terrainType = terrainType;
         possibleVillagersPlaced = 0;
@@ -103,7 +103,7 @@ public class Builder extends ActionHelper {
         expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType();
     }
 
-    private boolean settlementCanBeExpanded() {
+    public boolean settlementCanBeExpanded() {
         return thereIsAtLeastOneEmptyHexToExpand()
                 && thereIsEnoughVillagersToExpand();
     }
@@ -198,7 +198,7 @@ public class Builder extends ActionHelper {
         possibleVillagersPlaced += level;
     }
 
-    private boolean tigerCanBePlaced() {
+    public boolean tigerCanBePlaced() {
         return terrainIsNotAVolcano()
                 && terrainIsNotTaken()
                 && levelIsAtLeastThree()

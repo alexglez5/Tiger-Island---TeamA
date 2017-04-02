@@ -1,6 +1,5 @@
 package Tigerisland;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -13,12 +12,12 @@ public class InvalidVillagerPlacementTest {
 
     @Given("^the player chooses to \"([^\"]*)\"$")
     public void the_player_chooses_to(String choice) throws Throwable {
-        app.givePlayerTile("Lake", "Grassland");
-        app.placeTile("FromBottom", 1, 0, 0);
-        app.givePlayerChoice(choice);
-        if (!app.checkPlayerChoice(choice)) {
-            throw new Error("Wrong Player Choice");
-        }
+        app.updateCurrentTile("Lake", "Grassland");
+        app.placeTile("FromBottom", 0, 0);
+//        app.givePlayerChoice(choice);
+//        if (!app.checkPlayerChoice(choice)) {
+//            throw new Error("Wrong Player Choice");
+//        }
     }
 
     @When("^there is an open hex on level one$")
