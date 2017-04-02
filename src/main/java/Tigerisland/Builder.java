@@ -153,7 +153,8 @@ public class Builder extends ActionHelper {
     private boolean adjacentTerrainIsAsTheSameTypeAndHasNotBeenVisited(Coordinate neighborCoordinate) {
         return gameBoard.containsKey(neighborCoordinate)
                 && gameBoard.get(neighborCoordinate).getTerrainType() == terrainType
-                && !visitedCoordinates.contains(neighborCoordinate);
+                && !visitedCoordinates.contains(neighborCoordinate)
+                && !gameBoard.get(neighborCoordinate).hasVillager();
     }
 
     private void markCoordinateAsVisited(Coordinate neighborCoordinate) {
