@@ -21,6 +21,7 @@ public class Builder extends ActionHelper {
     private int possibleVillagersPlaced;
     private TreeSet<Integer> idOfSettlementsThatContainATiger;
     private ArrayList<Coordinate> settlement;
+    private int counter;
 
     public void foundNewSettlement(Coordinate coordinate) {
         processParameters(coordinate);
@@ -94,8 +95,11 @@ public class Builder extends ActionHelper {
 //    }
     
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
+        counter = -1;
+
         for (Coordinate coordinateInSettlement : settlements.get(settlementID)) {
-//            if (terrainBelongsToTheSameSettlementAndHasTheSameType(coordinateInSettlement)) {
+//            while (counter != 0) {
+//                counter = 0;
                 findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
                 expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
 //            }
@@ -125,8 +129,12 @@ public class Builder extends ActionHelper {
 
     private void expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited() {
         for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
-            if (adjacentTerrainIsAsTheSameTypeAndHasNotBeenVisited(neighborCoordinate))
+            if (adjacentTerrainIsAsTheSameTypeAndHasNotBeenVisited(neighborCoordinate)) {
                 markCoordinateAsVisited(neighborCoordinate);
+                findCounterClockwiseCoordinatesAroundCoordinate(neighborCoordinate);
+                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
+//                counter++;
+            }
         }
     }
 
