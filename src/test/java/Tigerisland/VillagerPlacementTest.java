@@ -1,6 +1,5 @@
 package Tigerisland;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,12 +10,12 @@ import cucumber.api.java.en.When;
 public class VillagerPlacementTest{
         App app = new App();
 
-        @Given("^the player chooses to \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
-        public void the_player_chooses_to_at(String choice, int arg2, int arg3) throws Throwable {
-            app.givePlayerTile("Lake", "Grassland");
-            app.placeTile("FromBottom", 1,0, 0 );
-            app.givePlayerChoice(choice);
-            if(!app.checkPlayerChoice(choice)) {
+        @Given("^the player \"([^\"]*)\" chooses to \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
+        public void the_player_chooses_to_at(String playerID, String choice, int coordinateX, int coordinateY) throws Throwable {
+            app.updateCurrentTile("Lake", "Grassland");
+            app.placeTile("FromBottom", coordinateX, coordinateY );
+            app.updateBuildOption(choice);
+            if(!app.checkBuildOption(choice)) {
                 throw new Error("Wrong Player Choice");
             }
         }
