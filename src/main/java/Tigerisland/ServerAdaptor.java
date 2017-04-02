@@ -13,13 +13,20 @@ public class ServerAdaptor {
         - Need client socket (Waiting for port/hostname)
             - Will read from the server
             - WIll write out to the server
-    - Beginning code
-        - After connection is established
-            - Wait for welcome message
-            - Send password
-            - Wait for slogan
-            - Send username and password
-            - Wait for pid
+        - Beginning code
+            - After connection is established
+                - Wait for welcome message
+                - Send password
+                - Wait for slogan
+                - Send username and password
+                - Wait for pid
+    - Coordinate Mapping
+        - we have (x,y) will be given (x',y',z')
+            - x' = x
+            - y' = -x-y
+            - z' = y
+    
+
     */
     private static int serverPort = 1234; //This needs to be changed when information is obtained
 
