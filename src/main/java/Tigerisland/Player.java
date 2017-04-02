@@ -1,9 +1,13 @@
 package Tigerisland;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by Reed on 3/20/2017.
  */
 public class Player {
+    protected HashMap<Integer, ArrayList> settlements;
     private Tile currentTile;
     private int points = 0;
     private int numberOfVillagersLeft = 20;
@@ -12,6 +16,7 @@ public class Player {
     private String choice;
 
     public void Player() {
+        settlements = new HashMap<>();
     }
 
     public int getPoints() {

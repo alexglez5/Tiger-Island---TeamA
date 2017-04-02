@@ -244,7 +244,7 @@ public class BuilderTest {
     @After
     public void deallocateHexesInMap() throws Exception{
         map.gameBoard.clear();
-        map.getPlayer().resetScoreAndInventory();
+        map.player.resetScoreAndInventory();
     }
 
     @After

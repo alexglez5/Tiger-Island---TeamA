@@ -8,7 +8,6 @@ import java.util.TreeSet;
  * Created by Alexander Gonzalez on 3/21/2017.
  */
 public class Builder extends ActionHelper {
-    private static Player player = new Player();
     private final int minimumSizeOfSettlementAdjacentToTotoro = 5;
     private final int pointsForTigerPlacement = 75;
     private Coordinate coordinate;
@@ -21,9 +20,9 @@ public class Builder extends ActionHelper {
     private int possibleVillagersPlaced;
     private TreeSet<Integer> idOfSettlementsThatContainATiger;
 
-    public Player getPlayer() {
-        return player;
-    }
+//    public Player getPlayer() {
+//        return player;
+//    }
 
     public void foundNewSettlement(Coordinate coordinate) {
         processParameters(coordinate);

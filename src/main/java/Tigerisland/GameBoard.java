@@ -10,6 +10,7 @@ public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
+    protected static Player player = new Player();
 
     public void placeStartingTile(){
         placer.placeOneStartingTile();
@@ -35,9 +36,9 @@ public class GameBoard {
         builder.placeTiger(coordinate);
     }
 
-    public Player getPlayer() {
-        return builder.getPlayer();
-    }
+//    public Player getPlayer() {
+//        return player();
+//    }
 
     //TODO add acceptance test for placeTile on different levels
 }
