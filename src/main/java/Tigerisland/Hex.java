@@ -9,7 +9,7 @@ public class Hex {
     private boolean hasTotoro;
     private boolean hasTiger;
     private int settlementID;
-    private int tileID;
+    private long tileID;
     private int level;
 
     public Hex(TerrainType terrainType) {
@@ -17,7 +17,7 @@ public class Hex {
         level = 1;
     }
 
-    public Hex(TerrainType terrainType, int tileID){
+    public Hex(TerrainType terrainType, long tileID){
         this.terrainType = terrainType;
         this.tileID = tileID;
         level = 1;
@@ -55,7 +55,7 @@ public class Hex {
         this.settlementID = settlementID;
     }
 
-    public void setTileID(int tileID){
+    public void setTileID(long tileID){
         this.tileID = tileID;
     }
 
@@ -63,7 +63,7 @@ public class Hex {
         return terrainType;
     }
 
-    public int getTileID() {
+    public long getTileID() {
         return tileID;
     }
 

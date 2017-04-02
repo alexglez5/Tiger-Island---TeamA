@@ -6,22 +6,21 @@ import java.util.TreeSet;
  * Created by Alexander Gonzalez on 3/19/2017.
  */
 public class TilePlacer extends ActionHelper {
-    //TODO more refactoring make tileID random and not required in tile's constructor
     private Coordinate leftOfMainTerrainCoordinate;
     private Coordinate mainTerrainCoordinate;
     private Coordinate rightOfMainTerrainCoordinate;
     private Tile tile;
-    private int tileID;
+    private long tileID;
     private Orientation orientation;
     private TreeSet<Integer> settlementIdsOfHexesInTile;
     private int sizeLeftOfCurrentSettlement;
 
-    public void placeOneStartingTile(){
-        gameBoard.put(new Coordinate(0,-1), new Hex(TerrainType.Jungle, 1));
-        gameBoard.put(new Coordinate(1,-1), new Hex(TerrainType.Lake, 1));
-        gameBoard.put(new Coordinate(0,0), new Hex(TerrainType.Volcano, 1));
-        gameBoard.put(new Coordinate(-1,1), new Hex(TerrainType.Rocky, 1));
-        gameBoard.put(new Coordinate(0,1), new Hex(TerrainType.Grasslands, 1));
+    public void placeOneStartingTile() {
+        gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));
+        gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.Lake, 1));
+        gameBoard.put(new Coordinate(0, 0), new Hex(TerrainType.Volcano, 1));
+        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.Rocky, 1));
+        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.Grasslands, 1));
     }
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
@@ -38,16 +37,8 @@ public class TilePlacer extends ActionHelper {
         this.orientation = terrainsOrientation;
         this.tileID = getRandomTileID(mainTerrainCoordinate, terrainsOrientation);
         tile.setTileID(tileID);
-        tile.getLeftOfMainTerrain().setSettlementID(tileID);
-        tile.getMainTerrain().setSettlementID(tileID);
-        tile.getRightOfMainTerrain().setSettlementID(tileID);
         this.tile = tile;
         updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
-    }
-
-    private int getRandomTileID(Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        return mainTerrainCoordinate.hashCode() + terrainsOrientation.hashCode()
-                + (int)System.currentTimeMillis();
     }
 
     private void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
@@ -104,9 +95,9 @@ public class TilePlacer extends ActionHelper {
         splitSettlementNukedIfNecessary();
     }
 
-    private void splitSettlementNukedIfNecessary() {
-        //go around hexes of tile
-        //to be worked on
+    private long getRandomTileID(Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+        return mainTerrainCoordinate.hashCode() + terrainsOrientation.hashCode()
+                + System.currentTimeMillis();
     }
 
     private boolean tileIsTheFirstTilePlacedOnTheGameBoard() {
@@ -182,6 +173,11 @@ public class TilePlacer extends ActionHelper {
         gameBoard.get(leftOfMainTerrainCoordinate).increaseLevel();
         gameBoard.get(mainTerrainCoordinate).increaseLevel();
         gameBoard.get(rightOfMainTerrainCoordinate).increaseLevel();
+    }
+
+    private void splitSettlementNukedIfNecessary() {
+        //go around hexes of tile
+        //to be worked on
     }
 
     private boolean touchesPreviouslyPlacedTileEdge(Coordinate terrainCoordinate) {
