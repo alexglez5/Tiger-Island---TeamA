@@ -12,9 +12,10 @@ public class Hex {
     private long tileID;
     private int level;
 
+
     public Hex(TerrainType terrainType) {
         this.terrainType = terrainType;
-        level = 1;
+        level =1;
     }
 
     public Hex(TerrainType terrainType, long tileID){
@@ -67,8 +68,12 @@ public class Hex {
         return tileID;
     }
 
+    public void setLevel(int level){
+        this.level = level;
+    }
+
     public void increaseLevel() {
-        level++;
+        this.level++;
     }
 
     public int getLevel() {

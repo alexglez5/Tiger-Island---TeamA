@@ -90,8 +90,9 @@ public class TilePlacer extends ActionHelper {
     }
 
     private void nuke() {
+        int level = gameBoard.get(mainTerrainCoordinate).getLevel();
         placeTileOnMap();
-        increaseLevelOfTile();
+        increaseLevelOfTile(level);
         splitSettlementNukedIfNecessary();
     }
 
@@ -169,10 +170,10 @@ public class TilePlacer extends ActionHelper {
         return true;
     }
 
-    private void increaseLevelOfTile() {
-        gameBoard.get(leftOfMainTerrainCoordinate).increaseLevel();
-        gameBoard.get(mainTerrainCoordinate).increaseLevel();
-        gameBoard.get(rightOfMainTerrainCoordinate).increaseLevel();
+    private void increaseLevelOfTile(int level) {
+        gameBoard.get(leftOfMainTerrainCoordinate).setLevel(level + 1);
+        gameBoard.get(mainTerrainCoordinate).setLevel(level + 1);
+        gameBoard.get(rightOfMainTerrainCoordinate).setLevel(level + 1);
     }
 
     private void splitSettlementNukedIfNecessary() {
