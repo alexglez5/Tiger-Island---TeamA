@@ -16,6 +16,14 @@ public class TilePlacer extends ActionHelper {
     private TreeSet<Integer> settlementIdsOfHexesInTile;
     private int sizeLeftOfCurrentSettlement;
 
+    public void placeOneStartingTile(){
+        gameBoard.put(new Coordinate(0,-1), new Hex(TerrainType.Jungle, 1));
+        gameBoard.put(new Coordinate(1,-1), new Hex(TerrainType.Lake, 1));
+        gameBoard.put(new Coordinate(0,0), new Hex(TerrainType.Volcano, 1));
+        gameBoard.put(new Coordinate(-1,1), new Hex(TerrainType.Rocky, 1));
+        gameBoard.put(new Coordinate(0,1), new Hex(TerrainType.Grasslands, 1));
+    }
+
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();

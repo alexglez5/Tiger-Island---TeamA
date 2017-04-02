@@ -11,8 +11,8 @@ public class GameBoard {
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
 
-    public Player getPlayer() {
-        return builder.getPlayer();
+    public void placeStartingTile(){
+        placer.placeOneStartingTile();
     }
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
@@ -33,6 +33,10 @@ public class GameBoard {
 
     public void placeTiger(Coordinate coordinate) {
         builder.placeTiger(coordinate);
+    }
+
+    public Player getPlayer() {
+        return builder.getPlayer();
     }
 
     //TODO add acceptance test for placeTile on different levels

@@ -18,6 +18,16 @@ public class GameBoardTest {
     }
 
     @Test
+    public void shouldPlaceOneStartingTile(){
+        map.placeStartingTile();
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,-1)).getTerrainType(), TerrainType.Jungle);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,-1)).getTerrainType(), TerrainType.Lake);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getTerrainType(), TerrainType.Volcano);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getTerrainType(), TerrainType.Rocky);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getTerrainType(), TerrainType.Grasslands);
+    }
+
+    @Test
     public void testTerrainTypeOfEveryHexOfTilePlaced() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);

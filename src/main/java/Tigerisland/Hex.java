@@ -17,6 +17,12 @@ public class Hex {
         level = 1;
     }
 
+    public Hex(TerrainType terrainType, int tileID){
+        this.terrainType = terrainType;
+        this.tileID = tileID;
+        level = 1;
+    }
+
     public void placeVillagers() {
         hasVillagers = true;
     }
