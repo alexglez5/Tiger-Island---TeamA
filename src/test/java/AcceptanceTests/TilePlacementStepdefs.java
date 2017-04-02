@@ -20,7 +20,7 @@ public class TilePlacementStepdefs {
         app.placeFirstTile();
     }
 
-    @Then("^a hex should occupy location -?(\\d+),-?(\\d+),-?(\\d+)$")
+    @Then("^a hex should occupy location (-?\\d+),(-?\\d+),(-?\\d+)$")
     public void a_hex_should_occupy_location(int xCord, int yCord, int zCord) throws Throwable {
         Coordinate cord = new Coordinate(xCord, yCord, zCord);
         Assert.assertTrue(app.checkHexLocation(cord));

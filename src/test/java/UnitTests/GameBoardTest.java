@@ -1,6 +1,7 @@
 package UnitTests;
 
 import Tigerisland.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,4 +39,10 @@ public class GameBoardTest {
         Hex test = map.getHex(cord);
         Assert.assertNotNull(test);
     }
+
+    @After
+    public void cleanup() throws Exception {
+        map.clearBoard();
+    }
+
 }

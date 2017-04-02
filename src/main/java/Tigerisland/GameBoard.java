@@ -34,4 +34,7 @@ public class GameBoard {
         gameBoard.put(cord, hex);
     }
 
+    public void clearBoard() {
+        gameBoard.clear();
+    }
 }

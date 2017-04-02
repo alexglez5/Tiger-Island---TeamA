@@ -34,6 +34,4 @@ public class CoordinateTest {
         int test = h.get(a);
         Assert.assertNotNull(test);
     }
-
-
 }

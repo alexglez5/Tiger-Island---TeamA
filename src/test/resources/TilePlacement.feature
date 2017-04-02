@@ -1,7 +1,7 @@
 Feature: Tile Placement
   In order to play the game
   As a player of the game
-  I need to place tiles correctly
+  I need to be able to place tiles
 
   Scenario Outline: First tile placement
     When a player places the first tile
@@ -11,6 +11,6 @@ Feature: Tile Placement
       | x  | y  | z  |
       | 0  | 0  | 0  |
       | -1 | 0  | 1  |
-      | -1 | 1  | 0  |
-      | 1  | -1 | 0  |
+      | 0  | 1  | -1 |
+      | 0  | -1 | 1  |
       | 1  | 0  | -1 |

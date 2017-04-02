@@ -4,16 +4,16 @@ public class Tile {
     private static int numberOfCreatedTiles = 1;
     private int tileID;
     private Hex leftOfMainTerrain;
-    private final Hex mainTerrain = new Hex(TerrainType.VOLCANO, tileID);
+    private Hex mainTerrain;
     private Hex rightOfMainTerrain;
     private int orientation;
 
     public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType){
-        leftOfMainTerrain = new Hex(leftTerrainType, tileID);
-        rightOfMainTerrain = new Hex(rightTerrainType, tileID);
-
         numberOfCreatedTiles++;
         tileID = numberOfCreatedTiles;
+        leftOfMainTerrain = new Hex(leftTerrainType, tileID);
+        rightOfMainTerrain = new Hex(rightTerrainType, tileID);
+        mainTerrain = new Hex(TerrainType.VOLCANO, tileID);
     }
 
     public Hex getLeftOfMainTerrain(){
@@ -32,7 +32,19 @@ public class Tile {
 
     public int getTileID() {return tileID; }
 
-    public void rotateTileClockwise() {
+    public int getOrientation() {
+        return orientation;
+    }
 
+    public void setOrientation(int orient) {
+        orientation = orient;
+    }
+
+    public void resetNumberOfTilesCreated() {
+        numberOfCreatedTiles = 1;
+    }
+
+    public static int getNumberOfTilesCreated() {
+        return numberOfCreatedTiles;
     }
 }
