@@ -69,7 +69,7 @@ public class App {
     }
 
     public void givePlayerTile(String terrain1, String terrain2, int ID) {
-        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2), ID);
+        Tile currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2));
         player1.grantTile(currentTile);
     }
 
