@@ -12,7 +12,15 @@ public class GameBoard {
     protected HashMap<Integer, ArrayList<Coordinate>> settlements = new HashMap<>();
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
-    protected static Player player = new Player();
+    protected static Player player;
+
+    public GameBoard(){
+        player = new Player();
+    }
+
+    public void updatePlayer(Player player){
+        this.player = player;
+    }
 
     public void placeStartingTile(){
         placer.placeOneStartingTile();
@@ -38,9 +46,12 @@ public class GameBoard {
         builder.placeTiger(coordinate);
     }
 
-//    public Player getPlayer() {
-//        return player();
-//    }
+    public boolean settlementCanBeFound(Coordinate coordinate){
+        builder.processParameters(coordinate);
+        return builder.settlementCanBeFound();
+    }
+
+
 
     //TODO add acceptance test for placeTile on different levels
 }

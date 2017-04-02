@@ -53,12 +53,12 @@ public class Builder extends ActionHelper {
         mergeSettlementsThatCanBeMerged(coordinate);
     }
 
-    private void processParameters(Coordinate coordinate) {
+    public void processParameters(Coordinate coordinate) {
         this.coordinate = coordinate;
         this.settlementID = coordinate.hashCode();
     }
 
-    private boolean settlementCanBeFound() {
+    public boolean settlementCanBeFound() {
         return terrainIsNotTaken()
                 && terrainIsNotAVolcano()
                 && terrainIsInLevelOne()
@@ -255,7 +255,7 @@ public class Builder extends ActionHelper {
         return player.getNumberOfTigersLeft() > 0;
     }
 
-    private boolean totoroCanBePlaced() {
+    public boolean totoroCanBePlaced() {
         return terrainIsNotAVolcano()
                 && terrainIsNotTaken()
                 && isAdjacentToSettlementOfAtLeastSizeFive()
