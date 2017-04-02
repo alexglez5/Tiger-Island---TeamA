@@ -25,5 +25,3 @@ Feature: Villager Placement
       And more than one hex from (0, 1) is available of that terrain type to expand into
     When there is a settlement at (0 , 1) that can be expanded
       And the hex at (0 , 1) is of "lakes" and has a settlement
-
-

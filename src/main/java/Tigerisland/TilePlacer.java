@@ -116,7 +116,7 @@ public class TilePlacer extends ActionHelper {
 
     private boolean volcanoIsPlacedOnTopOfAnotherVolcano() {
         return gameBoard.get(mainTerrainCoordinate).getTerrainType()
-                == TerrainType.Volcano;
+                == TerrainType.VOLCANO;
     }
 
     private Boolean tileIsNotPerfectlyOnTopOfAnotherTile() {

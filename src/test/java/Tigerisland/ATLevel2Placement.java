@@ -38,7 +38,7 @@ public class ATLevel2Placement {
     @When("^the player places a tile on level (\\d+) at a valid level two location$")
     public void the_player_places_a_tile_on_level_at_a_valid_level_two_location(int arg1) throws Throwable {
         if(true) {}; // need to implement player choices
-        app.givePlayerTile("Lake", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("LAKE", "Grassland", app.currentTurnNumber);
     }
 
     @When("^the level two tile's origin will be at \\((\\d+),(\\d+)\\) with orientation \"([^\"]*)\"$")

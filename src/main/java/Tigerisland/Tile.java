@@ -6,7 +6,7 @@ package Tigerisland;
 public class Tile {
     private int tileID;
     private Hex leftOfMainTerrain;
-    private final Hex mainTerrain = new Hex(TerrainType.Volcano, tileID);
+    private final Hex mainTerrain = new Hex(TerrainType.VOLCANO, tileID);
     private Hex rightOfMainTerrain;
 
     public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType, int tileID){
