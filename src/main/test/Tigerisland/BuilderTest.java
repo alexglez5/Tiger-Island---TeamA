@@ -10,7 +10,6 @@ import org.junit.Test;
  */
 public class BuilderTest {
     GameBoard map;
-//    Player   player;
 
     //TODO merge settlements after expansion?
 

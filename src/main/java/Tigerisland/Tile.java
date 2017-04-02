@@ -9,25 +9,29 @@ public class Tile {
     private final Hex mainTerrain = new Hex(TerrainType.VOLCANO, tileID);
     private Hex rightOfMainTerrain;
 
-    public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType, int tileID){
+    public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType, int tileID) {
         leftOfMainTerrain = new Hex(leftTerrainType, tileID);
         rightOfMainTerrain = new Hex(rightTerrainType, tileID);
         this.tileID = tileID;
     }
 
-    public Hex getLeftOfMainTerrain(){
+    public Hex getLeftOfMainTerrain() {
         return leftOfMainTerrain;
     }
 
-    public Hex getMainTerrain(){
+    public Hex getMainTerrain() {
         return mainTerrain;
     }
 
-    public Hex getRightOfMainTerrain(){
+    public Hex getRightOfMainTerrain() {
         return rightOfMainTerrain;
     }
 
-    public void setTileID(int tileID) {this.tileID = tileID;    }
+    public int getTileID() {
+        return tileID;
+    }
 
-    public int getTileID() {return tileID;     }
+    public void setTileID(int tileID) {
+        this.tileID = tileID;
+    }
 }

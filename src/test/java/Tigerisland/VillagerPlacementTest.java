@@ -13,7 +13,7 @@ public class VillagerPlacementTest{
 
         @Given("^the player chooses to \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
         public void the_player_chooses_to_at(String choice, int arg2, int arg3) throws Throwable {
-            app.givePlayerTile("LAKE", "Grassland", app.currentTurnNumber);
+            app.givePlayerTile("LAKE", "GRASS", app.currentTurnNumber);
             app.placeTile("FromBottom", 1,0, 0 );
             app.givePlayerChoice(choice);
             if(!app.checkPlayerChoice(choice)) {

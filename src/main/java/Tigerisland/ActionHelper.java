@@ -5,11 +5,11 @@ package Tigerisland;
  */
 public class ActionHelper extends GameBoard {
     protected final int sidesOfAHex = 6;
+    protected Coordinate[] counterClockwiseCoordinatesAroundCoordinate;
     private int currentTerrainXCoordinate;
     private int currentTerrainYCoordinate;
-    protected Coordinate[] counterClockwiseCoordinatesAroundCoordinate;
 
-    public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate){
+    public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate) {
         counterClockwiseCoordinatesAroundCoordinate = new Coordinate[sidesOfAHex];
         counterClockwiseCoordinatesAroundCoordinate[0] = belowAndToTheLeftOfMain(terrainCoordinate);
         counterClockwiseCoordinatesAroundCoordinate[1] = belowAndToTheRightOfMain(terrainCoordinate);
@@ -19,37 +19,37 @@ public class ActionHelper extends GameBoard {
         counterClockwiseCoordinatesAroundCoordinate[5] = toTheLeftOfMain(terrainCoordinate);
     }
 
-    public Coordinate belowAndToTheLeftOfMain(Coordinate terrainCoordinate){
+    public Coordinate belowAndToTheLeftOfMain(Coordinate terrainCoordinate) {
         updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
         return new Coordinate(currentTerrainXCoordinate - 1, currentTerrainYCoordinate + 1);
     }
 
-    public Coordinate belowAndToTheRightOfMain(Coordinate terrainCoordinate){
+    public Coordinate belowAndToTheRightOfMain(Coordinate terrainCoordinate) {
         updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
         return new Coordinate(currentTerrainXCoordinate, currentTerrainYCoordinate + 1);
     }
 
-    public Coordinate toTheLeftOfMain(Coordinate terrainCoordinate){
-        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
-        return new Coordinate(currentTerrainXCoordinate - 1, currentTerrainYCoordinate);
-    }
-
-    public Coordinate toTheRightOfMain(Coordinate terrainCoordinate){
+    public Coordinate toTheRightOfMain(Coordinate terrainCoordinate) {
         updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
         return new Coordinate(currentTerrainXCoordinate + 1, currentTerrainYCoordinate);
     }
 
-    public Coordinate overAndToTheLeftOfMain(Coordinate terrainCoordinate){
-        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
-        return new Coordinate(currentTerrainXCoordinate, currentTerrainYCoordinate - 1);
-    }
-
-    public Coordinate overAndToTheRightOfMain(Coordinate terrainCoordinate){
+    public Coordinate overAndToTheRightOfMain(Coordinate terrainCoordinate) {
         updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
         return new Coordinate(currentTerrainXCoordinate + 1, currentTerrainYCoordinate - 1);
     }
 
-    public void updateXAndYCoordinateOfCurrentTerrain(Coordinate terrainCoordinate){
+    public Coordinate overAndToTheLeftOfMain(Coordinate terrainCoordinate) {
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate, currentTerrainYCoordinate - 1);
+    }
+
+    public Coordinate toTheLeftOfMain(Coordinate terrainCoordinate) {
+        updateXAndYCoordinateOfCurrentTerrain(terrainCoordinate);
+        return new Coordinate(currentTerrainXCoordinate - 1, currentTerrainYCoordinate);
+    }
+
+    public void updateXAndYCoordinateOfCurrentTerrain(Coordinate terrainCoordinate) {
         this.currentTerrainXCoordinate = terrainCoordinate.getXCoordinate();
         this.currentTerrainYCoordinate = terrainCoordinate.getYCoordinate();
     }

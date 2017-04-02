@@ -11,8 +11,6 @@ import org.junit.Test;
 public class TilePlacerTest {
     GameBoard map;
 
-    //TODO  refactor this test using what Dave said
-
     @Before
     public void initializeGameBoard() throws Exception{
         map = new GameBoard();

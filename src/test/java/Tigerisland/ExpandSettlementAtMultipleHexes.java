@@ -13,9 +13,9 @@ public class ExpandSettlementAtMultipleHexes {
 
     @Given("^the player has the desire to \"([^\"]*)\"$")
     public void the_player_has_the_desire_to(String choice) throws Throwable {
-        app.givePlayerTile("LAKE", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("LAKE", "GRASS", app.currentTurnNumber);
         app.placeTile("FromBottom", app.currentTurnNumber, 0, 0);
-        app.givePlayerTile("Grassland", "Grassland", app.currentTurnNumber);
+        app.givePlayerTile("GRASS", "GRASS", app.currentTurnNumber);
         app.placeTile("FromTop", app.currentTurnNumber, 1, 1);
         app.givePlayerChoice(choice);
         if (!app.checkPlayerChoice(choice)) {

@@ -1,5 +1,4 @@
 package Tigerisland;
-import java.util.Objects;
 
 /**
  * Created by Alexander Gonzalez on 3/17/2017.
@@ -8,16 +7,16 @@ public class Coordinate {
     int x;
     int y;
 
-    public Coordinate(int x, int y){
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getXCoordinate(){
+    public int getXCoordinate() {
         return x;
     }
 
-    public int getYCoordinate(){
+    public int getYCoordinate() {
         return y;
     }
 
@@ -39,4 +38,5 @@ public class Coordinate {
         result = 31 * result + y;
         return result;
     }
+
 }
