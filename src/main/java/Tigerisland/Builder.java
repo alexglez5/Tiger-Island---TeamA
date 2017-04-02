@@ -1,5 +1,6 @@
 package Tigerisland;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -19,10 +20,7 @@ public class Builder extends ActionHelper {
     private int possiblePointsAdded;
     private int possibleVillagersPlaced;
     private TreeSet<Integer> idOfSettlementsThatContainATiger;
-
-//    public Player getPlayer() {
-//        return player;
-//    }
+    private ArrayList<Coordinate> settlement;
 
     public void foundNewSettlement(Coordinate coordinate) {
         processParameters(coordinate);
@@ -86,12 +84,21 @@ public class Builder extends ActionHelper {
             mergeSettlementsThatCanBeMerged(visitedCoordinate);
     }
 
+//    private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
+//        for (Coordinate coordinateInSettlement : gameBoard.keySet()) {
+//            if (terrainBelongsToTheSameSettlementAndHasTheSameType(coordinateInSettlement)) {
+//                findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
+//                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
+//            }
+//        }
+//    }
+    
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-        for (Coordinate adjacentCoordinate : gameBoard.keySet()) {
-            if (terrainBelongsToTheSameSettlementAndHasTheSameType(adjacentCoordinate)) {
-                findCounterClockwiseCoordinatesAroundCoordinate(adjacentCoordinate);
+        for (Coordinate coordinateInSettlement : settlements.get(settlementID)) {
+//            if (terrainBelongsToTheSameSettlementAndHasTheSameType(coordinateInSettlement)) {
+                findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
                 expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
-            }
+//            }
         }
     }
 
@@ -111,10 +118,10 @@ public class Builder extends ActionHelper {
         assignEveryHexThatShouldBeMergedTheSameID();
     }
 
-    private boolean terrainBelongsToTheSameSettlementAndHasTheSameType(Coordinate adjacentCoordinate) {
-        return gameBoard.get(adjacentCoordinate).getSettlementID() == settlementID
-                && gameBoard.get(adjacentCoordinate).getTerrainType() == terrainType;
-    }
+//    private boolean terrainBelongsToTheSameSettlementAndHasTheSameType(Coordinate coordinateInSettlement) {
+//        return gameBoard.get(coordinateInSettlement).getSettlementID() == settlementID
+//                && gameBoard.get(coordinateInSettlement).getTerrainType() == terrainType;
+//    }
 
     private void expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited() {
         for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
@@ -178,6 +185,9 @@ public class Builder extends ActionHelper {
     private void foundSettlement(Coordinate coordinate) {
         gameBoard.get(coordinate).placeVillagers();
         gameBoard.get(coordinate).setSettlementID(settlementID);
+        settlement = new ArrayList<>();
+        settlement.add(coordinate);
+        settlements.put(settlementID, settlement);
         player.addPlayerPoints(1);
         player.updatePlacedVillagers(1);
     }

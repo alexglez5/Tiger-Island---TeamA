@@ -1,5 +1,6 @@
 package Tigerisland;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import java.util.Map;
  */
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
+    protected HashMap<Integer, ArrayList<Coordinate>> settlements = new HashMap<>();
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
     protected static Player player = new Player();
