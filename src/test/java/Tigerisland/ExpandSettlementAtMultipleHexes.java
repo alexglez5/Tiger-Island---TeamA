@@ -1,6 +1,5 @@
 package Tigerisland;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -13,36 +12,34 @@ public class ExpandSettlementAtMultipleHexes {
 
     @Given("^the player has the desire to \"([^\"]*)\"$")
     public void the_player_has_the_desire_to(String choice) throws Throwable {
-        app.givePlayerTile("Lake", "Grassland");
-        app.placeTile("FromBottom", app.currentTurnNumber, 0, 0);
-        app.givePlayerTile("Grassland", "Grassland");
+        app.updateCurrentTile("Lake", "Grassland");
+        app.placeTile("FromBottom", 0, 0);
+        app.updateCurrentTile("Grassland", "Grassland");
 
-        app.placeTile("FromTop", app.currentTurnNumber, 1, 1);
-        app.givePlayerChoice(choice);
-        if (!app.checkPlayerChoice(choice)) {
-            throw new Error("Wrong Player Choice");
-        }
-    }
-
-    @Given("^more than one hex from \\((-?\\d+), (-?\\d+)\\) is available of that terrain type to expand into$")
-    public void more_than_one_hex_from_is_available_of_that_terrain_type_to_expand_into(int coordinateX, int coordinateY) throws Throwable {
-        if(!app.existsMultipleHexesOfTerrainTypeThatAreAdjacent(coordinateX, coordinateY)){
-            throw new Error("Does not exist multiple hexes of terrain type that are adjacent");
-        }
+        app.placeTile("FromTop", 1, 1);
+//        app.givePlayerChoice(choice);
+//        if (!app.checkPlayerChoice(choice)) {
+//            throw new Error("Wrong Player Choice");
+//        }
     }
 
     @When("^there is a settlement at \\((-?\\d+) , (-?\\d+)\\) that can be expanded$")
-    public void there_is_a_settlement_at_that_can_be_expanded(int xCord, int yCord) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-
-
-
-        throw new PendingException();
+    public void there_is_a_settlement_at_that_can_be_expanded(int coordinateX, int coordinateY) throws Throwable {
+        app.buildVillager(coordinateX, coordinateY);
+        if(!app.checkVillagers(coordinateX, coordinateY)) {
+            throw new Error("the hex didn't have villagers");
+        }
     }
 
-    @When("^the hex at \\((-?\\d+) , (-?\\d+)\\) is of \"([^\"]*)\" and has a settlement$")
-    public void the_hex_at_is_of_and_has_a_settlement(int arg1, int arg2, String arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^the hexes at \\((-?\\d+), (-?\\d+)\\) and \\((-?\\d+), (-?\\d+)\\) have settlements$")
+    public void the_hexes_at_and_have_settlements(int coordinateX, int coordinateY, int coordinateX1, int coordinateY1) throws Throwable {
+        app.buildVillager(coordinateX, coordinateY);
+        if(!app.checkVillagers(coordinateX, coordinateY)) {
+            throw new Error("the hex didn't have villagers");
+        }
+        if(!app.checkVillagers(coordinateX1, coordinateY1)) {
+            throw new Error("the hex didn't have villagers");
+        }
     }
+
 }
