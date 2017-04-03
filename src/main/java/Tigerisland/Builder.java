@@ -29,12 +29,8 @@ public class Builder extends ActionHelper {
         findCoordinatesOfPossibleSettlementExpansion();
         if (settlementCanBeExpanded()) {
             expandSettlement();
-<<<<<<< HEAD
-        mergeSettlementsThatCanBeMerged();
-=======
             mergeSettlementsThatCanBeMerged();
         }
->>>>>>> ab19a705fc372cef799ae5c3c3f538dc466608be
     }
 
     public void placeTotoro(Coordinate coordinate) {
@@ -69,6 +65,7 @@ public class Builder extends ActionHelper {
         settlements.get(settlementID).placeTiger();
         player.addPlayerPoints(pointsForTigerPlacement);
         player.updatePlacedTiger();
+        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
     }
 
     private boolean levelIsAtLeastThree() {
@@ -114,6 +111,7 @@ public class Builder extends ActionHelper {
         settlements.get(settlementID).placeTotoro();
         player.updatePlacedTotoro();
         player.addPlayerPoints(200);
+        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
     }
 
     private void mergeSettlementsThatCanBeMerged(Coordinate coordinate) {
@@ -215,7 +213,7 @@ public class Builder extends ActionHelper {
     }
 
     public void processParameters(Coordinate coordinate, TerrainType terrainType) {
-        if(gameBoard.get(coordinate).getWhichPlayerID() == player.getPlayerID()) {
+        if (gameBoard.get(coordinate).getWhichPlayerID() == player.getPlayerID()) {
             this.settlementID = gameBoard.get(coordinate).getSettlementID();
             this.terrainType = terrainType;
             possibleVillagersPlaced = 0;
@@ -293,142 +291,4 @@ public class Builder extends ActionHelper {
         possiblePointsAdded += level * level;
         possibleVillagersPlaced += level;
     }
-<<<<<<< HEAD
-
-    public boolean tigerCanBePlaced() {
-        return terrainIsNotAVolcano()
-                && terrainIsNotTaken()
-                && !hexContainsAPiece()
-                && levelIsAtLeastThree()
-                && atLeastOneAdjacentSettlementDoesNotContainATiger()
-                && thereIsATigerLeft();
-    }
-
-    private void placeTigerAtGivenCoordinate() {
-        gameBoard.get(coordinate).placeTiger();
-        gameBoard.get(coordinate).setSettlementID(settlementID);
-        settlements.get(settlementID).addCoordinateToSettlement(coordinate);
-        settlements.get(settlementID).placeTiger();
-        player.addPlayerPoints(pointsForTigerPlacement);
-        player.updatePlacedTiger();
-        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
-    }
-
-    private boolean levelIsAtLeastThree() {
-        return gameBoard.get(coordinate).getLevel() > 2;
-    }
-
-    public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
-        differentSettlementIDsAroundACoordinate = new TreeSet<>();
-        getAllDifferentSettlementIDsAroundACoordinate();
-        idOfSettlementsThatContainATiger = new TreeSet<>();
-        getIDsOfSettlementsThatContainATiger();
-        return oneOfTheSettlementsAroundCoordinateDoesNotContainATiger();
-    }
-
-    private boolean oneOfTheSettlementsAroundCoordinateDoesNotContainATiger() {
-        for (int coordinateID : differentSettlementIDsAroundACoordinate)
-            if (idIsNotOneOfTheOnesThatContainATiger(coordinateID)) {
-                settlementID = coordinateID;
-                return true;
-            }
-        return false;
-    }
-
-    private boolean idIsNotOneOfTheOnesThatContainATiger(int coordinateID) {
-        return !idOfSettlementsThatContainATiger.contains(coordinateID);
-    }
-
-    private void getIDsOfSettlementsThatContainATiger() {
-        for (int coordinateID : differentSettlementIDsAroundACoordinate) {
-            settlementID = coordinateID;
-            if(settlements.get(settlementID).hasTiger)
-                idOfSettlementsThatContainATiger.add(settlementID);
-//            for (Coordinate coordinate : gameBoard.keySet())
-//                if (coordinateOfSettlementDoesNotContainATiger(coordinate))
-//                    idOfSettlementsThatContainATiger.add(settlementID);
-        }
-    }
-
-//    private boolean coordinateOfSettlementDoesNotContainATiger(Coordinate coordinate) {
-//        return gameBoard.get(coordinate).getSettlementID() == settlementID
-//                && gameBoard.get(coordinate).hasTiger();
-//    }
-
-    private boolean thereIsATigerLeft() {
-        return player.getNumberOfTigersLeft() > 0;
-    }
-
-    public boolean totoroCanBePlaced() {
-        return terrainIsNotAVolcano()
-                && terrainIsNotTaken()
-                && isAdjacentToSettlementOfAtLeastSizeFive()
-                && !hexContainsAPiece()
-                && adjacentSettlementDoesNotContainATotoro()
-                && thereIsATotoroLeft();
-    }
-
-    private void placeTotoroAtGivenCoordinate() {
-        gameBoard.get(coordinate).placeTotoro();
-        gameBoard.get(coordinate).setSettlementID(settlementID);
-        settlements.get(settlementID).addCoordinateToSettlement(coordinate);
-        settlements.get(settlementID).placeTotoro();
-        player.updatePlacedTotoro();
-        player.addPlayerPoints(200);
-        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
-    }
-
-    private boolean isAdjacentToSettlementOfAtLeastSizeFive() {
-        getAllDifferentSettlementIDsAroundACoordinate();
-        return atLeastOneOfTheSettlementsIsAtLeastSizeFive();
-    }
-
-    private boolean atLeastOneOfTheSettlementsIsAtLeastSizeFive() {
-        for (int coordinateID : differentSettlementIDsAroundACoordinate) {
-            settlementSize = 0;
-            settlementID = coordinateID;
-            if (settlementIsAtLeastSizeFive())
-                return true;
-        }
-        return false;
-    }
-
-    private boolean settlementIsAtLeastSizeFive() {
-        for (Coordinate coordinate : gameBoard.keySet()) {
-            ifCoordinateBelongsToSettlementIncreaseSettlementSize(coordinate);
-            if (settlementSize == minimumSizeOfSettlementAdjacentToTotoro)
-                return true;
-        }
-        return false;
-    }
-
-    private boolean adjacentSettlementDoesNotContainATotoro() {
-        return !settlements.get(settlementID).hasTotoro;
-//        for (Coordinate coordinate : gameBoard.keySet())
-//            if (coordinateOfSettlementDoesNotContainATotoro(coordinate))
-//                return false;
-//        return true;
-    }
-
-//    private boolean coordinateOfSettlementDoesNotContainATotoro(Coordinate coordinate) {
-//        return gameBoard.get(coordinate).getSettlementID() == settlementID
-//                && gameBoard.get(coordinate).hasTotoro();
-//    }
-
-    private boolean thereIsATotoroLeft() {
-        return player.getNumberOfTotoroLeft() > 0;
-    }
-
-    private void ifCoordinateBelongsToSettlementIncreaseSettlementSize(Coordinate coordinate) {
-        if (gameBoard.containsKey(coordinate)
-                && gameBoard.get(coordinate).getSettlementID() == settlementID)
-            settlementSize++;
-    }
-
-    private boolean terrainTypeIsNotAVolcano() {
-        return terrainType != TerrainType.Volcano;
-    }
-
-=======
->>>>>>> ab19a705fc372cef799ae5c3c3f538dc466608be
 }
