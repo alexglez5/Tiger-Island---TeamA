@@ -1,6 +1,5 @@
 package Tigerisland;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -99,7 +98,7 @@ public class Builder extends ActionHelper {
     }
 
     public void processParameters(Coordinate coordinate, TerrainType terrainType) {
-        this.settlementID = coordinate.hashCode();
+        this.settlementID = gameBoard.get(coordinate).getSettlementID();
         this.terrainType = terrainType;
         possibleVillagersPlaced = 0;
         possiblePointsAdded = 0;
@@ -120,6 +119,7 @@ public class Builder extends ActionHelper {
             gameBoard.get(coordinateToExpand).placeVillagers();
             gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
             settlements.get(settlementID).addCoordinateToSettlement(coordinateToExpand);
+            System.out.println("got ha");
         }
         player.updatePlacedVillagers(possibleVillagersPlaced);
         player.addPlayerPoints(possiblePointsAdded);

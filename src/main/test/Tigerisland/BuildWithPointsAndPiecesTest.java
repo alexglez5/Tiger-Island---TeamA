@@ -1,5 +1,6 @@
 package Tigerisland;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,5 +71,12 @@ public class BuildWithPointsAndPiecesTest {
        //map.placeTiger(new Coordinate(1,-1));
         //Assert.assertEquals(map.player.getPoints(), 76);
 
+    }
+
+    @After
+    public void deallocateHexesInMap() throws Exception{
+        map.gameBoard.clear();
+        map.player.resetScoreAndInventory();
+        map.settlements.clear();
     }
 }

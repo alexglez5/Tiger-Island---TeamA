@@ -7,10 +7,15 @@ import java.util.HashMap;
  * Created by Alexander Gonzalez on 4/2/2017.
  */
 public class Settlement extends ActionHelper {
-    //    protected static HashMap<Integer, ArrayList<Coordinate>> settlements = new HashMap<>();
-    protected static ArrayList<Coordinate> settlementCoordinates = new ArrayList<>();
-    protected boolean hasTotoro = false;
-    protected boolean hasTiger = false;
+    protected ArrayList<Coordinate> settlementCoordinates;
+    protected boolean hasTotoro;
+    protected boolean hasTiger;
+
+    public Settlement(){
+        settlementCoordinates = new ArrayList<>();
+        hasTiger = false;
+        hasTotoro = false;
+    }
 
     public void placeTotoro(){
         hasTotoro = true;
@@ -20,9 +25,30 @@ public class Settlement extends ActionHelper {
         hasTiger = true;
     }
 
-    public static void addCoordinateToSettlement(Coordinate coordinate) {
+    public void addCoordinateToSettlement(Coordinate coordinate) {
         settlementCoordinates.add(coordinate);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Settlement that = (Settlement) o;
+
+        if (hasTotoro != that.hasTotoro) return false;
+        if (hasTiger != that.hasTiger) return false;
+        return settlementCoordinates != null ? settlementCoordinates.equals(that.settlementCoordinates) : that.settlementCoordinates == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = settlementCoordinates != null ? settlementCoordinates.hashCode() : 0;
+        result = 31 * result + (hasTotoro ? 1 : 0);
+        result = 31 * result + (hasTiger ? 1 : 0);
+        return result;
+    }
+
 
     //    public static boolean containsTotoro(int settlementID){
 //        for(Coordinate coordinate : settlements.get(settlementID))
