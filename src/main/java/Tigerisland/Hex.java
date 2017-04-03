@@ -5,6 +5,7 @@ package Tigerisland;
  */
 public class Hex {
     private TerrainType terrainType;
+    private int whichPlayerID;
     private boolean hasVillagers;
     private boolean hasTotoro;
     private boolean hasTiger;
@@ -79,6 +80,10 @@ public class Hex {
     public int getLevel() {
         return level;
     }
+
+    public int getWhichPlayerID(){return this.whichPlayerID;}
+
+    public void setWhichPlayerID(int playerID){this.whichPlayerID = playerID;}
 
     @Override
     public int hashCode() {
