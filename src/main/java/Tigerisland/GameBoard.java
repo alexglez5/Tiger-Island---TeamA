@@ -11,13 +11,14 @@ import java.util.Map;
 //TODO make settlements its own class and add funcitons to check whether it a totoro/tiger
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
-    protected HashMap<Integer, Settlement> settlements = new HashMap<>();
+    public static HashMap<Integer, Settlement> settlements = new HashMap<>();
     public static ActionHelper helper = new ActionHelper();
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
     protected static Player player;
 
     public GameBoard(){
+//        settlements = new HashMap<>();
         player = new Player();
     }
 

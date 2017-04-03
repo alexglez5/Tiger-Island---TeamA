@@ -179,9 +179,9 @@ public class BuilderTest {
                 new Coordinate(-2,2), Orientation.FromBottom);
         map.foundNewSettlement(new Coordinate(1,1));
 
-//        int id = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
+        int id = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
 //        System.out.println(id);
-//        Assert.assertEquals(map.settlements.size(),1);
+        Assert.assertEquals(map.settlements.size(),1);
 ////        System.out.println("got here 1");
 ////        ArrayList p = map.settlements.get(id).settlementCoordinates;
 ////        System.out.println("got here 2");
@@ -232,24 +232,24 @@ public class BuilderTest {
         Assert.assertFalse(map.gameBoard.get(new Coordinate(0 ,0)).hasTiger());
     }
 
-//    @Test
-//    public void testSettlementsAreMergedWhenTigerIsPlacedBetweenThem() throws Exception{
-//        map.foundNewSettlement(new Coordinate(-1,1));
-//        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
-//                new Coordinate(1,1), Orientation.FromTop);
-//        map.foundNewSettlement(new Coordinate(1,0));
-//        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
-//                map.gameBoard.get(new Coordinate(1,0)).getSettlementID());
-//
-//        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
-//        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
-//        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 3);
-//        map.placeTiger(new Coordinate(0,1));
-//        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,1)).hasTiger());
-//
-//        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
-//                map.gameBoard.get(new Coordinate(1,0)).getSettlementID());
-//    }
+    @Test
+    public void testSettlementsAreMergedWhenTigerIsPlacedBetweenThem() throws Exception{
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
+                new Coordinate(1,1), Orientation.FromTop);
+        map.foundNewSettlement(new Coordinate(1,0));
+        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
+                map.gameBoard.get(new Coordinate(1,0)).getSettlementID());
+
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 3);
+        map.placeTiger(new Coordinate(0,1));
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(0 ,1)).hasTiger());
+
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
+                map.gameBoard.get(new Coordinate(1,0)).getSettlementID());
+    }
 
     @Test
     public void cannotFoundSettlementInHexThatHasPieces() throws Exception {

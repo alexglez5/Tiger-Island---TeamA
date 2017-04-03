@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Created by Alexander Gonzalez on 4/2/2017.
  */
 public class Settlement extends ActionHelper {
-    protected ArrayList<Coordinate> settlementCoordinates;
+    public ArrayList<Coordinate> settlementCoordinates;
     protected boolean hasTotoro;
     protected boolean hasTiger;
 

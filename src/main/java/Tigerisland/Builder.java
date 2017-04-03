@@ -119,7 +119,6 @@ public class Builder extends ActionHelper {
             gameBoard.get(coordinateToExpand).placeVillagers();
             gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
             settlements.get(settlementID).addCoordinateToSettlement(coordinateToExpand);
-            System.out.println("got ha");
         }
         player.updatePlacedVillagers(possibleVillagersPlaced);
         player.addPlayerPoints(possiblePointsAdded);
@@ -166,9 +165,13 @@ public class Builder extends ActionHelper {
     }
 
     private void getAllDifferentSettlementIDsAroundACoordinate() {
+        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        int id = 0;
         for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate)
-            if (coordinateBelongsToSettlementWithDifferentID(neighborCoordinate))
-                differentSettlementIDsAroundACoordinate.add(gameBoard.get(neighborCoordinate).getSettlementID());
+            if (coordinateBelongsToSettlementWithDifferentID(neighborCoordinate)){
+                id = gameBoard.get(neighborCoordinate).getSettlementID();
+                differentSettlementIDsAroundACoordinate.add(id);
+            }
     }
 
     private void assignEveryHexThatShouldBeMergedTheSameID() {
@@ -229,6 +232,7 @@ public class Builder extends ActionHelper {
     }
 
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
+        differentSettlementIDsAroundACoordinate = new TreeSet<>();
         getAllDifferentSettlementIDsAroundACoordinate();
         idOfSettlementsThatContainATiger = new TreeSet<>();
         getIDsOfSettlementsThatContainATiger();
