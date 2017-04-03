@@ -11,7 +11,7 @@ public class VillagerPlacementTest{
         App app = new App();
 
         @Given("^the player \"([^\"]*)\" chooses to \"([^\"]*)\" at \\((\\d+),(\\d+)\\)$")
-        public void the_player_chooses_to_at(String playerID, String choice, int coordinateX, int coordinateY) throws Throwable {
+        public void the_player_chooses_to_at(String playerID, int choice, int coordinateX, int coordinateY) throws Throwable {
             app.createPlayer1(choice);
             app.updateCurrentTile("Lake", "Grassland");
             app.placeTile("FromBottom", coordinateX, coordinateY );

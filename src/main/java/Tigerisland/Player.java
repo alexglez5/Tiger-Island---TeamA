@@ -7,13 +7,13 @@ import java.util.HashMap;
  * Created by Reed on 3/20/2017.
  */
 public class Player {
+    private static int playerID;
     private Tile currentTile;
     private int points = 0;
     private int numberOfVillagersLeft = 20;
     private int numberOfTotoroLeft = 3;
     private int numberOfTigersLeft = 2;
     private String choice;
-    private String playerID;
 
 
     public int getPoints() {
@@ -76,7 +76,9 @@ public class Player {
         return this.choice;
     }
 
-    public void setPlayerID(String playerID) {
+    public void setPlayerID(int playerID) {
         this.playerID = playerID;
     }
+
+    public int getPlayerID(){return this.playerID;}
 }
