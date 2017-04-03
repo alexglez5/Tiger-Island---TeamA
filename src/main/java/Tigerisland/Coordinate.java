@@ -11,15 +11,15 @@ public class Coordinate {
         this.z = z;
     }
 
-    public int getXCoordinate(){
+    public int getX(){
         return x;
     }
 
-    public int getYCoordinate(){
+    public int getY(){
         return y;
     }
 
-    public int getZCoordinate() { return z; }
+    public int getZ() { return z; }
 
     @Override
     public boolean equals(Object o) {
