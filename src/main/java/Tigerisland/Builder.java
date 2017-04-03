@@ -76,9 +76,13 @@ public class Builder extends ActionHelper {
         return oneOfTheSettlementsDoesNotContainATiger();
     }
 
+    private boolean thereIsATigerLeft() {
+        return player.getNumberOfTigersLeft() > 0;
+    }
+
     private boolean oneOfTheSettlementsDoesNotContainATiger() {
         for (int id : differentSettlementIDsAroundCoordinate) {
-            if (!settlements.get(id).hasTiger) {
+            if (settlementDoesNotHaveATiger(id)) {
                 setSettlementIdToPieceBeingPlaced(id);
                 return true;
             }
@@ -86,12 +90,12 @@ public class Builder extends ActionHelper {
         return false;
     }
 
-    private void setSettlementIdToPieceBeingPlaced(int id) {
-        settlementID = id;
+    private boolean settlementDoesNotHaveATiger(int id) {
+        return !settlements.get(id).hasTiger;
     }
 
-    private boolean thereIsATigerLeft() {
-        return player.getNumberOfTigersLeft() > 0;
+    private void setSettlementIdToPieceBeingPlaced(int id) {
+        settlementID = id;
     }
 
     public boolean totoroCanBePlaced() {
@@ -114,19 +118,8 @@ public class Builder extends ActionHelper {
 
     private void mergeSettlementsThatCanBeMerged(Coordinate coordinate) {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
-        TreeSet<Integer> idsToBeRemoved = new TreeSet<>();
-        for (int id : differentSettlementIDsAroundCoordinate) {
-            if (id != settlementID) {
-                for (Coordinate coordinatesToBeMoved : settlements.get(id).settlementCoordinates) {
-                    settlements.get(settlementID).addCoordinateToSettlement(coordinatesToBeMoved);
-                    gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
-                }
-                idsToBeRemoved.add(id);
-            }
-        }
-        for (int id : idsToBeRemoved) {
-            settlements.remove(id);
-        }
+        for (int id : differentSettlementIDsAroundCoordinate)
+            mergeSettlementsIntoASingleSettlement(id);
     }
 
     private boolean isAdjacentToSettlementOfAtLeastSizeFive() {
@@ -154,6 +147,16 @@ public class Builder extends ActionHelper {
         }
     }
 
+    private void mergeSettlementsIntoASingleSettlement(int id) {
+        if (id != settlementID) {
+            for (Coordinate coordinatesToBeMoved : settlements.get(id).settlementCoordinates) {
+                settlements.get(settlementID).addCoordinateToSettlement(coordinatesToBeMoved);
+                gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
+            }
+            removeSettlementThatWasMerged(id);
+        }
+    }
+
     private boolean atLeastOneOfTheSettlementsIsAtLeastSizeFive() {
         for (int coordinateID : differentSettlementIDsAroundCoordinate) {
             if (settlements.get(coordinateID).settlementCoordinates.size() >= 5) {
@@ -162,6 +165,10 @@ public class Builder extends ActionHelper {
             }
         }
         return false;
+    }
+
+    private void removeSettlementThatWasMerged(int id) {
+        settlements.remove(id);
     }
 
     public void processParameters(Coordinate coordinate) {
