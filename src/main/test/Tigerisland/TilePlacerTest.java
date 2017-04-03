@@ -217,7 +217,6 @@ public class TilePlacerTest {
         Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 1);
     }
 
-    //todo uncomment test and pass it
     @Test
     public void shouldSplitSettlementNuked() throws Exception{
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),

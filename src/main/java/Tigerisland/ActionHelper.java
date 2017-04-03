@@ -53,4 +53,11 @@ public class ActionHelper extends GameBoard {
         this.currentTerrainXCoordinate = terrainCoordinate.getXCoordinate();
         this.currentTerrainYCoordinate = terrainCoordinate.getYCoordinate();
     }
+
+    public boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
+        return gameBoard.containsKey(terrainCoordinate)
+                && (gameBoard.get(terrainCoordinate).hasVillager()
+                || gameBoard.get(terrainCoordinate).hasTotoro()
+                || gameBoard.get(terrainCoordinate).hasTiger());
+    }
 }

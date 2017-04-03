@@ -5,8 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 /**
  * Created by Alexander Gonzalez on 3/21/2017.
  */
@@ -179,28 +177,19 @@ public class BuilderTest {
                 new Coordinate(-2,2), Orientation.FromBottom);
         map.foundNewSettlement(new Coordinate(1,1));
 
-        int id = map.gameBoard.get(new Coordinate(1,1)).getSettlementID();
-//        System.out.println(id);
         Assert.assertEquals(map.settlements.size(),1);
-////        System.out.println("got here 1");
-////        ArrayList p = map.settlements.get(id).settlementCoordinates;
-////        System.out.println("got here 2");
-////        System.out.println("pa" + map.settlements.get(id).settlementCoordinates.size());
-
         map.foundNewSettlement(new Coordinate(-2,3));
+        int oldId = map.gameBoard.get(new Coordinate(-2 ,3)).getSettlementID();
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-//        map.gameBoard.get(new Coordinate(0,3)).placeVillagers();
+        map.placeTotoro(new Coordinate(-1,3));
 
-
-//        System.out.println("pa" +map.settlements.get(map.gameBoard.
-//                get(new Coordinate(-2,3)).getSettlementID()).settlementCoordinates.size());
-
-//        map.placeTotoro(new Coordinate(-1,3));
-
-//        Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
-//        Assert.assertEquals(map.gameBoard.get(new Coordinate( -2,3)).getSettlementID(),
-//                map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());
-
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(-1 ,3)).hasTotoro());
+        Assert.assertEquals(map.gameBoard.get(new Coordinate( -2,3)).getSettlementID(),
+                map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID());
+        int newId = map.gameBoard.get(new Coordinate(1 ,1)).getSettlementID();
+        Assert.assertNotEquals(oldId, newId);
+        Assert.assertEquals(map.settlements.get(newId).settlementCoordinates.size(), 7);
+        Assert.assertEquals(map.settlements.size(), 1);
     }
 
     @Test
@@ -217,7 +206,7 @@ public class BuilderTest {
     public void testTigerIsNotPlacedIfLevelIsSmallerThanThree() throws Exception{
         map.foundNewSettlement(new Coordinate(-1,1));
         map.gameBoard.get(new Coordinate(0,1)).increaseLevel();
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 2);
+         Assert.assertEquals(map.gameBoard.get(new Coordinate(0,1)).getLevel(), 2);
         map.placeTiger(new Coordinate(0,1));
         Assert.assertFalse(map.gameBoard.get(new Coordinate(0 ,1)).hasTiger());
     }
