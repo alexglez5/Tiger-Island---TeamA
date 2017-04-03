@@ -221,13 +221,6 @@ public class TilePlacer extends ActionHelper {
         return sizeLeftOfCurrentSettlement;
     }
 
-    private boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
-        return gameBoard.containsKey(terrainCoordinate)
-                && (gameBoard.get(terrainCoordinate).hasVillager()
-                || gameBoard.get(terrainCoordinate).hasTotoro()
-                || gameBoard.get(terrainCoordinate).hasTiger());
-    }
-
     private boolean isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(
             Coordinate tempCoordinate, int idOfSettlementThanMightBeWipeOut) {
         return terrainContainsAPiece(tempCoordinate)
