@@ -132,11 +132,11 @@ public class App {
         currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2));
     }
 
-    public void createPlayer1(String playerID){
+    public void createPlayer1(int playerID){
         player1.setPlayerID(playerID);
     }
 
-    public void createPlayer2(String playerID){
+    public void createPlayer2(int playerID){
         player2.setPlayerID(playerID);
     }
 

@@ -17,15 +17,20 @@ public class BuildWithPointsAndPiecesTest {
 
 //    @Test
 //    public void foundSettlementAndCheckPlayerScoreAndVillagerUpdated(){
+//        map.player.setPlayerID(1);
 //        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky), new Coordinate(0,0), Orientation.FromBottom);
 //        map.foundNewSettlement(new Coordinate(0,1));
-//        Assert.assertEquals(map.player.getNumberOfVillagersLeft(), 18);
-//        Assert.assertEquals(map.player.getPoints(), 2);
+//        Assert.assertEquals(map.player.getNumberOfVillagersLeft(), 19);
+//        Assert.assertEquals(map.player.getPoints(), 1);
+//        Assert.assertEquals(map.player.getPlayerID(),1);
 //    }
 
 //    @Test
 //    public void expandSettlementAndCheckScore(){
-//        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky), new Coordinate(0,0), Orientation.FromBottom);
+//        map.player.setPlayerID(2);
+//        Assert.assertEquals(map.player.getPlayerID(),2);
+//        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+//                new Coordinate(0,0), Orientation.FromBottom);
 //        map.foundNewSettlement(new Coordinate(0,1));
 //        System.out.println("Points: " + map.player.getPoints());
 //        Assert.assertEquals(map.player.getPoints(), 1);
@@ -40,14 +45,17 @@ public class BuildWithPointsAndPiecesTest {
 //        Assert.assertEquals(map.player.getPoints(), 5);
 //        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Lake),
 //                new Coordinate(-2,1), Orientation.FromBottom);
-//        map.placeTotoro(new Coordinate(2,0));
+//        map.placeTotoro(new Coordinate(-1,1));
+//
 //        Assert.assertEquals(map.player.getPoints(),205);
 //        System.out.println("Points: " + map.player.getPoints());
 //        Assert.assertEquals(map.player.getNumberOfTotoroLeft(),2);
+//        Assert.assertEquals(map.gameBoard.get(new Coordinate(-1,1)).getWhichPlayerID(), 2);
 //    }
 
     @Test
     public void addTigerPlaygrouundWithPoints(){
+        map.player.setPlayerID(3);
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
@@ -63,14 +71,17 @@ public class BuildWithPointsAndPiecesTest {
         map.foundNewSettlement(new Coordinate(2,-1));
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(0,-1), Orientation.FromBottomRight);
-        Assert.assertEquals(map.gameBoard.get(new Coordinate(0,-1)).getLevel(),3);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(2,-1)).getLevel(),1);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(1,-1)).getLevel(),3);
         Assert.assertEquals(map.gameBoard.get(new Coordinate(0,0)).getLevel(),3);
+        //System.out.println("Level: " + map.gameBoard.get(new Coordinate(0,-1)).getLevel());
         Assert.assertFalse(map.gameBoard.get(new Coordinate(1,-1)).getTerrainType() == TerrainType.Volcano);
         Assert.assertTrue(map.gameBoard.get(new Coordinate(2,-1)).hasVillager());
-       //map.placeTiger(new Coordinate(1,-1));
-        //Assert.assertEquals(map.player.getPoints(), 76);
-
+        map.placeTiger(new Coordinate(1,-1));
+        System.out.println("Points: " + map.player.getPoints());
+        Assert.assertEquals(map.player.getNumberOfTigersLeft(), 1);
+        Assert.assertEquals(map.player.getPoints(), 76);
+        Assert.assertEquals(map.gameBoard.get(new Coordinate(1,-1)).getWhichPlayerID(), 3);
     }
 
     @After

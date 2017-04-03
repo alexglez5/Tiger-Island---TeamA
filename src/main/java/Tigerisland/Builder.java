@@ -32,7 +32,6 @@ public class Builder extends ActionHelper {
         findCoordinatesOfPossibleSettlementExpansion();
         if (settlementCanBeExpanded())
             expandSettlement();
-
         mergeSettlementsThatCanBeMerged();
     }
 
@@ -79,6 +78,7 @@ public class Builder extends ActionHelper {
         settlements.put(settlementID, currentSettlement);
         player.addPlayerPoints(1);
         player.updatePlacedVillagers(1);
+        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
     }
 
     private boolean terrainIsNotTaken() {
@@ -98,10 +98,12 @@ public class Builder extends ActionHelper {
     }
 
     public void processParameters(Coordinate coordinate, TerrainType terrainType) {
-        this.settlementID = gameBoard.get(coordinate).getSettlementID();
-        this.terrainType = terrainType;
-        possibleVillagersPlaced = 0;
-        possiblePointsAdded = 0;
+        if(gameBoard.get(coordinate).getWhichPlayerID() == player.getPlayerID()) {
+            this.settlementID = gameBoard.get(coordinate).getSettlementID();
+            this.terrainType = terrainType;
+            possibleVillagersPlaced = 0;
+            possiblePointsAdded = 0;
+        }
     }
 
     private void findCoordinatesOfPossibleSettlementExpansion() {
@@ -122,6 +124,7 @@ public class Builder extends ActionHelper {
         }
         player.updatePlacedVillagers(possibleVillagersPlaced);
         player.addPlayerPoints(possiblePointsAdded);
+        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
     }
 
     private void mergeSettlementsThatCanBeMerged() {
@@ -225,6 +228,7 @@ public class Builder extends ActionHelper {
         settlements.get(settlementID).placeTiger();
         player.addPlayerPoints(pointsForTigerPlacement);
         player.updatePlacedTiger();
+        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
     }
 
     private boolean levelIsAtLeastThree() {
@@ -288,6 +292,7 @@ public class Builder extends ActionHelper {
         settlements.get(settlementID).placeTotoro();
         player.updatePlacedTotoro();
         player.addPlayerPoints(200);
+        gameBoard.get(coordinate).setWhichPlayerID(player.getPlayerID());
     }
 
     private boolean isAdjacentToSettlementOfAtLeastSizeFive() {
