@@ -20,7 +20,7 @@ public class Builder extends ActionHelper {
     private int possiblePointsAdded;
     private int possibleVillagersPlaced;
     private TreeSet<Integer> idOfSettlementsThatContainATiger;
-    private ArrayList<Coordinate> settlement;
+    private Settlement currentSettlement;
 
     public void foundNewSettlement(Coordinate coordinate) {
         processParameters(coordinate);
@@ -75,9 +75,9 @@ public class Builder extends ActionHelper {
     private void foundSettlement(Coordinate coordinate) {
         gameBoard.get(coordinate).placeVillagers();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        settlement = new ArrayList<>();
-        settlement.add(coordinate);
-        settlements.put(settlementID, settlement);
+        currentSettlement = new Settlement();
+        currentSettlement.addCoordinateToSettlement(coordinate);
+        settlements.put(settlementID, currentSettlement);
         player.addPlayerPoints(1);
         player.updatePlacedVillagers(1);
     }
@@ -119,6 +119,7 @@ public class Builder extends ActionHelper {
         for (Coordinate coordinateToExpand : visitedCoordinates) {
             gameBoard.get(coordinateToExpand).placeVillagers();
             gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
+            settlements.get(settlementID).addCoordinateToSettlement(coordinateToExpand);
         }
         player.updatePlacedVillagers(possibleVillagersPlaced);
         player.addPlayerPoints(possiblePointsAdded);
@@ -130,7 +131,7 @@ public class Builder extends ActionHelper {
     }
 
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-        for (Coordinate coordinateInSettlement : settlements.get(settlementID)) {
+        for (Coordinate coordinateInSettlement : settlements.get(settlementID).settlementCoordinates) {
             findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
             expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
         }
@@ -217,6 +218,8 @@ public class Builder extends ActionHelper {
     private void placeTigerAtGivenCoordinate() {
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
+        settlements.get(settlementID).addCoordinateToSettlement(coordinate);
+        settlements.get(settlementID).placeTiger();
         player.addPlayerPoints(pointsForTigerPlacement);
         player.updatePlacedTiger();
     }
@@ -225,7 +228,7 @@ public class Builder extends ActionHelper {
         return gameBoard.get(coordinate).getLevel() > 2;
     }
 
-    private boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
+    public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
         getAllDifferentSettlementIDsAroundACoordinate();
         idOfSettlementsThatContainATiger = new TreeSet<>();
         getIDsOfSettlementsThatContainATiger();
@@ -248,16 +251,18 @@ public class Builder extends ActionHelper {
     private void getIDsOfSettlementsThatContainATiger() {
         for (int coordinateID : differentSettlementIDsAroundACoordinate) {
             settlementID = coordinateID;
-            for (Coordinate coordinate : gameBoard.keySet())
-                if (coordinateOfSettlementDoesNotContainATiger(coordinate))
-                    idOfSettlementsThatContainATiger.add(settlementID);
+            if(settlements.get(settlementID).hasTiger)
+                idOfSettlementsThatContainATiger.add(settlementID);
+//            for (Coordinate coordinate : gameBoard.keySet())
+//                if (coordinateOfSettlementDoesNotContainATiger(coordinate))
+//                    idOfSettlementsThatContainATiger.add(settlementID);
         }
     }
 
-    private boolean coordinateOfSettlementDoesNotContainATiger(Coordinate coordinate) {
-        return gameBoard.get(coordinate).getSettlementID() == settlementID
-                && gameBoard.get(coordinate).hasTiger();
-    }
+//    private boolean coordinateOfSettlementDoesNotContainATiger(Coordinate coordinate) {
+//        return gameBoard.get(coordinate).getSettlementID() == settlementID
+//                && gameBoard.get(coordinate).hasTiger();
+//    }
 
     private boolean thereIsATigerLeft() {
         return player.getNumberOfTigersLeft() > 0;
@@ -275,6 +280,8 @@ public class Builder extends ActionHelper {
     private void placeTotoroAtGivenCoordinate() {
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
+        settlements.get(settlementID).addCoordinateToSettlement(coordinate);
+        settlements.get(settlementID).placeTotoro();
         player.updatePlacedTotoro();
         player.addPlayerPoints(200);
     }
@@ -304,16 +311,17 @@ public class Builder extends ActionHelper {
     }
 
     private boolean adjacentSettlementDoesNotContainATotoro() {
-        for (Coordinate coordinate : gameBoard.keySet())
-            if (coordinateOfSettlementDoesNotContainATotoro(coordinate))
-                return false;
-        return true;
+        return !settlements.get(settlementID).hasTotoro;
+//        for (Coordinate coordinate : gameBoard.keySet())
+//            if (coordinateOfSettlementDoesNotContainATotoro(coordinate))
+//                return false;
+//        return true;
     }
 
-    private boolean coordinateOfSettlementDoesNotContainATotoro(Coordinate coordinate) {
-        return gameBoard.get(coordinate).getSettlementID() == settlementID
-                && gameBoard.get(coordinate).hasTotoro();
-    }
+//    private boolean coordinateOfSettlementDoesNotContainATotoro(Coordinate coordinate) {
+//        return gameBoard.get(coordinate).getSettlementID() == settlementID
+//                && gameBoard.get(coordinate).hasTotoro();
+//    }
 
     private boolean thereIsATotoroLeft() {
         return player.getNumberOfTotoroLeft() > 0;
