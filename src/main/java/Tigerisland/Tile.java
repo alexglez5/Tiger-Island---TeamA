@@ -6,7 +6,6 @@ public class Tile {
     private Hex leftOfMainTerrain;
     private Hex mainTerrain;
     private Hex rightOfMainTerrain;
-    private int orientation;
 
     public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType){
         numberOfCreatedTiles++;
@@ -31,14 +30,6 @@ public class Tile {
     public void setTileID(int tileID) { this.tileID = tileID; }
 
     public int getTileID() {return tileID; }
-
-    public int getOrientation() {
-        return orientation;
-    }
-
-    public void setOrientation(int orient) {
-        orientation = orient;
-    }
 
     public void resetNumberOfTilesCreated() {
         numberOfCreatedTiles = 1;

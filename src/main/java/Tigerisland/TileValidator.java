@@ -5,9 +5,10 @@ package Tigerisland;
  */
 public class TileValidator extends GameBoard {
     // 0 is A, 1 is B
-    private Coordinate[] orientationCoordinates = new Coordinate[2];
 
-    public void produceCoordinatesFromOrientation(Coordinate c, int orientation) {
+    public Coordinate[] produceCoordinatesFromOrientation(Coordinate c, int orientation) {
+        Coordinate[] orientationCoordinates = new Coordinate[2];
+
         switch (orientation) {
             case 1: orientationCoordinates[0] = new Coordinate(c.getX(), c.getY()+1, c.getZ()-1);
                     orientationCoordinates[1] = new Coordinate(c.getX()+1, c.getY(), c.getZ()-1);
@@ -28,7 +29,7 @@ public class TileValidator extends GameBoard {
                     orientationCoordinates[1] = new Coordinate(c.getX(), c.getY()+1, c.getZ()-1);
                     break;
         }
-
+        return orientationCoordinates;
     }
 
     public boolean canPlaceTileOnLevelOne(Coordinate c, int orientation) {

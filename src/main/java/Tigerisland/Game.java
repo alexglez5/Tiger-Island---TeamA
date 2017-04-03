@@ -7,12 +7,10 @@ public class Game {
     Player black = new Player();
     int turn = 1;
     TileValidator validator = new TileValidator();
+    Tile currentTile;
 
     public boolean checkHexLocation(Coordinate cord) {
-        boolean existence = false;
-        existence = gameBoard.checkForHex(cord);
-
-        return existence;
+        return gameBoard.checkForHex(cord);
     }
 
     public void placeFirstTile() {
@@ -52,7 +50,19 @@ public class Game {
         throw new Error("Incorrect terrain formatting");
     }
 
-    public void placeTile(Tile tile, Coordinate target) {
-        int orientation = tile.getOrientation();
+    public Tile createTile(TerrainType a, TerrainType b) {
+        currentTile = new Tile(a, b);
+        return currentTile;
+    }
+
+    public void placeTile(Tile tile, Coordinate target, int orientation) {
+        Coordinate[] nearby = validator.produceCoordinatesFromOrientation(target, orientation);
+        gameBoard.placeHex(tile.getLeftOfMainTerrain(), nearby[0]);
+        gameBoard.placeHex(tile.getRightOfMainTerrain(), nearby[1]);
+        gameBoard.placeHex(tile.getMainTerrain(), target);
+    }
+
+    public void clearBoard() {
+        gameBoard.clearBoard();
     }
 }

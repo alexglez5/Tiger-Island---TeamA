@@ -1,6 +1,7 @@
 package UnitTests;
 
 import Tigerisland.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +15,17 @@ public class TileValidatorTest {
     TileValidator validator = new TileValidator();
 
     @Before
-    public void setup {
+    public void setup() {
         game.placeFirstTile();
     }
 
     @Test
-    public void testPlacementOnLevelOne() throws Exception {
+    public void testPlacementOnLevelOne() {
         Assert.assertTrue(validator.canPlaceTileOnLevelOne(new Coordinate(1,-1,0), 2));
     }
 
-
-
+    @After
+    public void teardown() {
+        game.clearBoard();
+    }
 }

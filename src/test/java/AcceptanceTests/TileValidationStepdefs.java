@@ -19,19 +19,17 @@ public class TileValidationStepdefs {
         app.placeFirstTile();
     }
 
-    @Given("^the player has a tile of types \"([^\"]*)\" and \"([^\"]*)\" with orientation (\\d+)$")
-    public void the_player_has_a_tile_of_types_and_with_orientation(String t1, String t2, int orientation) throws Throwable {
+    @Given("^the player has a tile of types \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void the_player_has_a_tile_of_types_and(String t1, String t2) throws Throwable {
         TerrainType a = app.stringToTerrain(t1);
         TerrainType b = app.stringToTerrain(t2);
         tile = new Tile(a, b);
-        tile.setOrientation(orientation);
     }
 
-    @When("^the player places the tile at (-?\\d+),(-?\\d+),(-?\\d+)$")
-    public void the_player_places_the_tile_at(int xCord, int yCord, int zCord) throws Throwable {
+    @When("^the player places the tile at (-?\\d+),(-?\\d+),(-?\\d+) with orientation (\\d+)$")
+    public void the_player_places_the_tile_at_with_orientation(int xCord, int yCord, int zCord, int o) throws Throwable {
         Coordinate target = new Coordinate(xCord,yCord,zCord);
-        app.placeTile(tile, target);
-        throw new PendingException();
+        app.placeTile(tile, target, o);
     }
 
     @Then("^the game board should accept the tile placement$")
