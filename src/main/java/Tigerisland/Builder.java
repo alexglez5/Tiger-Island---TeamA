@@ -61,8 +61,15 @@ public class Builder extends ActionHelper {
     public boolean settlementCanBeFound() {
         return terrainIsNotTaken()
                 && terrainIsNotAVolcano()
+                && !hexContainsAPiece()
                 && terrainIsInLevelOne()
                 && thereIsAVillagerLeft();
+    }
+
+    private boolean hexContainsAPiece() {
+        return gameBoard.get(coordinate).hasTiger()
+                || gameBoard.get(coordinate).hasTotoro()
+                || gameBoard.get(coordinate).hasVillager();
     }
 
     private void foundSettlement(Coordinate coordinate) {
@@ -201,6 +208,7 @@ public class Builder extends ActionHelper {
     public boolean tigerCanBePlaced() {
         return terrainIsNotAVolcano()
                 && terrainIsNotTaken()
+                && !hexContainsAPiece()
                 && levelIsAtLeastThree()
                 && atLeastOneAdjacentSettlementDoesNotContainATiger()
                 && thereIsATigerLeft();
@@ -259,6 +267,7 @@ public class Builder extends ActionHelper {
         return terrainIsNotAVolcano()
                 && terrainIsNotTaken()
                 && isAdjacentToSettlementOfAtLeastSizeFive()
+                && !hexContainsAPiece()
                 && adjacentSettlementDoesNotContainATotoro()
                 && thereIsATotoroLeft();
     }
