@@ -7,10 +7,14 @@ import java.util.Map;
 /**
  * Created by Alexander Gonzalez on 3/17/2017.
  */
+
+//TODO make settlements its own class and add funcitons to check whether it a totoro/tiger
 public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
-    protected HashMap<Integer, ArrayList<Coordinate>> settlements = new HashMap<>();
+//    protected HashMap<Integer, ArrayList<Coordinate>> settlements = new HashMap<>();
+    protected HashMap<Integer, Settlement> settlements = new HashMap<>();
     public static ActionHelper helper = new ActionHelper();
+//    protected static ArrayList<Settlement> settlements = new ArrayList<>();
     private static TilePlacer placer = new TilePlacer();
     private static Builder builder = new Builder();
     protected static Player player;
@@ -75,6 +79,11 @@ public class GameBoard {
     public boolean tigerCanBePlaced(Coordinate coordinate){
         builder.processParameters(coordinate);
         return builder.tigerCanBePlaced();
+    }
+
+    public boolean atLeastOneAdjacentSettlementDoesNotContainATiger(Coordinate coordinate){
+        builder.processParameters(coordinate);
+        return builder.atLeastOneAdjacentSettlementDoesNotContainATiger();
     }
     //TODO add acceptance test for placeTile on different levels
 }
