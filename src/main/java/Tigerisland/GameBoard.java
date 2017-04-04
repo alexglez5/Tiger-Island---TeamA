@@ -13,8 +13,8 @@ public class GameBoard {
     protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
     protected static HashMap<Integer, Settlement> settlements = new HashMap<>();
     public static ActionHelper helper = new ActionHelper();
-    private static TilePlacer placer = new TilePlacer();
-    private static Builder builder = new Builder();
+    public static TilePlacer placer = new TilePlacer();
+    public static Builder builder = new Builder();
     protected static Player player;
 
     public GameBoard(){

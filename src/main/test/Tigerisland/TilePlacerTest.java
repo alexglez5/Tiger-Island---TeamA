@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 /**
  * Created by Alexander Gonzalez on 3/20/2017.
  */
@@ -225,20 +227,35 @@ public class TilePlacerTest {
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.gameBoard.get(new Coordinate(-1,1)).placeVillagers();
         map.gameBoard.get(new Coordinate(0,1)).placeVillagers();
-        map.gameBoard.get(new Coordinate(1,0)).placeVillagers();
+        map.gameBoard.get(new Coordinate(1,1)).placeVillagers();
         map.gameBoard.get(new Coordinate(2,0)).placeVillagers();
-
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(2,0)).hasVillager());
         map.gameBoard.get(new Coordinate(-1,1)).setSettlementID(3);
         map.gameBoard.get(new Coordinate(0,1)).setSettlementID(3);
-        map.gameBoard.get(new Coordinate(1,0)).setSettlementID(3);
+        map.gameBoard.get(new Coordinate(1,1)).setSettlementID(3);
         map.gameBoard.get(new Coordinate(2,0)).setSettlementID(3);
+        ArrayList<Coordinate> temp = new ArrayList<>();
+        temp.add(new Coordinate(-1,1));
+        temp.add(new Coordinate(0,1));
+        temp.add(new Coordinate(1,1));
+        temp.add(new Coordinate(2,0));
+        Settlement settlement = new Settlement();
+        settlement.settlementCoordinates = temp;
+        map.settlements.put(3, settlement);
 
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+        Assert.assertEquals(map.settlements.size(),1);
+        map.placer.processParameters(new Tile(TerrainType.Rocky, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottom);
-
-//        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
-//                map.gameBoard.get(new Coordinate(2,0)).getSettlementID());
+        map.placer.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+        map.gameBoard.get(new Coordinate(2,0)).placeVillagers();
+        map.placer.nuke();
+        Assert.assertTrue(map.gameBoard.get(new Coordinate(2,0)).hasVillager());
+        Assert.assertNotEquals(map.gameBoard.get(new Coordinate(-1,1)).getSettlementID(),
+                map.gameBoard.get(new Coordinate(2,0)).getSettlementID());
+        Assert.assertEquals(map.settlements.size(),2);
     }
+
+    //Todo add more tests to spliting settlements
 
     @After
     public void deallocateHexesInMap() throws Exception{

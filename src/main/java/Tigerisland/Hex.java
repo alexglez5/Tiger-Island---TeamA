@@ -26,15 +26,15 @@ public class Hex {
     }
 
     public void placeVillagers() {
-        hasVillagers = true;
+        this.hasVillagers = true;
     }
 
     public void placeTotoro() {
-        hasTotoro = true;
+        this.hasTotoro = true;
     }
 
     public void placeTiger() {
-        hasTiger = true;
+        this.hasTiger = true;
     }
 
     public boolean hasVillager() {

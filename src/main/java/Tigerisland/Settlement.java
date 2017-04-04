@@ -29,6 +29,34 @@ public class Settlement extends ActionHelper {
         settlementCoordinates.add(coordinate);
     }
 
+//    private void splitSettlementNukedIfNecessary() {
+//        findCoordinatesAroundATile();
+//        getDifferentSettlementIDsOfATile();
+//
+//
+//
+//        int id = -98;
+//        boolean thereIsAPath = true;
+//        int index = 0;
+//        for(int p : settlementIdsOfHexesInTile){
+//            if(coordinatesAroundATile.containsKey(p)){
+//                thereIsAPath = true;
+//                index = 0;
+//                while(thereIsAPath){
+//                    if(terrainContainsAPiece(coordinatesAroundATile[index])){
+//
+//                    }
+//                    index++;
+//                }
+//                for(Coordinate tempCoordinate : coordinatesAroundATile){
+//                    if(terrainContainsAPiece(tempCoordinate)){
+//                        if()
+//                    }
+//                }
+//            }
+//        }
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

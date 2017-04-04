@@ -1,19 +1,20 @@
 package Tigerisland;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
  * Created by Alexander Gonzalez on 3/19/2017.
  */
 public class TilePlacer extends ActionHelper {
-    private Coordinate leftOfMainTerrainCoordinate;
-    private Coordinate mainTerrainCoordinate;
-    private Coordinate rightOfMainTerrainCoordinate;
     private Tile tile;
     private long tileID;
-    private Orientation orientation;
-    private TreeSet<Integer> settlementIdsOfHexesInTile;
     private int sizeLeftOfCurrentSettlement;
+    private int idOfNewSettlement;
+    private ArrayList<Coordinate> coordinatesToBeMovedFromSettlement;
+    private Settlement newSettlement;
+    private TreeSet<Integer> coordinatesToTheLeftOfTile;
+    private TreeSet<Integer> coordinatesToTheRightOfTile;
 
     public void placeOneStartingTile() {
         gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));
@@ -41,35 +42,6 @@ public class TilePlacer extends ActionHelper {
         updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
     }
 
-    private void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
-        switch (orientation) {
-            case FromBottom:
-                leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
-                break;
-            case FromBottomRight:
-                leftOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
-                break;
-            case FromTopRight:
-                leftOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
-                break;
-            case FromTop:
-                leftOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
-                break;
-            case FromTopLeft:
-                leftOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
-                break;
-            case FromBottomLeft:
-                leftOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
-                break;
-        }
-    }
-
     public Boolean tileCanBePlacedOnLevelOne() {
         return tileIsTheFirstTilePlacedOnTheGameBoard()
                 || (thereIsNoTileBelow()
@@ -89,8 +61,9 @@ public class TilePlacer extends ActionHelper {
                 && tileDoesNotCompletelyWipeOutASettlement();
     }
 
-    private void nuke() {
+    public void nuke() {
         int level = gameBoard.get(mainTerrainCoordinate).getLevel();
+        getDifferentSettlementIDsOfATile();
         placeTileOnMap();
         increaseLevelOfTile(level);
         splitSettlementNukedIfNecessary();
@@ -158,7 +131,6 @@ public class TilePlacer extends ActionHelper {
     }
 
     private boolean tileDoesNotCompletelyWipeOutASettlement() {
-        settlementIdsOfHexesInTile = new TreeSet<>();
         sizeLeftOfCurrentSettlement = 0;
         getDifferentSettlementIDsOfATile();
 
@@ -170,6 +142,16 @@ public class TilePlacer extends ActionHelper {
         return true;
     }
 
+    public void getDifferentSettlementIDsOfATile() {
+        settlementIdsOfHexesInTile = new TreeSet<>();
+        if (terrainContainsAPiece(leftOfMainTerrainCoordinate))
+            settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
+        if (terrainContainsAPiece(mainTerrainCoordinate))
+            settlementIdsOfHexesInTile.add(gameBoard.get(mainTerrainCoordinate).getSettlementID());
+        if (terrainContainsAPiece(rightOfMainTerrainCoordinate))
+            settlementIdsOfHexesInTile.add(gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID());
+    }
+
     private void increaseLevelOfTile(int level) {
         gameBoard.get(leftOfMainTerrainCoordinate).setLevel(level + 1);
         gameBoard.get(mainTerrainCoordinate).setLevel(level + 1);
@@ -177,8 +159,9 @@ public class TilePlacer extends ActionHelper {
     }
 
     private void splitSettlementNukedIfNecessary() {
-        //go around hexes of tile
-        //to be worked on
+        findCoordinatesAroundATile();
+        separateCoordinatesOfSettlementsIntoRightAndLeftSidesOfATile();
+        ifThereIsNoPathBetweenCoordinatesOfSettlementsFromLeftToRightSideSplitThem();
     }
 
     private boolean touchesPreviouslyPlacedTileEdge(Coordinate terrainCoordinate) {
@@ -205,20 +188,25 @@ public class TilePlacer extends ActionHelper {
                 && gameBoard.get(terrainCoordinate).hasTiger());
     }
 
-    private void getDifferentSettlementIDsOfATile() {
-        if (terrainContainsAPiece(leftOfMainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
-        if (terrainContainsAPiece(mainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(mainTerrainCoordinate).getSettlementID());
-        if (terrainContainsAPiece(rightOfMainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID());
-    }
-
     private int getSizeLeftOfCurrentSettlement(int idOfSettlementThanMightBeWipeOut) {
         for (Coordinate tempCoordinate : gameBoard.keySet())
             if (isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(tempCoordinate, idOfSettlementThanMightBeWipeOut))
                 sizeLeftOfCurrentSettlement++;
         return sizeLeftOfCurrentSettlement;
+    }
+
+    private void separateCoordinatesOfSettlementsIntoRightAndLeftSidesOfATile() {
+        coordinatesToTheLeftOfTile = new TreeSet<>();
+        coordinatesToTheRightOfTile = new TreeSet<>();
+        for (Coordinate neighborCoordinate : coordinatesAroundATile)
+            if (terrainContainsAPiece(neighborCoordinate))
+                placeItInCorrespondingLeftOrRightSideList(neighborCoordinate);
+    }
+
+    private void ifThereIsNoPathBetweenCoordinatesOfSettlementsFromLeftToRightSideSplitThem() {
+        for (int id : settlementIdsOfHexesInTile)
+            if (thereIsAGapInSettlementsPath(id))
+                splitIntoTwoSeparateSettlements(id);
     }
 
     private boolean isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(
@@ -229,9 +217,84 @@ public class TilePlacer extends ActionHelper {
                 && isNotOneOfCoordinatesThatWillBeWipedOut(tempCoordinate);
     }
 
+    private void placeItInCorrespondingLeftOrRightSideList(Coordinate neighborCoordinate) {
+        if (isToTheRightOfTile(neighborCoordinate))
+            coordinatesToTheRightOfTile.add(gameBoard.get(neighborCoordinate).getSettlementID());
+        else
+            coordinatesToTheLeftOfTile.add(gameBoard.get(neighborCoordinate).getSettlementID());
+    }
+
+    private boolean thereIsAGapInSettlementsPath(int id) {
+        return thereAreCoordinatesOfTheSameSettlementInBothRightAndLeftSide(id)
+                && thereIsNotAPathBetweenRightAndLeftSide(id);
+    }
+
+    private void splitIntoTwoSeparateSettlements(int id) {
+        newSettlement = new Settlement();
+        coordinatesToBeMovedFromSettlement = new ArrayList<>();
+        idOfNewSettlement = 0;
+        putCoordinatesOnTheRightSideInANewSettlement(id);
+        removeCoordinatesThatWereMovedToANewSettlement(id);
+    }
+
     private boolean isNotOneOfCoordinatesThatWillBeWipedOut(Coordinate tempCoordinate) {
         return tempCoordinate == leftOfMainTerrainCoordinate
                 || tempCoordinate == mainTerrainCoordinate
                 || tempCoordinate == rightOfMainTerrainCoordinate;
+    }
+
+    private boolean thereAreCoordinatesOfTheSameSettlementInBothRightAndLeftSide(int id) {
+        return coordinatesToTheRightOfTile.contains(id) && coordinatesToTheLeftOfTile.contains(id);
+    }
+
+    private boolean thereIsNotAPathBetweenRightAndLeftSide(int id) {
+        return thereIsNotALowerPath(id) && thereIsNotAHigherPath(id);
+    }
+
+    private void putCoordinatesOnTheRightSideInANewSettlement(int id) {
+        boolean firstCoordinateOfNewSettlement = true;
+        for (Coordinate coordinateInSettlement : settlements.get(id).settlementCoordinates) {
+            if (isToTheRightOfTile(coordinateInSettlement)) {
+                newSettlement.settlementCoordinates.add(coordinateInSettlement);
+                coordinatesToBeMovedFromSettlement.add(coordinateInSettlement);
+                if (firstCoordinateOfNewSettlement)
+                    idOfNewSettlement = coordinateInSettlement.hashCode();
+                gameBoard.get(coordinateInSettlement).setSettlementID(idOfNewSettlement);
+            }
+        }
+    }
+
+    private void removeCoordinatesThatWereMovedToANewSettlement(int id) {
+        for (Coordinate coordinateToMove : coordinatesToBeMovedFromSettlement)
+            settlements.get(id).settlementCoordinates.remove(coordinateToMove);
+        settlements.put(idOfNewSettlement, newSettlement);
+    }
+
+    private boolean thereIsNotALowerPath(int id) {
+        return !(lowerInLeftSideBelongsToSettlement(id) && lowerInRightSideBelongsToSettlement(id));
+    }
+
+    private boolean thereIsNotAHigherPath(int id) {
+        return !(higherInLeftSideBelongsToSettlement(id) && higherInRightSideBelongsToSettlement(id));
+    }
+
+    private boolean lowerInLeftSideBelongsToSettlement(int id) {
+        return gameBoard.containsKey(belowAndToTheRightOfMain(rightOfMainTerrainCoordinate))
+                && gameBoard.get(belowAndToTheRightOfMain(rightOfMainTerrainCoordinate)).getSettlementID() == id;
+    }
+
+    private boolean lowerInRightSideBelongsToSettlement(int id) {
+        return gameBoard.containsKey(toTheRightOfMain(rightOfMainTerrainCoordinate))
+                && gameBoard.get(toTheRightOfMain(rightOfMainTerrainCoordinate)).getSettlementID() == id;
+    }
+
+    private boolean higherInLeftSideBelongsToSettlement(int id) {
+        return gameBoard.containsKey(overAndToTheRightOfMain(mainTerrainCoordinate))
+                && gameBoard.get(overAndToTheRightOfMain(mainTerrainCoordinate)).getSettlementID() == id;
+    }
+
+    private boolean higherInRightSideBelongsToSettlement(int id) {
+        return gameBoard.containsKey(overAndToTheLeftOfMain(mainTerrainCoordinate))
+                && gameBoard.get(overAndToTheLeftOfMain(mainTerrainCoordinate)).getSettlementID() == id;
     }
 }
