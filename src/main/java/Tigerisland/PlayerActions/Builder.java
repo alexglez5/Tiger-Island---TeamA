@@ -1,4 +1,8 @@
-package Tigerisland;
+package Tigerisland.PlayerActions;
+
+import Tigerisland.Coordinate;
+import Tigerisland.Settlement;
+import Tigerisland.TerrainType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -92,7 +96,7 @@ public class Builder extends ActionHelper {
     }
 
     private boolean settlementDoesNotHaveATiger(int id) {
-        return !settlements.get(id).hasTiger;
+        return !settlements.get(id).hasTiger();
     }
 
     private void setSettlementIdToPieceBeingPlaced(int id) {
@@ -130,7 +134,7 @@ public class Builder extends ActionHelper {
     }
 
     private boolean adjacentSettlementDoesNotContainATotoro() {
-        return !settlements.get(settlementID).hasTotoro;
+        return !settlements.get(settlementID).hasTotoro();
     }
 
     private boolean thereIsATotoroLeft() {

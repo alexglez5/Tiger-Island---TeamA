@@ -1,8 +1,10 @@
-package Tigerisland;
+package Tigerisland.PlayerActions;
+
+import Tigerisland.Coordinate;
+import Tigerisland.GameBoard;
+import Tigerisland.Orientation;
 
 import java.util.TreeSet;
-
-import static Tigerisland.Orientation.*;
 
 /**
  * Created by Alexander Gonzalez on 3/21/2017.

@@ -1,6 +1,9 @@
 package Tigerisland;
 
-import java.util.ArrayList;
+import Tigerisland.PlayerActions.ActionHelper;
+import Tigerisland.PlayerActions.Builder;
+import Tigerisland.PlayerActions.TilePlacer;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +23,18 @@ public class GameBoard {
     public GameBoard(){
 //        settlements = new HashMap<>();
         player = new Player();
+    }
+
+    public Map<Coordinate, Hex> getBoard(){
+        return this.gameBoard;
+    }
+
+    public HashMap<Integer, Settlement> getSettlements(){
+        return this.settlements;
+    }
+
+    public Player getPlayer(){
+        return this.player;
     }
 
     public void updatePlayer(Player player){

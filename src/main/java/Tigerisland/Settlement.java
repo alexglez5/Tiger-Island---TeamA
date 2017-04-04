@@ -1,15 +1,16 @@
 package Tigerisland;
 
+import Tigerisland.PlayerActions.ActionHelper;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Alexander Gonzalez on 4/2/2017.
  */
 public class Settlement extends ActionHelper {
     public ArrayList<Coordinate> settlementCoordinates;
-    protected boolean hasTotoro;
-    protected boolean hasTiger;
+    private boolean hasTotoro;
+    private boolean hasTiger;
 
     public Settlement(){
         settlementCoordinates = new ArrayList<>();
@@ -29,68 +30,11 @@ public class Settlement extends ActionHelper {
         settlementCoordinates.add(coordinate);
     }
 
-//    private void splitSettlementNukedIfNecessary() {
-//        findCoordinatesAroundATile();
-//        getDifferentSettlementIDsOfATile();
-//
-//
-//
-//        int id = -98;
-//        boolean thereIsAPath = true;
-//        int index = 0;
-//        for(int p : settlementIdsOfHexesInTile){
-//            if(coordinatesAroundATile.containsKey(p)){
-//                thereIsAPath = true;
-//                index = 0;
-//                while(thereIsAPath){
-//                    if(terrainContainsAPiece(coordinatesAroundATile[index])){
-//
-//                    }
-//                    index++;
-//                }
-//                for(Coordinate tempCoordinate : coordinatesAroundATile){
-//                    if(terrainContainsAPiece(tempCoordinate)){
-//                        if()
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Settlement that = (Settlement) o;
-
-        if (hasTotoro != that.hasTotoro) return false;
-        if (hasTiger != that.hasTiger) return false;
-        return settlementCoordinates != null ? settlementCoordinates.equals(that.settlementCoordinates) : that.settlementCoordinates == null;
+    public boolean hasTiger(){
+        return hasTiger;
     }
 
-    @Override
-    public int hashCode() {
-        int result = settlementCoordinates != null ? settlementCoordinates.hashCode() : 0;
-        result = 31 * result + (hasTotoro ? 1 : 0);
-        result = 31 * result + (hasTiger ? 1 : 0);
-        return result;
+    public boolean hasTotoro(){
+        return hasTotoro;
     }
-
-
-    //    public static boolean containsTotoro(int settlementID){
-//        for(Coordinate coordinate : settlements.get(settlementID))
-//            if(gameBoard.get(coordinate).hasTotoro())
-//                return true;
-//        return false;
-//    }
-//
-//    public static boolean containsTiger(int settlementID){
-//        for(Coordinate coordinate : settlements.get(settlementID))
-//            if(gameBoard.get(coordinate).hasTiger())
-//                return true;
-//        return false;
-//    }
-//
-
 }

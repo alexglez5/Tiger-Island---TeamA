@@ -1,4 +1,6 @@
-package Tigerisland;
+package Tigerisland.PlayerActions;
+
+import Tigerisland.*;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
