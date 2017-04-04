@@ -255,6 +255,8 @@ public class BuilderTest {
         Assert.assertFalse(map.getBoard().get(new Coordinate(0 ,0)).hasTiger());
     }
 
+    //todo test tiger is not place if there is another tiger in adjacent settlement
+
     @Test
     public void testSettlementsAreMergedWhenTigerIsPlacedBetweenThem() throws Exception{
         map.foundNewSettlement(new Coordinate(-1,1));

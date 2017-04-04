@@ -12,9 +12,6 @@ public class AIHelper extends ActionHelper {
     private HashSet<Coordinate> placesWhereTigerCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
 
-    public HashSet<Coordinate> getPlacesWhereTotoroCanBePlaced() {
-        return placesWhereTotoroCanBePlaced;
-    }
 
     //todo
     /*
@@ -22,23 +19,23 @@ public class AIHelper extends ActionHelper {
     one can:
         - place a tile in level one
         - nuke a tile at level n, n-1... 1
-        - place a tiger
         - expand a settlement
         - found a settlement
     */
 
-    public void getCoordinatesWhereTotoroCanBePlaced() {
+    public void findCoordinatesWhereTotoroCanBePlaced() {
         placesWhereTotoroCanBePlaced = new HashSet<>();
         visitedCoordinates = new HashSet<>();
         for (int id : settlements.keySet())
-            if (settlementIsAtLeastSizeFive(id))
+            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id))
                 for (Coordinate coordinate : settlements.get(id).settlementCoordinates)
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
 
     }
 
-    private boolean settlementIsAtLeastSizeFive(int id) {
-        return settlements.get(id).settlementCoordinates.size() >= 5;
+    private boolean settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(int id) {
+        return settlements.get(id).settlementCoordinates.size() >= 5
+                && settlementDoesNotContainTotoro(id);
     }
 
     private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
@@ -50,30 +47,46 @@ public class AIHelper extends ActionHelper {
         }
     }
 
+    private boolean settlementDoesNotContainTotoro(int id) {
+        return !settlements.get(id).hasTotoro();
+    }
+
     private boolean totoroCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
         return !visitedCoordinates.contains(neighborCoordinate) && totoroCanBePlaced(neighborCoordinate);
     }
 
-//    public void getCoordinatesWhereTigerCanBePlaced(){
-//        placesWhereTigerCanBePlaced = new ArrayList<>();
-//        boolean settlementHasTiger;
-//        Set<Integer> iDsOfSettlementsThatDoNotContainATiger = new TreeSet<>();
-//        for(int id : map.settlements.keySet()){
-//            settlementHasTiger = false;
-//            for(Coordinate coordinateInSettlement : map.settlements.get(id)){
-//                if(map.gameBoard.get(coordinateInSettlement).hasTiger()){
-//                    settlementHasTiger = true;
-//                }
-//            }
-//            if(!settlementHasTiger){
-//                for(Coordinate coordinateInSettlement : map.settlements.get(id)){
-//                    map.helper.findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
-//                    for(Coordinate neighborCoordinate : map.helper.counterClockwiseCoordinatesAroundCoordinate){
-//                        if(map.tigerCanBePlaced(neighborCoordinate))
-//                            placesWhereTigerCanBePlaced.add(neighborCoordinate);
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public void findCoordinatesWhereTigerCanBePlaced() {
+        placesWhereTigerCanBePlaced = new HashSet<>();
+        visitedCoordinates = new HashSet<>();
+        for (int id : settlements.keySet())
+            if (settlementDoesNotContainTiger(id))
+                for (Coordinate coordinate : settlements.get(id).settlementCoordinates)
+                    findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
+
+    }
+
+    private boolean settlementDoesNotContainTiger(int id) {
+        return !settlements.get(id).hasTiger();
+    }
+
+    private void findNeighborsOfCoordinateWhereTigerCanBePlaced(Coordinate coordinate) {
+        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
+            if (tigerCanBePlacedInCoordinate(neighborCoordinate))
+                placesWhereTigerCanBePlaced.add(neighborCoordinate);
+            visitedCoordinates.add(neighborCoordinate);
+        }
+    }
+
+    private boolean tigerCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
+        return !visitedCoordinates.contains(neighborCoordinate) && tigerCanBePlaced(neighborCoordinate);
+    }
+
+    public HashSet<Coordinate> getPlacesWhereTotoroCanBePlaced() {
+        return placesWhereTotoroCanBePlaced;
+    }
+
+    public HashSet<Coordinate> getPlacesWhereTigerCanBePlaced() {
+        return placesWhereTigerCanBePlaced;
+    }
 }
