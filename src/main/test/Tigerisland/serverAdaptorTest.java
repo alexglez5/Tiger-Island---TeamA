@@ -10,9 +10,5 @@ import org.junit.Test;
  */
 public class serverAdaptorTest {
 
-    @Test
-    public void clientSocket(){
-
-    }
 
 }
