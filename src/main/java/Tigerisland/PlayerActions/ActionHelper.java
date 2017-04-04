@@ -10,19 +10,19 @@ import java.util.TreeSet;
  * Created by Alexander Gonzalez on 3/21/2017.
  */
 public class ActionHelper extends GameBoard {
+    protected final int sidesOfAHex = 6;
+    protected final int sidesOfATile = 9;
     protected TreeSet<Integer> settlementIdsOfHexesInTile;
     protected Coordinate leftOfMainTerrainCoordinate;
     protected Coordinate mainTerrainCoordinate;
     protected Coordinate rightOfMainTerrainCoordinate;
     protected Orientation orientation;
-    protected final int sidesOfAHex = 6;
-    protected final int sidesOfATile = 9;
     protected Coordinate[] counterClockwiseCoordinatesAroundCoordinate;
     protected Coordinate[] coordinatesAroundATile;
     private int currentTerrainXCoordinate;
     private int currentTerrainYCoordinate;
 
-    public boolean isToTheRightOfTile(Coordinate tempCoordinate){
+    public boolean isToTheRightOfTile(Coordinate tempCoordinate) {
         return tempCoordinate.getXCoordinate() > mainTerrainCoordinate.getXCoordinate();
     }
 
@@ -55,7 +55,7 @@ public class ActionHelper extends GameBoard {
         }
     }
 
-    public void findCoordinatesAroundATile(){
+    public void findCoordinatesAroundATile() {
         coordinatesAroundATile = new Coordinate[sidesOfATile];
         determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
         coordinatesAroundATile[0] = overAndToTheRightOfMain(mainTerrainCoordinate);

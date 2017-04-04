@@ -68,7 +68,6 @@ public class BuilderTest {
     public void testSettlementDoesNotExpandLongerThanExpected() throws Exception{
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
         map.foundNewSettlement(new Coordinate(1,1));
@@ -78,6 +77,26 @@ public class BuilderTest {
         Assert.assertFalse(map.getBoard().get(new Coordinate(1,0)).hasVillager());
         Assert.assertFalse(map.getBoard().get(new Coordinate(0,0)).hasVillager());
         Assert.assertFalse(map.getBoard().get(new Coordinate(-1,1)).hasVillager());
+    }
+
+    @Test
+    public void shouldMergeSettlementWhenFoundingNewSettlement(){
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.foundNewSettlement(new Coordinate(1,1));
+        map.foundNewSettlement(new Coordinate(0,1));
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID()
+                            ,map.getBoard().get(new Coordinate(0, 1)).getSettlementID());
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID()
+                            , map.getBoard().get(new Coordinate(1, 1)).getSettlementID());
+        Assert.assertEquals(map.getSettlements().size(), 1);
+    }
+
+    @Test
+    public void cannotFoundSettlementInHexThatHasPieces() throws Exception {
+        map.foundNewSettlement(new Coordinate(0,1));
+        Assert.assertFalse(map.settlementCanBeFound(new Coordinate(0,1)));
     }
 
     @Test
@@ -194,6 +213,24 @@ public class BuilderTest {
     }
 
     @Test
+    public void cannotPlaceTotoroInHexThatHasPieces() throws Exception {
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+                new Coordinate(-1,2), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
+                new Coordinate(2,1), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
+                new Coordinate(1,3), Orientation.FromBottomLeft);
+
+        map.foundNewSettlement(new Coordinate(1,1));
+        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
+        map.foundNewSettlement(new Coordinate(-1,3));
+
+        Assert.assertFalse(map.totoroCanBePlaced(new Coordinate(-1,3)));
+    }
+
+    @Test
     public void testTigerIsProperlyPlacedIfTheLevelIsAtLeastThree() throws Exception{
         map.foundNewSettlement(new Coordinate(-1,1));
         map.getBoard().get(new Coordinate(0,1)).increaseLevel();
@@ -239,30 +276,6 @@ public class BuilderTest {
 
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getSettlementID(),
                 map.getBoard().get(new Coordinate(1,0)).getSettlementID());
-    }
-
-    @Test
-    public void cannotFoundSettlementInHexThatHasPieces() throws Exception {
-        map.foundNewSettlement(new Coordinate(0,1));
-        Assert.assertFalse(map.settlementCanBeFound(new Coordinate(0,1)));
-    }
-
-    @Test
-    public void cannotPlaceTotoroInHexThatHasPieces() throws Exception {
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
-                new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
-                new Coordinate(1,3), Orientation.FromBottomLeft);
-
-        map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-        map.foundNewSettlement(new Coordinate(-1,3));
-
-        Assert.assertFalse(map.totoroCanBePlaced(new Coordinate(-1,3)));
     }
 
     @Test
