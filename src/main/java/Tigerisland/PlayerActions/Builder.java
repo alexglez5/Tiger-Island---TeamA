@@ -56,8 +56,8 @@ public class Builder extends ActionHelper {
     }
 
     public boolean tigerCanBePlaced() {
-        return terrainIsNotAVolcano()
-                && terrainIsNotTaken()
+        return terrainIsOnMap()
+                && terrainIsNotAVolcano()
                 && !hexContainsAPiece()
                 && levelIsAtLeastThree()
                 && atLeastOneAdjacentSettlementDoesNotContainATiger()
@@ -106,12 +106,16 @@ public class Builder extends ActionHelper {
     }
 
     public boolean totoroCanBePlaced() {
-        return terrainIsNotAVolcano()
-                && terrainIsNotTaken()
+        return terrainIsOnMap()
+                && terrainIsNotAVolcano()
                 && !hexContainsAPiece()
                 && isAdjacentToSettlementOfAtLeastSizeFive()
                 && adjacentSettlementDoesNotContainATotoro()
                 && thereIsATotoroLeft();
+    }
+
+    private boolean terrainIsOnMap() {
+        return gameBoard.containsKey(coordinate);
     }
 
     private void placeTotoroAtGivenCoordinate() {
@@ -153,7 +157,7 @@ public class Builder extends ActionHelper {
     }
 
     public boolean settlementCanBeFound() {
-        return terrainIsNotTaken()
+        return terrainIsOnMap()
                 && terrainIsNotAVolcano()
                 && !hexContainsAPiece()
                 && terrainIsInLevelOne()
@@ -175,10 +179,6 @@ public class Builder extends ActionHelper {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for (int id : differentSettlementIDsAroundCoordinate)
             mergeSettlementsIntoASingleSettlement(id);
-    }
-
-    private boolean terrainIsNotTaken() {
-        return gameBoard.containsKey(coordinate);
     }
 
     private boolean terrainIsNotAVolcano() {
@@ -241,7 +241,7 @@ public class Builder extends ActionHelper {
 
     public boolean settlementCanBeExpanded() {
         return thereIsAtLeastOneEmptyHexToExpand()
-                && thereIsEnoughVillagersToExpand();
+                && thereAreEnoughVillagersToExpand();
     }
 
     private void expandSettlement() {
@@ -271,7 +271,7 @@ public class Builder extends ActionHelper {
         return visitedCoordinates.size() > 0;
     }
 
-    public boolean thereIsEnoughVillagersToExpand() {
+    public boolean thereAreEnoughVillagersToExpand() {
         return possibleVillagersPlaced <= player.getNumberOfVillagersLeft();
     }
 

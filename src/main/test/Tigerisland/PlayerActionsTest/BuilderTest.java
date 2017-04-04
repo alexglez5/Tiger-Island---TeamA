@@ -12,12 +12,8 @@ import org.junit.Test;
 public class BuilderTest {
     GameBoard map;
 
-    //TODO merge settlements after expansion?
-    //todo adjacent settlement can't contain totoro
-
     @Before
     public void initializeGameBoard() throws Exception{
-
         map = new GameBoard();
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);

@@ -1,56 +1,59 @@
-//package Tigerisland;
-//
-//import java.util.ArrayList;
-//import java.util.Set;
-//import java.util.TreeSet;
-//
-///**
-// * Created by Alexander Gonzalez on 4/2/2017.
-// */
-//public class AIHelper {
-//    private final int minimumSizeOfAdjacentSettlementToTotoro = 5;
-//    private GameBoard map;
-//    private ArrayList<Coordinate> placesWhereTotoroCanBePlaced;
-//    private ArrayList<Coordinate> placesWhereTigerCanBePlaced;
-//    private Boolean settlementHasTiger;
-//
-//    public AIHelper(GameBoard gameBoard){
-//        this.map = gameBoard;
-//    }
-//
-//    //todo
-//    /*
-//    - add 2D arraylist to GameBoard that will contain current levels in the game and
-//        tileIDs of the tiles at that level (maybe skip level 1[will always be the last option])
-//    - functions that will return arraylists of cooridnates for all the places
-//    one can:
-//        - place a tile in level one
-//        - nuke a tile at level n, n-1... 1
-//        - place a totoro (using hashtable mentioned above)
-//        - place a tiger
-//        - expand a settlement
-//        - found a settlement
-//    */
-//    public void getCoordinatesWhereTotoroCanBePlaced(){
-//        placesWhereTotoroCanBePlaced = new ArrayList<>();
-//        Set<Integer> iDsOfSettlementsOfAtLeastSizeFive = new TreeSet<>();
-//        for(int id : map.settlements.keySet()){
-//            if(map.settlements.get(id).size() >= minimumSizeOfAdjacentSettlementToTotoro){
-//                iDsOfSettlementsOfAtLeastSizeFive.add(id);
-//            }
-//        }
-//
-//        for(int id : iDsOfSettlementsOfAtLeastSizeFive){
-//            for(Coordinate coordinate : map.settlements.get(id)){
-//                map.helper.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-//                for(Coordinate neighborCoordinate : map.helper.counterClockwiseCoordinatesAroundCoordinate){
-//                    if(map.totoroCanBePlaced(neighborCoordinate))
-//                        placesWhereTotoroCanBePlaced.add(neighborCoordinate);
-//                }
-//            }
-//        }
-//    }
-//
+package Tigerisland;
+
+import Tigerisland.PlayerActions.ActionHelper;
+
+import java.util.HashSet;
+
+/**
+ * Created by Alexander Gonzalez on 4/2/2017.
+ */
+public class AIHelper extends ActionHelper {
+    private HashSet<Coordinate> placesWhereTotoroCanBePlaced;
+    private HashSet<Coordinate> placesWhereTigerCanBePlaced;
+    private HashSet<Coordinate> visitedCoordinates;
+
+    public HashSet<Coordinate> getPlacesWhereTotoroCanBePlaced() {
+        return placesWhereTotoroCanBePlaced;
+    }
+
+    //todo
+    /*
+    - functions that will return lists of coordinates for all the places
+    one can:
+        - place a tile in level one
+        - nuke a tile at level n, n-1... 1
+        - place a tiger
+        - expand a settlement
+        - found a settlement
+    */
+
+    public void getCoordinatesWhereTotoroCanBePlaced() {
+        placesWhereTotoroCanBePlaced = new HashSet<>();
+        visitedCoordinates = new HashSet<>();
+        for (int id : settlements.keySet())
+            if (settlementIsAtLeastSizeFive(id))
+                for (Coordinate coordinate : settlements.get(id).settlementCoordinates)
+                    findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
+
+    }
+
+    private boolean settlementIsAtLeastSizeFive(int id) {
+        return settlements.get(id).settlementCoordinates.size() >= 5;
+    }
+
+    private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
+        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
+            if (totoroCanBePlacedInCoordinate(neighborCoordinate))
+                placesWhereTotoroCanBePlaced.add(neighborCoordinate);
+            visitedCoordinates.add(neighborCoordinate);
+        }
+    }
+
+    private boolean totoroCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
+        return !visitedCoordinates.contains(neighborCoordinate) && totoroCanBePlaced(neighborCoordinate);
+    }
+
 //    public void getCoordinatesWhereTigerCanBePlaced(){
 //        placesWhereTigerCanBePlaced = new ArrayList<>();
 //        boolean settlementHasTiger;
@@ -73,4 +76,4 @@
 //            }
 //        }
 //    }
-//}
+}
