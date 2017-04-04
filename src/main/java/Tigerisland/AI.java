@@ -6,7 +6,7 @@ package Tigerisland;
 
 /* AI will be our new API and AI in one. Adaptor passes information to the AI in the following process:
 
-   <pid><place><build>
+   <place><build>
     |
     |
    \/
@@ -18,6 +18,11 @@ package Tigerisland;
 
    OR
 
+    <tile>
+    |
+    |
+    \/
+    <terrainA><terrainB>
 
     <build option> = "expand", "found", "totoro", "tiger"
     <terrain> = "JUNGLE", "LAKE", "ROCK", "GRASS"
@@ -41,6 +46,13 @@ public class AI {
 
     public void placeTile(Tile tile, Coordinate c, Orientation o) {
         map.placeTile(tile, c, o);
+    }
+
+    public void parseTileMessage(String message) {
+        String[] m = message.split(" ");
+        TerrainType a = parseTerrain(m[0]);
+        TerrainType b = parseTerrain(m[1]);
+        currentTile = new Tile(a, b);
     }
 
     public void parseOtherPlayerMessage(String message) {
@@ -123,4 +135,7 @@ public class AI {
             return null;
         }
     }
+
+
+
 }
