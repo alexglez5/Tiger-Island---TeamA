@@ -4,7 +4,7 @@ import Tigerisland.Coordinate;
 import Tigerisland.GameBoard;
 import Tigerisland.Orientation;
 
-import java.util.TreeSet;
+import java.util.Set;
 
 /**
  * Created by Alexander Gonzalez on 3/21/2017.
@@ -12,7 +12,7 @@ import java.util.TreeSet;
 public class ActionHelper extends GameBoard {
     protected final int sidesOfAHex = 6;
     protected final int sidesOfATile = 9;
-    protected TreeSet<Integer> settlementIdsOfHexesInTile;
+    protected Set<Integer> settlementIdsOfHexesInTile;
     protected Coordinate leftOfMainTerrainCoordinate;
     protected Coordinate mainTerrainCoordinate;
     protected Coordinate rightOfMainTerrainCoordinate;
@@ -21,6 +21,7 @@ public class ActionHelper extends GameBoard {
     protected Coordinate[] coordinatesAroundATile;
     private int currentTerrainXCoordinate;
     private int currentTerrainYCoordinate;
+    private int ydiff;
 
     public boolean isToTheRightOfTile(Coordinate tempCoordinate) {
         return tempCoordinate.getXCoordinate() > mainTerrainCoordinate.getXCoordinate();
@@ -55,9 +56,8 @@ public class ActionHelper extends GameBoard {
         }
     }
 
-    public void findCoordinatesAroundATile() {
+    public void findCoordinatesAroundATileAssumingBottomRotation() {
         coordinatesAroundATile = new Coordinate[sidesOfATile];
-        determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
         coordinatesAroundATile[0] = overAndToTheRightOfMain(mainTerrainCoordinate);
         coordinatesAroundATile[1] = overAndToTheLeftOfMain(mainTerrainCoordinate);
         coordinatesAroundATile[2] = toTheLeftOfMain(mainTerrainCoordinate);
@@ -67,6 +67,53 @@ public class ActionHelper extends GameBoard {
         coordinatesAroundATile[6] = belowAndToTheRightOfMain(rightOfMainTerrainCoordinate);
         coordinatesAroundATile[7] = toTheRightOfMain(rightOfMainTerrainCoordinate);
         coordinatesAroundATile[8] = overAndToTheRightOfMain(rightOfMainTerrainCoordinate);
+    }
+
+    public void findCoordinatesAroundATile() {
+        switch (orientation) {
+            case FromBottom:
+                findCoordinatesAroundATileAssumingBottomRotation();
+                break;
+            case FromBottomRight:
+                mainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
+                orientation = Orientation.FromTop;
+                determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                findCoordinatesAroundATileAssumingBottomRotation();
+                flipAroundXAxis();
+                break;
+            case FromTopRight:
+                mainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
+                orientation = Orientation.FromBottom;
+                determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                findCoordinatesAroundATileAssumingBottomRotation();
+                break;
+            case FromTop:
+                findCoordinatesAroundATileAssumingBottomRotation();
+                flipAroundXAxis();
+                break;
+            case FromTopLeft:
+                mainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
+                orientation = Orientation.FromBottom;
+                determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                findCoordinatesAroundATileAssumingBottomRotation();
+                break;
+            case FromBottomLeft:
+                mainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
+                orientation = Orientation.FromTop;
+                determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                findCoordinatesAroundATileAssumingBottomRotation();
+                flipAroundXAxis();
+                break;
+        }
+    }
+
+    private void flipAroundXAxis() {
+        ydiff = 0;
+        for(int i = 0; i < coordinatesAroundATile.length; i++){
+            ydiff = coordinatesAroundATile[i].getYCoordinate() - mainTerrainCoordinate.getYCoordinate();
+            coordinatesAroundATile[i] = new Coordinate(coordinatesAroundATile[i].getXCoordinate() + ydiff,
+                    coordinatesAroundATile[i].getYCoordinate() - 2 * ydiff);
+        }
     }
 
     public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate) {

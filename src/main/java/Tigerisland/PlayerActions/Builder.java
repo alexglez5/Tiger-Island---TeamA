@@ -6,7 +6,6 @@ import Tigerisland.TerrainType;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Created by Alexander Gonzalez on 3/21/2017.
@@ -17,7 +16,7 @@ public class Builder extends ActionHelper {
     private TerrainType terrainType;
     private int settlementID;
     private Set<Coordinate> visitedCoordinates;
-    private TreeSet<Integer> differentSettlementIDsAroundCoordinate;
+    private Set<Integer> differentSettlementIDsAroundCoordinate;
     private int possiblePointsAdded;
     private int possibleVillagersPlaced;
     private Settlement currentSettlement;
@@ -114,10 +113,6 @@ public class Builder extends ActionHelper {
                 && thereIsATotoroLeft();
     }
 
-    private boolean terrainIsOnMap() {
-        return gameBoard.containsKey(coordinate);
-    }
-
     private void placeTotoroAtGivenCoordinate() {
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
@@ -181,6 +176,10 @@ public class Builder extends ActionHelper {
             mergeSettlementsIntoASingleSettlement(id);
     }
 
+    private boolean terrainIsOnMap() {
+        return gameBoard.containsKey(coordinate);
+    }
+
     private boolean terrainIsNotAVolcano() {
         return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
     }
@@ -201,7 +200,7 @@ public class Builder extends ActionHelper {
 
     private void getDifferentSettlementIDsAroundCoordinate(Coordinate coordinate) {
         findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        differentSettlementIDsAroundCoordinate = new TreeSet<>();
+        differentSettlementIDsAroundCoordinate = new HashSet<>();
 
         for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
             if (terrainContainsAPiece(neighborCoordinate)

@@ -3,7 +3,8 @@ package Tigerisland.PlayerActions;
 import Tigerisland.*;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Alexander Gonzalez on 3/19/2017.
@@ -15,8 +16,8 @@ public class TilePlacer extends ActionHelper {
     private int idOfNewSettlement;
     private ArrayList<Coordinate> coordinatesToBeMovedFromSettlement;
     private Settlement newSettlement;
-    private TreeSet<Integer> coordinatesToTheLeftOfTile;
-    private TreeSet<Integer> coordinatesToTheRightOfTile;
+    private Set<Integer> coordinatesToTheLeftOfTile;
+    private Set<Integer> coordinatesToTheRightOfTile;
 
     public void placeOneStartingTile() {
         gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));
@@ -93,9 +94,29 @@ public class TilePlacer extends ActionHelper {
     }
 
     private void placeTileOnMap() {
+        removeFromSettlementAllPiecesNukedByATile();
         gameBoard.put(leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
         gameBoard.put(mainTerrainCoordinate, tile.getMainTerrain());
         gameBoard.put(rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
+    }
+
+    private void removeFromSettlementAllPiecesNukedByATile() {
+        removePieceNukedFromSettlement(leftOfMainTerrainCoordinate);
+        removePieceNukedFromSettlement(mainTerrainCoordinate);
+        removePieceNukedFromSettlement(rightOfMainTerrainCoordinate);
+    }
+
+    private void removePieceNukedFromSettlement(Coordinate terrainCoordinate) {
+        int tempId = 0;
+        if (coordinateHasAPieceThatWillBeWipedOut(terrainCoordinate)) {
+            tempId = gameBoard.get(terrainCoordinate).getSettlementID();
+            settlements.get(tempId).settlementCoordinates.remove(terrainCoordinate);
+        }
+    }
+
+    private boolean coordinateHasAPieceThatWillBeWipedOut(Coordinate terrainCoordinate) {
+        return terrainContainsAPiece(terrainCoordinate)
+                && settlementIdsOfHexesInTile.contains(gameBoard.get(terrainCoordinate).getSettlementID());
     }
 
     private boolean hexesBelowAreAtTheSameLevel() {
@@ -145,7 +166,7 @@ public class TilePlacer extends ActionHelper {
     }
 
     public void getDifferentSettlementIDsOfATile() {
-        settlementIdsOfHexesInTile = new TreeSet<>();
+        settlementIdsOfHexesInTile = new HashSet<>();
         if (terrainContainsAPiece(leftOfMainTerrainCoordinate))
             settlementIdsOfHexesInTile.add(gameBoard.get(leftOfMainTerrainCoordinate).getSettlementID());
         if (terrainContainsAPiece(mainTerrainCoordinate))
@@ -198,8 +219,8 @@ public class TilePlacer extends ActionHelper {
     }
 
     private void separateCoordinatesOfSettlementsIntoRightAndLeftSidesOfATile() {
-        coordinatesToTheLeftOfTile = new TreeSet<>();
-        coordinatesToTheRightOfTile = new TreeSet<>();
+        coordinatesToTheLeftOfTile = new HashSet<>();
+        coordinatesToTheRightOfTile = new HashSet<>();
         for (Coordinate neighborCoordinate : coordinatesAroundATile)
             if (terrainContainsAPiece(neighborCoordinate))
                 placeItInCorrespondingLeftOrRightSideList(neighborCoordinate);
