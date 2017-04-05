@@ -47,9 +47,25 @@ public class Settlement {
         size--;
     }
 
-    public int bfs() {
-        Set visited = new TreeSet();
-        Set elements = edges.keySet();
+    public Set<Coordinate> bfs() {
+        // set up bfs
+        Set<Coordinate> visited = new HashSet<Coordinate>();
+        Set<Coordinate> elements = edges.keySet();
+        ArrayDeque<Coordinate> queue = new ArrayDeque<>();
+        queue.add(elements.iterator().next());
 
+        while(!queue.isEmpty()) {
+            // get the first thing in the queue
+            Coordinate current = queue.remove();
+            visited.add(current);
+
+            // get the vertices that are connected to this element and not in visited
+            for (Coordinate c : edges.get(current)) {
+                if (!visited.contains(c)) {
+                    queue.add(c);
+                }
+            }
+        }
+        return visited;
     }
 }

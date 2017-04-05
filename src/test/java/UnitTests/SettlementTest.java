@@ -38,10 +38,9 @@ public class SettlementTest {
         s.addToSettlement(new Coordinate(0,1,-1));
         s.addToSettlement(new Coordinate(0,2,-2));
         s.addToSettlement(new Coordinate(0,3,-3));
-        s.addToSettlement(new Coordinate(1,2,-1));
-        Assert.assertEquals(5, s.bfs());
+        int size = s.bfs().size();
+        Assert.assertEquals(4, size);
     }
-
 
     @After
     public void teardown() {
