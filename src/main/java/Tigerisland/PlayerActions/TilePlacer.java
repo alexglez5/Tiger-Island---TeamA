@@ -182,7 +182,7 @@ public class TilePlacer extends ActionHelper {
     }
 
     private void splitSettlementNukedIfNecessary() {
-        findCoordinatesAroundATile();
+        findCoordinatesAroundATile(); //todo fix this and test independently with every rotation
         separateCoordinatesOfSettlementsIntoRightAndLeftSidesOfATile();
         ifThereIsNoPathBetweenCoordinatesOfSettlementsFromLeftToRightSideSplitThem();
     }
@@ -249,7 +249,7 @@ public class TilePlacer extends ActionHelper {
 
     private boolean thereIsAGapInSettlementsPath(int id) {
         return thereAreCoordinatesOfTheSameSettlementInBothRightAndLeftSide(id)
-                && thereIsNotAPathBetweenRightAndLeftSide(id);
+                && !thereIsAPathBetweenRightAndLeftSide(id);
     }
 
     private void splitIntoTwoSeparateSettlements(int id) {
@@ -270,8 +270,8 @@ public class TilePlacer extends ActionHelper {
         return coordinatesToTheRightOfTile.contains(id) && coordinatesToTheLeftOfTile.contains(id);
     }
 
-    private boolean thereIsNotAPathBetweenRightAndLeftSide(int id) {
-        return thereIsNotALowerPath(id) && thereIsNotAHigherPath(id);
+    private boolean thereIsAPathBetweenRightAndLeftSide(int id) {
+        return thereIsAPathInTheBottom(id) || thereIsAPathOnTheTop(id);
     }
 
     private void putCoordinatesOnTheRightSideInANewSettlement(int id) {
@@ -293,30 +293,80 @@ public class TilePlacer extends ActionHelper {
         settlements.put(idOfNewSettlement, newSettlement);
     }
 
-    private boolean thereIsNotALowerPath(int id) {
-        return !(lowerInLeftSideBelongsToSettlement(id) && lowerInRightSideBelongsToSettlement(id));
+    private boolean thereIsAPathInTheBottom(int id) {
+        return coordinateInLeftSideOfBottomPathBelongsToSettlement(id)
+                && coordinateInRightSideOfBottomPathBelongsToSettlement(id);
     }
 
-    private boolean thereIsNotAHigherPath(int id) {
-        return !(higherInLeftSideBelongsToSettlement(id) && higherInRightSideBelongsToSettlement(id));
+    private boolean thereIsAPathOnTheTop(int id) {
+        return coordinateInLeftSideOfTopPathBelongsToSettlement(id)
+                && coordinateInRightSideOfTopPathBelongsToSettlement(id);
     }
 
-    private boolean lowerInLeftSideBelongsToSettlement(int id) {
+    private boolean coordinateInLeftSideOfBottomPathBelongsToSettlement(int id) {
+        return orientation == Orientation.FromBottom
+                ? belongsToSettlementInLeftSideOfBottomPathAssumingFromBottomOrientation(id)
+                : belongsToSettlementInLeftSideOfBottomPathAssumingFromTopOrientation(id);
+    }
+
+    private boolean belongsToSettlementInLeftSideOfBottomPathAssumingFromTopOrientation(int id) {
+        return gameBoard.containsKey(rightOfMainTerrainCoordinate)
+                && gameBoard.get(rightOfMainTerrainCoordinate).getSettlementID() == id;
+    }
+
+    private boolean belongsToSettlementInLeftSideOfBottomPathAssumingFromBottomOrientation(int id) {
         return gameBoard.containsKey(belowAndToTheRightOfMain(rightOfMainTerrainCoordinate))
                 && gameBoard.get(belowAndToTheRightOfMain(rightOfMainTerrainCoordinate)).getSettlementID() == id;
     }
 
-    private boolean lowerInRightSideBelongsToSettlement(int id) {
+    private boolean coordinateInRightSideOfBottomPathBelongsToSettlement(int id) {
+        return orientation == Orientation.FromBottom
+                ? belongsToSettlementInRightSideOfBottomPathAssumingFromBottomOrientation(id)
+                : belongsToSettlementInRightSideOfBottomPathAssumingFromTopOrientation(id);
+    }
+
+    private boolean belongsToSettlementInRightSideOfBottomPathAssumingFromTopOrientation(int id) {
+        return gameBoard.containsKey(toTheRightOfMain(mainTerrainCoordinate))
+                && gameBoard.get(toTheRightOfMain(mainTerrainCoordinate)).getSettlementID() == id;
+    }
+
+    private boolean belongsToSettlementInRightSideOfBottomPathAssumingFromBottomOrientation(int id) {
         return gameBoard.containsKey(toTheRightOfMain(rightOfMainTerrainCoordinate))
                 && gameBoard.get(toTheRightOfMain(rightOfMainTerrainCoordinate)).getSettlementID() == id;
     }
 
-    private boolean higherInLeftSideBelongsToSettlement(int id) {
+    private boolean coordinateInRightSideOfTopPathBelongsToSettlement(int id) {
+        return orientation == Orientation.FromBottom
+                ? belongsToSettlementInRightSideOfTopPathAssumingFromBottomOrientation(id)
+                : belongsToSettlementInRightSideOfTopPathAssumingFromTopOrientation(id);
+    }
+
+    private boolean belongsToSettlementInRightSideOfTopPathAssumingFromTopOrientation(int id) {
+        return gameBoard.containsKey(new Coordinate(mainTerrainCoordinate.getXCoordinate(),
+                mainTerrainCoordinate.getYCoordinate() - 2))
+                && gameBoard.get(new Coordinate(mainTerrainCoordinate.getXCoordinate(),
+                mainTerrainCoordinate.getYCoordinate() - 2)).getSettlementID() == id;
+    }
+
+    private boolean belongsToSettlementInRightSideOfTopPathAssumingFromBottomOrientation(int id) {
         return gameBoard.containsKey(overAndToTheRightOfMain(mainTerrainCoordinate))
                 && gameBoard.get(overAndToTheRightOfMain(mainTerrainCoordinate)).getSettlementID() == id;
     }
 
-    private boolean higherInRightSideBelongsToSettlement(int id) {
+    private boolean coordinateInLeftSideOfTopPathBelongsToSettlement(int id) {
+        return orientation == Orientation.FromBottom
+                ? belongsToSettlementInLeftSideOfTopPathAssumingFromBottomOrientation(id)
+                : belongsToSettlementInLeftSideOfTopPathAssumingFromTopOrientation(id);
+    }
+
+    private boolean belongsToSettlementInLeftSideOfTopPathAssumingFromTopOrientation(int id) {
+        return gameBoard.containsKey(toTheRightOfMain(new Coordinate(mainTerrainCoordinate.getXCoordinate(),
+                mainTerrainCoordinate.getYCoordinate() - 2)))
+                && gameBoard.get(new Coordinate(mainTerrainCoordinate.getXCoordinate(),
+                mainTerrainCoordinate.getYCoordinate() - 2)).getSettlementID() == id;
+    }
+
+    private boolean belongsToSettlementInLeftSideOfTopPathAssumingFromBottomOrientation(int id) {
         return gameBoard.containsKey(overAndToTheLeftOfMain(mainTerrainCoordinate))
                 && gameBoard.get(overAndToTheLeftOfMain(mainTerrainCoordinate)).getSettlementID() == id;
     }

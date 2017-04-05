@@ -18,7 +18,7 @@ public class GameBoard {
     protected static Map<Integer, Settlement> settlements = new HashMap<>();
     protected static Player player;
 
-    public GameBoard() {
+    public GameBoard(Player player) {
         player = new Player();
     }
 
