@@ -2,15 +2,24 @@ package Tigerisland;
 
 public class Game {
 
-    GameBoard gameBoard = new GameBoard();
-    Player white = new Player();
-    Player black = new Player();
-    int turn = 1;
+    GameBoard map = new GameBoard();
+    Player computer = new Player();
+    Player opponent = new Player();
     TileValidator validator = new TileValidator();
+    CoordinatesLocator locator = new CoordinatesLocator();
     Tile currentTile;
+    TerrainType a;
+    TerrainType b;
+    int xCord;
+    int yCord;
+    int zCord;
+    int orient;
+    Coordinate tileLoc;
+    Coordinate buildLoc;
+    TerrainType expandTerrain;
 
     public boolean checkHexLocation(Coordinate cord) {
-        return gameBoard.checkForHex(cord);
+        return map.checkForHex(cord);
     }
 
     public void placeFirstTile() {
@@ -20,15 +29,11 @@ public class Game {
         Hex leftBot = new Hex(TerrainType.ROCK, 1);
         Hex rightBot = new Hex(TerrainType.GRASS, 1);
 
-        gameBoard.placeHex(main, new Coordinate(0,0,0));
-        gameBoard.placeHex(leftTop, new Coordinate(0,1,-1));
-        gameBoard.placeHex(rightTop, new Coordinate(1,0,-1));
-        gameBoard.placeHex(leftBot, new Coordinate(-1,0,1));
-        gameBoard.placeHex(rightBot, new Coordinate(0,-1,1));
-    }
-
-    public void incrementTurn() {
-        turn++;
+        map.placeHex(main, new Coordinate(0,0,0));
+        map.placeHex(leftTop, new Coordinate(0,1,-1));
+        map.placeHex(rightTop, new Coordinate(1,0,-1));
+        map.placeHex(leftBot, new Coordinate(-1,0,1));
+        map.placeHex(rightBot, new Coordinate(0,-1,1));
     }
 
     public TerrainType stringToTerrain(String terrain) throws Throwable {
@@ -50,19 +55,47 @@ public class Game {
         throw new Error("Incorrect terrain formatting");
     }
 
-    public Tile createTile(TerrainType a, TerrainType b) {
+    public void setCurrentTile(TerrainType a, TerrainType b) {
         currentTile = new Tile(a, b);
+    }
+
+    public Tile getCurrentTile() {
         return currentTile;
     }
 
+    // returns true if the tile was placed, false if it wasn't
+    public boolean checkAndPlaceTile(Tile tile, Coordinate target, int orientation) {
+        if (validator.canPlaceTile(target, orientation)) {
+            placeTile(tile, target, orientation);
+            return true;
+        }
+        return false;
+    }
+
     public void placeTile(Tile tile, Coordinate target, int orientation) {
-        Coordinate[] nearby = validator.produceCoordinatesFromOrientation(target, orientation);
-        gameBoard.placeHex(tile.getLeftOfMainTerrain(), nearby[0]);
-        gameBoard.placeHex(tile.getRightOfMainTerrain(), nearby[1]);
-        gameBoard.placeHex(tile.getMainTerrain(), target);
+        Coordinate[] nearby = locator.produceCoordinatesFromOrientation(target, orientation);
+        map.placeHex(tile.getLeftOfMainTerrain(), nearby[0]);
+        map.placeHex(tile.getRightOfMainTerrain(), nearby[1]);
+        map.placeHex(tile.getMainTerrain(), target);
+        
+        // todo: check for settlement split
     }
 
     public void clearBoard() {
-        gameBoard.clearBoard();
+        map.clearBoard();
     }
+
+    public int checkLevel(Coordinate c) {
+        return map.getHex(c).getLevel();
+    }
+
+    public Player getComputer() {
+        return computer;
+    }
+
+    public Player getOpponent() {
+        return opponent;
+    }
+
+
 }

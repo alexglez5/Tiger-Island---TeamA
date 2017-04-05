@@ -40,6 +40,14 @@ public class GameBoardTest {
         Assert.assertNotNull(test);
     }
 
+    @Test
+    public void testCorrectHexLevel() {
+        map.placeHex(hex, cord);
+        map.placeHex(hex, cord);
+        map.placeHex(hex, cord);
+        Assert.assertEquals(hex.getLevel(), 3);
+    }
+
     @After
     public void cleanup() throws Exception {
         map.clearBoard();

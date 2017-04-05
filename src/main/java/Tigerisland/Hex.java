@@ -42,12 +42,11 @@ public class Hex {
         return tileID;
     }
 
-    public void increaseLevel(){
-        level++;
-    }
-
     public int getLevel() {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }

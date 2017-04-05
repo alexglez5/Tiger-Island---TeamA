@@ -1,6 +1,7 @@
 package UnitTests;
 
 import Tigerisland.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,11 @@ public class TileTest {
         int toCheck = Tile.getNumberOfTilesCreated();
         tile = new Tile(TerrainType.GRASS, TerrainType.ROCK);
         Assert.assertEquals(tile.getTileID(), toCheck + 1);
+    }
+
+    @After
+    public void teardown() {
+        map.clearBoard();
     }
 
 }

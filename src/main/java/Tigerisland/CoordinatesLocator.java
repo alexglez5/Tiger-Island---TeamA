@@ -3,7 +3,7 @@ package Tigerisland;
 /**
  * Created by nathanbarnavon on 4/4/17.
  */
-public class TileLocator extends GameBoard {
+public class CoordinatesLocator {
 
     public Coordinate[] produceClockwiseNeighborCoordinates(Coordinate c) {
         Coordinate[] clockwiseCoordinates = new Coordinate[6];
@@ -48,6 +48,5 @@ public class TileLocator extends GameBoard {
         }
         return orientationCoordinates;
     }
-
 
 }

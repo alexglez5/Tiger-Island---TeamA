@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Player {
 
-    private Tile currentTile;
     private int score;
     private int numberOfVillagersLeft;
     private int numberOfTotoroLeft;
@@ -33,10 +32,6 @@ public class Player {
     public void useTotoro() { numberOfTotoroLeft--; }
 
     public void useTiger() { numberOfTigersLeft--; }
-
-    public Tile getCurrentTile() { return currentTile; }
-
-    public void setCurrentTile(Tile t) { currentTile = t; }
 
     public void addSettlement(Settlement s) { settlements.add(s); }
 
