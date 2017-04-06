@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Settlement extends Game {
 
-    ActionHelper cordLoc = new ActionHelper();
+    ActionHelper cordLoc = helper;
     private int size;
     private HashMap<Coordinate, ArrayList<Coordinate>> edges = new HashMap<>();
     private static int createdSettlements = 0;
@@ -16,7 +16,8 @@ public class Settlement extends Game {
 
     public Settlement(Coordinate cord) {
         createdSettlements++;
-        settlementID = createdSettlements;
+        if(gameBoard.containsKey(cord))
+            settlementID = gameBoard.get(cord).getSettlementID();
         hasTotoro = false;
         hasTiger = false;
         size = 1;
@@ -45,7 +46,8 @@ public class Settlement extends Game {
             }
         }
         size++;
-        settlementID = gameBoard.get(cord).getSettlementID();
+        if(gameBoard.containsKey(cord))
+            settlementID = gameBoard.get(cord).getSettlementID();
     }
 
     public void removeFromSettlement(Coordinate cord) {
@@ -61,10 +63,6 @@ public class Settlement extends Game {
     public Set<Coordinate> bfs() {
         // set up bfs
         Set<Coordinate> visited = new HashSet<Coordinate>();
-
-        if(edges.keySet().size() == 0)
-            return visited;
-
         Set<Coordinate> elements = edges.keySet();
         ArrayDeque<Coordinate> queue = new ArrayDeque<>();
         queue.add(elements.iterator().next());

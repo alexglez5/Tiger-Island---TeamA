@@ -11,38 +11,37 @@ import java.util.Map;
 
 public class Game {
     private static TilePlacer placer = new TilePlacer();
-    private static ActionHelper helper = new ActionHelper();
+    protected static ActionHelper helper = new ActionHelper();
     private static TilePlacementValidator tileValidator = new TilePlacementValidator();
     private static Builder builder = new Builder();
     private static BuildValidator buildValidator = new BuildValidator();
     public static Map<Coordinate, Hex> gameBoard = new HashMap<>();
-    private static Player currentPlayer;
-    private static Player player1;
-    private static Player player2;
+    private static Player currentPlayer = new Player();
+//    private static Player player1;
+//    private static Player player2;
 
-    public Game() {
-        player1 = new Player();
-        player1.setPlayerID(1);
-        player2 = new Player();
-        player2.setPlayerID(2);
-        updatePlayer(player1.getPlayerID());
-    }
+//    public Game() {
+//        player1 = new Player();
+//        player1.setPlayerID(1);
+//        player2 = new Player();
+//        player2.setPlayerID(2);
+//        updatePlayer(player1.getPlayerID());
+//    }
 
     public Map<Coordinate, Hex> getBoard() {
         return this.gameBoard;
     }
 
-
     public Player getPlayer() {
         return currentPlayer;
     }
 
-    public void updatePlayer(int pid) {
-        if (player1.getPlayerID() == pid)
-            currentPlayer = player1;
-        else
-            currentPlayer = player2;
-    }
+//    public void updatePlayer(int pid) {
+//        if (player1.getPlayerID() == pid)
+//            currentPlayer = player1;
+//        else
+//            currentPlayer = player2;
+//    }
 
     public void placeStartingTile() {
         placer.placeOneStartingTile();
@@ -69,7 +68,8 @@ public class Game {
     }
 
     public void placeTotoro(Coordinate coordinate) {
-        builder.placeTotoro(coordinate);
+        builder.processParameters(coordinate);
+        builder.placeTotoro();
     }
 
     public void placeTiger(Coordinate coordinate) {

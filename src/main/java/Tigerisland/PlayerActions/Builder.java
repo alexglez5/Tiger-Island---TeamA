@@ -37,12 +37,36 @@ public class Builder extends Game {
         mergeSettlementsThatCanBeMerged(coordinate);
     }
 
+    protected void findIdOfSettlementTotoroCouldBeAdjacentTo(){
+        getDifferentSettlementIDsAroundCoordinate(coordinate);
+        for(int id : differentSettlementIDsAroundCoordinate){
+            if(getPlayer().findSettlement(id).getSize() >= 5
+                    && !getPlayer().findSettlement(id).hasTotoro()){
+                settlementID = id;
+                return;
+            }
+        }
+        settlementID = -1;
+    }
+
+    protected void findIdOfSettlementTigerCouldBeAdjacentTo(){
+        getDifferentSettlementIDsAroundCoordinate(coordinate);
+        for(int id : differentSettlementIDsAroundCoordinate){
+            if(getPlayer().findSettlement(id).hasTiger()) {
+                settlementID = id;
+                return;
+            }
+        }
+        settlementID = -1;
+    }
+
     public void placeTiger() {
         placeTigerAtGivenCoordinate();
         mergeSettlementsThatCanBeMerged(coordinate);
     }
 
     private void placeTigerAtGivenCoordinate() {
+        findIdOfSettlementTigerCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
         getPlayer().addPoints(pointsForTigerPlacement);
@@ -54,6 +78,7 @@ public class Builder extends Game {
     }
 
     private void placeTotoroAtGivenCoordinate() {
+        findIdOfSettlementTotoroCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
         getPlayer().findSettlement(settlementID).addToSettlement(coordinate);
@@ -65,7 +90,6 @@ public class Builder extends Game {
     public void processParameters(Coordinate coordinate) {
         this.coordinate = coordinate;
         this.settlementID = coordinate.hashCode();
-//        this.settlementID = Settlement.getCreatedSettlements() + 1;
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
