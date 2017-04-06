@@ -86,7 +86,7 @@ public class BuilderTest {
                             ,map.getBoard().get(new Coordinate(0, 1)).getSettlementID());
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID()
                             , map.getBoard().get(new Coordinate(1, 1)).getSettlementID());
-        Assert.assertEquals(map.getSettlements().size(), 1);
+        Assert.assertEquals(map.getPlayer().getSettlements().size(), 1);
     }
 
     @Test
@@ -193,7 +193,7 @@ public class BuilderTest {
                 new Coordinate(-2,2), Orientation.FromBottom);
         map.foundNewSettlement(new Coordinate(1,1));
 
-        Assert.assertEquals(map.getSettlements().size(),1);
+        Assert.assertEquals(map.getPlayer().getSettlements().size(),1);
         map.foundNewSettlement(new Coordinate(-2,3));
         int oldId = map.getBoard().get(new Coordinate(-2 ,3)).getSettlementID();
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
@@ -204,8 +204,8 @@ public class BuilderTest {
                 map.getBoard().get(new Coordinate(1 ,1)).getSettlementID());
         int newId = map.getBoard().get(new Coordinate(1 ,1)).getSettlementID();
         Assert.assertNotEquals(oldId, newId);
-        Assert.assertEquals(map.getSettlements().get(newId).settlementCoordinates.size(), 7);
-        Assert.assertEquals(map.getSettlements().size(), 1);
+        Assert.assertEquals(map.getPlayer().findSettlement(newId).getSize(), 7);
+        Assert.assertEquals(map.getPlayer().getSettlements().size(), 1);
     }
 
     @Test
@@ -240,7 +240,7 @@ public class BuilderTest {
     public void testTigerIsNotPlacedIfLevelIsSmallerThanThree() throws Exception{
         map.foundNewSettlement(new Coordinate(-1,1));
         map.getBoard().get(new Coordinate(0,1)).increaseLevel();
-         Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getLevel(), 2);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getLevel(), 2);
         map.placeTiger(new Coordinate(0,1));
         Assert.assertFalse(map.getBoard().get(new Coordinate(0 ,1)).hasTiger());
     }

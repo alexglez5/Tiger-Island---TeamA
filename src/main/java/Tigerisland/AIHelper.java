@@ -7,11 +7,11 @@ import java.util.HashSet;
 /**
  * Created by Alexander Gonzalez on 4/2/2017.
  */
-public class AIHelper extends ActionHelper {
+public class AIHelper extends Game {
     private HashSet<Coordinate> placesWhereTotoroCanBePlaced;
     private HashSet<Coordinate> placesWhereTigerCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
-
+    ActionHelper locator = new ActionHelper();
 
     //todo
     /*
@@ -26,21 +26,20 @@ public class AIHelper extends ActionHelper {
     public void findCoordinatesWhereTotoroCanBePlaced() {
         placesWhereTotoroCanBePlaced = new HashSet<>();
         visitedCoordinates = new HashSet<>();
-        for (int id : settlements.keySet())
-            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id))
-                for (Coordinate coordinate : settlements.get(id).settlementCoordinates)
+        for (Settlement s : getPlayer().getSettlements())
+            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(s.getSettlementID()))
+                for (Coordinate coordinate : s.bfs())
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
-
     }
 
     private boolean settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(int id) {
-        return settlements.get(id).settlementCoordinates.size() >= 5
+        return getPlayer().findSettlement(id).getSize() >= 5
                 && settlementDoesNotContainTotoro(id);
     }
 
     private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
-        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : surroundingCoordinates) {
+        locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : locator.surroundingCoordinates) {
             if (totoroCanBePlacedInCoordinate(neighborCoordinate))
                 placesWhereTotoroCanBePlaced.add(neighborCoordinate);
             visitedCoordinates.add(neighborCoordinate);
@@ -48,7 +47,7 @@ public class AIHelper extends ActionHelper {
     }
 
     private boolean settlementDoesNotContainTotoro(int id) {
-        return !settlements.get(id).hasTotoro();
+        return !getPlayer().findSettlement(id).hasTotoro();
     }
 
     private boolean totoroCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
@@ -58,20 +57,20 @@ public class AIHelper extends ActionHelper {
     public void findCoordinatesWhereTigerCanBePlaced() {
         placesWhereTigerCanBePlaced = new HashSet<>();
         visitedCoordinates = new HashSet<>();
-        for (int id : settlements.keySet())
-            if (settlementDoesNotContainTiger(id))
-                for (Coordinate coordinate : settlements.get(id).settlementCoordinates)
+        for (Settlement s : getPlayer().getSettlements())
+            if (settlementDoesNotContainTiger(s.getSettlementID()))
+                for (Coordinate coordinate : s.bfs())
                     findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
 
     }
 
     private boolean settlementDoesNotContainTiger(int id) {
-        return !settlements.get(id).hasTiger();
+        return !getPlayer().findSettlement(id).hasTiger();
     }
 
     private void findNeighborsOfCoordinateWhereTigerCanBePlaced(Coordinate coordinate) {
-        findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : surroundingCoordinates) {
+        locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : locator.surroundingCoordinates) {
             if (tigerCanBePlacedInCoordinate(neighborCoordinate))
                 placesWhereTigerCanBePlaced.add(neighborCoordinate);
             visitedCoordinates.add(neighborCoordinate);

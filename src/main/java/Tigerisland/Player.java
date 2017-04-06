@@ -51,6 +51,10 @@ public class Player {
         return null;
     }
 
+    public ArrayList<Settlement> getSettlements() {
+        return settlements;
+    }
+
     public boolean containsKey(int id){
         return findSettlement(id) != null;
     }
