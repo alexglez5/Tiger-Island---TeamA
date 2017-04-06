@@ -10,11 +10,11 @@ import org.junit.Test;
  * Created by Alexander Gonzalez on 3/21/2017.
  */
 public class BuilderTest {
-    GameBoard map;
+    Game map;
 
     @Before
     public void initializeGameBoard() throws Exception{
-        map = new GameBoard();
+        map = new Game();
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);
     }

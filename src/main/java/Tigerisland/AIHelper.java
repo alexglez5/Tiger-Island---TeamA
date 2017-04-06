@@ -40,7 +40,7 @@ public class AIHelper extends ActionHelper {
 
     private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
         findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
+        for (Coordinate neighborCoordinate : surroundingCoordinates) {
             if (totoroCanBePlacedInCoordinate(neighborCoordinate))
                 placesWhereTotoroCanBePlaced.add(neighborCoordinate);
             visitedCoordinates.add(neighborCoordinate);
@@ -71,7 +71,7 @@ public class AIHelper extends ActionHelper {
 
     private void findNeighborsOfCoordinateWhereTigerCanBePlaced(Coordinate coordinate) {
         findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : counterClockwiseCoordinatesAroundCoordinate) {
+        for (Coordinate neighborCoordinate : surroundingCoordinates) {
             if (tigerCanBePlacedInCoordinate(neighborCoordinate))
                 placesWhereTigerCanBePlaced.add(neighborCoordinate);
             visitedCoordinates.add(neighborCoordinate);

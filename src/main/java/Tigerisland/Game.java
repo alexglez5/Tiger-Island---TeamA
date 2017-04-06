@@ -1,8 +1,6 @@
 package Tigerisland;
 
-import Tigerisland.PlayerActions.ActionHelper;
-import Tigerisland.PlayerActions.Builder;
-import Tigerisland.PlayerActions.TilePlacer;
+import Tigerisland.PlayerActions.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,31 +9,35 @@ import java.util.Map;
  * Created by Alexander Gonzalez on 3/17/2017.
  */
 
-public class GameBoard {
-    public static TilePlacer placer = new TilePlacer();
-    public static Builder builder = new Builder();
-    protected static Map<Coordinate, Hex> gameBoard = new HashMap<>();
-    protected static Map<Integer, Settlement> settlements = new HashMap<>();
-    protected static Player player;
+public class Game {
+    private static TilePlacer placer = new TilePlacer();
+    private static TilePlacementValidator tileValidator = new TilePlacementValidator();
+    private static Builder builder = new Builder();
+    private static BuildValidator buildValidator = new BuildValidator();
+    public static Map<Coordinate, Hex> gameBoard = new HashMap<>();
+    private static Player currentPlayer;
+    private static Player player1;
+    private static Player player2;
 
-    public GameBoard() {
-        player = new Player();
+    public Game() {
+        player1 = new Player();
+        player2 = new Player();
     }
 
     public Map<Coordinate, Hex> getBoard() {
         return this.gameBoard;
     }
 
-    public Map<Integer, Settlement> getSettlements() {
-        return this.settlements;
-    }
 
     public Player getPlayer() {
-        return this.player;
+        return currentPlayer;
     }
 
-    public void updatePlayer(Player player) {
-        this.player = player;
+    public void updatePlayer(int pid) {
+        if (player1.getPlayerID() == pid)
+            currentPlayer = player1;
+        else
+            currentPlayer = player2;
     }
 
     public void placeStartingTile() {
@@ -43,7 +45,13 @@ public class GameBoard {
     }
 
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        placer.placeTile(tile, mainTerrainCoordinate, terrainsOrientation);
+        placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+        if (tileValidator.tileCanBePlacedOnLevelOne()) {
+            placer.placeTileOnMap();
+        }
+        else if (tileValidator.tileCanNukeOtherTiles()) {
+            placer.nuke();
+        }
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
@@ -64,37 +72,49 @@ public class GameBoard {
 
     public boolean tileCanBePlacedOnLevelOne(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        return placer.tileCanBePlacedOnLevelOne();
+        return tileValidator.tileCanBePlacedOnLevelOne();
     }
 
     public boolean tileCanNukeOtherTiles(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        return placer.tileCanNukeOtherTiles();
+        return tileValidator.tileCanNukeOtherTiles();
     }
 
     public boolean settlementCanBeFound(Coordinate coordinate) {
         builder.processParameters(coordinate);
-        return builder.settlementCanBeFound();
+        return buildValidator.settlementCanBeFound();
     }
 
     public boolean settlementCanBeExpanded(Coordinate coordinate, TerrainType terrainType) {
         builder.processParameters(coordinate, terrainType);
-        return builder.settlementCanBeExpanded();
+        return buildValidator.settlementCanBeExpanded();
     }
 
     public boolean totoroCanBePlaced(Coordinate coordinate) {
         builder.processParameters(coordinate);
-        return builder.totoroCanBePlaced();
+        return buildValidator.totoroCanBePlaced();
     }
 
     public boolean tigerCanBePlaced(Coordinate coordinate) {
         builder.processParameters(coordinate);
-        return builder.tigerCanBePlaced();
+        return buildValidator.tigerCanBePlaced();
     }
 
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger(Coordinate coordinate) {
         builder.processParameters(coordinate);
-        return builder.atLeastOneAdjacentSettlementDoesNotContainATiger();
+        return buildValidator.atLeastOneAdjacentSettlementDoesNotContainATiger();
+    }
+
+    public boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
+        return gameBoard.containsKey(terrainCoordinate)
+                && (gameBoard.get(terrainCoordinate).hasVillager()
+                || gameBoard.get(terrainCoordinate).hasTotoro()
+                || gameBoard.get(terrainCoordinate).hasTiger());
+    }
+
+    public void findCoordinatesOfPossibleSettlementExpansion(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
+        builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
+        builder.findCoordinatesOfPossibleSettlementExpansion();
     }
     //TODO add acceptance test for placeTile on different levels
 }

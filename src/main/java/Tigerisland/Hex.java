@@ -5,21 +5,14 @@ package Tigerisland;
  */
 public class Hex {
     private TerrainType terrainType;
-    private int whichPlayerID;
     private boolean hasVillagers;
     private boolean hasTotoro;
     private boolean hasTiger;
     private int settlementID;
-    private long tileID;
+    private int tileID;
     private int level;
 
-
-    public Hex(TerrainType terrainType) {
-        this.terrainType = terrainType;
-        level =1;
-    }
-
-    public Hex(TerrainType terrainType, long tileID){
+    public Hex(TerrainType terrainType, int tileID){
         this.terrainType = terrainType;
         this.tileID = tileID;
         level = 1;
@@ -57,7 +50,7 @@ public class Hex {
         this.settlementID = settlementID;
     }
 
-    public void setTileID(long tileID){
+    public void setTileID(int tileID){
         this.tileID = tileID;
     }
 
@@ -65,38 +58,20 @@ public class Hex {
         return terrainType;
     }
 
-    public long getTileID() {
+    public int getTileID() {
         return tileID;
     }
 
-    public void setLevel(int level){
-        this.level = level;
-    }
-
     public void increaseLevel() {
-        this.level++;
+        level++;
     }
 
     public int getLevel() {
         return level;
     }
 
-    public int getWhichPlayerID(){return this.whichPlayerID;}
-
-    public void setWhichPlayerID(int playerID){this.whichPlayerID = playerID;}
-
-    @Override
-    public int hashCode() {
-        return terrainType != null ? terrainType.hashCode() : 0;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Hex hex = (Hex) o;
-
-        return terrainType == hex.terrainType;
-    }
 }

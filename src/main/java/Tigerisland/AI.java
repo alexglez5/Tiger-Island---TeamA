@@ -31,7 +31,7 @@ package Tigerisland;
 */
 
 public class AI {
-    GameBoard map;
+    Game map;
     boolean myTurn;
     Tile currentTile;
     Coordinate tileCord;
@@ -41,7 +41,7 @@ public class AI {
     TerrainType expandArea;
 
     public AI() {
-        map = new GameBoard();
+        map = new Game();
     }
 
     public void placeTile(Tile tile, Coordinate c, Orientation o) {

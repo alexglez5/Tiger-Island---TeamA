@@ -1,84 +1,65 @@
 package Tigerisland;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by Reed on 3/20/2017.
- */
 public class Player {
-    private static int playerID;
-    private Tile currentTile;
-    private int points = 0;
-    private int numberOfVillagersLeft = 20;
-    private int numberOfTotoroLeft = 3;
-    private int numberOfTigersLeft = 2;
-    private String choice;
 
+    private static int numCreatedPlayers;
+    private int playerID;
+    private int score;
+    private int numberOfVillagersLeft;
+    private int numberOfTotoroLeft;
+    private int numberOfTigersLeft;
+    private ArrayList<Settlement> settlements;
 
-    public int getPoints() {
-        return this.points;
+    public Player() {
+        numCreatedPlayers++;
+        playerID = numCreatedPlayers;
+        score = 0;
+        numberOfVillagersLeft = 20;
+        numberOfTotoroLeft = 3;
+        numberOfTigersLeft = 2;
     }
 
-    public void addPlayerPoints(int pointsAdded) {
-        this.points += pointsAdded;
+    public int getScore() { return score; }
+
+    public void addPoints(int points) { score += points; }
+
+    public int getNumberOfVillagersLeft() { return numberOfVillagersLeft; }
+
+    public int getNumberOfTotoroLeft() { return numberOfTotoroLeft; }
+
+    public int getNumberOfTigersLeft() { return numberOfTigersLeft; }
+
+    public void useVillagers(int num) { numberOfVillagersLeft -= num; }
+
+    public void useTotoro() { numberOfTotoroLeft--; }
+
+    public void useTiger() { numberOfTigersLeft--; }
+
+    public void addSettlement(Settlement s) { settlements.add(s); }
+
+    public void removeSettlement(Settlement s) { settlements.remove(s); }
+
+    public Settlement findSettlement(int sid) {
+        for (Settlement s : settlements) {
+            if (s.getSettlementID() == sid)
+                return s;
+        }
+        return null;
     }
 
-    public int getNumberOfVillagersLeft() {
-        return this.numberOfVillagersLeft;
+    public boolean containsKey(int id){
+        return findSettlement(id) != null;
     }
 
-    public int getNumberOfTotoroLeft() {
-        return this.numberOfTotoroLeft;
-    }
-
-    public int getNumberOfTigersLeft() {
-        return this.numberOfTigersLeft;
-    }
-
-    public void updatePlacedVillagers(int numberOfVillagersPlaced) {
-        this.numberOfVillagersLeft -= numberOfVillagersPlaced;
-    }
-
-    public void updatePlacedTotoro() {
-        this.numberOfTotoroLeft -= 1;
-    }
-
-    public void updatePlacedTiger() {
-        this.numberOfTigersLeft -= 1;
-    }
-
-    public void grantTile(Tile currentTile) {
-        this.currentTile = currentTile;
-    }
-
-    public void removeCurrentTile() {
-        this.currentTile = null;
-    }
-
-    public Tile getCurrentTile() {
-        return this.currentTile;
-    }
-
-    public void resetScoreAndInventory() {
-        this.points = 0;
-        this.numberOfVillagersLeft = 20;
-        this.numberOfTotoroLeft = 3;
-        this.numberOfTigersLeft = 2;
-    }
-
-    public void giveChoice(String choice) {
-        this.choice = choice;
-    }
-
-    public String checkPlayerChoice() {
-        System.out.println(this.choice + " at player");
-        return this.choice;
+    public int getPlayerID() {
+        return playerID;
     }
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
     }
-
-    public int getPlayerID(){return this.playerID;}
 }

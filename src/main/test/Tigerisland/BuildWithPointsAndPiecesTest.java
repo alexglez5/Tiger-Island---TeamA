@@ -9,10 +9,10 @@ import org.junit.Test;
  * Created by Alexander Gonzalez on 3/31/2017.
  */
 public class BuildWithPointsAndPiecesTest {
-    GameBoard map;
+    Game map;
     @Before
     public void setUpTests(){
-        map = new GameBoard();
+        map = new Game();
     }
 
     @Test
@@ -133,6 +133,5 @@ public class BuildWithPointsAndPiecesTest {
     public void deallocateHexesInMap() throws Exception{
         map.gameBoard.clear();
         map.player.resetScoreAndInventory();
-        map.settlements.clear();
     }
 }

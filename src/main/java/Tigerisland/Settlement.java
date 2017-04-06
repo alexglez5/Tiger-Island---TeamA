@@ -2,39 +2,96 @@ package Tigerisland;
 
 import Tigerisland.PlayerActions.ActionHelper;
 
-import java.util.ArrayList;
+import java.util.*;
 
-/**
- * Created by Alexander Gonzalez on 4/2/2017.
- */
-public class Settlement extends ActionHelper {
-    public ArrayList<Coordinate> settlementCoordinates;
+public class Settlement {
+
+    ActionHelper cordLoc = new ActionHelper();
+    private int size;
+    private HashMap<Coordinate, ArrayList<Coordinate>> edges = new HashMap<>();
+    private static int createdSettlements = 0;
+    private int settlementID;
     private boolean hasTotoro;
     private boolean hasTiger;
 
-    public Settlement(){
-        settlementCoordinates = new ArrayList<>();
-        hasTiger = false;
+    public Settlement(Coordinate cord) {
+        createdSettlements++;
+        settlementID = createdSettlements;
         hasTotoro = false;
+        hasTiger = false;
+        size = 1;
+        edges.put(cord, new ArrayList<Coordinate>());
     }
 
-    public void placeTotoro(){
-        hasTotoro = true;
+    public int getSize() { return size; }
+
+    public boolean contains(Coordinate c) {
+        return edges.containsKey(c);
     }
 
-    public void placeTiger(){
-        hasTiger = true;
+    public void addToSettlement(Coordinate cord) {
+        cordLoc.findCounterClockwiseCoordinatesAroundCoordinate(cord);
+        edges.put(cord, new ArrayList<Coordinate>());
+        for (Coordinate c : cordLoc.surroundingCoordinates) {
+            // if the neighboring coordinate is already part of the settlement
+            if (edges.containsKey(c)) {
+                // get the edges of that neighbor coordinate and add our new coordinate (vice versa)
+                edges.get(c).add(cord);
+                edges.get(cord).add(c);
+            }
+        }
+        size++;
     }
 
-    public void addCoordinateToSettlement(Coordinate coordinate) {
-        settlementCoordinates.add(coordinate);
+    public void removeFromSettlement(Coordinate cord) {
+        cordLoc.findCounterClockwiseCoordinatesAroundCoordinate(cord);
+        edges.remove(cord);
+        for (Coordinate c : cordLoc.surroundingCoordinates) {
+            if (edges.containsKey(c))
+                edges.get(c).remove(cord);
+        }
+        size--;
     }
 
-    public boolean hasTiger(){
+    public Set<Coordinate> bfs() {
+        // set up bfs
+        Set<Coordinate> visited = new HashSet<Coordinate>();
+        Set<Coordinate> elements = edges.keySet();
+        ArrayDeque<Coordinate> queue = new ArrayDeque<>();
+        queue.add(elements.iterator().next());
+
+        while(!queue.isEmpty()) {
+            // get the first thing in the queue
+            Coordinate current = queue.remove();
+            visited.add(current);
+
+            // get the vertices that are connected to this element and not in visited
+            for (Coordinate c : edges.get(current)) {
+                if (!visited.contains(c)) {
+                    queue.add(c);
+                }
+            }
+        }
+        return visited;
+    }
+
+    public boolean hasTotoro() {
+        return hasTotoro;
+    }
+
+    public void placeTotoro() {
+        this.hasTotoro = hasTotoro;
+    }
+
+    public boolean hasTiger() {
         return hasTiger;
     }
 
-    public boolean hasTotoro(){
-        return hasTotoro;
+    public void placeTiger() {
+        this.hasTiger = hasTiger;
+    }
+
+    public int getSettlementID() {
+        return settlementID;
     }
 }

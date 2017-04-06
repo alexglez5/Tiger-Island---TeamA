@@ -9,12 +9,12 @@ import org.junit.Test;
  * Created by Alexander Gonzalez on 3/19/2017.
  */
 
-public class GameBoardTest {
-    GameBoard map;
+public class GameTest {
+    Game map;
 
     @Before
     public void initializeGameBoard() throws Exception{
-        map = new GameBoard();
+        map = new Game();
     }
 
     @Test

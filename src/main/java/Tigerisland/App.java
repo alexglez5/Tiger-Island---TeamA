@@ -7,7 +7,7 @@ public class App {
     Boolean isBoardEmpty = true;
     Tile currentTile;
     String currentBuildOption;
-    GameBoard map = new GameBoard();
+    Game map = new Game();
     Player player1 = new Player();
     Player player2 = new Player();
 

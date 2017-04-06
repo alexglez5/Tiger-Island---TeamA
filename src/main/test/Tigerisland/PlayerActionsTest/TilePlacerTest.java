@@ -6,17 +6,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 /**
  * Created by Alexander Gonzalez on 3/20/2017.
  */
 public class TilePlacerTest {
-    GameBoard map;
+    Game map;
 
     @Before
     public void initializeGameBoard() throws Exception{
-        map = new GameBoard();
+        map = new Game();
     }
 
     @Test
