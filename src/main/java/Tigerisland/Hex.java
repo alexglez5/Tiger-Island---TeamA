@@ -5,7 +5,7 @@ package Tigerisland;
  */
 public class Hex {
     private TerrainType terrainType;
-    private int whichPlayerID;
+    private int whichPlayerID = 0;
     private boolean hasVillagers;
     private boolean hasTotoro;
     private boolean hasTiger;

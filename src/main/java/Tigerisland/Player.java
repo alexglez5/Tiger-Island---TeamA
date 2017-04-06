@@ -76,9 +76,7 @@ public class Player {
         return this.choice;
     }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
+    public void setPlayerID(int playerID) {this.playerID = playerID;}
 
     public int getPlayerID(){return this.playerID;}
 }
