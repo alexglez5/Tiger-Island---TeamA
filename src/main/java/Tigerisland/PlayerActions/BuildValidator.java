@@ -7,8 +7,6 @@ import Tigerisland.*;
  */
 public class BuildValidator extends Builder {
 
-    ActionHelper locator = new ActionHelper();
-
     public boolean settlementCanBeFound() {
         return terrainIsOnMap()
                 && terrainIsNotAVolcano()
