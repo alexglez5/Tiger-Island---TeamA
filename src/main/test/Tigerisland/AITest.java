@@ -5,9 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by nathanbarnavon on 4/3/17.
- */
 public class AITest {
 
 

@@ -5,22 +5,10 @@ import Tigerisland.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Alexander Gonzalez on 3/19/2017.
- */
 public class TilePlacer extends Game{
     private Tile tile;
     public Set<Integer> settlementIdsOfHexesInTile;
-//    public int sizeLeftOfCurrentSettlement;
-//    private int idOfNewSettlement;
-//    public ArrayList<Integer> settlementIdsOfHexesInTile;
-//    protected Coordinate leftOfMainTerrainCoordinate;
-//    protected Coordinate mainTerrainCoordinate;
-//    protected Coordinate rightOfMainTerrainCoordinate;
-//    protected Orientation orientation;
-//    private ArrayList<Coordinate> coordinatesToBeMovedFromSettlement;
     protected static ActionHelper locator = new ActionHelper();
-
 
     public void placeOneStartingTile() {
         gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));

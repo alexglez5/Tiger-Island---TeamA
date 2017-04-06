@@ -5,11 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by nathanbarnavon on 4/5/17.
- */
 public class SettlementTest {
-
     Settlement s;
 
     @Before

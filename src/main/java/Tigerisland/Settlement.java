@@ -24,10 +24,6 @@ public class Settlement extends Game {
         edges.put(cord, new ArrayList<Coordinate>());
     }
 
-//    public static int getCreatedSettlements(){
-//        return createdSettlements;
-//    }
-
     public int getSize() { return size; }
 
     public boolean contains(Coordinate c) {

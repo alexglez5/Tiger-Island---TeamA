@@ -6,9 +6,6 @@ import cucumber.api.java.en.When;
 
 import java.lang.Error;
 
-/**
- * Created by NotKali on 3/27/2017.
- */
 public class AtLevel2IncorrectPlacement {
     App app = new App();
 

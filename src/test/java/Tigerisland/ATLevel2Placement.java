@@ -5,9 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.lang.Error;
-/**
- * Created by NotKali on 3/25/2017.
- */
+
 public class ATLevel2Placement {
     App app = new App();
 

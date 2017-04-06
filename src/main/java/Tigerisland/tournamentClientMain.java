@@ -1,8 +1,5 @@
 package Tigerisland;
 
-/**
- * Created by vincentibarrola on 4/3/17.
- */
 public class tournamentClientMain {
 
     //Will be taking in the arguments from command line based off assumption

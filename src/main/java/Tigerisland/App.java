@@ -1,8 +1,5 @@
 package Tigerisland;
 
-/**
- * Hello world!
- */
 public class App {
     Boolean isBoardEmpty = true;
     Tile currentTile;

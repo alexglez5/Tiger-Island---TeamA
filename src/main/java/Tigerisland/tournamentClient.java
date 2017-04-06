@@ -5,8 +5,6 @@ import java.io.*;
 import java.net.*;
 
 /**
- Created by vincentibarrola on 4/3/17.
-
  * = done
 
  - TCP Session Connection *

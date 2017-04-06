@@ -2,9 +2,6 @@ package Tigerisland.PlayerActions;
 
 import Tigerisland.*;
 
-/**
- * Created by nathanbarnavon on 4/5/17.
- */
 public class TilePlacementValidator extends TilePlacer {
 
     public boolean tileCanBePlacedOnLevelOne() {

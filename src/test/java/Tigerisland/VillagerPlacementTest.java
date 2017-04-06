@@ -4,9 +4,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-/**
- * Created by vincentibarrola on 3/24/17.
- */
 public class VillagerPlacementTest{
         App app = new App();
 

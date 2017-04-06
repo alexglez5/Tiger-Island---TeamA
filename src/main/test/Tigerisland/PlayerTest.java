@@ -2,9 +2,6 @@ package Tigerisland;
 
 import org.junit.*;
 
-/**
- * Created by Reed on 3/22/2017.
- */
 public class PlayerTest {
     static Player player = new Player();
     @Test

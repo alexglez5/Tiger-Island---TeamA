@@ -6,9 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by Alexander Gonzalez on 3/20/2017.
- */
 public class TilePlacerTest {
     Game map;
 

@@ -3,11 +3,6 @@ package Tigerisland;
 import cucumber.api.java.en.*;
 
 import java.lang.Error;
-/**
- * Created by NotKali on 3/21/2017.
- */
-
-
 
 public class FirstTilePlacementStepsATest {
 

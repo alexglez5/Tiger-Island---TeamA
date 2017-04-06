@@ -5,10 +5,6 @@ import Tigerisland.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Alexander Gonzalez on 3/21/2017.
- */
-
 public class Builder extends Game {
     private final int pointsForTigerPlacement = 75;
     protected Coordinate coordinate;

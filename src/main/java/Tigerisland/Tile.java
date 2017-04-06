@@ -1,8 +1,5 @@
 package Tigerisland;
 
-/**
- * Created by Alexander Gonzalez on 3/17/2017.
- */
 public class Tile {
     private static int numOfTilesCreated = 0;
     private int tileID;

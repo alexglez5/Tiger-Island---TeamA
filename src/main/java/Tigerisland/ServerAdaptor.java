@@ -1,10 +1,5 @@
 package Tigerisland;
 
-
-
-/**
- * Created by vincentibarrola on 4/2/17.
- */
 public class ServerAdaptor {
     //todo
     /*

@@ -4,9 +4,6 @@ import Tigerisland.PlayerActions.ActionHelper;
 
 import java.util.HashSet;
 
-/**
- * Created by Alexander Gonzalez on 4/2/2017.
- */
 public class AIHelper extends Game {
     private HashSet<Coordinate> placesWhereTotoroCanBePlaced;
     private HashSet<Coordinate> placesWhereTigerCanBePlaced;

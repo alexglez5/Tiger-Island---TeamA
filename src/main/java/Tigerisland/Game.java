@@ -5,10 +5,6 @@ import Tigerisland.PlayerActions.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Alexander Gonzalez on 3/17/2017.
- */
-
 public class Game {
     private static TilePlacer placer = new TilePlacer();
     protected static ActionHelper helper = new ActionHelper();

@@ -4,13 +4,6 @@ import Tigerisland.Coordinate;
 import Tigerisland.Game;
 import Tigerisland.Orientation;
 
-import java.util.Set;
-
-import static Tigerisland.Orientation.*;
-
-/**
- * Created by Alexander Gonzalez on 3/21/2017.
- */
 public class ActionHelper extends Game{
     protected final int sidesOfAHex = 6;
     public Coordinate leftOfMainTerrainCoordinate;
