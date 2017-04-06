@@ -13,41 +13,41 @@ public class PlayerTest {
     }
     @Test
     public void addPlayerPoints(){
-        player.addPlayerPoints(50);
+        player.addPoints(50);
         Assert.assertTrue(player.getPoints() == 50);
     }
     @Test
     public void placedVillagers1(){
-        player.updatePlacedVillagers(5);
+        player.useVillagers(5);
         Assert.assertTrue(player.getNumberOfVillagersLeft() == 15);
     }
     @Test
     public void placedTotoro1(){
         System.out.println("first: " + player.getNumberOfTotoroLeft());
-        player.updatePlacedTotoro();
+        player.useTotoro();
         System.out.println("second: " + player.getNumberOfTotoroLeft());
         Assert.assertTrue((player.getNumberOfTotoroLeft() == 2));
     }
     @Test
     public void placedTiger1() {
-        player.updatePlacedTiger();
+        player.useTiger();
         Assert.assertTrue(player.getNumberOfTigersLeft() == 1);
     }
     @Test
     public void placedVillagers2() {
-        player.updatePlacedVillagers(5);
+        player.useVillagers(5);
         Assert.assertTrue(player.getNumberOfVillagersLeft() == 10);
     }
     @Test
     public void placedTotoro2(){
         System.out.println("Third " + player.getNumberOfTotoroLeft());
-        player.updatePlacedTotoro();
+        player.useTotoro();
         System.out.println("Fourth: " + player.getNumberOfTotoroLeft());
         Assert.assertTrue((player.getNumberOfTotoroLeft() == 1));
     }
     @Test
     public void placedTiger2() {
-        player.updatePlacedTiger();
+        player.useTiger();
         Assert.assertTrue(player.getNumberOfTigersLeft() == 0);
     }
 }

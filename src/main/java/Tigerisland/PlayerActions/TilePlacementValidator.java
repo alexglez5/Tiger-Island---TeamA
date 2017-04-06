@@ -47,7 +47,7 @@ public class TilePlacementValidator extends TilePlacer {
                 && settlementIdsOfHexesInTile.contains(gameBoard.get(terrainCoordinate).getSettlementID());
     }
 
-    private boolean hexesBelowAreAtTheSameLevel() {
+    public boolean hexesBelowAreAtTheSameLevel() {
         return hexesOfTileAreOccupied()
                 && gameBoard.get(leftOfMainTerrainCoordinate).getLevel()
                 == gameBoard.get(mainTerrainCoordinate).getLevel()

@@ -116,5 +116,6 @@ public class Game {
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         builder.findCoordinatesOfPossibleSettlementExpansion();
     }
+
     //TODO add acceptance test for placeTile on different levels
 }

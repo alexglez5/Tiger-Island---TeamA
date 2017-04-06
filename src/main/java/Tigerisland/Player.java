@@ -23,7 +23,7 @@ public class Player {
         numberOfTigersLeft = 2;
     }
 
-    public int getScore() { return score; }
+    public int getPoints() { return score; }
 
     public void addPoints(int points) { score += points; }
 
@@ -65,5 +65,12 @@ public class Player {
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+
+    public void resetScoreAndInventory() {
+        score = 0;
+        numberOfVillagersLeft = 20;
+        numberOfTotoroLeft = 3;
+        numberOfTigersLeft = 2;
     }
 }

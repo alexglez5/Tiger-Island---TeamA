@@ -140,21 +140,16 @@ public class TilePlacerTest {
                 new Coordinate(0,0), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
                 new Coordinate(1,1), Orientation.FromTop);
-        map.placeTile(new Tile(TerrainType.Jungle, TerrainType.Lake),
-
-                new Coordinate(1,0), Orientation.FromBottom);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(1,0)).getTerrainType(),
-                TerrainType.Rocky);
+        Assert.assertFalse(map.tileCanNukeOtherTiles(new Tile(TerrainType.Jungle, TerrainType.Lake),
+                new Coordinate(1,0), Orientation.FromBottom));
     }
 
     @Test
     public void testTileIsNotPerfectlyOnTopOfOtherTile() throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(0,0), Orientation.FromBottom);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getTerrainType(),
-                TerrainType.Lake);
+        Assert.assertFalse(map.tileCanNukeOtherTiles(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), Orientation.FromBottom));
     }
 
     @Test
@@ -162,34 +157,26 @@ public class TilePlacerTest {
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottom);
 
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(0,0), Orientation.FromBottomRight);
-        Assert.assertFalse(map.getBoard().containsKey(new Coordinate(1,0)));
-
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(1,0), Orientation.FromBottomLeft);
-        Assert.assertFalse(map.getBoard().containsKey(new Coordinate(1,0)));
-
-        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getTerrainType(),
-                TerrainType.Lake);
+        Assert.assertFalse(map.tileCanNukeOtherTiles(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), Orientation.FromBottomRight));
     }
-
-    @Test
-    public void testNukingIsNotDoneIfItReducesAnySettlementSizeToZero() throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
-                new Coordinate(0,0), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.foundNewSettlement(new Coordinate(0,1));
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(1,0), Orientation.FromBottom);
-
-        Assert.assertTrue(map.getBoard().get(new Coordinate(0,1)).hasVillager());
-        Assert.assertNotEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
-                TerrainType.Grasslands);
-        Assert.assertNotEquals(map.getBoard().get(new Coordinate(1,1)).getTerrainType(),
-                TerrainType.Rocky);
-    }
+//
+//    @Test
+//    public void testNukingIsNotDoneIfItReducesAnySettlementSizeToZero() throws Exception{
+//        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+//                new Coordinate(0,0), Orientation.FromBottom);
+//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+//                new Coordinate(1,0), Orientation.FromBottomRight);
+//        map.foundNewSettlement(new Coordinate(0,1));
+//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+//                new Coordinate(1,0), Orientation.FromBottom);
+//
+//        Assert.assertTrue(map.getBoard().get(new Coordinate(0,1)).hasVillager());
+//        Assert.assertNotEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
+//                TerrainType.Grasslands);
+//        Assert.assertNotEquals(map.getBoard().get(new Coordinate(1,1)).getTerrainType(),
+//                TerrainType.Rocky);
+//    }
 
     @Test
     public void testTileIsNeverPlacedOnTopOfTotoro() throws Exception{
@@ -201,7 +188,8 @@ public class TilePlacerTest {
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottom);
 
-        Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getLevel(), 1);
+        Assert.assertFalse(map.tileCanNukeOtherTiles(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromBottom));
 
     }
 
@@ -224,106 +212,50 @@ public class TilePlacerTest {
                 new Coordinate(0,0), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        map.getBoard().get(new Coordinate(-1,1)).placeVillagers();
-        map.getBoard().get(new Coordinate(0,1)).placeVillagers();
-        map.getBoard().get(new Coordinate(1,1)).placeVillagers();
-        map.getBoard().get(new Coordinate(2,0)).placeVillagers();
-        map.getBoard().get(new Coordinate(-1,1)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(0,1)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(1,1)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(2,0)).setSettlementID(3);
 
-        map.getSettlements().put(3, new Settlement());
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(-1,1));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(0,1));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(1,1));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(2,0));
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.foundNewSettlement(new Coordinate(0,1));
+        map.foundNewSettlement(new Coordinate(1,1));
+        map.foundNewSettlement(new Coordinate(2,0));
 
-        Assert.assertEquals(map.getSettlements().size(),1);
-        map.placer.processParameters(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+        Assert.assertEquals(map.getPlayer().getSettlements().size(),1);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottom);
-        map.placer.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
-        map.placer.nuke();
+
         Assert.assertNotEquals(map.getBoard().get(new Coordinate(-1,1)).getSettlementID(),
                 map.getBoard().get(new Coordinate(2,0)).getSettlementID());
-        Assert.assertEquals(map.getSettlements().size(),2);
+        Assert.assertEquals(map.getPlayer().getSettlements().size(),2);
     }
 
     @Test
     public void shouldNotSplitSettlementNukedIfTheSettlementIsStillConnected() throws Exception{
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
-                new Coordinate(0,0), Orientation.FromBottom);
+                new Coordinate(0,1), Orientation.FromTopLeft);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(2,-2), Orientation.FromBottom);
 
-        map.getBoard().get(new Coordinate(0,0)).placeVillagers();
-        map.getBoard().get(new Coordinate(1,-1)).placeVillagers();
-        map.getBoard().get(new Coordinate(2,-1)).placeVillagers();
-        map.getBoard().get(new Coordinate(1,0)).placeVillagers();
-        map.getBoard().get(new Coordinate(0,0)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(1,-1)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(2,-1)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(1,0)).setSettlementID(3);
+        map.foundNewSettlement(new Coordinate(1,-1));
+        map.foundNewSettlement(new Coordinate(0,0));
+        map.foundNewSettlement(new Coordinate(2,-1));
+        map.foundNewSettlement(new Coordinate(2,0));
+        map.foundNewSettlement(new Coordinate(1,1));
 
-        map.getSettlements().put(3, new Settlement());
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(0,0));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(1,-1));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(2,-1));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(1,0));
-
-        map.placer.processParameters(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+        Assert.assertEquals(map.getPlayer().getSettlements().size(),1);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
                 new Coordinate(1,0), Orientation.FromBottom);
-        map.placer.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
-        map.placer.nuke();
-        Assert.assertEquals(map.getSettlements().size(),1);
-        Assert.assertEquals(map.getSettlements().get(3).settlementCoordinates.size(), 3);
+
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getSettlementID(),
+                map.getBoard().get(new Coordinate(2,0)).getSettlementID());
+        Assert.assertEquals(map.getPlayer().getSettlements().size(),1);
     }
 
-    //Todo add more tests to spliting settlements (nuking in all rotations)
-    @Test
-    public void shouldSplitSettlementNukedWithTilesInDifferentRotation() throws Exception{
-        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(-1,-2), Orientation.FromTopRight);
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Jungle),
-                new Coordinate(1,-2), Orientation.FromTop);
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Jungle),
-                new Coordinate(2,-4), Orientation.FromTopLeft);
-
-        map.getBoard().get(new Coordinate(1,-4)).placeVillagers();
-        map.getBoard().get(new Coordinate(0,-3)).placeVillagers();
-        map.getBoard().get(new Coordinate(0,-2)).placeVillagers();
-        map.getBoard().get(new Coordinate(1,-3)).placeVillagers();
-        map.getBoard().get(new Coordinate(2,-3)).placeVillagers();
-
-        map.getBoard().get(new Coordinate(1,-4)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(0,-3)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(0,-2)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(1,-3)).setSettlementID(3);
-        map.getBoard().get(new Coordinate(2,-3)).setSettlementID(3);
-
-        map.getSettlements().put(3, new Settlement());
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(1,-4));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(0,-3));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(0,-2));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(1,-3));
-        map.getSettlements().get(3).addCoordinateToSettlement(new Coordinate(2,-3));
-
-        map.placer.processParameters(new Tile(TerrainType.Rocky, TerrainType.Rocky),
-                new Coordinate(1,-2), Orientation.FromTopLeft);
-        map.placer.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
-        map.placer.nuke();
-
-        Assert.assertNotEquals(map.getBoard().get(new Coordinate(0,-3)).getSettlementID(),
-                map.getBoard().get(new Coordinate(2,-3)).getSettlementID());
-        Assert.assertEquals(map.getSettlements().size(),2);
-    }
 
     @After
     public void deallocateHexesInMap() throws Exception{
         map.getBoard().clear();
-        map.getSettlements().clear();
+        map.getPlayer().getSettlements().clear();
         map.getPlayer().resetScoreAndInventory();
     }
 }
