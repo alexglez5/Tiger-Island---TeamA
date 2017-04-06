@@ -6,8 +6,7 @@ import java.util.Set;
 
 public class Player {
 
-    private static int numCreatedPlayers;
-    private int playerID;
+    private int playerID = 0;
     private int score;
     private int numberOfVillagersLeft;
     private int numberOfTotoroLeft;
@@ -15,8 +14,6 @@ public class Player {
     private ArrayList<Settlement> settlements;
 
     public Player() {
-        numCreatedPlayers++;
-        playerID = numCreatedPlayers;
         score = 0;
         settlements = new ArrayList<>();
         numberOfVillagersLeft = 20;
@@ -40,7 +37,7 @@ public class Player {
 
     public void useTiger() { numberOfTigersLeft--; }
 
-    public void addSettlement(Settlement s) { settlements.add(s); }
+    public void addSettlement(Settlement s) { getSettlements().add(s); }
 
     public void removeSettlement(Settlement s) { settlements.remove(s); }
 

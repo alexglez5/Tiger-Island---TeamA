@@ -205,7 +205,6 @@ public class BuilderTest {
 
         map.foundNewSettlement(new Coordinate(1,1));
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
-        map.foundNewSettlement(new Coordinate(-1,3));
 
         Assert.assertFalse(map.totoroCanBePlaced(new Coordinate(-1,3)));
     }
