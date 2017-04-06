@@ -7,10 +7,10 @@ import Tigerisland.*;
  */
 public class TilePlacementValidator extends TilePlacer {
 
-    ActionHelper locator = new ActionHelper();
-
     public boolean tileCanBePlacedOnLevelOne() {
-        return (!tileExistsBelow() && atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge());
+        return gameBoard.size() == 0
+                || (!tileExistsBelow()
+                && atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge());
     }
 
     private boolean touchesPreviouslyPlacedTileEdge(Coordinate terrainCoordinate) {
@@ -31,15 +31,15 @@ public class TilePlacementValidator extends TilePlacer {
     }
 
     private boolean tileExistsBelow() {
-        return gameBoard.containsKey(leftOfMainTerrainCoordinate)
-                && gameBoard.containsKey(mainTerrainCoordinate)
-                && gameBoard.containsKey(rightOfMainTerrainCoordinate);
+        return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate)
+                && gameBoard.containsKey(locator.mainTerrainCoordinate)
+                && gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge() {
-        return touchesPreviouslyPlacedTileEdge(leftOfMainTerrainCoordinate)
-                || touchesPreviouslyPlacedTileEdge(mainTerrainCoordinate)
-                || touchesPreviouslyPlacedTileEdge(rightOfMainTerrainCoordinate);
+        return touchesPreviouslyPlacedTileEdge(locator.leftOfMainTerrainCoordinate)
+                || touchesPreviouslyPlacedTileEdge(locator.mainTerrainCoordinate)
+                || touchesPreviouslyPlacedTileEdge(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean coordinateHasAPieceThatWillBeWipedOut(Coordinate terrainCoordinate) {
@@ -49,42 +49,42 @@ public class TilePlacementValidator extends TilePlacer {
 
     public boolean hexesBelowAreAtTheSameLevel() {
         return hexesOfTileAreOccupied()
-                && gameBoard.get(leftOfMainTerrainCoordinate).getLevel()
-                == gameBoard.get(mainTerrainCoordinate).getLevel()
-                && gameBoard.get(mainTerrainCoordinate).getLevel()
-                == gameBoard.get(rightOfMainTerrainCoordinate).getLevel();
+                && gameBoard.get(locator.leftOfMainTerrainCoordinate).getLevel()
+                == gameBoard.get(locator.mainTerrainCoordinate).getLevel()
+                && gameBoard.get(locator.mainTerrainCoordinate).getLevel()
+                == gameBoard.get(locator.rightOfMainTerrainCoordinate).getLevel();
     }
 
     private boolean volcanoIsPlacedOnTopOfAnotherVolcano() {
-        return gameBoard.get(mainTerrainCoordinate).getTerrainType()
+        return gameBoard.get(locator.mainTerrainCoordinate).getTerrainType()
                 == TerrainType.Volcano;
     }
 
     private boolean tileIsNotPerfectlyOnTopOfAnotherTile() {
-        return gameBoard.get(leftOfMainTerrainCoordinate).getTileID()
-                != gameBoard.get(mainTerrainCoordinate).getTileID()
-                || gameBoard.get(mainTerrainCoordinate).getTileID()
-                != gameBoard.get(rightOfMainTerrainCoordinate).getTileID()
-                || gameBoard.get(leftOfMainTerrainCoordinate).getTileID()
-                != gameBoard.get(rightOfMainTerrainCoordinate).getTileID();
+        return gameBoard.get(locator.leftOfMainTerrainCoordinate).getTileID()
+                != gameBoard.get(locator.mainTerrainCoordinate).getTileID()
+                || gameBoard.get(locator.mainTerrainCoordinate).getTileID()
+                != gameBoard.get(locator.rightOfMainTerrainCoordinate).getTileID()
+                || gameBoard.get(locator.leftOfMainTerrainCoordinate).getTileID()
+                != gameBoard.get(locator.rightOfMainTerrainCoordinate).getTileID();
     }
 
     private boolean tileIsNotPlacedOnTopOfTotoro() {
-        return coordinateDoesNotContainTotoro(leftOfMainTerrainCoordinate)
-                && coordinateDoesNotContainTotoro(mainTerrainCoordinate)
-                && coordinateDoesNotContainTotoro(rightOfMainTerrainCoordinate);
+        return coordinateDoesNotContainTotoro(locator.leftOfMainTerrainCoordinate)
+                && coordinateDoesNotContainTotoro(locator.mainTerrainCoordinate)
+                && coordinateDoesNotContainTotoro(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean tileIsNotPlacedOnTopOfTiger() {
-        return coordinateDoesNotContainTiger(leftOfMainTerrainCoordinate)
-                && coordinateDoesNotContainTiger(mainTerrainCoordinate)
-                && coordinateDoesNotContainTiger(rightOfMainTerrainCoordinate);
+        return coordinateDoesNotContainTiger(locator.leftOfMainTerrainCoordinate)
+                && coordinateDoesNotContainTiger(locator.mainTerrainCoordinate)
+                && coordinateDoesNotContainTiger(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean hexesOfTileAreOccupied() {
-        return gameBoard.containsKey(leftOfMainTerrainCoordinate) &&
-                gameBoard.containsKey(mainTerrainCoordinate) &&
-                gameBoard.containsKey(rightOfMainTerrainCoordinate);
+        return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate) &&
+                gameBoard.containsKey(locator.mainTerrainCoordinate) &&
+                gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean coordinateDoesNotContainTotoro(Coordinate terrainCoordinate) {
@@ -106,8 +106,8 @@ public class TilePlacementValidator extends TilePlacer {
     }
 
     private boolean isNotOneOfCoordinatesThatWillBeWipedOut(Coordinate tempCoordinate) {
-        return tempCoordinate == leftOfMainTerrainCoordinate
-                || tempCoordinate == mainTerrainCoordinate
-                || tempCoordinate == rightOfMainTerrainCoordinate;
+        return tempCoordinate == locator.leftOfMainTerrainCoordinate
+                || tempCoordinate == locator.mainTerrainCoordinate
+                || tempCoordinate == locator.rightOfMainTerrainCoordinate;
     }
 }

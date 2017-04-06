@@ -18,11 +18,11 @@ public class Builder extends Game {
     protected Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
-    ActionHelper locator = new ActionHelper();
+    protected static ActionHelper locator = new ActionHelper();
 
 
     public void foundNewSettlement() {
-        foundSettlement(coordinate);
+        foundNewSettlement(coordinate);
         mergeSettlementsThatCanBeMerged(coordinate);
     }
 
@@ -65,9 +65,10 @@ public class Builder extends Game {
     public void processParameters(Coordinate coordinate) {
         this.coordinate = coordinate;
         this.settlementID = coordinate.hashCode();
+//        this.settlementID = Settlement.getCreatedSettlements() + 1;
     }
 
-    private void foundSettlement(Coordinate coordinate) {
+    public void foundNewSettlement(Coordinate coordinate) {
         gameBoard.get(coordinate).placeVillagers();
         gameBoard.get(coordinate).setSettlementID(settlementID);
         getPlayer().addSettlement(new Settlement(coordinate));

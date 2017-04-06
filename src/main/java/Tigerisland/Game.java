@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class Game {
     private static TilePlacer placer = new TilePlacer();
+    private static ActionHelper helper = new ActionHelper();
     private static TilePlacementValidator tileValidator = new TilePlacementValidator();
     private static Builder builder = new Builder();
     private static BuildValidator buildValidator = new BuildValidator();
@@ -21,7 +22,10 @@ public class Game {
 
     public Game() {
         player1 = new Player();
+        player1.setPlayerID(1);
         player2 = new Player();
+        player2.setPlayerID(2);
+        updatePlayer(player1.getPlayerID());
     }
 
     public Map<Coordinate, Hex> getBoard() {
@@ -55,11 +59,13 @@ public class Game {
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
-        builder.foundNewSettlement(coordinate);
+        builder.processParameters(coordinate);
+        builder.foundNewSettlement();
     }
 
     public void expandSettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
-        builder.expandSettlement(coordinateOfAnyHexInSettlement, terrainType);
+        builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
+        builder.expandSettlement();
     }
 
     public void placeTotoro(Coordinate coordinate) {

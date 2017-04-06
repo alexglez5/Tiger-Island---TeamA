@@ -6,19 +6,49 @@ import Tigerisland.Orientation;
 
 import java.util.Set;
 
+import static Tigerisland.Orientation.*;
+
 /**
  * Created by Alexander Gonzalez on 3/21/2017.
  */
-public class ActionHelper {
+public class ActionHelper extends Game{
     protected final int sidesOfAHex = 6;
-    protected Set<Integer> settlementIdsOfHexesInTile;
-    protected Coordinate leftOfMainTerrainCoordinate;
-    protected Coordinate mainTerrainCoordinate;
-    protected Coordinate rightOfMainTerrainCoordinate;
+    public Coordinate leftOfMainTerrainCoordinate;
+    public Coordinate mainTerrainCoordinate;
+    public Coordinate rightOfMainTerrainCoordinate;
     protected Orientation orientation;
     public Coordinate[] surroundingCoordinates;
     private int currentTerrainXCoordinate;
     private int currentTerrainYCoordinate;
+
+    public void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
+        switch (orientation) {
+            case FromBottom:
+                leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
+                break;
+            case FromBottomRight:
+                leftOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
+                break;
+            case FromTopRight:
+                leftOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
+                break;
+            case FromTop:
+                leftOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
+                break;
+            case FromTopLeft:
+                leftOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
+                break;
+            case FromBottomLeft:
+                leftOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
+                break;
+        }
+    }
 
     public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate) {
         surroundingCoordinates = new Coordinate[sidesOfAHex];
@@ -60,9 +90,8 @@ public class ActionHelper {
         return new Coordinate(currentTerrainXCoordinate - 1, currentTerrainYCoordinate);
     }
 
-    public void updateXAndYCoordinateOfCurrentTerrain(Coordinate terrainCoordinate) {
+    protected void updateXAndYCoordinateOfCurrentTerrain(Coordinate terrainCoordinate) {
         this.currentTerrainXCoordinate = terrainCoordinate.getXCoordinate();
         this.currentTerrainYCoordinate = terrainCoordinate.getYCoordinate();
     }
-
 }

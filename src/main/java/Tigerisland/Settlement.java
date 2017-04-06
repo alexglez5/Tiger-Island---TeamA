@@ -4,7 +4,7 @@ import Tigerisland.PlayerActions.ActionHelper;
 
 import java.util.*;
 
-public class Settlement {
+public class Settlement extends Game {
 
     ActionHelper cordLoc = new ActionHelper();
     private int size;
@@ -22,6 +22,10 @@ public class Settlement {
         size = 1;
         edges.put(cord, new ArrayList<Coordinate>());
     }
+
+//    public static int getCreatedSettlements(){
+//        return createdSettlements;
+//    }
 
     public int getSize() { return size; }
 
@@ -41,6 +45,7 @@ public class Settlement {
             }
         }
         size++;
+        settlementID = gameBoard.get(cord).getSettlementID();
     }
 
     public void removeFromSettlement(Coordinate cord) {
@@ -56,6 +61,10 @@ public class Settlement {
     public Set<Coordinate> bfs() {
         // set up bfs
         Set<Coordinate> visited = new HashSet<Coordinate>();
+
+        if(edges.keySet().size() == 0)
+            return visited;
+
         Set<Coordinate> elements = edges.keySet();
         ArrayDeque<Coordinate> queue = new ArrayDeque<>();
         queue.add(elements.iterator().next());

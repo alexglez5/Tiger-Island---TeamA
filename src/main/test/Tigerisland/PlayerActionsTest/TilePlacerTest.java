@@ -30,8 +30,8 @@ public class TilePlacerTest {
     public void testPlacementFromBottomRightRotation()throws Exception{
         map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottomRight);
-        Assert.assertTrue(map.getBoard().containsKey(new Coordinate(0,1)));
-        Assert.assertTrue(map.getBoard().containsKey(new Coordinate(1,0)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(0,1)));
+        Assert.assertTrue(map.gameBoard.containsKey(new Coordinate(1,0)));
     }
 
     @Test

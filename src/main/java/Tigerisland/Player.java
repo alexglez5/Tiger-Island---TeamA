@@ -18,6 +18,7 @@ public class Player {
         numCreatedPlayers++;
         playerID = numCreatedPlayers;
         score = 0;
+        settlements = new ArrayList<>();
         numberOfVillagersLeft = 20;
         numberOfTotoroLeft = 3;
         numberOfTigersLeft = 2;
