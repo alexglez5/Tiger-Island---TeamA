@@ -5,17 +5,13 @@ import Tigerisland.PlayerActions.ActionHelper;
 import java.util.*;
 
 public class Settlement extends Game {
-
-    ActionHelper cordLoc = helper;
     private int size;
     private HashMap<Coordinate, ArrayList<Coordinate>> edges = new HashMap<>();
-    private static int createdSettlements = 0;
     private int settlementID;
     private boolean hasTotoro;
     private boolean hasTiger;
 
     public Settlement(Coordinate cord) {
-        createdSettlements++;
         if(gameBoard.containsKey(cord))
             settlementID = gameBoard.get(cord).getSettlementID();
         hasTotoro = false;
@@ -31,9 +27,9 @@ public class Settlement extends Game {
     }
 
     public void addToSettlement(Coordinate cord) {
-        cordLoc.findCounterClockwiseCoordinatesAroundCoordinate(cord);
+        locator.findCounterClockwiseCoordinatesAroundCoordinate(cord);
         edges.put(cord, new ArrayList<Coordinate>());
-        for (Coordinate c : cordLoc.surroundingCoordinates) {
+        for (Coordinate c : locator.surroundingCoordinates) {
             // if the neighboring coordinate is already part of the settlement
             if (edges.containsKey(c)) {
                 // get the edges of that neighbor coordinate and add our new coordinate (vice versa)
@@ -47,9 +43,9 @@ public class Settlement extends Game {
     }
 
     public void removeFromSettlement(Coordinate cord) {
-        cordLoc.findCounterClockwiseCoordinatesAroundCoordinate(cord);
+        locator.findCounterClockwiseCoordinatesAroundCoordinate(cord);
         edges.remove(cord);
-        for (Coordinate c : cordLoc.surroundingCoordinates) {
+        for (Coordinate c : locator.surroundingCoordinates) {
             if (edges.containsKey(c))
                 edges.get(c).remove(cord);
         }

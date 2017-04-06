@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Game {
     private static TilePlacer placer = new TilePlacer();
-    protected static ActionHelper helper = new ActionHelper();
+    public static ActionHelper locator = new ActionHelper();
     private static TilePlacementValidator tileValidator = new TilePlacementValidator();
     private static Builder builder = new Builder();
     private static BuildValidator buildValidator = new BuildValidator();

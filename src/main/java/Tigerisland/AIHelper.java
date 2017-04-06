@@ -2,13 +2,18 @@ package Tigerisland;
 
 import Tigerisland.PlayerActions.ActionHelper;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
-public class AIHelper extends Game {
-    private HashSet<Coordinate> placesWhereTotoroCanBePlaced;
-    private HashSet<Coordinate> placesWhereTigerCanBePlaced;
+public class AIHelper {
+    public Game map;
+    private ArrayList<Coordinate> placesWhereTotoroCanBePlaced;
+    private ArrayList<Coordinate> placesWhereTigerCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
-    ActionHelper locator = new ActionHelper();
+
+    public AIHelper(Game map){
+        this.map = map;
+    }
 
     //todo
     /*
@@ -21,22 +26,22 @@ public class AIHelper extends Game {
     */
 
     public void findCoordinatesWhereTotoroCanBePlaced() {
-        placesWhereTotoroCanBePlaced = new HashSet<>();
+        placesWhereTotoroCanBePlaced = new ArrayList<>();
         visitedCoordinates = new HashSet<>();
-        for (Settlement s : getPlayer().getSettlements())
-            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(s.getSettlementID()))
-                for (Coordinate coordinate : s.bfs())
+        for (Settlement settlement : map.getPlayer().getSettlements())
+            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(settlement.getSettlementID()))
+                for (Coordinate coordinate : settlement.bfs())
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
     }
 
     private boolean settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(int id) {
-        return getPlayer().findSettlement(id).getSize() >= 5
+        return map.getPlayer().findSettlement(id).getSize() >= 5
                 && settlementDoesNotContainTotoro(id);
     }
 
     private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
-        locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : locator.surroundingCoordinates) {
+        map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : map.locator.surroundingCoordinates) {
             if (totoroCanBePlacedInCoordinate(neighborCoordinate))
                 placesWhereTotoroCanBePlaced.add(neighborCoordinate);
             visitedCoordinates.add(neighborCoordinate);
@@ -44,30 +49,30 @@ public class AIHelper extends Game {
     }
 
     private boolean settlementDoesNotContainTotoro(int id) {
-        return !getPlayer().findSettlement(id).hasTotoro();
+        return !map.getPlayer().findSettlement(id).hasTotoro();
     }
 
     private boolean totoroCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
-        return !visitedCoordinates.contains(neighborCoordinate) && totoroCanBePlaced(neighborCoordinate);
+        return !visitedCoordinates.contains(neighborCoordinate) && map.totoroCanBePlaced(neighborCoordinate);
     }
 
     public void findCoordinatesWhereTigerCanBePlaced() {
-        placesWhereTigerCanBePlaced = new HashSet<>();
+        placesWhereTigerCanBePlaced = new ArrayList<>();
         visitedCoordinates = new HashSet<>();
-        for (Settlement s : getPlayer().getSettlements())
-            if (settlementDoesNotContainTiger(s.getSettlementID()))
-                for (Coordinate coordinate : s.bfs())
+        for (Settlement settlement : map.getPlayer().getSettlements())
+            if (settlementDoesNotContainTiger(settlement.getSettlementID()))
+                for (Coordinate coordinate : settlement.bfs())
                     findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
 
     }
 
     private boolean settlementDoesNotContainTiger(int id) {
-        return !getPlayer().findSettlement(id).hasTiger();
+        return !map.getPlayer().findSettlement(id).hasTiger();
     }
 
     private void findNeighborsOfCoordinateWhereTigerCanBePlaced(Coordinate coordinate) {
-        locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : locator.surroundingCoordinates) {
+        map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : map.locator.surroundingCoordinates) {
             if (tigerCanBePlacedInCoordinate(neighborCoordinate))
                 placesWhereTigerCanBePlaced.add(neighborCoordinate);
             visitedCoordinates.add(neighborCoordinate);
@@ -75,14 +80,16 @@ public class AIHelper extends Game {
     }
 
     private boolean tigerCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
-        return !visitedCoordinates.contains(neighborCoordinate) && tigerCanBePlaced(neighborCoordinate);
+        return !visitedCoordinates.contains(neighborCoordinate) && map.tigerCanBePlaced(neighborCoordinate);
     }
 
-    public HashSet<Coordinate> getPlacesWhereTotoroCanBePlaced() {
+    public ArrayList<Coordinate> getPlacesWhereTotoroCanBePlaced() {
+        findCoordinatesWhereTotoroCanBePlaced();
         return placesWhereTotoroCanBePlaced;
     }
 
-    public HashSet<Coordinate> getPlacesWhereTigerCanBePlaced() {
+    public ArrayList<Coordinate> getPlacesWhereTigerCanBePlaced() {
+        findCoordinatesWhereTigerCanBePlaced();
         return placesWhereTigerCanBePlaced;
     }
 }
