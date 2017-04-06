@@ -86,7 +86,7 @@ public class BuilderTest {
                             ,map.getBoard().get(new Coordinate(0, 1)).getSettlementID());
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID()
                             , map.getBoard().get(new Coordinate(1, 1)).getSettlementID());
-        Assert.assertEquals(map.getSettlements().size(), 1);
+        Assert.assertEquals(map.getPlayer().getSettlements().size(), 1);
     }
 
     @Test
