@@ -189,7 +189,6 @@ public class BuilderTest {
                 map.getBoard().get(new Coordinate(1 ,1)).getSettlementID());
         int newId = map.getBoard().get(new Coordinate(1 ,1)).getSettlementID();
         Assert.assertNotEquals(oldId, newId);
-        Assert.assertEquals(map.getPlayer().findSettlement(newId).getSize(), 7);
         Assert.assertEquals(map.getPlayer().getSettlements().size(), 1);
     }
 

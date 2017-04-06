@@ -52,7 +52,7 @@ public class Builder extends Game {
     protected void findIdOfSettlementTigerCouldBeAdjacentTo(){
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for(int id : differentSettlementIDsAroundCoordinate){
-            if(getPlayer().findSettlement(id).hasTiger()) {
+            if(!getPlayer().findSettlement(id).hasTiger()) {
                 settlementID = id;
                 return;
             }

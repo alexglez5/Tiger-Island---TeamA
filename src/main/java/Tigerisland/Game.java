@@ -73,7 +73,8 @@ public class Game {
     }
 
     public void placeTiger(Coordinate coordinate) {
-        builder.placeTiger(coordinate);
+        builder.processParameters(coordinate);
+        builder.placeTiger();
     }
 
     public boolean tileCanBePlacedOnLevelOne(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
