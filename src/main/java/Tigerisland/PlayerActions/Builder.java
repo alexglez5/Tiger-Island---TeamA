@@ -121,6 +121,7 @@ public class Builder extends Game {
     private void mergeSettlementsIntoASingleSettlement(int id) {
         if (id != settlementID) {
             for (Coordinate coordinatesToBeMoved : getPlayer().findSettlement(id).bfs()) {
+                gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
                 getPlayer().findSettlement(settlementID).addToSettlement(coordinatesToBeMoved);
                 gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
             }
