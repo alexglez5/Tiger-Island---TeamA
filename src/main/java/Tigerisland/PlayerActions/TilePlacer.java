@@ -8,7 +8,6 @@ import java.util.Set;
 public class TilePlacer extends Game{
     private Tile tile;
     public Set<Integer> settlementIdsOfHexesInTile;
-    protected static ActionHelper locator = new ActionHelper();
 
     public void placeOneStartingTile() {
         gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));

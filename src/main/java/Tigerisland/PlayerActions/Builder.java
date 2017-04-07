@@ -14,8 +14,6 @@ public class Builder extends Game {
     protected Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
-    protected static ActionHelper locator = new ActionHelper();
-
 
     public void foundNewSettlement() {
         foundNewSettlement(coordinate);
