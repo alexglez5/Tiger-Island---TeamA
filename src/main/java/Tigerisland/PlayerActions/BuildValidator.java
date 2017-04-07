@@ -76,7 +76,14 @@ public class BuildValidator extends Builder {
 
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
-        return settlementID != -1;
+        for (int sid : differentSettlementIDsAroundCoordinate) {
+            if (!getPlayer().findSettlement(sid).hasTiger())
+                return true;
+        }
+        if (differentSettlementIDsAroundCoordinate.isEmpty())
+            return true;
+        else
+            return false;
     }
 
     private boolean thereIsATigerLeft() {
