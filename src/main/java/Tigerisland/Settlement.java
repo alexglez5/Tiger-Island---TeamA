@@ -4,7 +4,7 @@ import Tigerisland.PlayerActions.ActionHelper;
 
 import java.util.*;
 
-public class Settlement extends Game {
+public class Settlement {
     private int size;
     private HashMap<Coordinate, ArrayList<Coordinate>> edges = new HashMap<>();
     private int settlementID;
@@ -12,8 +12,8 @@ public class Settlement extends Game {
     private boolean hasTiger;
 
     public Settlement(Coordinate cord) {
-        if(gameBoard.containsKey(cord))
-            settlementID = gameBoard.get(cord).getSettlementID();
+        if(Game.gameBoard.containsKey(cord))
+            settlementID = Game.gameBoard.get(cord).getSettlementID();
         hasTotoro = false;
         hasTiger = false;
         size = 1;
@@ -27,9 +27,9 @@ public class Settlement extends Game {
     }
 
     public void addToSettlement(Coordinate cord) {
-        locator.findCounterClockwiseCoordinatesAroundCoordinate(cord);
+        Game.locator.findCounterClockwiseCoordinatesAroundCoordinate(cord);
         edges.put(cord, new ArrayList<Coordinate>());
-        for (Coordinate c : locator.surroundingCoordinates) {
+        for (Coordinate c : Game.locator.surroundingCoordinates) {
             // if the neighboring coordinate is already part of the settlement
             if (edges.containsKey(c)) {
                 // get the edges of that neighbor coordinate and add our new coordinate (vice versa)
@@ -38,14 +38,14 @@ public class Settlement extends Game {
             }
         }
         size++;
-        if(gameBoard.containsKey(cord))
-            settlementID = gameBoard.get(cord).getSettlementID();
+        if(Game.gameBoard.containsKey(cord))
+            settlementID = Game.gameBoard.get(cord).getSettlementID();
     }
 
     public void removeFromSettlement(Coordinate cord) {
-        locator.findCounterClockwiseCoordinatesAroundCoordinate(cord);
+        Game.locator.findCounterClockwiseCoordinatesAroundCoordinate(cord);
         edges.remove(cord);
-        for (Coordinate c : locator.surroundingCoordinates) {
+        for (Coordinate c : Game.locator.surroundingCoordinates) {
             if (edges.containsKey(c))
                 edges.get(c).remove(cord);
         }
