@@ -23,8 +23,8 @@ public class TilePlacementValidator extends TilePlacer {
                 && volcanoIsPlacedOnTopOfAnotherVolcano()
                 && tileIsNotPerfectlyOnTopOfAnotherTile()
                 && tileIsNotPlacedOnTopOfTotoro()
-                && tileIsNotPlacedOnTopOfTiger();
-                //&& tileDoesNotCompletelyWipeOutASettlement();
+                && tileIsNotPlacedOnTopOfTiger()
+                && !tileCompletelyWipesOutASettlement();
     }
 
     private boolean tileExistsBelow() {
@@ -106,5 +106,65 @@ public class TilePlacementValidator extends TilePlacer {
         return tempCoordinate == locator.leftOfMainTerrainCoordinate
                 || tempCoordinate == locator.mainTerrainCoordinate
                 || tempCoordinate == locator.rightOfMainTerrainCoordinate;
+    }
+
+    public boolean tileCompletelyWipesOutASettlement() {
+        // if only one settlement id exists
+        if (getDifferentSettlementIDsOfATile().size() == 1) {
+            int idToCheck = getDifferentSettlementIDsOfATile().iterator().next();
+
+            // if both locations contain a piece
+            if (gameBoard.get(locator.leftOfMainTerrainCoordinate).hasVillager() &&
+                    gameBoard.get(locator.rightOfMainTerrainCoordinate).hasVillager()) {
+
+                // if the settlementID isnt found, its part of the other player
+                if (getPlayer().findSettlement(idToCheck) != null) {
+                    if (getPlayer().findSettlement(idToCheck).getSize() > 2)
+                        return false;
+                    else
+                        return true;
+                }
+                else {
+                    if (getPlayer().findSettlement(idToCheck).getSize() > 2)
+                        return false;
+                    else
+                        return true;
+                }
+
+            }
+
+            // if only one location contains a piece
+            else {
+                // if settlement id isn't found, its part of other player
+                if (getPlayer().containsKey(idToCheck)) {
+                    if (getPlayer().findSettlement(idToCheck).getSize() > 1)
+                        return false;
+                    else
+                        return true;
+                }
+                else {
+                    if (getPlayer().findSettlement(idToCheck).getSize() > 1)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+        }
+        // if two settlement ids exist
+        else if (getDifferentSettlementIDsOfATile().size() == 2) {
+            for (int sid : getDifferentSettlementIDsOfATile()) {
+                if (getPlayer().containsKey(sid)) {
+                    if (getPlayer().findSettlement(sid).bfs().size() == 1)
+                        return true;
+                }
+                else {
+                    if (getPlayer().containsKey(sid)) {
+                        if (getPlayer().findSettlement(sid).bfs().size() == 1)
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
