@@ -16,35 +16,35 @@ public class GameTest {
     @Test
     public void shouldPlaceOneStartingTile(){
         map.placeStartingTile();
-        Assert.assertEquals(map.getBoard().get(new Coordinate(0,-1)).getTerrainType(), TerrainType.Jungle);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(1,-1)).getTerrainType(), TerrainType.Lake);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(0,0)).getTerrainType(), TerrainType.Volcano);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getTerrainType(), TerrainType.Rocky);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(), TerrainType.Grasslands);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(0,-1)).getTerrainType(), TerrainType.JUNGLE);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(1,-1)).getTerrainType(), TerrainType.LAKE);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(0,0)).getTerrainType(), TerrainType.VOLCANO);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getTerrainType(), TerrainType.ROCKY);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(), TerrainType.GRASSLANDS);
     }
 
     @Test
     public void testTerrainTypeOfEveryHexOfTilePlaced() throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCKY),
                 new Coordinate(0,0), Orientation.FromBottom);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,0)).getTerrainType(),
-                TerrainType.Volcano);
+                TerrainType.VOLCANO);
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getTerrainType(),
-                TerrainType.Lake);
+                TerrainType.LAKE);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
-                TerrainType.Rocky);
+                TerrainType.ROCKY);
     }
 
     @Test
     public void testEveryHexIsPlacedAtTheRightIndex() throws Exception{
-        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCKY),
                 new Coordinate(0,2), Orientation.FromBottom);
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1,3)).getTerrainType(),
-                TerrainType.Lake);
+                TerrainType.LAKE);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,2)).getTerrainType(),
-                TerrainType.Volcano);
+                TerrainType.VOLCANO);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,3)).getTerrainType(),
-                TerrainType.Rocky);
+                TerrainType.ROCKY);
     }
 
     @After

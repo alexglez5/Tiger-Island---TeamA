@@ -9,7 +9,7 @@ public class ExpandSettlementTest {
 
     @Given("^the player wants to \"([^\"]*)\"$")
     public void the_player_wants_to(String choice) throws Throwable {
-        app.updateCurrentTile("Lake", "Grassland");
+        app.updateCurrentTile("LAKE", "Grassland");
         app.placeTile("FromBottom",0, 0);
 //        if (!app.checkPlayerChoice(choice)) {
 //            throw new Error("Wrong Player Choice");

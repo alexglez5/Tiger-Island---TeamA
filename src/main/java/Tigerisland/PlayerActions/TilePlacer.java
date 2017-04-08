@@ -41,11 +41,11 @@ public class TilePlacer {
     }
 
     public void placeOneStartingTile() {
-        gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));
-        gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.Lake, 1));
-        gameBoard.put(new Coordinate(0, 0), new Hex(TerrainType.Volcano, 1));
-        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.Rocky, 1));
-        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.Grasslands, 1));
+        gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.JUNGLE, 1));
+        gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.LAKE, 1));
+        gameBoard.put(new Coordinate(0, 0), new Hex(TerrainType.VOLCANO, 1));
+        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.ROCKY, 1));
+        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.GRASSLANDS, 1));
     }
 
     public void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {

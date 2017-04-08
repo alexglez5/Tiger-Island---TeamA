@@ -13,23 +13,23 @@ public class AIHelperTest{
     public void initializeGameBoard() throws Exception {
 //        helper.map = new Game();
         helper = new AIHelper();
-        helper.map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCKY),
                 new Coordinate(0, 0), Orientation.FromBottom);
     }
 
     @Test
     public void shouldReturnArrayListOfCoordinatesWhereTotoroCanBePlaced() throws Exception {
-        helper.map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
+        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
+        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
                 new Coordinate(2, 1), Orientation.FromBottom);
-        helper.map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Jungle),
+        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
                 new Coordinate(1, 3), Orientation.FromBottomLeft);
 
         helper.map.foundNewSettlement(new Coordinate(1, 1));
-        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.Rocky);
+        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCKY);
 
         helper.findCoordinatesWhereTotoroCanBePlaced();
         for (Coordinate c : helper.getPlacesWhereTotoroCanBePlaced()){
@@ -46,11 +46,11 @@ public class AIHelperTest{
 
 //    @Test
 //    public void shouldReturnArrayListOfCoordinatesWhereTigerCanBePlaced() throws Exception {
-//        helper.map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
+//        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
 //                new Coordinate(1, 0), Orientation.FromBottomRight);
-//        helper.map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+//        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
 //                new Coordinate(-1, 2), Orientation.FromBottomRight);
-//        helper.map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Lake),
+//        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
 //                new Coordinate(2, 1), Orientation.FromBottom);
 //
 //        helper.map.foundNewSettlement(new Coordinate(1,1));

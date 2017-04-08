@@ -23,11 +23,8 @@ public class Game {
         player2.setPlayerID(2);
     }
 
-    public void setCurrentPlayer(int pid) throws Exception {
-        if (pid == 1 || pid == 2)
-            currentPlayerId = pid;
-        else
-            throw new Exception("Wrong player ID");
+    public void setCurrentPlayer(int pid) {
+        currentPlayerId = pid;
     }
 
     public void switchPlayers() {

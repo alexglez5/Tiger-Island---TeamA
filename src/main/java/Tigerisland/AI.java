@@ -23,7 +23,7 @@ package Tigerisland;
     |
     \/
     <terrainA><terrainB>
-
+d
     <build option> = "expand", "found", "totoro", "tiger"
     <terrain> = "JUNGLE", "LAKE", "ROCK", "GRASS"
 
@@ -36,9 +36,95 @@ public class AI {
     Tile currentTile;
     Coordinate tileCord;
     Orientation orient;
-    PlayerChoice buildChoice;
+    Choice buildChoice;
     Coordinate buildCord;
     TerrainType expandArea;
+    String message;
+
+    public void setServerMessage(String message){
+        this.message = message;
+    }
+
+    public void placeOpponentMove() {
+        String[] split = message.split(" ");
+        int i = 0;
+        String pid = split[5];
+        String xTile = split[9];
+        String yTile = split[11];
+        String[] tempSplit = split[7].split("[+]");
+        String leftTerrainType = tempSplit[0];
+        String rightTerrainType = tempSplit[1];
+        String intOrientation = split[12];
+        String terrainType = "";
+
+        Choice move = Choice.TIGER;
+        String xBuild = split[9];
+        String yBuild = split[11];
+
+        if (split[13].equals("FOUNDED")) {
+            move = Choice.FOUNDED;
+            xBuild = split[16];
+            yBuild = split[18];
+        } else if (split[13].equals("EXPANDED")) {
+            move = Choice.EXPANDED;
+            xBuild = split[16];
+            yBuild = split[18];
+            terrainType = split[19];
+        } else if (split[14].equals("TOTORO")) {
+            move = Choice.TOTORO;
+            xBuild = split[17];
+            yBuild = split[19];
+        } else if (split[14].equals("TIGER")) {
+            move = Choice.TIGER;
+            xBuild = split[17];
+            yBuild = split[19];
+        }
+
+        Orientation orientation;
+        switch(Integer.parseInt(intOrientation)) {
+            case 1:
+                orientation = Orientation.FromTop;
+                break;
+            case 2:
+                orientation = Orientation.FromTopRight;
+                break;
+            case 3:
+                orientation = Orientation.FromBottomRight;
+                break;
+            case 4:
+                orientation = Orientation.FromBottom;
+                break;
+            case 5:
+                orientation = Orientation.FromBottomLeft;
+                break;
+            case 6:
+                orientation = Orientation.FromTopLeft;
+                break;
+            default:
+                orientation = Orientation.FromBottom;
+        }
+
+        map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
+                , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
+                , orientation);
+
+        map.setCurrentPlayer(Integer.parseInt(pid));
+        switch (move){
+            case FOUNDED:
+                map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                break;
+            case EXPANDED:
+                map.expandSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)), TerrainType.valueOf(terrainType));
+                break;
+            case TOTORO:
+                map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                break;
+            case TIGER:
+                map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                break;
+        }
+    }
+
 
     public AI() {
         map = new Game();
@@ -74,7 +160,7 @@ public class AI {
         int yBuild = Integer.parseInt(m[7]);
         buildCord = new Coordinate(xBuild, yBuild);
 
-        if (buildChoice.equals(PlayerChoice.expandSettlement)) {
+        if (buildChoice.equals(Choice.EXPANDED)) {
             expandArea = parseTerrain(m[8]);
         }
     }
@@ -98,15 +184,15 @@ public class AI {
         }
     }
 
-    public PlayerChoice parseBuildOption(String choice) {
+    public Choice parseBuildOption(String choice) {
         if (choice.equals("found")) {
-            return PlayerChoice.foundSettlement;
+            return Choice.EXPANDED;
         } else if (choice.equals("expand")) {
-            return PlayerChoice.expandSettlement;
+            return Choice.EXPANDED;
         } else if (choice.equals("totoro")) {
-            return PlayerChoice.placeTotoro;
+            return Choice.TOTORO;
         } else if (choice.equals("tiger")) {
-            return PlayerChoice.placeTiger;
+            return Choice.TIGER;
         } else {
             System.out.println("Invalid Player Choice");
             return null;
@@ -116,26 +202,23 @@ public class AI {
     public TerrainType parseTerrain(String terrain) {
 
         if(terrain.equals("JUNGLE")){
-            return TerrainType.Jungle;
+            return TerrainType.JUNGLE;
         }
         else if(terrain.equals("ROCK")) {
-            return TerrainType.Rocky;
+            return TerrainType.ROCKY;
         }
         else if(terrain.equals("LAKE")) {
-            return TerrainType.Lake;
+            return TerrainType.LAKE;
         }
         else if(terrain.equals("GRASS")) {
-            return TerrainType.Grasslands;
+            return TerrainType.GRASSLANDS;
         }
         else if(terrain.equals("VOLCANO") ) {
-            return TerrainType.Volcano;
+            return TerrainType.VOLCANO;
         }
         else {
             System.out.println("Invalid Terrain");
             return null;
         }
     }
-
-
-
 }

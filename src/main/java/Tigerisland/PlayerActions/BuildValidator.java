@@ -28,7 +28,7 @@ public class BuildValidator extends Builder{
     }
 
     private boolean terrainIsNotAVolcano() {
-        return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
+        return gameBoard.get(coordinate).getTerrainType() != TerrainType.VOLCANO;
     }
 
     private boolean hexContainsAPiece() {
