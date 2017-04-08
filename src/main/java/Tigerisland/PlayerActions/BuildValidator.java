@@ -1,6 +1,6 @@
 package Tigerisland.PlayerActions;
 
-import Tigerisland.*;
+import Tigerisland.TerrainType;
 
 public class BuildValidator extends Builder {
 
@@ -74,6 +74,10 @@ public class BuildValidator extends Builder {
                 && thereIsATigerLeft();
     }
 
+    private boolean levelIsAtLeastThree() {
+        return gameBoard.get(coordinate).getLevel() > 2;
+    }
+
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         return settlementID != -1;
@@ -81,9 +85,5 @@ public class BuildValidator extends Builder {
 
     private boolean thereIsATigerLeft() {
         return getPlayer().getNumberOfTigersLeft() > 0;
-    }
-
-    private boolean levelIsAtLeastThree() {
-        return gameBoard.get(coordinate).getLevel() > 2;
     }
 }

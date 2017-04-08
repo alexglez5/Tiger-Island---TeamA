@@ -4,20 +4,29 @@ import Tigerisland.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-public class TilePlacer extends Game{
-    private Tile tile;
-    public Set<Integer> settlementIdsOfHexesInTile;
+public class TilePlacer {
     protected static ActionHelper locator = new ActionHelper();
+    public Set<Integer> settlementIdsOfHexesInTile;
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    private Tile tile;
+    private Player player;
 
-    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard){
-        this.gameBoard = gameBoard;
+    public Player getPlayer() {
+        return this.player;
     }
-    public HashMap<Coordinate, Hex> getGameBoard(){
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public HashMap<Coordinate, Hex> getGameBoard() {
         return gameBoard;
+    }
+
+    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     public void placeOneStartingTile() {
@@ -43,18 +52,6 @@ public class TilePlacer extends Game{
         increaseLevel(level);
     }
 
-    private void increaseLevel(int previousLevel) {
-        gameBoard.get(locator.mainTerrainCoordinate).setLevel(previousLevel + 1);
-        gameBoard.get(locator.leftOfMainTerrainCoordinate).setLevel(previousLevel + 1);
-        gameBoard.get(locator.rightOfMainTerrainCoordinate).setLevel(previousLevel + 1);
-    }
-
-    public void placeTileOnMap() {
-        gameBoard.put(locator.leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
-        gameBoard.put(locator.mainTerrainCoordinate, tile.getMainTerrain());
-        gameBoard.put(locator.rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
-    }
-
     public Set<Integer> getDifferentSettlementIDsOfATile() {
         settlementIdsOfHexesInTile = new HashSet<>();
         if (terrainContainsAPiece(locator.leftOfMainTerrainCoordinate))
@@ -65,6 +62,25 @@ public class TilePlacer extends Game{
             settlementIdsOfHexesInTile.add(gameBoard.get(locator.rightOfMainTerrainCoordinate).getSettlementID());
 
         return settlementIdsOfHexesInTile;
+    }
+
+    public void placeTileOnMap() {
+        gameBoard.put(locator.leftOfMainTerrainCoordinate, tile.getLeftOfMainTerrain());
+        gameBoard.put(locator.mainTerrainCoordinate, tile.getMainTerrain());
+        gameBoard.put(locator.rightOfMainTerrainCoordinate, tile.getRightOfMainTerrain());
+    }
+
+    private void increaseLevel(int previousLevel) {
+        gameBoard.get(locator.mainTerrainCoordinate).setLevel(previousLevel + 1);
+        gameBoard.get(locator.leftOfMainTerrainCoordinate).setLevel(previousLevel + 1);
+        gameBoard.get(locator.rightOfMainTerrainCoordinate).setLevel(previousLevel + 1);
+    }
+
+    public boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
+        return gameBoard.containsKey(terrainCoordinate)
+                && (gameBoard.get(terrainCoordinate).hasVillager()
+                || gameBoard.get(terrainCoordinate).hasTotoro()
+                || gameBoard.get(terrainCoordinate).hasTiger());
     }
 
 

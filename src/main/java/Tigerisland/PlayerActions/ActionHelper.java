@@ -4,13 +4,13 @@ import Tigerisland.Coordinate;
 import Tigerisland.Game;
 import Tigerisland.Orientation;
 
-public class ActionHelper extends Game{
+public class ActionHelper extends Game {
     protected final int sidesOfAHex = 6;
     public Coordinate leftOfMainTerrainCoordinate;
     public Coordinate mainTerrainCoordinate;
     public Coordinate rightOfMainTerrainCoordinate;
-    protected Orientation orientation;
     public Coordinate[] surroundingCoordinates;
+    protected Orientation orientation;
     private int currentTerrainXCoordinate;
     private int currentTerrainYCoordinate;
 
@@ -41,16 +41,6 @@ public class ActionHelper extends Game{
                 rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
         }
-    }
-
-    public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate) {
-        surroundingCoordinates = new Coordinate[sidesOfAHex];
-        surroundingCoordinates[0] = belowAndToTheLeftOfMain(terrainCoordinate);
-        surroundingCoordinates[1] = belowAndToTheRightOfMain(terrainCoordinate);
-        surroundingCoordinates[2] = toTheRightOfMain(terrainCoordinate);
-        surroundingCoordinates[3] = overAndToTheRightOfMain(terrainCoordinate);
-        surroundingCoordinates[4] = overAndToTheLeftOfMain(terrainCoordinate);
-        surroundingCoordinates[5] = toTheLeftOfMain(terrainCoordinate);
     }
 
     public Coordinate belowAndToTheLeftOfMain(Coordinate terrainCoordinate) {
@@ -86,5 +76,15 @@ public class ActionHelper extends Game{
     protected void updateXAndYCoordinateOfCurrentTerrain(Coordinate terrainCoordinate) {
         this.currentTerrainXCoordinate = terrainCoordinate.getXCoordinate();
         this.currentTerrainYCoordinate = terrainCoordinate.getYCoordinate();
+    }
+
+    public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate) {
+        surroundingCoordinates = new Coordinate[sidesOfAHex];
+        surroundingCoordinates[0] = belowAndToTheLeftOfMain(terrainCoordinate);
+        surroundingCoordinates[1] = belowAndToTheRightOfMain(terrainCoordinate);
+        surroundingCoordinates[2] = toTheRightOfMain(terrainCoordinate);
+        surroundingCoordinates[3] = overAndToTheRightOfMain(terrainCoordinate);
+        surroundingCoordinates[4] = overAndToTheLeftOfMain(terrainCoordinate);
+        surroundingCoordinates[5] = toTheLeftOfMain(terrainCoordinate);
     }
 }
