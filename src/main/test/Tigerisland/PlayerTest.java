@@ -20,9 +20,7 @@ public class PlayerTest {
     }
     @Test
     public void placedTotoro1(){
-        System.out.println("first: " + player.getNumberOfTotoroLeft());
         player.useTotoro();
-        System.out.println("second: " + player.getNumberOfTotoroLeft());
         Assert.assertTrue((player.getNumberOfTotoroLeft() == 2));
     }
     @Test
@@ -37,9 +35,7 @@ public class PlayerTest {
     }
     @Test
     public void placedTotoro2(){
-        System.out.println("Third " + player.getNumberOfTotoroLeft());
         player.useTotoro();
-        System.out.println("Fourth: " + player.getNumberOfTotoroLeft());
         Assert.assertTrue((player.getNumberOfTotoroLeft() == 1));
     }
     @Test

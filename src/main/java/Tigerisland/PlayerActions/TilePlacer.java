@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class TilePlacer {
     protected static ActionHelper locator = new ActionHelper();
-    protected Set<Integer> settlementIdsOfHexesInTile;
+    protected Set<Integer> settlementIdsOfHexesUnderTile;
     private Tile tile;
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Player player;
@@ -56,20 +56,21 @@ public class TilePlacer {
     public void nuke() {
         int level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
         getDifferentSettlementIDsOfATile();
+//        updateSettlements();
         placeTileOnMap();
         increaseLevel(level);
     }
 
     public Set<Integer> getDifferentSettlementIDsOfATile() {
-        settlementIdsOfHexesInTile = new HashSet<>();
+        settlementIdsOfHexesUnderTile = new HashSet<>();
         if (terrainContainsAPiece(locator.leftOfMainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(locator.leftOfMainTerrainCoordinate).getSettlementID());
+            settlementIdsOfHexesUnderTile.add(gameBoard.get(locator.leftOfMainTerrainCoordinate).getSettlementID());
         if (terrainContainsAPiece(locator.mainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(locator.mainTerrainCoordinate).getSettlementID());
+            settlementIdsOfHexesUnderTile.add(gameBoard.get(locator.mainTerrainCoordinate).getSettlementID());
         if (terrainContainsAPiece(locator.rightOfMainTerrainCoordinate))
-            settlementIdsOfHexesInTile.add(gameBoard.get(locator.rightOfMainTerrainCoordinate).getSettlementID());
+            settlementIdsOfHexesUnderTile.add(gameBoard.get(locator.rightOfMainTerrainCoordinate).getSettlementID());
 
-        return settlementIdsOfHexesInTile;
+        return settlementIdsOfHexesUnderTile;
     }
 
     public void placeTileOnMap() {
@@ -91,5 +92,13 @@ public class TilePlacer {
                 || gameBoard.get(terrainCoordinate).hasTiger());
     }
 
+//    public void updateSettlements() {
+//
+//        // if there is only one settlement id in the set
+//        if (settlementIdsOfHexesUnderTile.size() == 1) {
+//            if (locator.leftOfMainTerrainCoordinate.)
+//        }
+//
+//    }
 
 }

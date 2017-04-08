@@ -6,6 +6,7 @@ public class Hex {
     private boolean hasTotoro;
     private boolean hasTiger;
     private int settlementID;
+    private int playerID;
     private int tileID;
     private int level;
 
@@ -39,6 +40,8 @@ public class Hex {
         return hasTiger;
     }
 
+    public boolean isOccupied() {return hasTiger || hasTotoro || hasVillagers; }
+
     public int getSettlementID() {
         return settlementID;
     }
@@ -46,6 +49,10 @@ public class Hex {
     public void setSettlementID(int settlementID) {
         this.settlementID = settlementID;
     }
+
+    public int getPlayerID() { return playerID; }
+
+    public void setPlayerID(int pid) { playerID = pid; }
 
     public void setTileID(int tileID){
         this.tileID = tileID;

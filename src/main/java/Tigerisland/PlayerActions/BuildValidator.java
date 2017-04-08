@@ -5,20 +5,6 @@ import Tigerisland.*;
 import java.util.HashMap;
 
 public class BuildValidator extends Builder{
-//    private Builder = new Builder();
-    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
-    protected Player player;
-    protected HashMap<Integer, Settlement> settlements;
-
-    public void setSettlements(HashMap<Integer, Settlement> settlements){
-        this.settlements = settlements;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard) {
-        this.gameBoard = gameBoard;
-    }
 
     public boolean settlementCanBeFound() {
         return terrainIsOnMap()

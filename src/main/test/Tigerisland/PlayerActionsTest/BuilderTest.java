@@ -30,7 +30,7 @@ public class BuilderTest {
     @Test
     public void testVillagerIsPlacedOnLevelOneWhenFindingNewSettlement() throws Exception{
         map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-                new Coordinate(1,0), Orientation.FromBottomRight);
+                new Coordinate(1,1), Orientation.FromTop);
         map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
                 new Coordinate(0,0), Orientation.FromBottomRight);
         Assert.assertFalse(map.settlementCanBeFound(new Coordinate(1,0)));
@@ -64,6 +64,8 @@ public class BuilderTest {
         map.foundNewSettlement(new Coordinate(1,1));
         map.expandSettlement(new Coordinate(1,1), TerrainType.Rocky);
 
+        // this is quite long to find the size of a settlement, see if we can refactor later
+        Assert.assertEquals(map.getSettlements().get(map.getBoard().get(new Coordinate(1,1)).getSettlementID()).getSize(), 3);
         Assert.assertFalse(map.getBoard().get(new Coordinate(-1,3)).hasVillager());
         Assert.assertFalse(map.getBoard().get(new Coordinate(1,0)).hasVillager());
         Assert.assertFalse(map.getBoard().get(new Coordinate(0,0)).hasVillager());
@@ -267,6 +269,12 @@ public class BuilderTest {
         map.getBoard().get(new Coordinate(0,1)).setLevel(3);
         map.getBoard().get(new Coordinate(0,1)).placeVillagers();
         Assert.assertFalse(map.tigerCanBePlaced(new Coordinate(0,1)));
+    }
+
+    @Test
+    public void playerIdIsUpdatedInHex() {
+        map.foundNewSettlement(new Coordinate(-1,1));
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getPlayerID(), 1);
     }
 
     @After

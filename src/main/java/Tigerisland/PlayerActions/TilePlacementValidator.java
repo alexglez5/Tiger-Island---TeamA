@@ -2,24 +2,7 @@ package Tigerisland.PlayerActions;
 
 import Tigerisland.*;
 
-import java.util.HashMap;
-
 public class TilePlacementValidator extends TilePlacer{
-//    protected ActionHelper locator = new ActionHelper();
-//    private TilePlacer placer = new TilePlacer();
-    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
-    protected Player player;
-    protected HashMap<Integer, Settlement> settlements;
-
-    public void setSettlements(HashMap<Integer, Settlement> settlements){
-        this.settlements = settlements;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard) {
-        this.gameBoard = gameBoard;
-    }
 
     public boolean tileCanBePlacedOnLevelOne() {
         return gameBoard.size() == 0
@@ -108,7 +91,7 @@ public class TilePlacementValidator extends TilePlacer{
 
     private boolean coordinateHasAPieceThatWillBeWipedOut(Coordinate terrainCoordinate) {
         return terrainContainsAPiece(terrainCoordinate)
-                && settlementIdsOfHexesInTile.contains(gameBoard.get(terrainCoordinate).getSettlementID());
+                && settlementIdsOfHexesUnderTile.contains(gameBoard.get(terrainCoordinate).getSettlementID());
     }
 
     private boolean isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(

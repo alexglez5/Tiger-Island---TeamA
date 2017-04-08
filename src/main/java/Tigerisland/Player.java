@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
-//    private int playerID = 0;
+    private int playerID;
     private int score;
     private int numberOfVillagersLeft;
     private int numberOfTotoroLeft;
@@ -56,13 +56,13 @@ public class Player {
 //        return findSettlement(id) != null;
 //    }
 
-//    public int getPlayerID() {
-//        return playerID;
-//    }
+    public int getPlayerID() {
+        return playerID;
+    }
 
-//    public void setPlayerID(int playerID) {
-//        this.playerID = playerID;
-//    }
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
+    }
 
     public void resetScoreAndInventory() {
         score = 0;

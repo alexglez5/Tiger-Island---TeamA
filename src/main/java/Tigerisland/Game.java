@@ -16,11 +16,23 @@ public class Game {
     private Player player2 = new Player();
     private int currentPlayerId = 1;
 
+    public Game() {
+        player1.setPlayerID(1);
+        player2.setPlayerID(2);
+    }
+
     public void setCurrentPlayer(int pid) throws Exception {
         if (pid == 1 || pid == 2)
             currentPlayerId = pid;
         else
             throw new Exception("Wrong player ID");
+    }
+
+    public void switchPlayers() {
+        if (currentPlayerId == 1)
+            currentPlayerId = 2;
+        else
+            currentPlayerId = 1;
     }
 
     public HashMap<Integer, Settlement> getSettlements() {
@@ -34,7 +46,6 @@ public class Game {
     public void placeStartingTile() {
         placer.setGameBoard(gameBoard);
         placer.setSettlements(settlements);
-        placer.getSettlements();
         placer.setPlayer(getPlayer());
         placer.placeOneStartingTile();
         updateGameBoard(placer.getGameBoard());
@@ -64,6 +75,7 @@ public class Game {
             player2 = player;
     }
 
+    // todo: Let's separate the validation and actual placing of tile in gameboard
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.setGameBoard(gameBoard);
         placer.setPlayer(getPlayer());
@@ -192,6 +204,8 @@ public class Game {
         builder.findCoordinatesOfPossibleSettlementExpansion();
         updateGameBoard(builder.getGameBoard());
     }
+
+
 
     public void resetGame() {
         gameBoard.clear();
