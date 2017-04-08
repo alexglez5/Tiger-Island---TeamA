@@ -6,8 +6,8 @@ package Tigerisland;
 public class DoPlayerAction {
     private String message;
 
-    public void doMessage(String message){
-        if(message == PlayerAction.)
-
-    }
+//    public void doMessage(String message){
+//        if(message == PlayerAction.)
+//
+//    }
 }

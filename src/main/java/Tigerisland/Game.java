@@ -176,19 +176,9 @@ public class Game {
         builder.findCoordinatesOfPossibleSettlementExpansion();
     }
 
-//    public ArrayList<Coordinate> findCoordinatesWhereTotoroCanBePlaced(){
-//        helper.updtateComponents(getComponents());
-//        builder.updtateComponents(getComponents());
-//        placer.updtateComponents(getComponents());
-//        buildValidator.updtateComponents(getComponents());
-//        tileValidator.updtateComponents(getComponents());
-//        return helper.getPlacesWhereTotoroCanBePlaced();
-//    }
-//
-//    public ArrayList<Coordinate> findCoordinatesWhereTigerCanBePlaced(){
-//        helper.updtateComponents(getComponents());
-//        return helper.getPlacesWhereTigerCanBePlaced();
-//    }
+    public boolean isSettlementSplit(Settlement s) {
+        return tileValidator.checkForSplit(s);
+    }
 
     public void resetGame() {
         gameBoard.clear();
