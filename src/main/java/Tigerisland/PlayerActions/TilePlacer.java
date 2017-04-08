@@ -9,11 +9,11 @@ import java.util.Set;
 public class TilePlacer {
     protected static ActionHelper locator = new ActionHelper();
     protected Set<Integer> settlementIdsOfHexesInTile;
-    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private Tile tile;
+    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Player player;
-
     protected HashMap<Integer, Settlement> settlements;
+
     public HashMap<Integer, Settlement> getSettlements(){
         return this.settlements;
     }

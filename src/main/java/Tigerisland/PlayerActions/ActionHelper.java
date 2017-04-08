@@ -4,7 +4,7 @@ import Tigerisland.Coordinate;
 import Tigerisland.Game;
 import Tigerisland.Orientation;
 
-public class ActionHelper extends Game {
+public class ActionHelper {
     protected final int sidesOfAHex = 6;
     public Coordinate leftOfMainTerrainCoordinate;
     public Coordinate mainTerrainCoordinate;

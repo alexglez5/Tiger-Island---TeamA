@@ -5,11 +5,11 @@ import Tigerisland.PlayerActions.*;
 import java.util.HashMap;
 
 public class Game {
-    public static ActionHelper locator = new ActionHelper();
-    private static TilePlacer placer = new TilePlacer();
-    private static TilePlacementValidator tileValidator = new TilePlacementValidator();
-    private static Builder builder = new Builder();
-    private static BuildValidator buildValidator = new BuildValidator();
+    public ActionHelper locator = new ActionHelper();
+    private TilePlacer placer = new TilePlacer();
+    private TilePlacementValidator tileValidator = new TilePlacementValidator();
+    private Builder builder = new Builder();
+    private BuildValidator buildValidator = new BuildValidator();
     private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private HashMap<Integer, Settlement> settlements = new HashMap<>();
     private Player player1 = new Player();
@@ -23,10 +23,7 @@ public class Game {
             throw new Exception("Wrong player ID");
     }
 
-    public void updateSettlements(HashMap<Integer, Settlement> settlements){
-        this.settlements = settlements;
-    }
-    public HashMap<Integer, Settlement> getSettlements(){
+    public HashMap<Integer, Settlement> getSettlements() {
         return this.settlements;
     }
 
@@ -56,6 +53,10 @@ public class Game {
         this.gameBoard = gameBoard;
     }
 
+    public void updateSettlements(HashMap<Integer, Settlement> settlements) {
+        this.settlements = settlements;
+    }
+
     public void updatePlayer(Player player) {
         if (currentPlayerId == 1)
             player1 = player;
@@ -67,13 +68,15 @@ public class Game {
         placer.setGameBoard(gameBoard);
         placer.setPlayer(getPlayer());
         placer.setSettlements(settlements);
+
+        tileValidator.setGameBoard(gameBoard);
+        tileValidator.setPlayer(getPlayer());
+        tileValidator.setSettlements(settlements);
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        if (tileValidator.tileCanBePlacedOnLevelOne()) {
+        if (tileValidator.tileCanBePlacedOnLevelOne())
             placer.placeTileOnMap();
-        }
-        else if (tileValidator.tileCanNukeOtherTiles()) {
+        else if (tileValidator.tileCanNukeOtherTiles())
             placer.nuke();
-        }
         updateGameBoard(placer.getGameBoard());
         updateSettlements(placer.getSettlements());
         updatePlayer(placer.getPlayer());
@@ -190,7 +193,7 @@ public class Game {
         updateGameBoard(builder.getGameBoard());
     }
 
-    public void resetGame(){
+    public void resetGame() {
         gameBoard.clear();
         player1.resetScoreAndInventory();
         player2.resetScoreAndInventory();

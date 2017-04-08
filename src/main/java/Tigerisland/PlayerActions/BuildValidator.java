@@ -1,8 +1,24 @@
 package Tigerisland.PlayerActions;
 
-import Tigerisland.TerrainType;
+import Tigerisland.*;
 
-public class BuildValidator extends Builder {
+import java.util.HashMap;
+
+public class BuildValidator extends Builder{
+//    private Builder = new Builder();
+    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    protected Player player;
+    protected HashMap<Integer, Settlement> settlements;
+
+    public void setSettlements(HashMap<Integer, Settlement> settlements){
+        this.settlements = settlements;
+    }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard) {
+        this.gameBoard = gameBoard;
+    }
 
     public boolean settlementCanBeFound() {
         return terrainIsOnMap()
@@ -31,7 +47,7 @@ public class BuildValidator extends Builder {
     }
 
     private boolean thereIsAVillagerLeft() {
-        return getPlayer().getNumberOfVillagersLeft() > 0;
+        return player.getNumberOfVillagersLeft() > 0;
     }
 
     public boolean settlementCanBeExpanded() {
@@ -44,7 +60,7 @@ public class BuildValidator extends Builder {
     }
 
     public boolean thereAreEnoughVillagersToExpand() {
-        return possibleVillagersPlaced <= getPlayer().getNumberOfVillagersLeft();
+        return possibleVillagersPlaced <= player.getNumberOfVillagersLeft();
     }
 
     public boolean totoroCanBePlaced() {
@@ -62,7 +78,7 @@ public class BuildValidator extends Builder {
     }
 
     private boolean thereIsATotoroLeft() {
-        return getPlayer().getNumberOfTotoroLeft() > 0;
+        return player.getNumberOfTotoroLeft() > 0;
     }
 
     public boolean tigerCanBePlaced() {
@@ -84,6 +100,6 @@ public class BuildValidator extends Builder {
     }
 
     private boolean thereIsATigerLeft() {
-        return getPlayer().getNumberOfTigersLeft() > 0;
+        return player.getNumberOfTigersLeft() > 0;
     }
 }
