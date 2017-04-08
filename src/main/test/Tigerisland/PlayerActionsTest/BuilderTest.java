@@ -271,12 +271,6 @@ public class BuilderTest {
         Assert.assertFalse(map.tigerCanBePlaced(new Coordinate(0,1)));
     }
 
-    @Test
-    public void playerIdIsUpdatedInHex() {
-        map.foundNewSettlement(new Coordinate(-1,1));
-        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getPlayerID(), 1);
-    }
-
     @After
     public void deallocateHexesInMap() throws Exception{
         map.resetGame();

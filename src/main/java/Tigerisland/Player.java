@@ -1,20 +1,14 @@
 package Tigerisland;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 public class Player {
     private int playerID;
     private int score;
     private int numberOfVillagersLeft;
     private int numberOfTotoroLeft;
     private int numberOfTigersLeft;
-//    private ArrayList<Settlement> settlements;
 
     public Player() {
         score = 0;
-//        settlements = new ArrayList<>();
         numberOfVillagersLeft = 20;
         numberOfTotoroLeft = 3;
         numberOfTigersLeft = 2;
