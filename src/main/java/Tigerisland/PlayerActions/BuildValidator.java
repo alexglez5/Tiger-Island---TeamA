@@ -79,7 +79,7 @@ public class BuildValidator extends Builder{
     }
 
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
-        getDifferentSettlementIDsAroundCoordinate(coordinate);
+        findIdOfSettlementTigerCouldBeAdjacentTo();
         return settlementID != -1;
     }
 

@@ -240,9 +240,11 @@ public class BuilderTest {
         int id = (new Coordinate(-1,1)).hashCode();
         map.getBoard().get(new Coordinate(-1,1)).setLevel(3);
         map.getBoard().get(new Coordinate(0,1)).setLevel(3);
-        map.getSettlements().put(id ,addedSettlement);
+        map.getSettlements().put(id, addedSettlement);
         map.getBoard().get(new Coordinate(-1,1)).setSettlementID(id);
+        map.getBoard().get(new Coordinate(-1,1)).placeTiger();
         map.getSettlements().get(id).placeTiger();
+        Assert.assertTrue(map.getBoard().get(new Coordinate(-1,1)).hasTiger());
         Assert.assertFalse(map.tigerCanBePlaced(new Coordinate(0,1)));
     }
 
