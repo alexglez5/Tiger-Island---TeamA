@@ -61,6 +61,7 @@ public class TilePlacer {
         getDifferentSettlementIDsOfATile();
         placeTileOnMap();
         increaseLevel(level);
+        removeFromSettlement();
     }
 
     public Set<Integer> getDifferentSettlementIDsOfATile() {
@@ -92,5 +93,16 @@ public class TilePlacer {
                 && (gameBoard.get(terrainCoordinate).hasVillager()
                 || gameBoard.get(terrainCoordinate).hasTotoro()
                 || gameBoard.get(terrainCoordinate).hasTiger());
+    }
+
+    private void removeFromSettlement() {
+        for (int sid : settlementIdsOfHexesUnderTile) {
+            // for each settlementId, check if the underlying coordinate is a part of that settlement
+            // then, delete it if it exists.
+            if (settlements.get(sid).contains(locator.leftOfMainTerrainCoordinate))
+                settlements.get(sid).removeFromSettlement(locator.leftOfMainTerrainCoordinate);
+            if (settlements.get(sid).contains(locator.rightOfMainTerrainCoordinate))
+                settlements.get(sid).removeFromSettlement(locator.rightOfMainTerrainCoordinate);
+        }
     }
 }

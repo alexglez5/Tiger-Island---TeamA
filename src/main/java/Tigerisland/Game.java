@@ -170,6 +170,10 @@ public class Game {
         builder.findCoordinatesOfPossibleSettlementExpansion();
     }
 
+    public boolean isSettlementSplit(Settlement s) {
+        return tileValidator.checkForSplit(s);
+    }
+
     public void resetGame() {
         gameBoard.clear();
         player1.resetScoreAndInventory();

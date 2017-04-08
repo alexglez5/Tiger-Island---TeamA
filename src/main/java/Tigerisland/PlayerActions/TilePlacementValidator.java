@@ -143,4 +143,11 @@ public class TilePlacementValidator extends TilePlacer{
         // if none of the above conditions are met, tile does not completely wipe out settlement
         return false;
     }
+
+    public boolean checkForSplit(Settlement s) {
+        if (s.bfs().size() < s.getSize())
+            return true;
+        else
+            return false;
+    }
 }
