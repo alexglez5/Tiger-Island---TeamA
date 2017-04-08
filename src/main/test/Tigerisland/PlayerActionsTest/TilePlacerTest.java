@@ -217,31 +217,34 @@ public class TilePlacerTest {
         Assert.assertTrue(map.isSettlementSplit(map.getSettlements().get
                 (map.getBoard().get(new Coordinate(-1,1)).getSettlementID())));
     }
-//
-//    @Test
-//    public void shouldNotSplitSettlementNukedIfTheSettlementIsStillConnected() throws Exception{
-//        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
-//                new Coordinate(0,1), Orientation.FromTopLeft);
-//        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
-//                new Coordinate(1,0), Orientation.FromBottomRight);
-//        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
-//                new Coordinate(2,-2), Orientation.FromBottom);
-//
-//        map.foundNewSettlement(new Coordinate(1,-1));
-//        map.foundNewSettlement(new Coordinate(0,0));
-//        map.foundNewSettlement(new Coordinate(2,-1));
-//        map.foundNewSettlement(new Coordinate(2,0));
-//        map.foundNewSettlement(new Coordinate(1,1));
-//
-//        Assert.assertEquals(map.getPlayer().getSettlements().size(),1);
-//        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
-//                new Coordinate(1,0), Orientation.FromBottom);
-//
-//        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getSettlementID(),
-//                map.getBoard().get(new Coordinate(2,0)).getSettlementID());
-//        Assert.assertEquals(map.getPlayer().getSettlements().size(),1);
-//    }
 
+    @Test
+    public void testSettlementIsStillConnected() throws Exception{
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(0,1), Orientation.FromTopLeft);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Grasslands),
+                new Coordinate(2,-2), Orientation.FromBottom);
+
+        map.foundNewSettlement(new Coordinate(1,-1));
+        map.foundNewSettlement(new Coordinate(0,0));
+        map.foundNewSettlement(new Coordinate(2,-1));
+        map.foundNewSettlement(new Coordinate(2,0));
+        map.foundNewSettlement(new Coordinate(1,1));
+
+        Assert.assertEquals(map.getSettlements().size(),1);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromBottom);
+
+        Assert.assertFalse(map.isSettlementSplit(map.getSettlements().get
+                (map.getBoard().get(new Coordinate(1,-1)).getSettlementID())));
+    }
+
+    @Test
+    public void testResolvedSplitSettlement() {
+
+    }
 
     @After
     public void deallocateHexesInMap() throws Exception{
