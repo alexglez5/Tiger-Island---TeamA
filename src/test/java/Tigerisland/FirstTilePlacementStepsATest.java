@@ -11,7 +11,7 @@ public class FirstTilePlacementStepsATest {
 
     @Given("^the board is empty and player \"([^\"]*)\" is given tile with terrains \"([^\"]*)\" and \"([^\"]*)\"$")
     public void the_board_is_empty_and_player_is_given_tile_with_terrains_and(String pid, String terrain1, String terrain2) throws Throwable {
-        app.map.gameBoard.clear();
+        app.map.getBoard().clear();
         app.updateCurrentTile(terrain1, terrain2);
         if(!app.isEmptyBoard()){
             throw new Error("didn't work");

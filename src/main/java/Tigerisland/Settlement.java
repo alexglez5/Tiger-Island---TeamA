@@ -10,6 +10,14 @@ public class Settlement extends Game {
     private int settlementID;
     private boolean hasTotoro;
     private boolean hasTiger;
+    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+
+    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard){
+        this.gameBoard = gameBoard;
+    }
+    public HashMap<Coordinate, Hex> getGameBoard(){
+        return gameBoard;
+    }
 
     public Settlement(Coordinate cord) {
         if(gameBoard.containsKey(cord))

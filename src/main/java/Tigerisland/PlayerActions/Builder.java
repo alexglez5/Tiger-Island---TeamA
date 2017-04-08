@@ -2,10 +2,13 @@ package Tigerisland.PlayerActions;
 
 import Tigerisland.*;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Builder extends Game {
+    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private final int pointsForTigerPlacement = 75;
     protected Coordinate coordinate;
     protected TerrainType terrainType;
@@ -16,6 +19,12 @@ public class Builder extends Game {
     protected int possibleVillagersPlaced;
     protected static ActionHelper locator = new ActionHelper();
 
+    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard){
+        this.gameBoard = gameBoard;
+    }
+    public HashMap<Coordinate, Hex> getGameBoard(){
+        return gameBoard;
+    }
 
     public void foundNewSettlement() {
         foundNewSettlement(coordinate);

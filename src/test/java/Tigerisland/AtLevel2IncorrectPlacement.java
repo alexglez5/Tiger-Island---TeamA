@@ -11,7 +11,7 @@ public class AtLevel2IncorrectPlacement {
 
     @Given("^that the board has at least (\\d+) tiles from game start$")
     public void that_the_board_has_at_least_tiles_from_game_start(int arg1) throws Throwable {
-        app.map.gameBoard.clear();
+        app.map.getBoard().clear();
         if(!app.isEmptyBoard()){
             throw new Error("The Board already has tiles");
         }

@@ -11,7 +11,7 @@ public class StartOfTurnTilePlacement {
 
     @Given("^the player \"([^\"]*)\" is given a tile with terrains \"([^\"]*)\" and \"([^\"]*)\"$")
     public void the_player_is_given_a_tile_with_terrains_and(String playerID, String firstTerrain, String secondTerrain ) throws Throwable {
-        app.map.gameBoard.clear();
+        app.map.getBoard().clear();
         app.updateCurrentTile(firstTerrain, secondTerrain);
         app.placeTile("FromBottom", 0, 0 );
         if(app.isEmptyBoard()){

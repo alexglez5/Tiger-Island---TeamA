@@ -1,6 +1,7 @@
 package Tigerisland;
 
 public class App {
+
     Boolean isBoardEmpty = true;
     Tile currentTile;
     String currentBuildOption;
@@ -50,7 +51,7 @@ public class App {
 
     public boolean doesTileExist(int coordinate1, int coordinate2) {
         Coordinate cord = new Coordinate(coordinate1, coordinate2);
-        return map.gameBoard.containsKey(cord);
+        return map.getBoard().containsKey(cord);
     }
 
     public PlayerChoice enumPlayerChoice(String choice) {
@@ -105,19 +106,19 @@ public class App {
     public boolean isCorrectTerrain(int x, int y, String correctTerrain) {
         TerrainType correctTerrainType = checkTerrain(correctTerrain);
         Coordinate toCheck = new Coordinate(x,y);
-        Hex hexToCheck = map.gameBoard.get(toCheck);
+        Hex hexToCheck = map.getBoard().get(toCheck);
         return correctTerrainType.equals(hexToCheck.getTerrainType());
 
     }
 
     public int returnLevel(int coordinatex, int coordinatey) {
         Coordinate coordinate = new Coordinate(coordinatex, coordinatey);
-        return map.gameBoard.get(coordinate).getLevel();
+        return map.getBoard().get(coordinate).getLevel();
     }
 
     public boolean checkVillagers(int coordinateX, int coordinateY) {
         Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
-        return map.gameBoard.get(coordinate).hasVillager();
+        return map.getBoard().get(coordinate).hasVillager();
     }
 
     public void expandSettlementAt(int coordinateX, int coordinateY, String terrain) {
