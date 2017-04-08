@@ -43,14 +43,20 @@ public class Game {
         return this.gameBoard;
     }
 
+    public void updateComponents(ComponentsDTO dto){
+        updateGameBoard(dto.getGameBoard());
+        updateSettlements(dto.getSettlements());
+        updatePlayer(dto.getPlayer());
+    }
+
+    public ComponentsDTO getComponents(){
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer());
+    }
+
     public void placeStartingTile() {
-        placer.setGameBoard(gameBoard);
-        placer.setSettlements(settlements);
-        placer.setPlayer(getPlayer());
+        placer.updtateComponents(this.getComponents());
         placer.placeOneStartingTile();
-        updateGameBoard(placer.getGameBoard());
-        updateSettlements(placer.getSettlements());
-        updatePlayer(placer.getPlayer());
+        this.updateComponents(placer.getComponents());
     }
 
     public Player getPlayer() {
@@ -77,135 +83,92 @@ public class Game {
 
     // todo: Let's separate the validation and actual placing of tile in gameboard
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        placer.setGameBoard(gameBoard);
-        placer.setPlayer(getPlayer());
-        placer.setSettlements(settlements);
-
-        tileValidator.setGameBoard(gameBoard);
-        tileValidator.setPlayer(getPlayer());
-        tileValidator.setSettlements(settlements);
+        placer.updtateComponents(this.getComponents());
+        tileValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+
         if (tileValidator.tileCanBePlacedOnLevelOne())
             placer.placeTileOnMap();
         else if (tileValidator.tileCanNukeOtherTiles())
             placer.nuke();
-        updateGameBoard(placer.getGameBoard());
-        updateSettlements(placer.getSettlements());
-        updatePlayer(placer.getPlayer());
+        this.updateComponents(placer.getComponents());
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         builder.foundNewSettlement();
-        updateGameBoard(builder.getGameBoard());
-        updateSettlements(builder.getSettlements());
-        updatePlayer(builder.getPlayer());
+        this.updateComponents(builder.getComponents());
     }
 
     public void expandSettlement(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         builder.expandSettlement();
-        updateGameBoard(builder.getGameBoard());
-        updateSettlements(builder.getSettlements());
-        updatePlayer(builder.getPlayer());
+        this.updateComponents(builder.getComponents());
     }
 
     public void placeTotoro(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setSettlements(settlements);
-        updateSettlements(builder.getSettlements());
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         builder.placeTotoro();
-        updateGameBoard(builder.getGameBoard());
-        updateSettlements(builder.getSettlements());
-        updatePlayer(builder.getPlayer());
+        this.updateComponents(builder.getComponents());
     }
 
     public void placeTiger(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         builder.placeTiger();
-        updateGameBoard(builder.getGameBoard());
-        updateSettlements(builder.getSettlements());
-        updatePlayer(builder.getPlayer());
+        this.updateComponents(builder.getComponents());
     }
 
     public boolean tileCanBePlacedOnLevelOne(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        placer.setGameBoard(gameBoard);
-        placer.setSettlements(settlements);
-        placer.setPlayer(getPlayer());
+        placer.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanBePlacedOnLevelOne();
     }
 
     public boolean tileCanNukeOtherTiles(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        placer.setGameBoard(gameBoard);
-        placer.setSettlements(settlements);
-        placer.setPlayer(getPlayer());
+        placer.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanNukeOtherTiles();
     }
 
     public boolean settlementCanBeFound(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.settlementCanBeFound();
     }
 
     public boolean settlementCanBeExpanded(Coordinate coordinate, TerrainType terrainType) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate, terrainType);
         return buildValidator.settlementCanBeExpanded();
     }
 
     public boolean totoroCanBePlaced(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.totoroCanBePlaced();
     }
 
     public boolean tigerCanBePlaced(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.tigerCanBePlaced();
     }
 
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger(Coordinate coordinate) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.atLeastOneAdjacentSettlementDoesNotContainATiger();
     }
 
     public void findCoordinatesOfPossibleSettlementExpansion(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
-        builder.setGameBoard(gameBoard);
-        builder.setSettlements(settlements);
-        builder.setPlayer(getPlayer());
+        builder.updtateComponents(this.getComponents());
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         builder.findCoordinatesOfPossibleSettlementExpansion();
-        updateGameBoard(builder.getGameBoard());
     }
-
-
 
     public void resetGame() {
         gameBoard.clear();

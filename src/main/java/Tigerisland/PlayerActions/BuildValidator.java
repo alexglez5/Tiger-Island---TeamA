@@ -2,8 +2,6 @@ package Tigerisland.PlayerActions;
 
 import Tigerisland.*;
 
-import java.util.HashMap;
-
 public class BuildValidator extends Builder{
 
     public boolean settlementCanBeFound() {

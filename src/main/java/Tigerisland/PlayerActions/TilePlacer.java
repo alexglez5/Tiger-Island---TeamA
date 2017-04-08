@@ -9,16 +9,19 @@ import java.util.Set;
 public class TilePlacer {
     protected static ActionHelper locator = new ActionHelper();
     protected Set<Integer> settlementIdsOfHexesUnderTile;
-    private Tile tile;
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Player player;
     protected HashMap<Integer, Settlement> settlements;
+    private Tile tile;
 
-    public HashMap<Integer, Settlement> getSettlements(){
-        return this.settlements;
+    public void updtateComponents(ComponentsDTO dto) {
+        this.gameBoard = dto.getGameBoard();
+        this.settlements = dto.getSettlements();
+        this.player = dto.getPlayer();
     }
-    public void setSettlements(HashMap<Integer, Settlement> settlements){
-        this.settlements = settlements;
+
+    public ComponentsDTO getComponents() {
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer());
     }
 
     public Player getPlayer() {
@@ -29,12 +32,12 @@ public class TilePlacer {
         this.player = player;
     }
 
-    public HashMap<Coordinate, Hex> getGameBoard() {
-        return gameBoard;
+    public HashMap<Integer, Settlement> getSettlements() {
+        return this.settlements;
     }
 
-    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard) {
-        this.gameBoard = gameBoard;
+    public void setSettlements(HashMap<Integer, Settlement> settlements) {
+        this.settlements = settlements;
     }
 
     public void placeOneStartingTile() {
@@ -56,7 +59,6 @@ public class TilePlacer {
     public void nuke() {
         int level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
         getDifferentSettlementIDsOfATile();
-        updateSettlements();
         placeTileOnMap();
         increaseLevel(level);
     }
@@ -91,9 +93,4 @@ public class TilePlacer {
                 || gameBoard.get(terrainCoordinate).hasTotoro()
                 || gameBoard.get(terrainCoordinate).hasTiger());
     }
-
-    public void updateSettlements() {
-
-    }
-
 }

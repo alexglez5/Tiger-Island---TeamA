@@ -11,28 +11,24 @@ public class Builder {
     protected static ActionHelper locator = new ActionHelper();
     private final int pointsForTigerPlacement = 75;
     public Set<Coordinate> visitedCoordinates;
-    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Coordinate coordinate;
     protected TerrainType terrainType;
     protected int settlementID;
     protected Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
-    protected Player player;
-    protected HashMap<Integer, Settlement> settlements;
-    public HashMap<Integer, Settlement> getSettlements(){
-        return this.settlements;
-    }
-    public void setSettlements(HashMap<Integer, Settlement> settlements){
-        this.settlements = settlements;
+    protected Player player = new Player();
+    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    protected HashMap<Integer, Settlement> settlements = new HashMap<>();
+
+    public void updtateComponents(ComponentsDTO dto) {
+        this.gameBoard = dto.getGameBoard();
+        this.settlements = dto.getSettlements();
+        this.player = dto.getPlayer();
     }
 
-    public HashMap<Coordinate, Hex> getGameBoard() {
-        return gameBoard;
-    }
-
-    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard) {
-        this.gameBoard = gameBoard;
+    public ComponentsDTO getComponents() {
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.player);
     }
 
     public void foundNewSettlement() {
@@ -43,9 +39,8 @@ public class Builder {
     public void foundNewSettlement(Coordinate coordinate) {
         gameBoard.get(coordinate).placeVillagers();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        gameBoard.get(coordinate).setPlayerID(getPlayer().getPlayerID());
+        gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
         settlements.put(settlementID, new Settlement(coordinate));
-//        player.addSettlement(new Settlement(coordinate));
         player.addPoints(1);
         player.useVillagers(1);
     }
@@ -56,21 +51,13 @@ public class Builder {
             mergeSettlementsIntoASingleSettlement(id);
     }
 
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public void getDifferentSettlementIDsAroundCoordinate(Coordinate coordinate) {
         locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
         differentSettlementIDsAroundCoordinate = new HashSet<>();
 
         for (Coordinate neighborCoordinate : locator.surroundingCoordinates) {
             if (terrainContainsAPiece(neighborCoordinate)
-                    && settlements.containsKey(gameBoard.get(neighborCoordinate).getSettlementID())){
+                    && settlements.containsKey(gameBoard.get(neighborCoordinate).getSettlementID())) {
                 differentSettlementIDsAroundCoordinate.add(gameBoard.get(neighborCoordinate).getSettlementID());
             }
         }
@@ -140,20 +127,17 @@ public class Builder {
         findIdOfSettlementTigerCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        gameBoard.get(coordinate).setPlayerID(getPlayer().getPlayerID());
-        getPlayer().addPoints(pointsForTigerPlacement);
-        getPlayer().useTiger();
+        gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
+        player.addPoints(pointsForTigerPlacement);
+        player.useTiger();
     }
 
-    private void setSettlementIdToPieceBeingPlaced(int id) {
-        settlementID = id;
-    }
 
     private void placeTotoroAtGivenCoordinate() {
         findIdOfSettlementTotoroCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        gameBoard.get(coordinate).setPlayerID(getPlayer().getPlayerID());
+        gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
         settlements.get(settlementID).addToSettlement(coordinate);
         settlements.get(settlementID).placeTotoro();
         player.useTotoro();
@@ -181,11 +165,11 @@ public class Builder {
         for (Coordinate coordinateToExpand : visitedCoordinates) {
             gameBoard.get(coordinateToExpand).placeVillagers();
             gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
-            gameBoard.get(coordinate).setPlayerID(getPlayer().getPlayerID());
+            gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
             settlements.get(settlementID).addToSettlement(coordinateToExpand);
         }
-        getPlayer().useVillagers(possibleVillagersPlaced);
-        getPlayer().addPoints(possiblePointsAdded);
+        player.useVillagers(possibleVillagersPlaced);
+        player.addPoints(possiblePointsAdded);
     }
 
     private void mergeSettlementsThatCanBeMerged() {
