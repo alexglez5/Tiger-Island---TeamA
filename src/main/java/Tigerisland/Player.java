@@ -5,17 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
-
-    private int playerID = 0;
+//    private int playerID = 0;
     private int score;
     private int numberOfVillagersLeft;
     private int numberOfTotoroLeft;
     private int numberOfTigersLeft;
-    private ArrayList<Settlement> settlements;
+//    private ArrayList<Settlement> settlements;
 
     public Player() {
         score = 0;
-        settlements = new ArrayList<>();
+//        settlements = new ArrayList<>();
         numberOfVillagersLeft = 20;
         numberOfTotoroLeft = 3;
         numberOfTigersLeft = 2;
@@ -37,33 +36,33 @@ public class Player {
 
     public void useTiger() { numberOfTigersLeft--; }
 
-    public void addSettlement(Settlement s) { getSettlements().add(s); }
+//    public void addSettlement(Settlement s) { getSettlements().add(s); }
 
-    public void removeSettlement(Settlement s) { settlements.remove(s); }
+//    public void removeSettlement(Settlement s) { settlements.remove(s); }
 
-    public Settlement findSettlement(int sid) {
-        for (Settlement s : settlements) {
-            if (s.getSettlementID() == sid)
-                return s;
-        }
-        return null;
-    }
+//    public Settlement findSettlement(int sid) {
+//        for (Settlement s : settlements) {
+//            if (s.getSettlementID() == sid)
+//                return s;
+//        }
+//        return null;
+//    }
 
-    public ArrayList<Settlement> getSettlements() {
-        return settlements;
-    }
+//    public ArrayList<Settlement> getSettlements() {
+//        return settlements;
+//    }
 
-    public boolean containsKey(int id){
-        return findSettlement(id) != null;
-    }
+//    public boolean containsKey(int id){
+//        return findSettlement(id) != null;
+//    }
 
-    public int getPlayerID() {
-        return playerID;
-    }
+//    public int getPlayerID() {
+//        return playerID;
+//    }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
+//    public void setPlayerID(int playerID) {
+//        this.playerID = playerID;
+//    }
 
     public void resetScoreAndInventory() {
         score = 0;

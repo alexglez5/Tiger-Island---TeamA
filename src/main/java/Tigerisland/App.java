@@ -20,13 +20,13 @@ public class App {
         isBoardEmpty = false;
         map.placeTile(
                 currentTile,
-                new Coordinate(xcoordinate,ycoordinate),
+                new Coordinate(xcoordinate, ycoordinate),
                 checkOrientation(orientation)
         );
     }
 
-    public void doBuildOption (String playerID) {
-        if(currentBuildOption.equals("Found Settlement")){
+    public void doBuildOption(String playerID) {
+        if (currentBuildOption.equals("Found Settlement")) {
         }
     }
 
@@ -72,24 +72,19 @@ public class App {
 
     public TerrainType checkTerrain(String terrain) {
 
-        if(terrain.equals("Jungle") || terrain.equals("jungle") ){
+        if (terrain.equals("Jungle") || terrain.equals("jungle")) {
             return TerrainType.Jungle;
-        }
-        else if(terrain.equals("Rocky") || terrain.equals("rocky") ) {
+        } else if (terrain.equals("Rocky") || terrain.equals("rocky")) {
             return TerrainType.Rocky;
-        }
-        else if(terrain.equals("Lake") || terrain.equals("lake")
+        } else if (terrain.equals("Lake") || terrain.equals("lake")
                 || terrain.equals("Lakes") || terrain.equals("lakes")) {
             return TerrainType.Lake;
-        }
-        else if(terrain.equals("Grassland") || terrain.equals("grassland")
+        } else if (terrain.equals("Grassland") || terrain.equals("grassland")
                 || terrain.equals("Grasslands") || terrain.equals("grasslands")) {
             return TerrainType.Grasslands;
-        }
-        else if(terrain.equals("Volcano") || terrain.equals("volcano") ) {
+        } else if (terrain.equals("Volcano") || terrain.equals("volcano")) {
             return TerrainType.Volcano;
-        }
-        else {
+        } else {
             System.out.println("Invalid Terrain");
             return null;
         }
@@ -105,7 +100,7 @@ public class App {
 
     public boolean isCorrectTerrain(int x, int y, String correctTerrain) {
         TerrainType correctTerrainType = checkTerrain(correctTerrain);
-        Coordinate toCheck = new Coordinate(x,y);
+        Coordinate toCheck = new Coordinate(x, y);
         Hex hexToCheck = map.getBoard().get(toCheck);
         return correctTerrainType.equals(hexToCheck.getTerrainType());
 
@@ -130,15 +125,16 @@ public class App {
         currentTile = new Tile(checkTerrain(terrain1), checkTerrain(terrain2));
     }
 
-    public void createPlayer1(int playerID){
-        player1.setPlayerID(playerID);
-    }
+    public void createPlayer1(int playerID) {
+//        player1.setPlayerID(playerID);
+//    }
 
-    public void createPlayer2(int playerID){
-        player2.setPlayerID(playerID);
-    }
+//    public void createPlayer2(int playerID){
+//        player2.setPlayerID(playerID);
+// }
 
-    public void chooseBuildOption(String choice, String playerID) {
-
+//    public void chooseBuildOption(String choice, String playerID) {
+//
+//    }
     }
 }

@@ -251,8 +251,6 @@ public class TilePlacerTest {
 
     @After
     public void deallocateHexesInMap() throws Exception{
-        map.getBoard().clear();
-        map.getPlayer().getSettlements().clear();
-        map.getPlayer().resetScoreAndInventory();
+        map.resetGame();
     }
 }

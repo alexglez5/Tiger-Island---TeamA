@@ -8,10 +8,18 @@ import java.util.Set;
 
 public class TilePlacer {
     protected static ActionHelper locator = new ActionHelper();
-    public Set<Integer> settlementIdsOfHexesInTile;
+    protected Set<Integer> settlementIdsOfHexesInTile;
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private Tile tile;
-    private Player player;
+    protected Player player;
+
+    protected HashMap<Integer, Settlement> settlements;
+    public HashMap<Integer, Settlement> getSettlements(){
+        return this.settlements;
+    }
+    public void setSettlements(HashMap<Integer, Settlement> settlements){
+        this.settlements = settlements;
+    }
 
     public Player getPlayer() {
         return this.player;

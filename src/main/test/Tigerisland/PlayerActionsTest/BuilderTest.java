@@ -81,7 +81,7 @@ public class BuilderTest {
                             ,map.getBoard().get(new Coordinate(0, 1)).getSettlementID());
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID()
                             , map.getBoard().get(new Coordinate(1, 1)).getSettlementID());
-        Assert.assertEquals(map.getPlayer().getSettlements().size(), 1);
+        Assert.assertEquals(map.getSettlements().size(), 1);
     }
 
     @Test
@@ -186,7 +186,7 @@ public class BuilderTest {
                 map.getBoard().get(new Coordinate(1 ,1)).getSettlementID());
         int newId = map.getBoard().get(new Coordinate(1 ,1)).getSettlementID();
         Assert.assertNotEquals(oldId, newId);
-        Assert.assertEquals(map.getPlayer().getSettlements().size(), 1);
+        Assert.assertEquals(map.getSettlements().size(), 1);
     }
 
     @Test
@@ -235,11 +235,12 @@ public class BuilderTest {
     @Test
     public void shouldNotPlaceTigerIfTheOnlyAdjacentSettlementContainsATiger() throws Exception{
         Settlement addedSettlement = new Settlement(new Coordinate(-1,1));
+        int id = (new Coordinate(-1,1)).hashCode();
         map.getBoard().get(new Coordinate(-1,1)).setLevel(3);
         map.getBoard().get(new Coordinate(0,1)).setLevel(3);
-        map.getPlayer().addSettlement(addedSettlement);
-        map.getBoard().get(new Coordinate(-1,1)).setSettlementID(addedSettlement.getSettlementID());
-        map.getPlayer().findSettlement(addedSettlement.getSettlementID()).placeTiger();
+        map.getSettlements().put(id ,addedSettlement);
+        map.getBoard().get(new Coordinate(-1,1)).setSettlementID(id);
+        map.getSettlements().get(id).placeTiger();
         Assert.assertFalse(map.tigerCanBePlaced(new Coordinate(0,1)));
     }
 
@@ -270,9 +271,7 @@ public class BuilderTest {
 
     @After
     public void deallocateHexesInMap() throws Exception{
-        map.getBoard().clear();
-        map.getPlayer().resetScoreAndInventory();
-        map.getPlayer().getSettlements().clear();
+        map.resetGame();
     }
 }
 

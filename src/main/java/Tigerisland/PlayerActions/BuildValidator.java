@@ -57,8 +57,8 @@ public class BuildValidator extends Builder {
 
     private boolean adjacentSettlementIsAtLeastSizeFiveAndDoesNotContainTotoro() {
         findIdOfSettlementTotoroCouldBeAdjacentTo();
-        return getPlayer().findSettlement(settlementID).hasTotoro()
-                && getPlayer().findSettlement(settlementID).getSize() >= 5;
+        return settlements.get(settlementID).hasTotoro()
+                && settlements.get(settlementID).getSize() >= 5;
     }
 
     private boolean thereIsATotoroLeft() {

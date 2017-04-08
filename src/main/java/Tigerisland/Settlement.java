@@ -7,21 +7,21 @@ import java.util.*;
 public class Settlement extends Game {
     private int size;
     private HashMap<Coordinate, ArrayList<Coordinate>> edges = new HashMap<>();
-    private int settlementID;
+//    private int settlementID;
     private boolean hasTotoro;
     private boolean hasTiger;
-    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+//    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
 
-    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard){
-        this.gameBoard = gameBoard;
-    }
-    public HashMap<Coordinate, Hex> getGameBoard(){
-        return gameBoard;
-    }
+//    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard){
+//        this.gameBoard = gameBoard;
+//    }
+//    public HashMap<Coordinate, Hex> getGameBoard(){
+//        return gameBoard;
+//    }
 
     public Settlement(Coordinate cord) {
-        if(gameBoard.containsKey(cord))
-            settlementID = gameBoard.get(cord).getSettlementID();
+//        if(gameBoard.containsKey(cord))
+//            settlementID = gameBoard.get(cord).getSettlementID();
         hasTotoro = false;
         hasTiger = false;
         size = 1;
@@ -46,8 +46,8 @@ public class Settlement extends Game {
             }
         }
         size++;
-        if(gameBoard.containsKey(cord))
-            settlementID = gameBoard.get(cord).getSettlementID();
+//        if(gameBoard.containsKey(cord))
+//            settlementID = gameBoard.get(cord).getSettlementID();
     }
 
     public void removeFromSettlement(Coordinate cord) {
@@ -98,7 +98,7 @@ public class Settlement extends Game {
         this.hasTiger = hasTiger;
     }
 
-    public int getSettlementID() {
-        return settlementID;
-    }
+//    public int getSettlementID() {
+//        return settlementID;
+//    }
 }
