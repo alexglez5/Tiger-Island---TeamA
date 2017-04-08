@@ -240,9 +240,11 @@ public class BuilderTest {
         int id = (new Coordinate(-1,1)).hashCode();
         map.getBoard().get(new Coordinate(-1,1)).setLevel(3);
         map.getBoard().get(new Coordinate(0,1)).setLevel(3);
-        map.getSettlements().put(id ,addedSettlement);
+        map.getSettlements().put(id, addedSettlement);
         map.getBoard().get(new Coordinate(-1,1)).setSettlementID(id);
+        map.getBoard().get(new Coordinate(-1,1)).placeTiger();
         map.getSettlements().get(id).placeTiger();
+        Assert.assertTrue(map.getBoard().get(new Coordinate(-1,1)).hasTiger());
         Assert.assertFalse(map.tigerCanBePlaced(new Coordinate(0,1)));
     }
 
@@ -269,12 +271,6 @@ public class BuilderTest {
         map.getBoard().get(new Coordinate(0,1)).setLevel(3);
         map.getBoard().get(new Coordinate(0,1)).placeVillagers();
         Assert.assertFalse(map.tigerCanBePlaced(new Coordinate(0,1)));
-    }
-
-    @Test
-    public void playerIdIsUpdatedInHex() {
-        map.foundNewSettlement(new Coordinate(-1,1));
-        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getPlayerID(), 1);
     }
 
     @After

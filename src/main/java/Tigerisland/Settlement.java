@@ -4,28 +4,23 @@ import Tigerisland.PlayerActions.ActionHelper;
 
 import java.util.*;
 
-public class Settlement extends Game {
+public class Settlement {
+    private ActionHelper locator = new ActionHelper();
     private int size;
     private HashMap<Coordinate, ArrayList<Coordinate>> edges = new HashMap<>();
-//    private int settlementID;
+    private int playerID;
     private boolean hasTotoro;
     private boolean hasTiger;
-//    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
-
-//    public void setGameBoard(HashMap<Coordinate, Hex> gameBoard){
-//        this.gameBoard = gameBoard;
-//    }
-//    public HashMap<Coordinate, Hex> getGameBoard(){
-//        return gameBoard;
-//    }
 
     public Settlement(Coordinate cord) {
-//        if(gameBoard.containsKey(cord))
-//            settlementID = gameBoard.get(cord).getSettlementID();
         hasTotoro = false;
         hasTiger = false;
         size = 1;
         edges.put(cord, new ArrayList<Coordinate>());
+    }
+
+    public void setPlayerID(int playerID){
+        this.playerID = playerID;
     }
 
     public int getSize() { return size; }
@@ -46,8 +41,6 @@ public class Settlement extends Game {
             }
         }
         size++;
-//        if(gameBoard.containsKey(cord))
-//            settlementID = gameBoard.get(cord).getSettlementID();
     }
 
     public void removeFromSettlement(Coordinate cord) {
@@ -87,7 +80,7 @@ public class Settlement extends Game {
     }
 
     public void placeTotoro() {
-        this.hasTotoro = hasTotoro;
+        this.hasTotoro = true;
     }
 
     public boolean hasTiger() {
@@ -95,10 +88,10 @@ public class Settlement extends Game {
     }
 
     public void placeTiger() {
-        this.hasTiger = hasTiger;
+        this.hasTiger = true;
     }
 
-//    public int getSettlementID() {
-//        return settlementID;
-//    }
+    public int getPlayerID() {
+        return playerID;
+    }
 }
