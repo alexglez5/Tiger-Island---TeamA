@@ -12,7 +12,7 @@ public class Game {
     private TilePlacementValidator tileValidator = new TilePlacementValidator();
     private Builder builder = new Builder();
     private BuildValidator buildValidator = new BuildValidator();
-    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private HashMap<Integer, Settlement> settlements = new HashMap<>();
     private Player player1 = new Player();
     private Player player2 = new Player();
