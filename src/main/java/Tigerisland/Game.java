@@ -2,9 +2,11 @@ package Tigerisland;
 
 import Tigerisland.PlayerActions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
+//    public AIHelper helper = new AIHelper();
     public ActionHelper locator = new ActionHelper();
     private TilePlacer placer = new TilePlacer();
     private TilePlacementValidator tileValidator = new TilePlacementValidator();
@@ -130,24 +132,28 @@ public class Game {
 
     public boolean tileCanNukeOtherTiles(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanNukeOtherTiles();
     }
 
     public boolean settlementCanBeFound(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.settlementCanBeFound();
     }
 
     public boolean settlementCanBeExpanded(Coordinate coordinate, TerrainType terrainType) {
         builder.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate, terrainType);
         return buildValidator.settlementCanBeExpanded();
     }
 
     public boolean totoroCanBePlaced(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.totoroCanBePlaced();
     }
@@ -169,6 +175,20 @@ public class Game {
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         builder.findCoordinatesOfPossibleSettlementExpansion();
     }
+
+//    public ArrayList<Coordinate> findCoordinatesWhereTotoroCanBePlaced(){
+//        helper.updtateComponents(getComponents());
+//        builder.updtateComponents(getComponents());
+//        placer.updtateComponents(getComponents());
+//        buildValidator.updtateComponents(getComponents());
+//        tileValidator.updtateComponents(getComponents());
+//        return helper.getPlacesWhereTotoroCanBePlaced();
+//    }
+//
+//    public ArrayList<Coordinate> findCoordinatesWhereTigerCanBePlaced(){
+//        helper.updtateComponents(getComponents());
+//        return helper.getPlacesWhereTigerCanBePlaced();
+//    }
 
     public void resetGame() {
         gameBoard.clear();

@@ -16,9 +16,9 @@ public class Builder {
     protected Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
-    protected Player player = new Player();
-    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
-    protected HashMap<Integer, Settlement> settlements = new HashMap<>();
+    private Player player = new Player();
+    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    private HashMap<Integer, Settlement> settlements = new HashMap<>();
 
     public void updtateComponents(ComponentsDTO dto) {
         this.gameBoard = dto.getGameBoard();
