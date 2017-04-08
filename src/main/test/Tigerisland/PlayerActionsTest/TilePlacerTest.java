@@ -157,23 +157,18 @@ public class TilePlacerTest {
         Assert.assertFalse(map.tileCanNukeOtherTiles(new Tile(TerrainType.Lake, TerrainType.Rocky),
                 new Coordinate(0,0), Orientation.FromBottomRight));
     }
-//
-//    @Test
-//    public void testNukingIsNotDoneIfItReducesAnySettlementSizeToZero() throws Exception{
-//        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
-//                new Coordinate(0,0), Orientation.FromBottom);
-//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-//                new Coordinate(1,0), Orientation.FromBottomRight);
-//        map.foundNewSettlement(new Coordinate(0,1));
-//        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
-//                new Coordinate(1,0), Orientation.FromBottom);
-//
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(0,1)).hasVillager());
-//        Assert.assertNotEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
-//                TerrainType.Grasslands);
-//        Assert.assertNotEquals(map.getBoard().get(new Coordinate(1,1)).getTerrainType(),
-//                TerrainType.Rocky);
-//    }
+
+    @Test
+    public void testNukingIsNotDoneIfItReducesAnySettlementSizeToZero() throws Exception{
+        map.placeTile(new Tile(TerrainType.Lake, TerrainType.Rocky),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        map.foundNewSettlement(new Coordinate(0,1));
+
+        Assert.assertFalse(map.tileCanNukeOtherTiles(new Tile(TerrainType.Grasslands, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromBottom));
+    }
 
     @Test
     public void testTileIsNeverPlacedOnTopOfTotoro() throws Exception{

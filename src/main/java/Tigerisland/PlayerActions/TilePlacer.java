@@ -56,7 +56,7 @@ public class TilePlacer {
     public void nuke() {
         int level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
         getDifferentSettlementIDsOfATile();
-//        updateSettlements();
+        updateSettlements();
         placeTileOnMap();
         increaseLevel(level);
     }
@@ -92,13 +92,8 @@ public class TilePlacer {
                 || gameBoard.get(terrainCoordinate).hasTiger());
     }
 
-//    public void updateSettlements() {
-//
-//        // if there is only one settlement id in the set
-//        if (settlementIdsOfHexesUnderTile.size() == 1) {
-//            if (locator.leftOfMainTerrainCoordinate.)
-//        }
-//
-//    }
+    public void updateSettlements() {
+
+    }
 
 }

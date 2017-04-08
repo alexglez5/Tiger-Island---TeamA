@@ -40,8 +40,6 @@ public class Hex {
         return hasTiger;
     }
 
-    public boolean isOccupied() {return hasTiger || hasTotoro || hasVillagers; }
-
     public int getSettlementID() {
         return settlementID;
     }

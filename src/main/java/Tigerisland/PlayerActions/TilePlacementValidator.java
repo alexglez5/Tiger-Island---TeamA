@@ -35,8 +35,8 @@ public class TilePlacementValidator extends TilePlacer{
                 && volcanoIsPlacedOnTopOfAnotherVolcano()
                 && tileIsNotPerfectlyOnTopOfAnotherTile()
                 && tileIsNotPlacedOnTopOfTotoro()
-                && tileIsNotPlacedOnTopOfTiger();
-        //&& tileDoesNotCompletelyWipeOutASettlement();
+                && tileIsNotPlacedOnTopOfTiger()
+                && !tileCompletelyWipesOutASettlement();
     }
 
     public boolean hexesBelowAreAtTheSameLevel() {
@@ -106,5 +106,41 @@ public class TilePlacementValidator extends TilePlacer{
         return tempCoordinate == locator.leftOfMainTerrainCoordinate
                 || tempCoordinate == locator.mainTerrainCoordinate
                 || tempCoordinate == locator.rightOfMainTerrainCoordinate;
+    }
+
+    public boolean tileCompletelyWipesOutASettlement() {
+
+        getDifferentSettlementIDsOfATile();
+
+
+        // if there is only one settlement id in the set
+        if (settlementIdsOfHexesUnderTile.size() == 1) {
+
+            // count if both are occupied,
+            if (terrainContainsAPiece(locator.leftOfMainTerrainCoordinate) &&
+                    terrainContainsAPiece(locator.rightOfMainTerrainCoordinate)) {
+
+                // check if the bfs of the underlying settlement is greater than 2
+                int settlementIdToCheck = settlementIdsOfHexesUnderTile.iterator().next();
+                if (settlements.get(settlementIdToCheck).bfs().size() <= 2)
+                    return true;
+            }
+            // only one is occupied
+            else {
+                // check if bfs of underlying settlement is greater than 1
+                int settlementIdToCheck = settlementIdsOfHexesUnderTile.iterator().next();
+                if (settlements.get(settlementIdToCheck).bfs().size() == 1)
+                    return true;
+            }
+        } else if (settlementIdsOfHexesUnderTile.size() == 2) {
+            // make sure that each underlying settlement has a bfs of greater than 1
+            for (int sid : settlementIdsOfHexesUnderTile) {
+                if (settlements.get(sid).bfs().size() == 1)
+                    return true;
+            }
+        }
+
+        // if none of the above conditions are met, tile does not completely wipe out settlement
+        return false;
     }
 }
