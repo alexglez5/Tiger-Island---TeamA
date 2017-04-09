@@ -23,10 +23,20 @@ public class AIHelper {
     private HashSet<Coordinate> visitedCoordinates;
 
     public void findPossibleMoves() {
+        resetMoveFlags();
         findCoordinateWhereTotoroCanBePlaced();
         findCoordinateWhereTigerCanBePlaced();
         findPlaceWhereSettlementCanBeExpanded();
+        findCoordinatesWhereSettlementCanBeFound();
         setArrayOfMoveOptions();
+    }
+
+    public void resetMoveFlags(){
+        tileMove = false;
+        totoroMove = false;
+        tigerMove = false;
+        expandMove = false;
+        foundMove = false;
     }
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain){
@@ -98,6 +108,7 @@ public class AIHelper {
                 break;
             }
         }
+        tileMove = true;
     }
 
     public void findCoordinateWhereTotoroCanBePlaced() {
