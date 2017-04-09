@@ -78,7 +78,7 @@ public class tournamentClient {
 
     }
 
-    //after this come back to main and start
+    //After this the game begins
     public void tournamentLogin(String username, String password) throws IOException{
         String serverMessage;
 
@@ -105,17 +105,18 @@ public class tournamentClient {
         }
     }
 
+    //Waiting for a new match
     public void waitForTournamentToBegin() {
         String serverMessage;
 
-        game1AI = new AI();
-        game2AI = new AI();
 
         try{
             while((serverMessage = incomingMessage.readLine()) != null){
                 //If match is going to start go to correct function
-                if(serverMessage.startsWith("NEW MATCH")){
-                    moveMessenger();
+                if(serverMessage.startsWith("NEW MATCH")){ //Should only get called once
+                    game1AI = new AI();
+                    game2AI = new AI();
+                    winTheTournament();
                     break;
                 }
                 //If server says goodbye then everything is over or we got kicked
@@ -135,7 +136,8 @@ public class tournamentClient {
         }
     }
 
-    public void moveMessenger(){
+    //This take in all the move messages
+    public void winTheTournament(){
         String serverMessage;
 
         try{
@@ -151,13 +153,14 @@ public class tournamentClient {
 
                     if(gid == "1") {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
+                        userMoveInformation = game1AI.placeAIMove();
                     }
                     else if(gid == "2"){
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
+                        userMoveInformation = game2AI.placeAIMove();
                     }
 
-                    outgoingMessage.println("GAME" + gid + "MOVE" + moveNumber + "PLACE" + tileDrawn +
-                            "AT" + userMoveInformation);
+                    outgoingMessage.println("GAME" + gid + "MOVE" + moveNumber + " " + userMoveInformation);
                     break;
                 }
                 //Getting opponents move placed on our board
@@ -165,18 +168,26 @@ public class tournamentClient {
                     String[] split = serverMessage.split(" ");
                     gid = split[1];
                     opponentspid = split[5];
+                    if(split[2] == "OVER"){ //Resetting the game if they have ended
+                        if(gid == "A"){
+                            game1AI.map.resetGame();
+                        }
+                        else if(gid == "B"){
+                            game2AI.map.resetGame();
+                        }
+                    }
                     if(gid == "A" && opponentspid != ourPid) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                     }
                     else if(gid == "B" && opponentspid != ourPid){
-                        game2AI.setServerMessage(serverMessage);  //game 2 opponent
+                        game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                     }
                     break;
                 }
                 //If server says goodbye then everything is over or we got kicked
                 else if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
-                    System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     clientSocket.close();
+                    System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     break;
                 }
             }
