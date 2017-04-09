@@ -98,3 +98,4 @@ public class BuildValidator extends Builder{
         return player.getNumberOfTigersLeft() > 0;
     }
 }
+ 

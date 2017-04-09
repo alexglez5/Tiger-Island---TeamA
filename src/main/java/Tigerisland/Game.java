@@ -127,28 +127,32 @@ public class Game {
 
     public boolean tileCanBePlacedOnLevelOne(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.updtateComponents(this.getComponents());
+//        tileValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+//        tileValidator.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanBePlacedOnLevelOne();
     }
 
     public boolean tileCanNukeOtherTiles(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.updtateComponents(this.getComponents());
-        buildValidator.updtateComponents(this.getComponents());
+//        buildValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanNukeOtherTiles();
     }
 
     public boolean settlementCanBeFound(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
-        buildValidator.updtateComponents(this.getComponents());
+//        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
+//        buildValidator.processParameters(coordinate);
         return buildValidator.settlementCanBeFound();
     }
 
     public boolean settlementCanBeExpanded(Coordinate coordinate, TerrainType terrainType) {
         builder.updtateComponents(this.getComponents());
-        buildValidator.updtateComponents(this.getComponents());
+//        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate, terrainType);
+//        buildValidator.processParameters(coordinate, terrainType);
         return buildValidator.settlementCanBeExpanded();
     }
 
@@ -156,6 +160,7 @@ public class Game {
         builder.updtateComponents(this.getComponents());
         buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
+//        buildValidator.processParameters(coordinate);
         return buildValidator.totoroCanBePlaced();
     }
 

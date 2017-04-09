@@ -150,4 +150,12 @@ public class TilePlacementValidator extends TilePlacer{
         else
             return false;
     }
+
+    public void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+        locator.mainTerrainCoordinate = mainTerrainCoordinate;
+        locator.orientation = terrainsOrientation;
+        this.tile = tile;
+        locator.updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
+        locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+    }
 }

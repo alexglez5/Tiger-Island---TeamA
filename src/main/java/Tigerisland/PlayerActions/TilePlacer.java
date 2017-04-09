@@ -12,7 +12,7 @@ public class TilePlacer {
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Player player;
     protected HashMap<Integer, Settlement> settlements;
-    private Tile tile;
+    protected Tile tile;
 
     public void updtateComponents(ComponentsDTO dto) {
         this.gameBoard = dto.getGameBoard();
