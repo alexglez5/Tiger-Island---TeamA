@@ -13,7 +13,7 @@ public class Builder {
     protected Coordinate coordinate;
     protected TerrainType terrainType;
     protected int settlementID;
-    protected Set<Integer> differentSettlementIDsAroundCoordinate;
+    public Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
     protected Player player = new Player();

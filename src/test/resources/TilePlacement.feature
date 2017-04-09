@@ -17,8 +17,8 @@ Feature: Tile Placement
     Then the gameboard should reject the tile at (2, 1)
 
   Scenario: It is the start of a player's turn on turn 2
-    Given the player "red" is given a tile with terrains "Lake" and "Rocky"
-    When the player places the tile with next tile ID 2 and orientaiton "FromTop" at (1,0)
+    Given the game is given tile with terrains "LAKE" and "ROCKY"
+    When the game places the tile with orientation "FromTop" at (1,0)
     And the tile at (1,0) will have more than zero connections to any other tile
     Then the gameboard should accept the tile at (1,0)
 

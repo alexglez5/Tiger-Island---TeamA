@@ -208,14 +208,15 @@ public class AIHelper {
         TreeSet<Integer> scores = new TreeSet<>();
         HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
         for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == map.getCurrentPlayerId()) {
+            if (map.getSettlements().get(id).getPlayerID() == map.getCurrentPlayerId()
+                    && !map.getSettlements().get(id).hasTotoro()
+                    && !map.getSettlements().get(id).hasTiger()) {
                 for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
                     ExpandingParameters parameters = new ExpandingParameters(
                             map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
-                    if (map.settlementCanBeExpanded(map.getAnyCoordinateOfSameTerrainTypeInSettlement(id,
-                            terrainType), terrainType)) {
-                        movesWithScores.put(map.getPointsSettlementExpansionWouldProduce(map.
-                                getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType), parameters);
+                    int points = map.getPointsSettlementExpansionWouldProduce(parameters.getCoordinate(), parameters.getTerrainType());
+                    if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType())){
+                        movesWithScores.put(points, parameters);
                         expandMove = true;
                     }
                 }
@@ -230,9 +231,14 @@ public class AIHelper {
         visitedCoordinates = new HashSet<>();
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
-                placeWhereSettlementCanBeFound = c;
-                foundMove = true;
-                break;
+                map.builder.getDifferentSettlementIDsAroundCoordinate(c);
+                for(int id : map.builder.differentSettlementIDsAroundCoordinate){
+                    if(!map.getSettlements().containsKey(id)){
+                        placeWhereSettlementCanBeFound = c;
+                        foundMove = true;
+                        break;
+                    }
+                }
             }
         }
     }

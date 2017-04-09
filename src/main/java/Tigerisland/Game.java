@@ -10,7 +10,7 @@ public class Game {
     public ActionHelper locator = new ActionHelper();
     private TilePlacer placer = new TilePlacer();
     private TilePlacementValidator tileValidator = new TilePlacementValidator();
-    private Builder builder = new Builder();
+    public Builder builder = new Builder();
     private BuildValidator buildValidator = new BuildValidator();
     private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private HashMap<Integer, Settlement> settlements = new HashMap<>();
@@ -97,10 +97,10 @@ public class Game {
         return new Coordinate(-100,-100);
     }
 
-    public ArrayList<TerrainType> getDifferentTerrainTypesInSettlement(int settlementID){
+    public ArrayList<TerrainType> getDifferentTerrainTypesInSettlement(int id){
         ArrayList<TerrainType> types = new ArrayList<>();
-        for(Coordinate coordinate : getSettlements().get(settlementID).bfs())
-            if(types.contains(getBoard().get(coordinate).getTerrainType()))
+        for(Coordinate coordinate : getSettlements().get(id).bfs())
+            if(!types.contains(getBoard().get(coordinate).getTerrainType()))
                 types.add(getBoard().get(coordinate).getTerrainType());
         return types;
     }
@@ -162,6 +162,15 @@ public class Game {
         tileValidator.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanNukeOtherTiles();
     }
+
+    public boolean tileCanBePlaced(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
+        placer.updtateComponents(this.getComponents());
+        tileValidator.updtateComponents(this.getComponents());
+        placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+        tileValidator.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
+        return tileValidator.tileCanNukeOtherTiles() || tileValidator.tileCanBePlacedOnLevelOne();
+    }
+
 
     public boolean settlementCanBeFound(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
