@@ -96,7 +96,7 @@ public class AI {
         }
     }
 
-    public void placeAIMove(){
+    public String placeAIMove(){
         String[] terrains = message.split(" ");
         TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
@@ -153,6 +153,7 @@ public class AI {
             else
                 message += "UNABLE TO BUILD";
         }
+        return message;
     }
 
     //////////////////////////////////////Nathan stuff////////////////////////////////////
