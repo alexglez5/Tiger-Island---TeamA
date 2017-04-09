@@ -37,9 +37,4 @@ public class SettlementTest {
         Assert.assertEquals(4, size);
     }
 
-    @After
-    public void teardown() {
-
-    }
-
 }

@@ -199,49 +199,6 @@ public class TilePlacerTest {
     }
 
     @Test
-    public void testCanSplitSettlement() throws Exception{
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-                new Coordinate(0,0), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-
-        map.foundNewSettlement(new Coordinate(-1,1));
-        map.foundNewSettlement(new Coordinate(0,1));
-        map.foundNewSettlement(new Coordinate(1,1));
-        map.foundNewSettlement(new Coordinate(2,0));
-
-        Assert.assertEquals(map.getSettlements().size(),1);
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-                new Coordinate(1,0), Orientation.FromBottom);
-
-        Assert.assertTrue(map.isSettlementSplit(map.getSettlements().get
-                (map.getBoard().get(new Coordinate(-1,1)).getSettlementID())));
-    }
-
-    @Test
-    public void testSettlementIsStillConnected() throws Exception{
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-                new Coordinate(0,1), Orientation.FromTopLeft);
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-                new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
-                new Coordinate(2,-2), Orientation.FromBottom);
-
-        map.foundNewSettlement(new Coordinate(1,-1));
-        map.foundNewSettlement(new Coordinate(0,0));
-        map.foundNewSettlement(new Coordinate(2,-1));
-        map.foundNewSettlement(new Coordinate(2,0));
-        map.foundNewSettlement(new Coordinate(1,1));
-
-        Assert.assertEquals(map.getSettlements().size(),1);
-        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-                new Coordinate(1,0), Orientation.FromBottom);
-
-        Assert.assertFalse(map.isSettlementSplit(map.getSettlements().get
-                (map.getBoard().get(new Coordinate(1,-1)).getSettlementID())));
-    }
-
-    @Test
     public void testResolvedSplitSettlement() {
 
     }

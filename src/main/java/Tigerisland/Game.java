@@ -182,6 +182,11 @@ public class Game {
         builder.findCoordinatesOfPossibleSettlementExpansion();
     }
 
+    public void splitSettlements() {
+        placer.updtateComponents(this.getComponents());
+        placer.splitSettlements();
+    }
+
     public boolean isSettlementSplit(Settlement s) {
         return tileValidator.checkForSplit(s);
     }
