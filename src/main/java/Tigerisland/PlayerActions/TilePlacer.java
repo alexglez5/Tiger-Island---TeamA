@@ -4,6 +4,7 @@ import Tigerisland.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class TilePlacer {
@@ -62,6 +63,7 @@ public class TilePlacer {
         placeTileOnMap();
         increaseLevel(level);
         removeFromSettlement();
+        splitSettlements();
     }
 
     public Set<Integer> getDifferentSettlementIDsOfATile() {
@@ -103,6 +105,45 @@ public class TilePlacer {
                 settlements.get(sid).removeFromSettlement(locator.leftOfMainTerrainCoordinate);
             if (settlements.get(sid).contains(locator.rightOfMainTerrainCoordinate))
                 settlements.get(sid).removeFromSettlement(locator.rightOfMainTerrainCoordinate);
+        }
+    }
+
+    public void splitSettlements() {
+        for (int sid: settlementIdsOfHexesUnderTile) {
+            // for each settlement id, while the bfs does not return the full size, get all the coordinates of that
+            // bfs and put it in its own settlement.
+
+            Set<Coordinate> connectedComponent = settlements.get(sid).bfs();
+
+            while (connectedComponent.size() != settlements.get(sid).getSize()) {
+                // get the first coordinate of the connected component
+                Iterator<Coordinate> i = connectedComponent.iterator();
+
+                if (i.hasNext()) {
+
+                    Coordinate firstCord = i.next();
+
+                    // remove it from the current settlement
+                    settlements.get(sid).removeFromSettlement(firstCord);
+
+                    // found a new settlement with it (with a unique id) and update the hex settlementID
+                    settlements.put(firstCord.hashCode(), new Settlement(firstCord));
+                    gameBoard.get(firstCord).setSettlementID(firstCord.hashCode());
+
+                    // iterate through the rest of the connected component, remove from current settlement, add to
+                    // this new settlement, and update the gameboard
+                    // Iterator<Coordinate> i = connectedComponent.iterator();
+                    while (i.hasNext()) {
+                        Coordinate nextCord = i.next();
+                        settlements.get(sid).removeFromSettlement(nextCord);
+                        settlements.get(firstCord.hashCode()).addToSettlement(nextCord);
+                        gameBoard.get(nextCord).setSettlementID(firstCord.hashCode());
+                    }
+
+                    // run another bfs to test for while condition
+                    connectedComponent = settlements.get(sid).bfs();
+                }
+            }
         }
     }
 }

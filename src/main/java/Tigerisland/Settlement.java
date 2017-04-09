@@ -58,7 +58,8 @@ public class Settlement {
         Set<Coordinate> visited = new HashSet<Coordinate>();
         Set<Coordinate> elements = edges.keySet();
         ArrayDeque<Coordinate> queue = new ArrayDeque<>();
-        queue.add(elements.iterator().next());
+        if (!elements.isEmpty())
+            queue.add(elements.iterator().next());
 
         while(!queue.isEmpty()) {
             // get the first thing in the queue
