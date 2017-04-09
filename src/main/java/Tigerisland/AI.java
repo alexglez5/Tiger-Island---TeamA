@@ -97,10 +97,15 @@ public class AI {
     }
 
     public void placeAIMove(){
+        String[] terrains = message.split(" ");
+        TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
+        TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
+
         message = "";
         helper.findPossibleMoves();
         boolean[] moves = helper.getMoves();
         if(moves[0]){
+            helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced();
             map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());

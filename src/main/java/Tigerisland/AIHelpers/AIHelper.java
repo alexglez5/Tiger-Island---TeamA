@@ -1,8 +1,7 @@
 package Tigerisland.AIHelpers;
 
-import Tigerisland.Coordinate;
-import Tigerisland.Game;
-import Tigerisland.TerrainType;
+import Tigerisland.*;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +25,79 @@ public class AIHelper {
     public void findPossibleMoves() {
         findCoordinateWhereTotoroCanBePlaced();
         findCoordinateWhereTigerCanBePlaced();
+        findPlaceWhereSettlementCanBeExpanded();
         setArrayOfMoveOptions();
+    }
+
+    public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain){
+        for(int id : map.getSettlements().keySet()){
+            if(map.getSettlements().get(id).getPlayerID() != map.getCurrentPlayerId()
+                    && map.getSettlements().get(id).getSize() > 3){
+               for(Coordinate coordinate : map.getSettlements().get(id).bfs()){
+                   for(Orientation orientation : Orientation.getOrientations()){
+                       if(map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), coordinate, orientation)){
+                           placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, coordinate, orientation);
+                           break;
+                       }
+                   }
+               }
+            }
+        }
+
+        int maxX = -1000, maxY = -1000;
+        int minX = 1000, minY = 10000;
+
+        Coordinate coordinate = new Coordinate(-1000,-10000);
+        Coordinate possibleCoordinate = map.locator.overAndToTheLeftOfMain(coordinate);
+        int randomDirection = (int)(Math.random() * 4) + 1;
+        switch (randomDirection){
+            case 1:
+                for(Coordinate c : map.getBoard().keySet()){
+                    if(c.getXCoordinate() > maxX) {
+                        maxX = c.getXCoordinate();
+                        coordinate = c;
+                    }
+                }
+                possibleCoordinate = map.locator.toTheRightOfMain(coordinate);
+            case 2:
+                for(Coordinate c : map.getBoard().keySet()){
+                    if(c.getYCoordinate() > maxY) {
+                        maxY = c.getYCoordinate();
+                        coordinate = c;
+                    }
+                }
+                possibleCoordinate = map.locator.overAndToTheRightOfMain(coordinate);
+            case 3:
+                for(Coordinate c : map.getBoard().keySet()){
+                    if(c.getXCoordinate() < minX) {
+                        minX = c.getXCoordinate();
+                        coordinate = c;
+                    }
+                }
+                possibleCoordinate = map.locator.toTheLeftOfMain(coordinate);
+            case 4:
+                for(Coordinate c : map.getBoard().keySet()){
+                    if(c.getYCoordinate() < minY) {
+                        minY = c.getYCoordinate();
+                        coordinate = c;
+                    }
+                }
+                possibleCoordinate = map.locator.belowAndToTheLeftOfMain(coordinate);
+            default:
+                for(Coordinate c : map.getBoard().keySet()){
+                    if(c.getYCoordinate() < minY) {
+                        minY = c.getYCoordinate();
+                        coordinate = c;
+                    }
+                }
+        }
+
+        for(Orientation orientation : Orientation.getOrientations()){
+            if(map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), possibleCoordinate, orientation)){
+                placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, possibleCoordinate, orientation);
+                break;
+            }
+        }
     }
 
     public void findCoordinateWhereTotoroCanBePlaced() {
