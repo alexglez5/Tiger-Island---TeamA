@@ -29,13 +29,8 @@ public class AIHelperTest{
 
         helper.map.foundNewSettlement(new Coordinate(1, 1));
         helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCKY);
-
-        Assert.assertTrue(helper.getPlacesWhereTotoroCanBePlaced().contains(new Coordinate(0, 4)));
-        Assert.assertTrue(helper.getPlacesWhereTotoroCanBePlaced().contains(new Coordinate(2, 2)));
-        Assert.assertTrue(helper.getPlacesWhereTotoroCanBePlaced().contains(new Coordinate(2, 0)));
-        Assert.assertTrue(helper.getPlacesWhereTotoroCanBePlaced().contains(new Coordinate(-1, 1)));
-        Assert.assertTrue(helper.getPlacesWhereTotoroCanBePlaced().contains(new Coordinate(-1, 3)));
-        Assert.assertEquals(helper.getPlacesWhereTotoroCanBePlaced().size(), 5);
+        helper.findCoordinateWhereTotoroCanBePlaced();
+        Assert.assertTrue(helper.map.totoroCanBePlaced(helper.getPlaceWhereTotoroCanBePlaced()));
     }
 
     @Test
@@ -65,11 +60,8 @@ public class AIHelperTest{
         helper.map.getSettlements().put(3, new Settlement(new Coordinate(-1,1)));
         helper.map.getSettlements().get(3).placeTiger();
 
-        Assert.assertTrue(helper.getPlacesWhereTigerCanBePlaced().contains(new Coordinate(0, 1)));
-        Assert.assertTrue(helper.getPlacesWhereTigerCanBePlaced().contains(new Coordinate(0, 2)));
-        Assert.assertTrue(helper.getPlacesWhereTigerCanBePlaced().contains(new Coordinate(1, 2)));
-        Assert.assertTrue(helper.getPlacesWhereTigerCanBePlaced().contains(new Coordinate(2, 0)));
-        Assert.assertEquals(helper.getPlacesWhereTigerCanBePlaced().size(), 4);
+        helper.findCoordinateWhereTigerCanBePlaced();
+        Assert.assertTrue(helper.map.tigerCanBePlaced(helper.getPlaceWhereTigerCanBePlaced()));
     }
 
     @After

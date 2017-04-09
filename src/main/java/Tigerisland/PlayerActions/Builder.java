@@ -20,6 +20,10 @@ public class Builder {
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected HashMap<Integer, Settlement> settlements = new HashMap<>();
 
+    public int getPossiblePointsAdded(){
+        return possiblePointsAdded;
+    }
+
     public void updtateComponents(ComponentsDTO dto) {
         this.gameBoard = dto.getGameBoard();
         this.settlements = dto.getSettlements();

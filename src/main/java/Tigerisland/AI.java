@@ -130,13 +130,7 @@ public class AI {
             }
             else if (moves[3]) {
                 ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
-                Coordinate coordinate = new Coordinate(0,0);
-                for (Coordinate coord : map.getSettlements().get(parameters.getSettlementID()).bfs()){
-                    if(map.getBoard().get(coord).getTerrainType().equals(parameters.getTerrainType())){
-                        coordinate = coord;
-                        break;
-                    }
-                }
+                Coordinate coordinate = parameters.getCoordinate();
                 int x = coordinate.getXCoordinate();
                 int y = coordinate.getYCoordinate();
                 int z = -1 * x - y;

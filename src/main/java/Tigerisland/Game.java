@@ -4,6 +4,7 @@ import Tigerisland.PlayerActions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Game {
     public ActionHelper locator = new ActionHelper();
@@ -20,6 +21,10 @@ public class Game {
     public Game() {
         player1.setPlayerID(1);
         player2.setPlayerID(2);
+    }
+
+    public int getCurrentPlayerId(){
+        return currentPlayerId;
     }
 
     public void setCurrentPlayer(int pid) {
@@ -82,6 +87,22 @@ public class Game {
             player1 = player;
         else
             player2 = player;
+    }
+
+    public Coordinate getAnyCoordinateOfSameTerrainTypeInSettlement(int settlementID, TerrainType terrainType){
+        for(Coordinate c : getSettlements().get(settlementID).bfs()){
+            if(getBoard().get(c).getTerrainType() == terrainType)
+                return c;
+        }
+        return new Coordinate(-100,-100);
+    }
+
+    public ArrayList<TerrainType> getDifferentTerrainTypesInSettlement(int settlementID){
+        ArrayList<TerrainType> types = new ArrayList<>();
+        for(Coordinate coordinate : getSettlements().get(settlementID).bfs())
+            if(types.contains(getBoard().get(coordinate).getTerrainType()))
+                types.add(getBoard().get(coordinate).getTerrainType());
+        return types;
     }
 
     // todo: Let's separate the validation and actual placing of tile in gameboard
@@ -182,12 +203,13 @@ public class Game {
         return buildValidator.atLeastOneAdjacentSettlementDoesNotContainATiger();
     }
 
-    public void findCoordinatesOfPossibleSettlementExpansion(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
+    public int getPointsSettlementExpansionWouldProduce(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
         builder.updtateComponents(this.getComponents());
         buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         buildValidator.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         builder.findCoordinatesOfPossibleSettlementExpansion();
+        return builder.getPossiblePointsAdded();
     }
 
     public void splitSettlements() {

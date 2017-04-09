@@ -7,21 +7,12 @@ import Tigerisland.TerrainType;
  * Created by Alexander Gonzalez on 4/9/2017.
  */
 public class ExpandingParameters {
-    private int settlementID;
+    private Coordinate coordinate;
     private TerrainType terrainType;
 
-    public ExpandingParameters(int settlementID, TerrainType terrainType){
-        this.settlementID = settlementID;
+    public ExpandingParameters(Coordinate coordinate, TerrainType terrainType){
+        this.coordinate = coordinate;
         this.terrainType = terrainType;
-    }
-
-
-    public int getSettlementID() {
-        return settlementID;
-    }
-
-    public void setSettlementID(int settlementID) {
-        this.settlementID = settlementID;
     }
 
     public TerrainType getTerrainType() {
@@ -30,5 +21,13 @@ public class ExpandingParameters {
 
     public void setTerrainType(TerrainType terrainType) {
         this.terrainType = terrainType;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 }
