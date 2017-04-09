@@ -5,6 +5,7 @@ import Tigerisland.*;
 import java.util.HashMap;
 
 public class BuildValidator extends Builder{
+//    private int settlementID = super.settlementID;
 //    private Player player = new Player();
 //    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
 //    private HashMap<Integer, Settlement> settlements = new HashMap<>();
@@ -68,8 +69,7 @@ public class BuildValidator extends Builder{
 
     private boolean adjacentSettlementIsAtLeastSizeFiveAndDoesNotContainTotoro() {
         findIdOfSettlementTotoroCouldBeAdjacentTo();
-        return settlements.get(settlementID).hasTotoro()
-                && settlements.get(settlementID).getSize() >= 5;
+        return settlementID != -1;
     }
 
     private boolean thereIsATotoroLeft() {
@@ -98,4 +98,3 @@ public class BuildValidator extends Builder{
         return player.getNumberOfTigersLeft() > 0;
     }
 }
- 

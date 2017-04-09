@@ -191,7 +191,7 @@ public class BuilderTest {
         Assert.assertEquals(map.getSettlements().size(), 1);
     }
 
-    @Test
+    @Test   //todo double check this test
     public void cannotPlaceTotoroInHexThatHasPieces() throws Exception {
         map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
                 new Coordinate(1,0), Orientation.FromBottomRight);
@@ -205,7 +205,7 @@ public class BuilderTest {
         map.foundNewSettlement(new Coordinate(1,1));
         map.expandSettlement(new Coordinate(1,1), TerrainType.ROCKY);
 
-        Assert.assertFalse(map.totoroCanBePlaced(new Coordinate(-1,3)));
+        Assert.assertFalse(map.totoroCanBePlaced(new Coordinate(1,1)));
     }
 
     @Test

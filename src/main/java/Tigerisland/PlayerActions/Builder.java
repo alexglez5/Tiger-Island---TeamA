@@ -32,10 +32,8 @@ public class Builder {
     }
 
     public void foundNewSettlement() {
-        if(!gameBoard.get(coordinate).hasVillager() && !gameBoard.get(coordinate).hasTiger() && !gameBoard.get(coordinate).hasTotoro()) {
-            foundNewSettlement(coordinate);
-            mergeSettlementsThatCanBeMerged(coordinate);
-        }
+        foundNewSettlement(coordinate);
+        mergeSettlementsThatCanBeMerged(coordinate);
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
@@ -95,10 +93,8 @@ public class Builder {
     }
 
     public void placeTotoro() {
-        if(!gameBoard.get(coordinate).hasVillager() && !gameBoard.get(coordinate).hasTiger() && !gameBoard.get(coordinate).hasTotoro()) {
-            placeTotoroAtGivenCoordinate();
-            mergeSettlementsThatCanBeMerged(coordinate);
-        }
+        placeTotoroAtGivenCoordinate();
+        mergeSettlementsThatCanBeMerged(coordinate);
     }
 
     protected void findIdOfSettlementTotoroCouldBeAdjacentTo() {
@@ -106,29 +102,27 @@ public class Builder {
         for (int id : differentSettlementIDsAroundCoordinate) {
             if (settlements.get(id).getSize() >= 5
                     && !settlements.get(id).hasTotoro()) {
-                settlementID = id;
+                setSettlementID(id);
                 return;
             }
         }
-        settlementID = -1;
+        setSettlementID(-1);
     }
 
-    protected void findIdOfSettlementTigerCouldBeAdjacentTo() {
+    public void findIdOfSettlementTigerCouldBeAdjacentTo() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for (int id : differentSettlementIDsAroundCoordinate) {
             if (!settlements.get(id).hasTiger()) {
-                settlementID = id;
+                setSettlementID(id);
                 return;
             }
         }
-        settlementID = -1;
+        setSettlementID(-1);
     }
 
     public void placeTiger() {
-        if(!gameBoard.get(coordinate).hasVillager() && !gameBoard.get(coordinate).hasTiger() && !gameBoard.get(coordinate).hasTotoro()) {
-            placeTigerAtGivenCoordinate();
-            mergeSettlementsThatCanBeMerged(coordinate);
-        }
+        placeTigerAtGivenCoordinate();
+        mergeSettlementsThatCanBeMerged(coordinate);
     }
 
     private void placeTigerAtGivenCoordinate() {
@@ -224,5 +218,9 @@ public class Builder {
         int level = gameBoard.get(neighborCoordinate).getLevel();
         possiblePointsAdded += level * level;
         possibleVillagersPlaced += level;
+    }
+
+    public void setSettlementID(int settlementID){
+        this.settlementID = settlementID;
     }
 }
