@@ -10,7 +10,7 @@ public class Tile {
     public Tile(TerrainType leftTerrainType, TerrainType rightTerrainType) {
         numOfTilesCreated++;
         tileID = numOfTilesCreated;
-        mainTerrain = new Hex(TerrainType.Volcano, tileID);
+        mainTerrain = new Hex(TerrainType.VOLCANO, tileID);
         leftOfMainTerrain = new Hex(leftTerrainType, tileID);
         rightOfMainTerrain = new Hex(rightTerrainType, tileID);
     }

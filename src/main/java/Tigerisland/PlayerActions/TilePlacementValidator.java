@@ -49,7 +49,7 @@ public class TilePlacementValidator extends TilePlacer{
 
     private boolean volcanoIsPlacedOnTopOfAnotherVolcano() {
         return gameBoard.get(locator.mainTerrainCoordinate).getTerrainType()
-                == TerrainType.Volcano;
+                == TerrainType.VOLCANO;
     }
 
     private boolean tileIsNotPerfectlyOnTopOfAnotherTile() {

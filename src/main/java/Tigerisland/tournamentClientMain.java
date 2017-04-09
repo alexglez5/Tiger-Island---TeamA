@@ -1,7 +1,6 @@
 package Tigerisland;
 
 public class tournamentClientMain {
-
     //Will be taking in the arguments from command line based off assumption
     public static void main(String[] args){
         String serverIP;

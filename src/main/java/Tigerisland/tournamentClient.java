@@ -1,6 +1,5 @@
 package Tigerisland;
 
-import java.util.*;
 import java.io.*;
 import java.net.*;
 
@@ -29,12 +28,15 @@ public class tournamentClient {
     private PrintWriter outgoingMessage;
     private String username;
     private String password;
-    private String pid;
+    private String ourPid, opponentspid;
     private String gid;
     private String moveNumber;
     private String tileDrawn;
     private String tileToAI;
     private String userMoveInformation;
+
+    private AI game1AI, game2AI;
+
 
     public tournamentClient(String serverIP, int serverPort){ //update serverIP
         this.serverIP = serverIP;
@@ -63,11 +65,9 @@ public class tournamentClient {
         while((serverMessage = incomingMessage.readLine()) != null){
             if(serverMessage.startsWith("WELCOME")) {
                 //Send out the required line to enter
-                outgoingMessage.println("ENTER THUNDERDOME" + tournamentPassword);
-                for(int i=1; i<150; i++){
-                    System.out.println(i);
-                }
-                //  tournamentLogin(username, password);
+                outgoingMessage.println("ENTER THUNDERDOME " + tournamentPassword);
+                System.out.println("Auth");
+                tournamentLogin(username, password);
             }
             if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
                 System.out.println("FAILED TO LOGIN! NOT GOOD");
@@ -77,21 +77,23 @@ public class tournamentClient {
         }
     }
 
+    //after this come back to main and start
     public void tournamentLogin(String username, String password) throws Exception{
         String serverMessage;
 
         while((serverMessage = incomingMessage.readLine()) != null){
             if(serverMessage.startsWith("TWO"))
                 //Send out user name and password
-                outgoingMessage.println("I AM" + username + " " + password);
-            else if(serverMessage.startsWith("WAIT FOR THE TOURNAMENT")){
+                outgoingMessage.println("I AM " + username + " " + password);
+            if(serverMessage.startsWith("WAIT FOR THE TOURNAMENT")){
                 //Send message to array to parse it using split function
                 String[] split =serverMessage.split(" ");
                 //get pid from the server message
-                pid = split[6];
+                ourPid = split[6];
                 //Print to console we are about to beat some players!!!
                 System.out.println("Login was a success");
                 waitForTournamentToBegin();
+                return;
             }
 
             if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
@@ -109,7 +111,7 @@ public class tournamentClient {
             while((serverMessage = incomingMessage.readLine()) != null){
                 //If match is going to start go to correct function
                 if(serverMessage.startsWith("NEW MATCH")){
-                    makeMove();
+                    moveMessenger();
                     break;
                 }
                 //If server says goodbye then everything is over or we got kicked
@@ -128,26 +130,49 @@ public class tournamentClient {
         }
     }
 
-    public void makeMove(){
+    public void moveMessenger(){
         String serverMessage;
+
+        game1AI = new AI();
+        game2AI = new AI();
 
         try{
             while((serverMessage = incomingMessage.readLine()) != null){
-                //If match is going to start go to correct function
+                //This is for our move to be created
                 if(serverMessage.startsWith("MAKE YOUR MOVE IN GAME")){
                     String[] split = serverMessage.split(" ");
                     gid = split[5];
                     moveNumber = split[10];
                     tileDrawn = split[12];
                     String[] tileSplit = tileDrawn.split("[+]");
-                    tileToAI = Arrays.toString(tileSplit);              //Check this!!!
-                    //userMoveInformation = AI.moveMake(tileToAI);
+                    tileToAI = tileSplit[0] + " " + tileSplit[1];              //Check this!!!
 
-                    outgoingMessage.println("GAME" + gid + moveNumber + "PLACE" + tileDrawn + "AT" + userMoveInformation);
+                    if(gid == "1") {
+                        game1AI.setServerMessage(tileToAI);  //send to thread for AI
+                    }
+                    else if(gid == "2"){
+                        game2AI.setServerMessage(tileToAI);  //send to thread for AI
+                    }
+
+                    outgoingMessage.println("GAME" + gid + "MOVE" + moveNumber + "PLACE" + tileDrawn +
+                            "AT" + userMoveInformation);
+                    break;
+                }
+                //Getting opponents move placed on our board
+                else if(serverMessage.startsWith("GAME")){
+                    String[] split = serverMessage.split(" ");
+                    gid = split[1];
+                    opponentspid = split[5];
+                    if(gid == "A" && opponentspid != ourPid) {
+                        game1AI.setServerMessage(serverMessage);  //game 1 for opponent
+                    }
+                    else if(gid == "B" && opponentspid != ourPid){
+                        game2AI.setServerMessage(serverMessage);  //game 2 opponent
+                    }
                     break;
                 }
                 //If server says goodbye then everything is over or we got kicked
-                if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
+                else if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     break;
                 }

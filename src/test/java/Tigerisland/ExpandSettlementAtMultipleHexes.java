@@ -9,7 +9,7 @@ public class ExpandSettlementAtMultipleHexes {
 
     @Given("^the player has the desire to \"([^\"]*)\"$")
     public void the_player_has_the_desire_to(String choice) throws Throwable {
-        app.updateCurrentTile("Lake", "Grassland");
+        app.updateCurrentTile("LAKE", "Grassland");
         app.placeTile("FromBottom", 0, 0);
         app.updateCurrentTile("Grassland", "Grassland");
         app.placeTile("FromTop", 1, 1);

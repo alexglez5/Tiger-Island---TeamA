@@ -9,7 +9,7 @@ public class InvalidVillagerPlacementTest {
 
     @Given("^the player chooses to \"([^\"]*)\"$")
     public void the_player_chooses_to(String choice) throws Throwable {
-        app.updateCurrentTile("Lake", "Grassland");
+        app.updateCurrentTile("LAKE", "Grassland");
         app.placeTile("FromBottom", 0, 0);
 //        app.givePlayerChoice(choice);
 //        if (!app.checkPlayerChoice(choice)) {

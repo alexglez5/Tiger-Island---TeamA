@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class TilePlacer {
-    protected static ActionHelper locator = new ActionHelper();
+    protected ActionHelper locator = new ActionHelper();
     protected Set<Integer> settlementIdsOfHexesUnderTile;
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Player player;
@@ -19,10 +19,11 @@ public class TilePlacer {
         this.gameBoard = dto.getGameBoard();
         this.settlements = dto.getSettlements();
         this.player = dto.getPlayer();
+        this.locator = dto.getLocator();
     }
 
     public ComponentsDTO getComponents() {
-        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer());
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer(), this.locator);
     }
 
     public Player getPlayer() {
@@ -42,11 +43,11 @@ public class TilePlacer {
     }
 
     public void placeOneStartingTile() {
-        gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.Jungle, 1));
-        gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.Lake, 1));
-        gameBoard.put(new Coordinate(0, 0), new Hex(TerrainType.Volcano, 1));
-        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.Rocky, 1));
-        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.Grasslands, 1));
+        gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.JUNGLE, 1));
+        gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.LAKE, 1));
+        gameBoard.put(new Coordinate(0, 0), new Hex(TerrainType.VOLCANO, 1));
+        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.ROCKY, 1));
+        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.GRASSLANDS, 1));
     }
 
     public void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {

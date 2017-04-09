@@ -54,15 +54,15 @@ public class App {
         return map.getBoard().containsKey(cord);
     }
 
-    public PlayerChoice enumPlayerChoice(String choice) {
+    public Choice enumPlayerChoice(String choice) {
         if (choice.equals("Found Settlement")) {
-            return PlayerChoice.foundSettlement;
+            return Choice.FOUNDED;
         } else if (choice.equals("Expand Settlement")) {
-            return PlayerChoice.expandSettlement;
+            return Choice.EXPANDED;
         } else if (choice.equals("Place Totoro")) {
-            return PlayerChoice.placeTotoro;
+            return Choice.TOTORO;
         } else if (choice.equals("Place Tiger")) {
-            return PlayerChoice.placeTiger;
+            return Choice.TIGER;
         } else {
             System.out.println("Invalid Player Choice");
             return null;
@@ -72,18 +72,18 @@ public class App {
 
     public TerrainType checkTerrain(String terrain) {
 
-        if (terrain.equals("Jungle") || terrain.equals("jungle")) {
-            return TerrainType.Jungle;
-        } else if (terrain.equals("Rocky") || terrain.equals("rocky")) {
-            return TerrainType.Rocky;
-        } else if (terrain.equals("Lake") || terrain.equals("lake")
+        if (terrain.equals("JUNGLE") || terrain.equals("jungle")) {
+            return TerrainType.JUNGLE;
+        } else if (terrain.equals("ROCKY") || terrain.equals("rocky")) {
+            return TerrainType.ROCKY;
+        } else if (terrain.equals("LAKE") || terrain.equals("lake")
                 || terrain.equals("Lakes") || terrain.equals("lakes")) {
-            return TerrainType.Lake;
+            return TerrainType.LAKE;
         } else if (terrain.equals("Grassland") || terrain.equals("grassland")
-                || terrain.equals("Grasslands") || terrain.equals("grasslands")) {
-            return TerrainType.Grasslands;
-        } else if (terrain.equals("Volcano") || terrain.equals("volcano")) {
-            return TerrainType.Volcano;
+                || terrain.equals("GRASSLANDS") || terrain.equals("grasslands")) {
+            return TerrainType.GRASSLANDS;
+        } else if (terrain.equals("VOLCANO") || terrain.equals("volcano")) {
+            return TerrainType.VOLCANO;
         } else {
             System.out.println("Invalid Terrain");
             return null;

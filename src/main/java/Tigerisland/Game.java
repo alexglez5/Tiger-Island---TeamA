@@ -2,6 +2,7 @@ package Tigerisland;
 
 import Tigerisland.PlayerActions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
@@ -21,11 +22,8 @@ public class Game {
         player2.setPlayerID(2);
     }
 
-    public void setCurrentPlayer(int pid) throws Exception {
-        if (pid == 1 || pid == 2)
-            currentPlayerId = pid;
-        else
-            throw new Exception("Wrong player ID");
+    public void setCurrentPlayer(int pid) {
+        currentPlayerId = pid;
     }
 
     public void switchPlayers() {
@@ -47,10 +45,15 @@ public class Game {
         updateGameBoard(dto.getGameBoard());
         updateSettlements(dto.getSettlements());
         updatePlayer(dto.getPlayer());
+        updateLocator(dto.getLocator());
+    }
+
+    private void updateLocator(ActionHelper locator) {
+        this.locator = locator;
     }
 
     public ComponentsDTO getComponents(){
-        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer());
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer(), this.locator);
     }
 
     public void placeStartingTile() {
@@ -130,24 +133,28 @@ public class Game {
 
     public boolean tileCanNukeOtherTiles(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         return tileValidator.tileCanNukeOtherTiles();
     }
 
     public boolean settlementCanBeFound(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.settlementCanBeFound();
     }
 
     public boolean settlementCanBeExpanded(Coordinate coordinate, TerrainType terrainType) {
         builder.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate, terrainType);
         return buildValidator.settlementCanBeExpanded();
     }
 
     public boolean totoroCanBePlaced(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
+        buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinate);
         return buildValidator.totoroCanBePlaced();
     }

@@ -2,7 +2,18 @@ package Tigerisland.PlayerActions;
 
 import Tigerisland.*;
 
+import java.util.HashMap;
+
 public class BuildValidator extends Builder{
+//    private Player player = new Player();
+//    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+//    private HashMap<Integer, Settlement> settlements = new HashMap<>();
+//
+//    public void updtateComponents(ComponentsDTO dto) {
+//        this.gameBoard = dto.getGameBoard();
+//        this.settlements = dto.getSettlements();
+//        this.player = dto.getPlayer();
+//    }
 
     public boolean settlementCanBeFound() {
         return terrainIsOnMap()
@@ -17,7 +28,7 @@ public class BuildValidator extends Builder{
     }
 
     private boolean terrainIsNotAVolcano() {
-        return gameBoard.get(coordinate).getTerrainType() != TerrainType.Volcano;
+        return gameBoard.get(coordinate).getTerrainType() != TerrainType.VOLCANO;
     }
 
     private boolean hexContainsAPiece() {
