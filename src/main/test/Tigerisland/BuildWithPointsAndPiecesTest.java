@@ -85,7 +85,6 @@ public class BuildWithPointsAndPiecesTest {
         map.foundNewSettlement(new Coordinate(0, 1));
         map.foundNewSettlement(new Coordinate(-1, 1));
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID(), map.getBoard().get(new Coordinate(0, 1)).getSettlementID());
-        Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getPlayerID(), map.getBoard().get(new Coordinate(0, 1)).getPlayerID());
     }
 
 //    @Test

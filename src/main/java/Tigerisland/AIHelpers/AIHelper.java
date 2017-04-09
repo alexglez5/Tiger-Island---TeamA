@@ -5,6 +5,7 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class AIHelper {
@@ -114,7 +115,8 @@ public class AIHelper {
     public void findCoordinateWhereTotoroCanBePlaced() {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
-            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id))
+            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id)
+                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
     }
@@ -122,7 +124,8 @@ public class AIHelper {
     public void findCoordinateWhereTigerCanBePlaced() {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
-            if (settlementDoesNotContainTiger(id))
+            if (settlementDoesNotContainTiger(id)
+                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
 
@@ -257,4 +260,6 @@ public class AIHelper {
     public boolean[] getMoves() {
         return moves;
     }
+
+    public Set<Coordinate> getVisitedCoordinates() { return visitedCoordinates; }
 }
