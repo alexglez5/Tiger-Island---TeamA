@@ -45,10 +45,15 @@ public class Game {
         updateGameBoard(dto.getGameBoard());
         updateSettlements(dto.getSettlements());
         updatePlayer(dto.getPlayer());
+        updateLocator(dto.getLocator());
+    }
+
+    private void updateLocator(ActionHelper locator) {
+        this.locator = locator;
     }
 
     public ComponentsDTO getComponents(){
-        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer());
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer(), this.locator);
     }
 
     public void placeStartingTile() {

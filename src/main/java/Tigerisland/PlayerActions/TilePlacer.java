@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TilePlacer {
-    protected static ActionHelper locator = new ActionHelper();
+    protected ActionHelper locator = new ActionHelper();
     protected Set<Integer> settlementIdsOfHexesUnderTile;
     protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     protected Player player;
@@ -18,10 +18,11 @@ public class TilePlacer {
         this.gameBoard = dto.getGameBoard();
         this.settlements = dto.getSettlements();
         this.player = dto.getPlayer();
+        this.locator = dto.getLocator();
     }
 
     public ComponentsDTO getComponents() {
-        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer());
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.getPlayer(), this.locator);
     }
 
     public Player getPlayer() {

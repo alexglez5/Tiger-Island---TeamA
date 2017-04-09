@@ -14,14 +14,16 @@ public class ComponentsDTO {
     private Player player = new Player();
     private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private HashMap<Integer, Settlement> settlements = new HashMap<>();
+    private ActionHelper locator = new ActionHelper();
 
     public ComponentsDTO(
             HashMap<Coordinate, Hex> gameBoard,
             HashMap<Integer, Settlement> settlements,
-            Player player){
+            Player player, ActionHelper locator){
         this.gameBoard = gameBoard;
         this.settlements = settlements;
         this.player = player;
+        this.locator = locator;
     }
 
     public Player getPlayer() {
@@ -42,5 +44,13 @@ public class ComponentsDTO {
 
     public void setSettlements(HashMap<Integer, Settlement> settlements) {
         this.settlements = settlements;
+    }
+
+    public ActionHelper getLocator() {
+        return locator;
+    }
+
+    public void setLocator(ActionHelper locator) {
+        this.locator = locator;
     }
 }

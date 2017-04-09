@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Builder {
-    protected static ActionHelper locator = new ActionHelper();
+    protected ActionHelper locator = new ActionHelper();
     private final int pointsForTigerPlacement = 75;
     public Set<Coordinate> visitedCoordinates;
     protected Coordinate coordinate;
@@ -16,18 +16,19 @@ public class Builder {
     protected Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
-    private Player player = new Player();
-    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
-    private HashMap<Integer, Settlement> settlements = new HashMap<>();
+    protected Player player = new Player();
+    protected HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    protected HashMap<Integer, Settlement> settlements = new HashMap<>();
 
     public void updtateComponents(ComponentsDTO dto) {
         this.gameBoard = dto.getGameBoard();
         this.settlements = dto.getSettlements();
         this.player = dto.getPlayer();
+        this.locator = dto.getLocator();
     }
 
     public ComponentsDTO getComponents() {
-        return new ComponentsDTO(this.gameBoard, this.settlements, this.player);
+        return new ComponentsDTO(this.gameBoard, this.settlements, this.player, this.locator);
     }
 
     public void foundNewSettlement() {
