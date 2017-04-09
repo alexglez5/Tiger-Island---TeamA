@@ -1,5 +1,7 @@
 package Tigerisland;
 
+import java.io.IOException;
+
 public class tournamentClientMain {
     //Will be taking in the arguments from command line based off assumption
     public static void main(String[] args){
@@ -28,11 +30,12 @@ public class tournamentClientMain {
 //        System.out.println(password);
 
         tournamentClient clientSocket = new tournamentClient(serverIP, port);
-        try{
+        try{ //This starts everything up for the tournament!
             clientSocket.tournamentAuthentication(tournamentPassword, username, password);
         }catch(Exception e){
             System.err.println("Cannot login!");
         }
+
     }
 
 }

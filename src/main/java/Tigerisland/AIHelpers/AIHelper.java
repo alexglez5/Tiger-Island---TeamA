@@ -24,11 +24,6 @@ public class AIHelper {
     private ArrayList<ExpandingParameters> placesWhereSettlementCanBeExpanded;
     private ArrayList<Coordinate> placesWhereSettlementCanBeFound;
     private ArrayList<TileParameters> placesWhereTileCanBePlaced;
-//    private Coordinate placeWhereTotoroCanBePlaced;
-//    private Coordinate placeWhereTigerCanBePlaced;
-//    private ExpandingParameters placesWhereSettlementCanBeExpanded;
-//    private ArrayList<Coordinate placesWhereSettlementCanBeFound;
-//    private ArrayList<TileParameters> placesWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
 
     //todo
@@ -41,9 +36,17 @@ public class AIHelper {
         - found a settlement
     */
 
-//    public void findCoordinatesWhereSettlementCanBeFound(){
-//
-//    }
+    public void findCoordinatesWhereSettlementCanBeFound(){
+        placesWhereSettlementCanBeFound = new ArrayList<>();
+        visitedCoordinates = new HashSet<>();
+        for(Coordinate c : map.getBoard().keySet()){
+            if(map.settlementCanBeFound(c)) {
+                placesWhereSettlementCanBeFound.add(c);
+                foundMove = true;
+                break;
+            }
+        }
+    }
 
     public void findCoordinatesWhereTotoroCanBePlaced() {
         placesWhereTotoroCanBePlaced = new ArrayList<>();
@@ -141,6 +144,7 @@ public class AIHelper {
     }
 
     public Coordinate getPlaceWhereSettlementCanBeFound() {
+        findCoordinatesWhereSettlementCanBeFound();
         return placesWhereSettlementCanBeFound.get(0);
     }
 

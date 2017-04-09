@@ -57,55 +57,59 @@ public class tournamentClient {
         }
     }
 
-    public void tournamentAuthentication(String tournamentPassword, String username, String password) throws Exception{
+    public void tournamentAuthentication(String tournamentPassword, String username, String password) throws IOException{
         //this.username = username;
         //this.password = password;
         String serverMessage;
+            while ((serverMessage = incomingMessage.readLine()) != null) {
+                if (serverMessage.startsWith("WELCOME")) {
+                    //Send out the required line to enter
+                    outgoingMessage.println("ENTER THUNDERDOME " + tournamentPassword);
+                    System.out.println("Auth");
+                    tournamentLogin(username, password);
+                }
+                if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
+                    clientSocket.close();
+                    System.out.println("FAILED TO LOGIN! NOT GOOD");
+                    break;  //Break while loop. THINGS ARE NOT GOOD
+                }
 
-        while((serverMessage = incomingMessage.readLine()) != null){
-            if(serverMessage.startsWith("WELCOME")) {
-                //Send out the required line to enter
-                outgoingMessage.println("ENTER THUNDERDOME " + tournamentPassword);
-                System.out.println("Auth");
-                tournamentLogin(username, password);
-            }
-            if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
-                System.out.println("FAILED TO LOGIN! NOT GOOD");
-                break;  //Break while loop. THINGS ARE NOT GOOD
             }
 
-        }
     }
 
     //after this come back to main and start
-    public void tournamentLogin(String username, String password) throws Exception{
+    public void tournamentLogin(String username, String password) throws IOException{
         String serverMessage;
 
-        while((serverMessage = incomingMessage.readLine()) != null){
-            if(serverMessage.startsWith("TWO"))
+        while((serverMessage = incomingMessage.readLine()) != null) {
+            if (serverMessage.startsWith("TWO"))
                 //Send out user name and password
                 outgoingMessage.println("I AM " + username + " " + password);
-            if(serverMessage.startsWith("WAIT FOR THE TOURNAMENT")){
+            if (serverMessage.startsWith("WAIT FOR THE TOURNAMENT")) {
                 //Send message to array to parse it using split function
-                String[] split =serverMessage.split(" ");
+                String[] split = serverMessage.split(" ");
                 //get pid from the server message
                 ourPid = split[6];
                 //Print to console we are about to beat some players!!!
                 System.out.println("Login was a success");
                 waitForTournamentToBegin();
-                return;
+                break;
             }
 
-            if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
+            if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
+                clientSocket.close();
                 System.out.println("FAILED TO LOGIN! NOT GOOD");
                 break;  //Break while loop. THINGS ARE NOT GOOD
             }
-
         }
     }
 
     public void waitForTournamentToBegin() {
         String serverMessage;
+
+        game1AI = new AI();
+        game2AI = new AI();
 
         try{
             while((serverMessage = incomingMessage.readLine()) != null){
@@ -116,6 +120,7 @@ public class tournamentClient {
                 }
                 //If server says goodbye then everything is over or we got kicked
                 if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
+                    clientSocket.close();
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     break;
                 }
@@ -125,16 +130,13 @@ public class tournamentClient {
                 }
             }
         }catch(IOException e){
-            System.err.println("I/O error when connecting!");
+            System.err.println("I/O error!");
             System.exit(1);
         }
     }
 
     public void moveMessenger(){
         String serverMessage;
-
-        game1AI = new AI();
-        game2AI = new AI();
 
         try{
             while((serverMessage = incomingMessage.readLine()) != null){
@@ -174,6 +176,7 @@ public class tournamentClient {
                 //If server says goodbye then everything is over or we got kicked
                 else if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
+                    clientSocket.close();
                     break;
                 }
             }
