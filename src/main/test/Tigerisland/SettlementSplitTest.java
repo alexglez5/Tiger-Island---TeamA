@@ -112,6 +112,23 @@ public class SettlementSplitTest {
                 , 2);
     }
 
+    @Test
+    public void testIfItWorksWhenOriginalFounderIsTheOneToSplit() {
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(0,0), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(2,0), Orientation.FromBottom);
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.expandSettlement(new Coordinate(-1,1), TerrainType.Rocky);
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromTop);
+
+        map.placeTile(new Tile(TerrainType.Rocky, TerrainType.Rocky),
+                new Coordinate(1,0), Orientation.FromBottom);
+
+        Assert.assertEquals(map.getSettlements().size(), 2);
+    }
+
     @After
     public void teardown() {
         map.resetGame();
