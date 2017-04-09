@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
-//    public AIHelper helper = new AIHelper();
     public ActionHelper locator = new ActionHelper();
     private TilePlacer placer = new TilePlacer();
     private TilePlacementValidator tileValidator = new TilePlacementValidator();
     private Builder builder = new Builder();
     private BuildValidator buildValidator = new BuildValidator();
-    HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
+    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private HashMap<Integer, Settlement> settlements = new HashMap<>();
     private Player player1 = new Player();
     private Player player2 = new Player();
