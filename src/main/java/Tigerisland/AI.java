@@ -17,6 +17,7 @@ public class AI {
     }
 
     public void placeOpponentMove() {
+        map.setCurrentPlayer(2);
         String[] split = message.split(" ");
         int i = 0;
         String pid = split[5];
@@ -97,6 +98,7 @@ public class AI {
     }
 
     public String placeAIMove(){
+        map.setCurrentPlayer(1);
         String[] terrains = message.split(" ");
         TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
