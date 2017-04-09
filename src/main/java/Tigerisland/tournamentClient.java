@@ -151,11 +151,11 @@ public class tournamentClient {
                     String[] tileSplit = tileDrawn.split("[+]");
                     tileToAI = tileSplit[0] + " " + tileSplit[1];              //Check this!!!
 
-                    if(gid == "1") {
+                    if(gid.equals("A")) {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game1AI.placeAIMove();
                     }
-                    else if(gid == "2"){
+                    else if(gid.equals("B")){
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
                     }
@@ -168,19 +168,21 @@ public class tournamentClient {
                     String[] split = serverMessage.split(" ");
                     gid = split[1];
                     opponentspid = split[5];
-                    if(split[2] == "OVER"){ //Resetting the game if they have ended
-                        if(gid == "A"){
+                    if(split[2].equals("OVER")){ //Resetting the game if they have ended
+                        if(gid.equals("A")){
                             game1AI.map.resetGame();
                         }
-                        else if(gid == "B"){
+                        else if(gid.equals("B")){
                             game2AI.map.resetGame();
                         }
                     }
-                    if(gid == "A" && opponentspid != ourPid) {
+                    else if(gid.equals("A") && !opponentspid.equals(ourPid)) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
+                        game1AI.placeOpponentMove();
                     }
-                    else if(gid == "B" && opponentspid != ourPid){
+                    else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
+                        game2AI.placeOpponentMove();
                     }
                     break;
                 }
