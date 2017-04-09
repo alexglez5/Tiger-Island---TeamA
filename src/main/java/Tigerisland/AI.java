@@ -1,45 +1,16 @@
 package Tigerisland;
 
+import Tigerisland.AIHelpers.AIHelper;
+import Tigerisland.AIHelpers.ExpandingParameters;
+import Tigerisland.AIHelpers.TileParameters;
+
 /**
  * Created by Alexander Gonzalez on 4/1/2017.
  */
-
-/* AI will be our new API and AI in one. Adaptor passes information to the AI in the following process:
-
-   <place><build>
-    |
-    |
-   \/
-   <tile><coordinate><orientation><build option><coordinate>(<terrain>)
-    |
-    |
-   \/
-   <terrainA><terrainB><xCord><yCord><orientation><build option><xCord><yCord>(<terrain>)
-
-   OR
-
-    <tile>
-    |
-    |
-    \/
-    <terrainA><terrainB>
-d
-    <build option> = "expand", "found", "totoro", "tiger"
-    <terrain> = "JUNGLE", "LAKE", "ROCK", "GRASS"
-
-    sections are delimited by spaces.
-*/
-
 public class AI {
-    Game map;
-    boolean myTurn;
-    Tile currentTile;
-    Coordinate tileCord;
-    Orientation orient;
-    Choice buildChoice;
-    Coordinate buildCord;
-    TerrainType expandArea;
-    String message;
+    public Game map = new Game();
+    private AIHelper helper = new AIHelper();
+    private String message;
 
     public void setServerMessage(String message){
         this.message = message;
@@ -125,6 +96,100 @@ public class AI {
         }
     }
 
+    public void placeAIMove(){
+        message = "";
+        helper.findPossibleMoves();
+        boolean[] moves = helper.getMoves();
+        if(moves[0]){
+            TileParameters parameters = helper.getPlaceWhereTileCanBePlaced();
+            map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
+                    parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
+            int x = parameters.getMainTerrainCoordinate().getXCoordinate();
+            int y = parameters.getMainTerrainCoordinate().getYCoordinate();
+            int z = -1 * x - y;
+            message += "PLACE " + parameters.getLeftTerrainType().toString()
+                    + "+" + parameters.getRightTerrainType().toString()
+                    + " AT " + parameters.getMainTerrainCoordinate().getXCoordinate()
+                    + " " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
+                    + " ";
+        }
+        for(int i = 1; i < moves.length; i++){
+            if(moves[1]) {
+                int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
+                int y = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
+                int z = -1 * x - y;
+                map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
+                message += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
+            }
+            else if(moves[2]) {
+                int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
+                int y = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
+                int z = -1 * x - y;
+                map.placeTotoro(helper.getPlaceWhereTigerCanBePlaced());
+                message += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
+            }
+            else if (moves[3]) {
+                ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
+                Coordinate coordinate = new Coordinate(0,0);
+                for (Coordinate coord : map.getSettlements().get(parameters.getSettlementID()).bfs()){
+                    if(map.getBoard().get(coord).getTerrainType().equals(parameters.getTerrainType())){
+                        coordinate = coord;
+                        break;
+                    }
+                }
+                int x = coordinate.getXCoordinate();
+                int y = coordinate.getYCoordinate();
+                int z = -1 * x - y;
+                map.expandSettlement(coordinate, parameters.getTerrainType());
+                message += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
+            }
+            else if(moves[4]) {
+                int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
+                int y = helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
+                int z = -1 * x - y;
+                map.placeTotoro(helper.getPlaceWhereSettlementCanBeFound());
+                message += "FOUND SETTLEMENT AT " + x + " " + y + " " + z;
+                map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
+            }
+            else
+                message += "UNABLE TO BUILD";
+        }
+    }
+
+    //////////////////////////////////////Nathan stuff////////////////////////////////////
+    /* AI will be our new API and AI in one. Adaptor passes information to the AI in the following process:
+
+   <place><build>
+    |
+    |
+   \/
+   <tile><coordinate><orientation><build option><coordinate>(<terrain>)
+    |
+    |
+   \/
+   <terrainA><terrainB><xCord><yCord><orientation><build option><xCord><yCord>(<terrain>)
+
+   OR
+
+    <tile>
+    |
+    |
+    \/
+    <terrainA><terrainB>
+d
+    <build option> = "expand", "found", "totoro", "tiger"
+    <terrain> = "JUNGLE", "LAKE", "ROCK", "GRASS"
+
+    sections are delimited by spaces.
+*/
+
+    boolean myTurn;
+    Tile currentTile;
+    Coordinate tileCord;
+    Orientation orient;
+    Choice buildChoice;
+    Coordinate buildCord;
+    TerrainType expandArea;
 
     public AI() {
         map = new Game();

@@ -1,34 +1,35 @@
-package Tigerisland;
-import Tigerisland.PlayerActions.*;
+package Tigerisland.AIHelpers;
+import Tigerisland.Coordinate;
+import Tigerisland.Game;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class AIHelper {
+    private boolean tileMove;
+    private boolean totoroMove;
+    private boolean tigerMove;
+    private boolean expandMove;
+    private boolean foundMove;
+    private boolean[] moves = new boolean[5];
+
+    public void findPossibleMoves() {
+        //call all the functions to produce what they need
+    }
+
+
     public Game map = new Game();
-//    private TilePlacer placer = new TilePlacer();
-//    private TilePlacementValidator tileValidator = new TilePlacementValidator();
-//    private Builder builder = new Builder();
-//    private BuildValidator buildValidator = new BuildValidator();
-//    private TilePlacementValidator placerValidator = new TilePlacementValidator();
-//    private ActionHelper locator = new ActionHelper();
-//    private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
-//    private HashMap<Integer, Settlement> settlements = new HashMap<>();
-//    private Player player =  new Player();
     private ArrayList<Coordinate> placesWhereTotoroCanBePlaced;
     private ArrayList<Coordinate> placesWhereTigerCanBePlaced;
+    private ArrayList<ExpandingParameters> placesWhereSettlementCanBeExpanded;
+    private ArrayList<Coordinate> placesWhereSettlementCanBeFound;
+    private ArrayList<TileParameters> placesWhereTileCanBePlaced;
+//    private Coordinate placeWhereTotoroCanBePlaced;
+//    private Coordinate placeWhereTigerCanBePlaced;
+//    private ExpandingParameters placesWhereSettlementCanBeExpanded;
+//    private ArrayList<Coordinate placesWhereSettlementCanBeFound;
+//    private ArrayList<TileParameters> placesWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
-
-//    public void updtateComponents(ComponentsDTO dto) {
-//        this.gameBoard = dto.getGameBoard();
-//        this.settlements = dto.getSettlements();
-//        this.player = dto.getPlayer();
-////        builder.updtateComponents(dto);
-////        placer.updtateComponents(dto);
-////        buildValidator.updtateComponents(dto);
-////        placerValidator.updtateComponents(dto);
-//    }
 
     //todo
     /*
@@ -39,6 +40,10 @@ public class AIHelper {
         - expand a settlement
         - found a settlement
     */
+
+//    public void findCoordinatesWhereSettlementCanBeFound(){
+//
+//    }
 
     public void findCoordinatesWhereTotoroCanBePlaced() {
         placesWhereTotoroCanBePlaced = new ArrayList<>();
@@ -92,7 +97,6 @@ public class AIHelper {
     }
 
     private boolean tigerCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
-//        buildValidator.processParameters(neighborCoordinate);
         return !visitedCoordinates.contains(neighborCoordinate) && map.tigerCanBePlaced(neighborCoordinate);
     }
 
@@ -104,5 +108,43 @@ public class AIHelper {
     public ArrayList<Coordinate> getPlacesWhereTigerCanBePlaced() {
         findCoordinatesWhereTigerCanBePlaced();
         return placesWhereTigerCanBePlaced;
+    }
+
+    public ArrayList<TileParameters> getPlacesWhereTileCanBePlaced() {
+        return placesWhereTileCanBePlaced;
+    }
+
+    public ArrayList<ExpandingParameters> getPlacesWhereSettlementCanBeExpanded() {
+        return placesWhereSettlementCanBeExpanded;
+    }
+
+    public ArrayList<Coordinate> getPlacesWhereSettlementCanBeFound() {
+        return placesWhereSettlementCanBeFound;
+    }
+
+    public Coordinate getPlaceWhereTotoroCanBePlaced() {
+        findCoordinatesWhereTotoroCanBePlaced();
+        return placesWhereTotoroCanBePlaced.get(0);
+    }
+
+    public Coordinate getPlaceWhereTigerCanBePlaced() {
+        findCoordinatesWhereTigerCanBePlaced();
+        return placesWhereTigerCanBePlaced.get(0);
+    }
+
+    public TileParameters getPlaceWhereTileCanBePlaced() {
+        return placesWhereTileCanBePlaced.get(0);
+    }
+
+    public ExpandingParameters getPlaceWhereSettlementCanBeExpanded() {
+        return placesWhereSettlementCanBeExpanded.get(0);
+    }
+
+    public Coordinate getPlaceWhereSettlementCanBeFound() {
+        return placesWhereSettlementCanBeFound.get(0);
+    }
+
+    public boolean[] getMoves() {
+        return moves;
     }
 }
