@@ -90,6 +90,13 @@ public class Game {
             player2 = player;
     }
 
+    public void printGameBoard(){
+        System.out.print("GameBoard size: " + getBoard().size() + " ==> ");
+        for(Coordinate c : getBoard().keySet()){
+            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + " | ");
+        }
+    }
+
     public Coordinate getAnyCoordinateOfSameTerrainTypeInSettlement(int settlementID, TerrainType terrainType){
         for(Coordinate c : getSettlements().get(settlementID).bfs()){
             if(getBoard().get(c).getTerrainType() == terrainType)

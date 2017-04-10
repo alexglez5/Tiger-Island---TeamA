@@ -9,7 +9,6 @@ import Tigerisland.AIHelpers.TileParameters;
  * Created by Alexander Gonzalez on 4/1/2017.
  */
 public class AI {
-    //public Game map = new Game();
     public AIHelper helper = new AIHelper();
     private String message;
 
@@ -81,7 +80,6 @@ public class AI {
                 , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
                 , orientation);
 
-        helper.map.setCurrentPlayer(Integer.parseInt(pid));
         switch (move){
             case FOUNDED:
                 helper.map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
@@ -105,22 +103,15 @@ public class AI {
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
         message = "";
-
-//        boolean[] moves = helper.getMoves();
         if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
-//            helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
             int y = parameters.getMainTerrainCoordinate().getYCoordinate();
             int z = -1 * x - y;
-            message += "PLACE " + parameters.getLeftTerrainType().toString()
-                    + "+" + parameters.getRightTerrainType().toString()
-                    + " AT " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
-                    + " ";
+            message += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
-//        helper.findPossibleMoves();
         if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();

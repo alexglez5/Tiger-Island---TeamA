@@ -83,7 +83,6 @@ public class AIHelper {
     }
 
     public void findCoordinatesWhereSettlementCanBeFound() {
-        visitedCoordinates = new HashSet<>();
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
                 map.builder.getDifferentSettlementIDsAroundCoordinate(c);
