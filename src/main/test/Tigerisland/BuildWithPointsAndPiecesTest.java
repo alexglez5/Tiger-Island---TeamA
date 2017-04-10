@@ -59,7 +59,7 @@ public class BuildWithPointsAndPiecesTest {
                 new Coordinate(1, 0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
                 new Coordinate(0, 0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCKY),
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
                 new Coordinate(0, -1), Orientation.FromTop);
         map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
                 new Coordinate(2, -2), Orientation.FromBottom);
@@ -88,44 +88,44 @@ public class BuildWithPointsAndPiecesTest {
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getPlayerID(), map.getBoard().get(new Coordinate(0, 1)).getPlayerID());
     }
 
-//    @Test
-//    public void testSettlementsAreNotMergedWhenDifferentPlayerIDs() throws Exception {
-//        map.getPlayer().setPlayerID(4);
-//        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
-//                new Coordinate(1, 0), Orientation.FromBottomRight);
-//        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
-//                new Coordinate(-1, 2), Orientation.FromBottomRight);
-//        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
-//                new Coordinate(2, 1), Orientation.FromBottom);
-//        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
-//                new Coordinate(1, 3), Orientation.FromBottomLeft);
-//        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.ROCKY),
-//                new Coordinate(-2, 2), Orientation.FromBottom);
-//        map.foundNewSettlement(new Coordinate(1, 1));
-//
-//        map.getPlayer().setPlayerID(5);
-//        map.foundNewSettlement(new Coordinate(-2, 3));
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(-2, 3)).hasVillager());
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 1)).hasVillager());
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(-2, 3)).getPlayerID() !=
-//                map.getBoard().get(new Coordinate(1, 1)).getPlayerID());
-//        map.expandSettlement(new Coordinate(-2, 3), TerrainType.ROCKY);
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(-1, 3)).hasVillager() && map.getBoard().get(new Coordinate(-1, 3)).getTerrainType() == TerrainType.ROCKY);
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(2, 2)).hasVillager() && map.getBoard().get(new Coordinate(2, 2)).getTerrainType() == TerrainType.ROCKY);
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 2)).hasVillager() && map.getBoard().get(new Coordinate(1, 2)).getTerrainType() == TerrainType.ROCKY);
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(0, 3)).hasVillager() && map.getBoard().get(new Coordinate(0, 3)).getTerrainType() == TerrainType.ROCKY);
-//        Assert.assertFalse(map.getBoard().get(new Coordinate(0, 2)).hasVillager());
-//        map.placeTotoro(new Coordinate(0, 3));
-//        Assert.assertFalse(map.getBoard().get(new Coordinate(0, 3)).hasTotoro());
-//        map.placeTotoro(new Coordinate(0, 2));
-//        Assert.assertEquals(map.getBoard().get(new Coordinate(1, 1)).getPlayerID(), 4);
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 1)).getPlayerID() != map.getBoard().get(new Coordinate(0, 2)).getPlayerID());
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(0, 2)).hasTotoro());
-//        Assert.assertEquals(map.getBoard().get(new Coordinate(-2, 3)).getSettlementID(),
-//                map.getBoard().get(new Coordinate(0, 2)).getSettlementID());
-//        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 1)).getSettlementID() !=
-//                map.getBoard().get(new Coordinate(0, 2)).getSettlementID());
-//    }
+    @Test
+    public void testSettlementsAreNotMergedWhenDifferentPlayerIDs() throws Exception {
+        map.getPlayer().setPlayerID(4);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+                new Coordinate(1, 0), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
+                new Coordinate(-1, 2), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
+                new Coordinate(2, 1), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+                new Coordinate(1, 3), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.ROCKY),
+                new Coordinate(-2, 2), Orientation.FromBottom);
+        map.foundNewSettlement(new Coordinate(1, 1));
+
+        map.getPlayer().setPlayerID(5);
+        map.foundNewSettlement(new Coordinate(-2, 3));
+        Assert.assertTrue(map.getBoard().get(new Coordinate(-2, 3)).hasVillager());
+       Assert.assertTrue(map.getBoard().get(new Coordinate(1, 1)).hasVillager());
+        Assert.assertTrue(map.getBoard().get(new Coordinate(-2, 3)).getPlayerID() !=
+                map.getBoard().get(new Coordinate(1, 1)).getPlayerID());
+        map.expandSettlement(new Coordinate(-2, 3), TerrainType.ROCKY);
+        Assert.assertTrue(map.getBoard().get(new Coordinate(-1, 3)).hasVillager() && map.getBoard().get(new Coordinate(-1, 3)).getTerrainType() == TerrainType.ROCKY);
+        Assert.assertTrue(map.getBoard().get(new Coordinate(2, 2)).hasVillager() && map.getBoard().get(new Coordinate(2, 2)).getTerrainType() == TerrainType.ROCKY);
+        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 2)).hasVillager() && map.getBoard().get(new Coordinate(1, 2)).getTerrainType() == TerrainType.ROCKY);
+        Assert.assertTrue(map.getBoard().get(new Coordinate(0, 3)).hasVillager() && map.getBoard().get(new Coordinate(0, 3)).getTerrainType() == TerrainType.ROCKY);
+        Assert.assertFalse(map.getBoard().get(new Coordinate(0, 2)).hasVillager() && map.getBoard().get(new Coordinate(0, 2)).getTerrainType() == TerrainType.ROCKY);
+        Assert.assertFalse(map.getBoard().get(new Coordinate(0, 2)).hasVillager());
+        Assert.assertFalse(map.getBoard().get(new Coordinate(0, 3)).hasTotoro());
+        map.placeTotoro(new Coordinate(0, 2));
+        Assert.assertEquals(map.getBoard().get(new Coordinate(1, 1)).getPlayerID(), 4);
+        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 1)).getPlayerID() != map.getBoard().get(new Coordinate(0, 2)).getPlayerID());
+        Assert.assertTrue(map.getBoard().get(new Coordinate(0, 2)).hasTotoro());
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-2, 3)).getSettlementID(),
+                map.getBoard().get(new Coordinate(0, 2)).getSettlementID());
+        Assert.assertTrue(map.getBoard().get(new Coordinate(1, 1)).getSettlementID() !=
+                map.getBoard().get(new Coordinate(0, 2)).getSettlementID());
+    }
 
     @After
     public void deallocateHexesInMap() throws Exception {

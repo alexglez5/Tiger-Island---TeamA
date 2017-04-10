@@ -54,58 +54,65 @@ public class AIHelper {
             }
         }
 
-        int maxX = -1000, maxY = -1000;
-        int minX = 1000, minY = 10000;
+        if(placeWhereTileCanBePlaced == null) {
+            int maxX = -1000, maxY = -1000;
+            int minX = 1000, minY = 10000;
+            Coordinate coordinate = new Coordinate(-1000, -10000);
+            Coordinate possibleCoordinate = map.locator.overAndToTheLeftOfMain(coordinate);
+            int randomDirection = (int) (Math.random() * 4) + 1;
+            switch (randomDirection) {
+                case 1:
+                    for (Coordinate c : map.getBoard().keySet()) {
+                        if (c.getXCoordinate() > maxX) {
+                            maxX = c.getXCoordinate();
+                            coordinate = c;
+                        }
+                    }
+                    possibleCoordinate = map.locator.toTheRightOfMain(coordinate);
+                    break;
+                case 2:
+                    for (Coordinate c : map.getBoard().keySet()) {
+                        if (c.getYCoordinate() > maxY) {
+                            maxY = c.getYCoordinate();
+                            coordinate = c;
+                        }
+                    }
+                    possibleCoordinate = map.locator.overAndToTheRightOfMain(coordinate);
+                    break;
+                case 3:
+                    for (Coordinate c : map.getBoard().keySet()) {
+                        if (c.getXCoordinate() < minX) {
+                            minX = c.getXCoordinate();
+                            coordinate = c;
+                        }
+                    }
+                    possibleCoordinate = map.locator.toTheLeftOfMain(coordinate);
+                    break;
+                case 4:
+                    for (Coordinate c : map.getBoard().keySet()) {
+                        if (c.getYCoordinate() < minY) {
+                            minY = c.getYCoordinate();
+                            coordinate = c;
+                        }
+                    }
+                    possibleCoordinate = map.locator.belowAndToTheLeftOfMain(coordinate);
+                    break;
+                default:
+                    for (Coordinate c : map.getBoard().keySet()) {
+                        if (c.getYCoordinate() < minY) {
+                            minY = c.getYCoordinate();
+                            coordinate = c;
+                        }
+                    }
+                    possibleCoordinate = map.locator.belowAndToTheRightOfMain(coordinate);
+                    break;
+            }
 
-        Coordinate coordinate = new Coordinate(-1000,-10000);
-        Coordinate possibleCoordinate = map.locator.overAndToTheLeftOfMain(coordinate);
-        int randomDirection = (int)(Math.random() * 4) + 1;
-        switch (randomDirection){
-            case 1:
-                for(Coordinate c : map.getBoard().keySet()){
-                    if(c.getXCoordinate() > maxX) {
-                        maxX = c.getXCoordinate();
-                        coordinate = c;
-                    }
+            for (Orientation orientation : Orientation.getOrientations()) {
+                if (map.tileCanBePlacedOnLevelOne(new Tile(leftTerrain, rightTerrain), possibleCoordinate, orientation)) {
+                    placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, possibleCoordinate, orientation);
+                    break;
                 }
-                possibleCoordinate = map.locator.toTheRightOfMain(coordinate);
-            case 2:
-                for(Coordinate c : map.getBoard().keySet()){
-                    if(c.getYCoordinate() > maxY) {
-                        maxY = c.getYCoordinate();
-                        coordinate = c;
-                    }
-                }
-                possibleCoordinate = map.locator.overAndToTheRightOfMain(coordinate);
-            case 3:
-                for(Coordinate c : map.getBoard().keySet()){
-                    if(c.getXCoordinate() < minX) {
-                        minX = c.getXCoordinate();
-                        coordinate = c;
-                    }
-                }
-                possibleCoordinate = map.locator.toTheLeftOfMain(coordinate);
-            case 4:
-                for(Coordinate c : map.getBoard().keySet()){
-                    if(c.getYCoordinate() < minY) {
-                        minY = c.getYCoordinate();
-                        coordinate = c;
-                    }
-                }
-                possibleCoordinate = map.locator.belowAndToTheLeftOfMain(coordinate);
-            default:
-                for(Coordinate c : map.getBoard().keySet()){
-                    if(c.getYCoordinate() < minY) {
-                        minY = c.getYCoordinate();
-                        coordinate = c;
-                    }
-                }
-        }
-
-        for(Orientation orientation : Orientation.getOrientations()){
-            if(map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), possibleCoordinate, orientation)){
-                placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, possibleCoordinate, orientation);
-                break;
             }
         }
         tileMove = true;
