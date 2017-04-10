@@ -46,8 +46,8 @@ public class TilePlacer {
         gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.JUNGLE, 1));
         gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.LAKE, 1));
         gameBoard.put(new Coordinate(0, 0), new Hex(TerrainType.VOLCANO, 1));
-        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.ROCKY, 1));
-        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.GRASSLANDS, 1));
+        gameBoard.put(new Coordinate(-1, 1), new Hex(TerrainType.ROCK, 1));
+        gameBoard.put(new Coordinate(0, 1), new Hex(TerrainType.GRASS, 1));
     }
 
     public void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
@@ -128,8 +128,8 @@ public class TilePlacer {
                     settlements.get(sid).removeFromSettlement(firstCord);
 
                     // found a new settlement with it (with a unique id) and update the hex settlementID
-                    settlements.put(firstCord.hashCode(), new Settlement(firstCord));
-                    gameBoard.get(firstCord).setSettlementID(firstCord.hashCode());
+                    settlements.put(firstCord.hashCode()+1200, new Settlement(firstCord));
+                    gameBoard.get(firstCord).setSettlementID(firstCord.hashCode()+1200);
 
                     // iterate through the rest of the connected component, remove from current settlement, add to
                     // this new settlement, and update the gameboard
@@ -137,8 +137,8 @@ public class TilePlacer {
                     while (i.hasNext()) {
                         Coordinate nextCord = i.next();
                         settlements.get(sid).removeFromSettlement(nextCord);
-                        settlements.get(firstCord.hashCode()).addToSettlement(nextCord);
-                        gameBoard.get(nextCord).setSettlementID(firstCord.hashCode());
+                        settlements.get(firstCord.hashCode()+1200).addToSettlement(nextCord);
+                        gameBoard.get(nextCord).setSettlementID(firstCord.hashCode()+1200);
                     }
 
                     // run another bfs to test for while condition

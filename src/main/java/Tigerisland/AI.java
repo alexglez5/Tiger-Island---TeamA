@@ -9,8 +9,8 @@ import Tigerisland.AIHelpers.TileParameters;
  * Created by Alexander Gonzalez on 4/1/2017.
  */
 public class AI {
-    public Game map = new Game();
-    private AIHelper helper = new AIHelper();
+    //public Game map = new Game();
+    public AIHelper helper = new AIHelper();
     private String message;
 
     public void setServerMessage(String message){
@@ -84,16 +84,16 @@ public class AI {
         helper.map.setCurrentPlayer(Integer.parseInt(pid));
         switch (move){
             case FOUNDED:
-                map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper.map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
             case EXPANDED:
-                map.expandSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)), TerrainType.valueOf(terrainType));
+                helper.map.expandSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)), TerrainType.valueOf(terrainType));
                 break;
             case TOTORO:
-                map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper. map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
             case TIGER:
-                map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper.map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
         }
     }
@@ -117,8 +117,7 @@ public class AI {
             int z = -1 * x - y;
             message += "PLACE " + parameters.getLeftTerrainType().toString()
                     + "+" + parameters.getRightTerrainType().toString()
-                    + " AT " + parameters.getMainTerrainCoordinate().getXCoordinate()
-                    + " " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
+                    + " AT " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
                     + " ";
         }
 //        helper.findPossibleMoves();
@@ -157,135 +156,4 @@ public class AI {
 
         return message;
     }
-
-    //////////////////////////////////////Nathan stuff////////////////////////////////////
-    /* AI will be our new API and AI in one. Adaptor passes information to the AI in the following process:
-
-   <place><build>
-    |
-    |
-   \/
-   <tile><coordinate><orientation><build option><coordinate>(<terrain>)
-    |
-    |
-   \/
-   <terrainA><terrainB><xCord><yCord><orientation><build option><xCord><yCord>(<terrain>)
-
-   OR
-
-    <tile>
-    |
-    |
-    \/
-    <terrainA><terrainB>
-d
-    <build option> = "expand", "found", "totoro", "tiger"
-    <terrain> = "JUNGLE", "LAKE", "ROCK", "GRASS"
-
-    sections are delimited by spaces.
-*/
-
-//    boolean myTurn;
-//    Tile currentTile;
-//    Coordinate tileCord;
-//    Orientation orient;
-//    Choice buildChoice;
-//    Coordinate buildCord;
-//    TerrainType expandArea;
-//
-//    public AI() {
-//        map = new Game();
-//    }
-//
-//    public void placeTile(Tile tile, Coordinate c, Orientation o) {
-//        map.placeTile(tile, c, o);
-//    }
-//
-//    public void parseTileMessage(String message) {
-//        String[] m = message.split(" ");
-//        TerrainType a = parseTerrain(m[0]);
-//        TerrainType b = parseTerrain(m[1]);
-//        currentTile = new Tile(a, b);
-//    }
-//
-//    public void parseOtherPlayerMessage(String message) {
-//        String[] m = message.split(" ");
-//
-//        TerrainType a = parseTerrain(m[0]);
-//        TerrainType b = parseTerrain(m[1]);
-//        currentTile = new Tile(a, b);
-//
-//        int xTile = Integer.parseInt(m[2]);
-//        int yTile = Integer.parseInt(m[3]);
-//        tileCord = new Coordinate(xTile, yTile);
-//
-//        orient = parseOrientation(m[4]);
-//
-//        buildChoice = parseBuildOption(m[5]);
-//
-//        int xBuild = Integer.parseInt(m[6]);
-//        int yBuild = Integer.parseInt(m[7]);
-//        buildCord = new Coordinate(xBuild, yBuild);
-//
-//        if (buildChoice.equals(Choice.EXPANDED)) {
-//            expandArea = parseTerrain(m[8]);
-//        }
-//    }
-//
-//    public Orientation parseOrientation(String orientation) {
-//        if (orientation.equals("FromBottom")) {
-//            return Orientation.FromBottom;
-//        } else if (orientation.equals("FromTop")) {
-//            return Orientation.FromTop;
-//        } else if (orientation.equals("FromTopLeft")) {
-//            return Orientation.FromTopLeft;
-//        } else if (orientation.equals("FromTopRight")) {
-//            return Orientation.FromTopRight;
-//        } else if (orientation.equals("FromBottomLeft")) {
-//            return Orientation.FromBottomLeft;
-//        } else if (orientation.equals("FromBottomRight")) {
-//            return Orientation.FromBottomRight;
-//        } else {
-//            System.out.println("Invalid Orientation");
-//            return null;
-//        }
-//    }
-//
-//    public Choice parseBuildOption(String choice) {
-//        if (choice.equals("found")) {
-//            return Choice.EXPANDED;
-//        } else if (choice.equals("expand")) {
-//            return Choice.EXPANDED;
-//        } else if (choice.equals("totoro")) {
-//            return Choice.TOTORO;
-//        } else if (choice.equals("tiger")) {
-//            return Choice.TIGER;
-//        } else {
-//            System.out.println("Invalid Player Choice");
-//            return null;
-//        }
-//    }
-//
-//    public TerrainType parseTerrain(String terrain) {
-//
-//        if(terrain.equals("JUNGLE")){
-//            return TerrainType.JUNGLE;
-//        }
-//        else if(terrain.equals("ROCK")) {
-//            return TerrainType.ROCKY;
-//        }
-//        else if(terrain.equals("LAKE")) {
-//            return TerrainType.LAKE;
-//        }
-//        else if(terrain.equals("GRASS")) {
-//            return TerrainType.GRASSLANDS;
-//        }
-//        else if(terrain.equals("VOLCANO") ) {
-//            return TerrainType.VOLCANO;
-//        }
-//        else {
-//            System.out.println("Invalid Terrain");
-//            return null;
-//        }
-//    }
 }

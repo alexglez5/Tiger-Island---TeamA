@@ -76,14 +76,14 @@ public class App {
 
         if (terrain.equals("JUNGLE") || terrain.equals("jungle")) {
             return TerrainType.JUNGLE;
-        } else if (terrain.equals("ROCKY") || terrain.equals("rocky")) {
-            return TerrainType.ROCKY;
+        } else if (terrain.equals("ROCK") || terrain.equals("rocky")) {
+            return TerrainType.ROCK;
         } else if (terrain.equals("LAKE") || terrain.equals("lake")
                 || terrain.equals("Lakes") || terrain.equals("lakes")) {
             return TerrainType.LAKE;
         } else if (terrain.equals("Grassland") || terrain.equals("grassland")
-                || terrain.equals("GRASSLANDS") || terrain.equals("grasslands")) {
-            return TerrainType.GRASSLANDS;
+                || terrain.equals("GRASS") || terrain.equals("grasslands")) {
+            return TerrainType.GRASS;
         } else if (terrain.equals("VOLCANO") || terrain.equals("volcano")) {
             return TerrainType.VOLCANO;
         } else {
