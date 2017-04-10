@@ -231,7 +231,7 @@ public class AIHelper {
             }
 
             for (Orientation orientation : Orientation.getOrientations()) {
-                if (map.tileCanBePlacedOnLevelOne(new Tile(leftTerrain, rightTerrain), possibleCoordinate, orientation)) {
+                if (map.tileCanBePlaced(new Tile(leftTerrain, rightTerrain), possibleCoordinate, orientation)) {
                     placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, possibleCoordinate, orientation);
                     break;
                 }
