@@ -230,7 +230,8 @@ public class AIHelper {
         }
         for (int score : movesWithScores.keySet())
             scores.add(score);
-        placeWhereSettlementCanBeExpanded = movesWithScores.get(scores.last());
+        if(scores.size() != 0)
+         placeWhereSettlementCanBeExpanded = movesWithScores.get(scores.last());
     }
 
     public void findCoordinatesWhereSettlementCanBeFound() {
