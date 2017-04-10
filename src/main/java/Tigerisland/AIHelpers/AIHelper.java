@@ -241,6 +241,8 @@ public class AIHelper {
                 map.builder.getDifferentSettlementIDsAroundCoordinate(c);
                 if(map.getSettlements().size() == 0){
                     placeWhereSettlementCanBeFound = c;
+                    foundMove = true;
+                    break;
                 }
                 for(int id : map.builder.differentSettlementIDsAroundCoordinate){
                     if(!map.getSettlements().containsKey(id)){
