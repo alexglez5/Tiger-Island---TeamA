@@ -116,14 +116,6 @@ public class AIHelperTest{
         helper.findPlaceWhereSettlementCanBeExpanded();
         ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
         Assert.assertTrue(helper.map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()));
-//        helper.map.expandSettlement(new Coordinate(1,1), TerrainType.ROCKY);
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1,1)).hasVillager());
-//        Assert.assertEquals(helper.map.getBoard().get(new Coordinate(1,1)).getSettlementID(),
-//                new Coordinate(1,1).hashCode());
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0,1)).hasVillager());
-//        Assert.assertTrue/(helper.map.getBoard().get(new Coordinate(1,1)).hasVillager());
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0 ,2)).hasVillager());
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1 ,2)).hasVillager());
     }
 
     @Test

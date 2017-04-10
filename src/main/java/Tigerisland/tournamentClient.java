@@ -162,7 +162,7 @@ public class tournamentClient {
                     }
 
                     outgoingMessage.println("GAME" + gid + "MOVE" + moveNumber + " " + userMoveInformation);
-                    System.out.println("GAME" + gid + "MOVE" + moveNumber + " " + userMoveInformation);
+                    System.out.println("GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
                     break;
                 }
                 //Getting opponents move placed on our board
