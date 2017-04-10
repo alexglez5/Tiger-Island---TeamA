@@ -129,10 +129,10 @@ public class AIHelperTest{
 
         helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS);
 
-        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced() != null);
-        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced().getLeftTerrainType(),
-                helper.getPlaceWhereTileCanBePlaced().getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate(),
-                helper.getPlaceWhereTileCanBePlaced().getOrientattion());
+        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS) != null);
+        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getLeftTerrainType(),
+                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getMainTerrainCoordinate(),
+                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getOrientattion());
         Tile tile = new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType());
         System.out.println(parameters.getMainTerrainCoordinate().getXCoordinate());
         System.out.println(parameters.getMainTerrainCoordinate().getYCoordinate());
