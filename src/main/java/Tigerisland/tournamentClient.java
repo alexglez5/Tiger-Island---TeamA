@@ -92,7 +92,7 @@ public class tournamentClient {
                 //get pid from the server message
                 ourPid = split[6];
                 //Print to console we are about to beat some players!!!
-                System.out.println("Login was a success " + ourPid);
+                System.out.println("Login was a success. PID: " + ourPid);
                 waitForTournamentToBegin();
                 break;
             }
@@ -174,16 +174,23 @@ public class tournamentClient {
                     if (gid.equals("A")) {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game1AI.placeAIMove();
+                        System.out.println("********AAAAAAA********");
+                        game1AI.helper.map.printGameBoard();
+                        System.out.println("\n************************");
                         //System.out.println("make move A");
                     } else if (gid.equals("B")) {
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
+                        System.out.println("********BBBBBB********");
+                        game2AI.helper.map.printGameBoard();
+                        System.out.println("\n************************");
                     }
 
                     outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
+
                     opponentMoves();
                     break;
                 }
@@ -201,7 +208,7 @@ public class tournamentClient {
         try {
             while ((serverMessage = incomingMessage.readLine()) != null) {
                 if(serverMessage.startsWith("GAME")){
-                    System.out.println("************************");
+                    System.out.println("********OPPOMOVE********");
                     System.out.println(serverMessage);
                     System.out.println("************************");
                     String[] split = serverMessage.split(" ");
@@ -209,14 +216,14 @@ public class tournamentClient {
                     opponentspid = split[5];
                     if(split[2].equals("OVER")){ //Resetting the game if they have ended
                         if(gid.equals("A")){
-                            game1AI.helper.map.resetGame();
+                            //game1AI.helper.map.resetGame();
                             System.out.println("************************");
                             System.out.println("Game A Over");
                             System.out.println("************************");
                             opponentMoves();
                         }
                         else if(gid.equals("B")){
-                            game2AI.helper.map.resetGame();
+                            //game2AI.helper.map.resetGame();
                             System.out.println("************************");
                             System.out.println("Game B Over");
                             System.out.println("************************");
@@ -235,7 +242,11 @@ public class tournamentClient {
                         System.out.println("************************");
                         System.out.println("Opponent A move");
                         System.out.println("************************");
-                        winTheTournament();
+                        //winTheTournament();
+                        System.out.println("********AAAAAAA********");
+                        game1AI.helper.map.printGameBoard();
+                        System.out.println("\n************************");
+                        opponentMoves();
                     }
                     else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent

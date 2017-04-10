@@ -92,6 +92,8 @@ public class AI {
                 helper.map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
         }
+
+
     }
 
     public String placeAIMove(){
@@ -100,7 +102,7 @@ public class AI {
         TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
-        message = "";
+        String outMessage = "";
         if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
@@ -108,21 +110,21 @@ public class AI {
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
             int y = parameters.getMainTerrainCoordinate().getYCoordinate();
             int z = -1 * x - y;
-            message += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
+            outMessage += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
         if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
             int z = -1 * x - y;
             helper.map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
-            message += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
+            outMessage += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
         }
         else if(helper.getPlaceWhereTigerCanBePlaced() != null) {
             int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
             int z = -1 * x - y;
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
-            message += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
+            outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
         else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
             ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
@@ -138,11 +140,11 @@ public class AI {
             int y = helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
             int z = -1 * x - y;
             helper.map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
-            message += "FOUND SETTLEMENT AT " + x + " " + y + " " + z;
+            outMessage += "FOUND SETTLEMENT AT " + x + " " + y + " " + z;
         }
         else
-            message += "UNABLE TO BUILD";
+            outMessage += "UNABLE TO BUILD";
 
-        return message;
+        return outMessage;
     }
 }
