@@ -169,7 +169,6 @@ public class AIHelper {
                         if(map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
                             for (Orientation orientation : Orientation.getOrientations()) {
                                 if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)) {
-                                    System.out.println("IN NUKE IF LOOP");
                                     placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, tempCoordinate, orientation);
                                     tileMove = true;
                                     break;

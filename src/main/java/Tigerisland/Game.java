@@ -122,8 +122,9 @@ public class Game {
 
         if (tileValidator.tileCanBePlacedOnLevelOne())
             placer.placeTileOnMap();
-        else if (tileValidator.tileCanNukeOtherTiles())
+        else if (tileValidator.tileCanNukeOtherTiles()) {
             placer.nuke();
+        }
         this.updateComponents(tileValidator.getComponents());
     }
 

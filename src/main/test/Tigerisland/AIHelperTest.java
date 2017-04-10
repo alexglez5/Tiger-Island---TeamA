@@ -176,6 +176,9 @@ public class AIHelperTest{
         System.out.println(parameters.getMainTerrainCoordinate().getXCoordinate());
         System.out.println(parameters.getMainTerrainCoordinate().getYCoordinate());
         System.out.println(parameters.getOrientattion());
+        helper.map.placeTile(tile, parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
+        Assert.assertEquals(helper.map.getBoard().get(new Coordinate(parameters.getMainTerrainCoordinate().getXCoordinate(),
+                parameters.getMainTerrainCoordinate().getYCoordinate())).getLevel(),2);
     }
 
     @After
