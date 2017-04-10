@@ -45,7 +45,7 @@ public class VillagerPlacementTest{
         @Then("^the player will place (\\d+) villager on that hex at \\((\\d+), (\\d+)\\)$")
         public void the_player_will_place_villager_on_that_hex_at(int numberOfVillagers, int coordinatex, int coordinatey) throws Throwable {
             game.foundNewSettlement(new Coordinate(coordinatex,coordinatey));
-            if(game.getSettlements()==null) {
+            if(game.getSettlements().isEmpty()) {
                 throw new Error("the hex doesn't have any villagers placed");
             }
         }
