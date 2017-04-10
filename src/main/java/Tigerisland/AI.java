@@ -9,7 +9,7 @@ import Tigerisland.AIHelpers.TileParameters;
  * Created by Alexander Gonzalez on 4/1/2017.
  */
 public class AI {
-    public Game map = new Game();
+    //public Game map = new Game();
     public AIHelper helper = new AIHelper();
     private String message;
 
@@ -84,16 +84,16 @@ public class AI {
         helper.map.setCurrentPlayer(Integer.parseInt(pid));
         switch (move){
             case FOUNDED:
-                map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper.map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
             case EXPANDED:
-                map.expandSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)), TerrainType.valueOf(terrainType));
+                helper.map.expandSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)), TerrainType.valueOf(terrainType));
                 break;
             case TOTORO:
-                map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper. map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
             case TIGER:
-                map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper.map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
         }
     }

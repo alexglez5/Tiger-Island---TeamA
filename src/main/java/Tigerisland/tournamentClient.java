@@ -174,16 +174,17 @@ public class tournamentClient {
                     opponentspid = split[5];
                     if(split[2].equals("OVER")){ //Resetting the game if they have ended
                         if(gid.equals("A")){
-                            game1AI.map.resetGame();
+                            game1AI.helper.map.resetGame();
                         }
                         else if(gid.equals("B")){
-                            game2AI.map.resetGame();
+                            game2AI.helper.map.resetGame();
                         }
                     }
                     else if(gid.equals("A") && !opponentspid.equals(ourPid)) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                         game1AI.placeOpponentMove();
                     }
+
                     else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                         game2AI.placeOpponentMove();

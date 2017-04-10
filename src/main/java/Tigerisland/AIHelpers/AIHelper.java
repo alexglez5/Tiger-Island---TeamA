@@ -177,11 +177,11 @@ public class AIHelper {
         }
 
         if (placeWhereTileCanBePlaced == null) {
-            int maxX = 1000, maxY = -1000;
-            int minX = -1000, minY = 1000;
+            int maxX = -1000, maxY = -1000;
+            int minX = 1000, minY = 1000;
             Coordinate coordinate = new Coordinate(-1000, -1000);
             Coordinate possibleCoordinate = map.locator.overAndToTheLeftOfMain(coordinate);
-            int randomDirection = (int) (Math.random() * 4) + 1;
+            int randomDirection = (int) (Math.random() * 3) + 1;
             switch (randomDirection) {
                 case 1:
                     for (Coordinate c : map.getBoard().keySet()) {
@@ -226,7 +226,7 @@ public class AIHelper {
                             coordinate = c;
                         }
                     }
-                    possibleCoordinate = map.locator.belowAndToTheRightOfMain(coordinate);
+                    possibleCoordinate = map.locator.overAndToTheRightOfMain(coordinate);
                     break;
             }
 

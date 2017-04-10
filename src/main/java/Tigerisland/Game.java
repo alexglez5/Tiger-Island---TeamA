@@ -19,6 +19,7 @@ public class Game {
     private int currentPlayerId = 1;
 
     public Game() {
+        //placeStartingTile();
         player1.setPlayerID(1);
         player2.setPlayerID(2);
     }
@@ -168,7 +169,7 @@ public class Game {
         tileValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         tileValidator.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        return tileValidator.tileCanNukeOtherTiles() || tileValidator.tileCanBePlacedOnLevelOne();
+        return tileValidator.tileCanNukeOtherTiles() && tileValidator.tileCanBePlacedOnLevelOne();
     }
 
 
