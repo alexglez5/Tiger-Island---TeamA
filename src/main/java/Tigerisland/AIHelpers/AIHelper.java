@@ -161,14 +161,20 @@ public class AIHelper {
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
         for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() != map.getCurrentPlayerId()
+            if (map.getSettlements().get(id).getPlayerID() == 2
                     && map.getSettlements().get(id).getSize() > 3) {
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs()) {
-                    for (Orientation orientation : Orientation.getOrientations()) {
-                        if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), coordinate, orientation)) {
-                            placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, coordinate, orientation);
-                            tileMove = true;
-                            break;
+                    map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+                    for(Coordinate tempCoordinate : map.locator.surroundingCoordinates) {
+                        if(map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
+                            for (Orientation orientation : Orientation.getOrientations()) {
+                                if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)) {
+                                    System.out.println("IN NUKE IF LOOP");
+                                    placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, tempCoordinate, orientation);
+                                    tileMove = true;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
