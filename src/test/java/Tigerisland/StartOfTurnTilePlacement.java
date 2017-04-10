@@ -15,7 +15,7 @@ public class StartOfTurnTilePlacement {
     public void the_game_is_given_a_tile_with_terrains_and(String terrainLeft, String terrainRight) throws Error {
         game.resetGame();
         TerrainType terrainLeftParsed = TerrainType.LAKE;
-        TerrainType terrainRightParsed = TerrainType.ROCKY;
+        TerrainType terrainRightParsed = TerrainType.ROCK;
         tile = new Tile(terrainLeftParsed, terrainRightParsed);
 
         Coordinate coordinate = new Coordinate(0,0);
@@ -54,7 +54,7 @@ public class StartOfTurnTilePlacement {
     public void the_game_is_given_tile_with_terrains_and(String arg1, String arg2) throws Throwable {
         game.resetGame();
         TerrainType terrainLeftParsed = TerrainType.LAKE;
-        TerrainType terrainRightParsed = TerrainType.ROCKY;
+        TerrainType terrainRightParsed = TerrainType.ROCK;
         tile = new Tile(terrainLeftParsed, terrainRightParsed);
 
         Coordinate coordinate = new Coordinate(0,0);

@@ -92,7 +92,7 @@ public class tournamentClient {
                 //get pid from the server message
                 ourPid = split[6];
                 //Print to console we are about to beat some players!!!
-                System.out.println("Login was a success");
+                System.out.println("Login was a success " + ourPid);
                 waitForTournamentToBegin();
                 break;
             }
@@ -107,8 +107,9 @@ public class tournamentClient {
 
     //Waiting for a new match
     public void waitForTournamentToBegin() {
-        String serverMessage;
+        String serverMessage = "";
 
+        System.out.println(serverMessage);
 
         try{
             while((serverMessage = incomingMessage.readLine()) != null){
@@ -146,6 +147,7 @@ public class tournamentClient {
             while((serverMessage = incomingMessage.readLine()) != null){
                 //This is for our move to be created
                 if(serverMessage.startsWith("MAKE YOUR MOVE IN GAME")){
+                    System.out.println(serverMessage);
                     String[] split = serverMessage.split(" ");
                     gid = split[5];
                     moveNumber = split[10];
@@ -156,38 +158,44 @@ public class tournamentClient {
                     if(gid.equals("A")) {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game1AI.placeAIMove();
-                       // System.out.println(userMoveInformation);
+                        System.out.println("make move A");
                     }
                     else if(gid.equals("B")){
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
+                        System.out.println("make move B");
                     }
 
                     outgoingMessage.println("GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
-                    System.out.println("GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
+                    System.out.println("Our Move :GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
                     break;
                 }
                 //Getting opponents move placed on our board
                 else if(serverMessage.startsWith("GAME")){
+                    System.out.println(serverMessage);
                     String[] split = serverMessage.split(" ");
                     gid = split[1];
                     opponentspid = split[5];
                     if(split[2].equals("OVER")){ //Resetting the game if they have ended
                         if(gid.equals("A")){
                             game1AI.helper.map.resetGame();
+                            System.out.println("over A");
                         }
                         else if(gid.equals("B")){
                             game2AI.helper.map.resetGame();
+                            System.out.println("over B");
                         }
                     }
                     else if(gid.equals("A") && !opponentspid.equals(ourPid)) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                         game1AI.placeOpponentMove();
+                        System.out.println("Opponent Move A");
                     }
 
                     else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                         game2AI.placeOpponentMove();
+                        System.out.println("Opponent Move B");
                     }
                     break;
                 }

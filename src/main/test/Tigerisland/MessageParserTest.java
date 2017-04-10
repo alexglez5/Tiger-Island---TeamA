@@ -16,7 +16,7 @@ public class MessageParserTest {
 
     @Test
     public void shouldgetTheRightMessage() throws Exception{
-        String message  = "GAME A MOVE 1 PLAYER 1 PLACED ROCKY+LAKE AT 0 -1 1 2 BUILT TIGER PLAYGROUND AT -1 0 1";
+        String message  = "GAME A MOVE 1 PLAYER 1 PLACED ROCK+LAKE AT 0 -1 1 2 BUILT TIGER PLAYGROUND AT -1 0 1";
         ai.setServerMessage(message);
 //        ai.placeOpponentMove();
     }

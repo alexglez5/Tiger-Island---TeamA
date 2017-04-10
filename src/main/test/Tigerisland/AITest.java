@@ -54,7 +54,7 @@
 //    public void testCorrectParseOfExpandArea() {
 //        String message = new String("JUNGLE ROCK 1 0 FromBottomRight expand 2 0 ROCK");
 //        ai.parseOtherPlayerMessage(message);
-//        Assert.assertEquals(TerrainType.ROCKY, ai.expandArea);
+//        Assert.assertEquals(TerrainType.ROCK, ai.expandArea);
 //    }
 //
 //    @Test

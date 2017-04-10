@@ -13,7 +13,7 @@ public class FirstTilePlacementStepsATest {
     public void the_board_is_empty_is_given_tile_with_terrains_and(String terrainLeft, String terrainRight) throws Error {
         game.resetGame();
         TerrainType terrainLeftParsed = TerrainType.LAKE;
-        TerrainType terrainRightParsed = TerrainType.ROCKY;
+        TerrainType terrainRightParsed = TerrainType.ROCK;
         tile = new Tile(terrainLeftParsed, terrainRightParsed);
     }
 
@@ -39,7 +39,7 @@ public class FirstTilePlacementStepsATest {
 
     @Then("^the tile right hex should be placed at \\((-?\\d+),(-?\\d+)\\) with terrain \"([^\"]*)\"$")
     public void the_tile_right_hex_should_be_placed_at_with_terrain(int coordinateX, int coordinateY, String terrain) throws Error {
-        TerrainType terrain1 = TerrainType.ROCKY;
+        TerrainType terrain1 = TerrainType.ROCK;
         Coordinate coordinate = new Coordinate(coordinateX, coordinateY);
         Hex hex = game.getBoard().get(coordinate);
         if(hex == null) {
