@@ -116,14 +116,6 @@ public class AIHelperTest{
         helper.findPlaceWhereSettlementCanBeExpanded();
         ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
         Assert.assertTrue(helper.map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()));
-//        helper.map.expandSettlement(new Coordinate(1,1), TerrainType.ROCKY);
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1,1)).hasVillager());
-//        Assert.assertEquals(helper.map.getBoard().get(new Coordinate(1,1)).getSettlementID(),
-//                new Coordinate(1,1).hashCode());
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0,1)).hasVillager());
-//        Assert.assertTrue/(helper.map.getBoard().get(new Coordinate(1,1)).hasVillager());
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0 ,2)).hasVillager());
-//        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1 ,2)).hasVillager());
     }
 
     @Test
@@ -138,13 +130,6 @@ public class AIHelperTest{
         helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS);
 
         Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced() != null);
-//        helper.map.placeTile(new Tile(helper.getPlaceWhereTileCanBePlaced().getLeftTerrainType(),
-//                helper.getPlaceWhereTileCanBePlaced().getRightTerrainType()),
-//                new Coordinate(helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getXCoordinate(),
-//                        helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getYCoordinate()),
-//                helper.getPlaceWhereTileCanBePlaced().getOrientattion());
-//        Assert.assertEquals(helper.map.getBoard().get(new Coordinate(helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getXCoordinate()
-//                , helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getYCoordinate())).getTerrainType(), TerrainType.VOLCANO);
         TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced().getLeftTerrainType(),
                 helper.getPlaceWhereTileCanBePlaced().getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate(),
                 helper.getPlaceWhereTileCanBePlaced().getOrientattion());
