@@ -115,7 +115,9 @@ public class tournamentClient {
                 //If match is going to start go to correct function
                 if(serverMessage.startsWith("NEW MATCH")){ //Should only get called once
                     game1AI = new AI();
+                    game1AI.helper.map.placeStartingTile();
                     game2AI = new AI();
+                    game2AI.helper.map.placeStartingTile();
                     winTheTournament();
                     break;
                 }

@@ -10,7 +10,7 @@ import Tigerisland.AIHelpers.TileParameters;
  */
 public class AI {
     public Game map = new Game();
-    private AIHelper helper = new AIHelper();
+    public AIHelper helper = new AIHelper();
     private String message;
 
     public void setServerMessage(String message){
@@ -117,8 +117,7 @@ public class AI {
             int z = -1 * x - y;
             message += "PLACE " + parameters.getLeftTerrainType().toString()
                     + "+" + parameters.getRightTerrainType().toString()
-                    + " AT " + parameters.getMainTerrainCoordinate().getXCoordinate()
-                    + " " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
+                    + " AT " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
                     + " ";
         }
 //        helper.findPossibleMoves();
