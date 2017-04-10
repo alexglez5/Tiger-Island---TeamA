@@ -19,8 +19,6 @@ public class AI {
     public void placeOpponentMove() {
         helper.map.setCurrentPlayer(2);
         String[] split = message.split(" ");
-        int i = 0;
-        String pid = split[5];
         String xTile = split[9];
         String yTile = split[11];
         String[] tempSplit = split[7].split("[+]");
