@@ -138,13 +138,6 @@ public class AIHelperTest{
         helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS);
 
         Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced() != null);
-//        helper.map.placeTile(new Tile(helper.getPlaceWhereTileCanBePlaced().getLeftTerrainType(),
-//                helper.getPlaceWhereTileCanBePlaced().getRightTerrainType()),
-//                new Coordinate(helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getXCoordinate(),
-//                        helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getYCoordinate()),
-//                helper.getPlaceWhereTileCanBePlaced().getOrientattion());
-//        Assert.assertEquals(helper.map.getBoard().get(new Coordinate(helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getXCoordinate()
-//                , helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate().getYCoordinate())).getTerrainType(), TerrainType.VOLCANO);
         TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced().getLeftTerrainType(),
                 helper.getPlaceWhereTileCanBePlaced().getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced().getMainTerrainCoordinate(),
                 helper.getPlaceWhereTileCanBePlaced().getOrientattion());
@@ -155,7 +148,12 @@ public class AIHelperTest{
         Assert.assertTrue(helper.map.tileCanBePlacedOnLevelOne(tile, parameters.getMainTerrainCoordinate(), parameters.getOrientattion()));
     }
 
-
+    @Test
+    public void testAICanFoundSettlement(){
+        helper.findCoordinatesWhereSettlementCanBeFound();
+        System.out.println(helper.getPlaceWhereSettlementCanBeFound());
+        Assert.assertTrue(helper.getPlaceWhereSettlementCanBeFound() != null);
+    }
 
     @After
     public void deallocateHexesInMap() throws Exception {

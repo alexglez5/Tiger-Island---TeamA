@@ -238,6 +238,9 @@ public class AIHelper {
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
                 map.builder.getDifferentSettlementIDsAroundCoordinate(c);
+                if(map.getSettlements().size() == 0){
+                    placeWhereSettlementCanBeFound = c;
+                }
                 for(int id : map.builder.differentSettlementIDsAroundCoordinate){
                     if(!map.getSettlements().containsKey(id)){
                         placeWhereSettlementCanBeFound = c;
@@ -251,22 +254,6 @@ public class AIHelper {
 
     public Coordinate getPlaceWhereTotoroCanBePlaced() {
         return placeWhereTotoroCanBePlaced;
-    }
-
-    public Coordinate getPlacesWhereTigerCanBePlaced() {
-        return placeWhereTigerCanBePlaced;
-    }
-
-    public TileParameters getPlacesWhereTileCanBePlaced() {
-        return placeWhereTileCanBePlaced;
-    }
-
-    public ExpandingParameters getPlacesWhereSettlementCanBeExpanded() {
-        return placeWhereSettlementCanBeExpanded;
-    }
-
-    public Coordinate getPlacesWhereSettlementCanBeFound() {
-        return placeWhereSettlementCanBeFound;
     }
 
     public boolean[] getMoves() {
