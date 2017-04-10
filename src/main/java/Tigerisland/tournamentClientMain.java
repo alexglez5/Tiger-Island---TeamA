@@ -33,8 +33,8 @@ public class tournamentClientMain {
         try{ //This starts everything up for the tournament!
             clientSocket.tournamentAuthentication(tournamentPassword, username, password);
         }catch(Exception e){
-            System.err.println("Cannot login!");
-        }
+           System.err.println("Timeout");
+      }
 
     }
 

@@ -24,7 +24,7 @@ public class tournamentClient {
     private String serverIP;
     private int serverPort;
     private Socket clientSocket;
-    private BufferedReader  incomingMessage;
+    private BufferedReader incomingMessage;
     private PrintWriter outgoingMessage;
     private String username;
     private String password;
@@ -38,7 +38,7 @@ public class tournamentClient {
     private AI game1AI, game2AI;
 
 
-    public tournamentClient(String serverIP, int serverPort){ //update serverIP
+    public tournamentClient(String serverIP, int serverPort) { //update serverIP
         this.serverIP = serverIP;
         this.serverPort = serverPort;
         try {
@@ -47,8 +47,8 @@ public class tournamentClient {
             //open up a print writer on the socket
             outgoingMessage = new PrintWriter(clientSocket.getOutputStream(), true);
             //open up a buffer reader on the socket
-            incomingMessage = new BufferedReader(new InputStreamReader (clientSocket.getInputStream()));
-        }catch (UnknownHostException e) {
+            incomingMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        } catch (UnknownHostException e) {
             System.err.println("Don't know about host: " + serverIP);
             System.exit(1);
         } catch (IOException e) {
@@ -57,32 +57,32 @@ public class tournamentClient {
         }
     }
 
-    public void tournamentAuthentication(String tournamentPassword, String username, String password) throws IOException{
+    public void tournamentAuthentication(String tournamentPassword, String username, String password) throws IOException {
         //this.username = username;
         //this.password = password;
         String serverMessage;
-            while ((serverMessage = incomingMessage.readLine()) != null) {
-                if (serverMessage.startsWith("WELCOME")) {
-                    //Send out the required line to enter
-                    outgoingMessage.println("ENTER THUNDERDOME " + tournamentPassword);
-                    System.out.println("Auth");
-                    tournamentLogin(username, password);
-                }
-                if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
-                    clientSocket.close();
-                    System.out.println("FAILED TO LOGIN! NOT GOOD");
-                    break;  //Break while loop. THINGS ARE NOT GOOD
-                }
-
+        while ((serverMessage = incomingMessage.readLine()) != null) {
+            if (serverMessage.startsWith("WELCOME")) {
+                //Send out the required line to enter
+                outgoingMessage.println("ENTER THUNDERDOME " + tournamentPassword);
+                System.out.println("Auth");
+                tournamentLogin(username, password);
             }
+            if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
+                clientSocket.close();
+                System.out.println("FAILED TO LOGIN! NOT GOOD");
+                break;  //Break while loop. THINGS ARE NOT GOOD
+            }
+
+        }
 
     }
 
     //After this the game begins
-    public void tournamentLogin(String username, String password) throws IOException{
+    public void tournamentLogin(String username, String password) throws IOException {
         String serverMessage;
 
-        while((serverMessage = incomingMessage.readLine()) != null) {
+        while ((serverMessage = incomingMessage.readLine()) != null) {
             if (serverMessage.startsWith("TWO"))
                 //Send out user name and password
                 outgoingMessage.println("I AM " + username + " " + password);
@@ -111,10 +111,10 @@ public class tournamentClient {
 
         System.out.println(serverMessage);
 
-        try{
-            while((serverMessage = incomingMessage.readLine()) != null){
+        try {
+            while ((serverMessage = incomingMessage.readLine()) != null) {
                 //If match is going to start go to correct function
-                if(serverMessage.startsWith("NEW MATCH")){ //Should only get called once
+                if (serverMessage.startsWith("NEW MATCH")) { //Should only get called once
                     game1AI = new AI();
                     game1AI.helper.map.placeStartingTile();
                     game2AI = new AI();
@@ -123,30 +123,30 @@ public class tournamentClient {
                     break;
                 }
                 //If server says goodbye then everything is over or we got kicked
-                if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
+                if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
                     clientSocket.close();
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     break;
                 }
-                if(serverMessage.equals("END OF CHALLENGES")){
+                if (serverMessage.equals("END OF CHALLENGES")) {
                     System.out.println("Challenges over!");
                     break;
                 }
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             System.err.println("I/O error!");
             System.exit(1);
         }
     }
 
     //This take in all the move messages
-    public void winTheTournament(){
+    public void winTheTournament() {
         String serverMessage;
 
-        try{
-            while((serverMessage = incomingMessage.readLine()) != null){
+        try {
+            while ((serverMessage = incomingMessage.readLine()) != null) {
                 //This is for our move to be created
-                if(serverMessage.startsWith("MAKE YOUR MOVE IN GAME")){
+                if (serverMessage.startsWith("MAKE YOUR MOVE IN GAME")) {
                     System.out.println(serverMessage);
                     String[] split = serverMessage.split(" ");
                     gid = split[5];
@@ -155,24 +155,35 @@ public class tournamentClient {
                     String[] tileSplit = tileDrawn.split("[+]");
                     tileToAI = tileSplit[0] + " " + tileSplit[1];              //Check this!!!
 
-                    if(gid.equals("A")) {
+                    if (gid.equals("A")) {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game1AI.placeAIMove();
                         System.out.println("make move A");
-                    }
-                    else if(gid.equals("B")){
+                    } else if (gid.equals("B")) {
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
-                        System.out.println("make move B");
                     }
 
                     outgoingMessage.println("GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
-                    System.out.println("Our Move :GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
+                    System.out.println("Our Move : GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
+                    opponentMoves();
                     break;
                 }
-                //Getting opponents move placed on our board
-                else if(serverMessage.startsWith("GAME")){
-                    System.out.println(serverMessage);
+            }
+        } catch (IOException e) {
+            System.err.println("I/O error when connecting!");
+            System.exit(1);
+        }
+
+    }
+
+    public void opponentMoves() {
+        String serverMessage;
+
+        try {
+            while ((serverMessage = incomingMessage.readLine()) != null) {
+                if(serverMessage.startsWith("GAME")){
+                    //System.out.println(serverMessage);
                     String[] split = serverMessage.split(" ");
                     gid = split[1];
                     opponentspid = split[5];
@@ -180,22 +191,33 @@ public class tournamentClient {
                         if(gid.equals("A")){
                             game1AI.helper.map.resetGame();
                             System.out.println("over A");
+                            winTheTournament();
                         }
                         else if(gid.equals("B")){
                             game2AI.helper.map.resetGame();
+
                             System.out.println("over B");
+                            winTheTournament();
                         }
+                    }
+                    else if(gid.equals("A") && opponentspid.equals(ourPid)) {
+                        opponentMoves();
+                    }
+                    else if(gid.equals("B") && opponentspid.equals(ourPid)) {
+                        opponentMoves();
                     }
                     else if(gid.equals("A") && !opponentspid.equals(ourPid)) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                         game1AI.placeOpponentMove();
-                        System.out.println("Opponent Move A");
-                    }
 
+                        System.out.println("Opponent Move A: " + serverMessage);
+                        winTheTournament();
+                    }
                     else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                         game2AI.placeOpponentMove();
-                        System.out.println("Opponent Move B");
+                        System.out.println("Opponent Move B: " + serverMessage);
+                        winTheTournament();
                     }
                     break;
                 }
@@ -205,8 +227,9 @@ public class tournamentClient {
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     break;
                 }
+
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             System.err.println("I/O error when connecting!");
             System.exit(1);
         }
