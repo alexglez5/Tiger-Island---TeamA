@@ -147,6 +147,37 @@ public class AIHelperTest{
         Assert.assertTrue(helper.getPlaceWhereSettlementCanBeFound() != null);
     }
 
+    @Test
+    public void nukeTest(){
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(1, 0), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+                new Coordinate(-1, 2), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+                new Coordinate(2, 1), Orientation.FromBottom);
+        helper.map.setCurrentPlayer(2);
+        helper.map.foundNewSettlement(new Coordinate(-1,3));
+        helper.map.expandSettlement(new Coordinate(-1,3), TerrainType.ROCK);
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(-1,3)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0,2)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1,2)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1,1)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0,1)).hasVillager());
+        helper.map.setCurrentPlayer(1);
+        Assert.assertEquals(helper.map.getSettlements().get(helper.map.getBoard().get(new Coordinate(0,1)).getSettlementID()).getPlayerID(), 2);
+        Assert.assertEquals(helper.map.getSettlements().get(helper.map.getBoard().get(new Coordinate(0,1)).getSettlementID()).getSize(), 5);
+        Assert.assertEquals(helper.map.getCurrentPlayerId(),1);
+        helper.findPlaceWhereTileCanBePlaced(TerrainType.GRASS, TerrainType.JUNGLE);
+        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS) != null);
+        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getLeftTerrainType(),
+                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getMainTerrainCoordinate(),
+                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getOrientattion());
+        Tile tile = new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType());
+        System.out.println(parameters.getMainTerrainCoordinate().getXCoordinate());
+        System.out.println(parameters.getMainTerrainCoordinate().getYCoordinate());
+        System.out.println(parameters.getOrientattion());
+    }
+
     @After
     public void deallocateHexesInMap() throws Exception {
         helper.map.resetGame();
