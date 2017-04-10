@@ -180,7 +180,7 @@ public class AIHelper {
             }
         }
 
-        if (placeWhereTileCanBePlaced == null) {
+        if (placeWhereTileCanBePlaced == null || placeWhereTileCanBePlaced != null) {
             int maxX = -1000, maxY = -1000;
             int minX = 1000, minY = 1000;
             Coordinate coordinate = new Coordinate(-1000, -1000);

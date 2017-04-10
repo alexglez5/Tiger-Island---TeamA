@@ -65,7 +65,6 @@ public class tournamentClient {
             if (serverMessage.startsWith("WELCOME")) {
                 //Send out the required line to enter
                 outgoingMessage.println("ENTER THUNDERDOME " + tournamentPassword);
-                System.out.println("Authentication!!");
                 tournamentLogin(username, password);
             }
             if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
@@ -83,9 +82,13 @@ public class tournamentClient {
         String serverMessage;
 
         while ((serverMessage = incomingMessage.readLine()) != null) {
-            if (serverMessage.startsWith("TWO"))
+            if (serverMessage.startsWith("TWO")){
+
                 //Send out user name and password
                 outgoingMessage.println("I AM " + username + " " + password);
+
+                System.out.println("Authentication!!");
+            }
             if (serverMessage.startsWith("WAIT FOR THE TOURNAMENT")) {
                 //Send message to array to parse it using split function
                 String[] split = serverMessage.split(" ");
@@ -177,21 +180,32 @@ public class tournamentClient {
                         System.out.println("********AAAAAAA********");
                         game1AI.helper.map.printGameBoard();
                         System.out.println("\n************************");
-                        //System.out.println("make move A");
+                        outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+                                + tileDrawn + " AT " + userMoveInformation);
+                        System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+                                + tileDrawn + " AT " + userMoveInformation);
+
+                        opponentMoves();
                     } else if (gid.equals("B")) {
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
                         System.out.println("********BBBBBB********");
                         game2AI.helper.map.printGameBoard();
                         System.out.println("\n************************");
+                        outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+                                + tileDrawn + " AT " + userMoveInformation);
+                        System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+                                + tileDrawn + " AT " + userMoveInformation);
+
+                        opponentMoves();
                     }
 
-                    outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                            + tileDrawn + " AT " + userMoveInformation);
-                    System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                            + tileDrawn + " AT " + userMoveInformation);
-
-                    opponentMoves();
+//                    outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+//                            + tileDrawn + " AT " + userMoveInformation);
+//                    System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+//                            + tileDrawn + " AT " + userMoveInformation);
+//
+//                    opponentMoves();
                     break;
                 }
             }
@@ -216,14 +230,14 @@ public class tournamentClient {
                     opponentspid = split[5];
                     if(split[2].equals("OVER")){ //Resetting the game if they have ended
                         if(gid.equals("A")){
-                            //game1AI.helper.map.resetGame();
+                            game1AI.helper.map.resetGame();
                             System.out.println("************************");
                             System.out.println("Game A Over");
                             System.out.println("************************");
                             opponentMoves();
                         }
                         else if(gid.equals("B")){
-                            //game2AI.helper.map.resetGame();
+                            game2AI.helper.map.resetGame();
                             System.out.println("************************");
                             System.out.println("Game B Over");
                             System.out.println("************************");
