@@ -22,22 +22,22 @@ public class AIHelper {
     private TileParameters placeWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
 
-    public void findPossibleMoves() {
-        resetMoveFlags();
-        findCoordinateWhereTotoroCanBePlaced();
-        findCoordinateWhereTigerCanBePlaced();
-        findPlaceWhereSettlementCanBeExpanded();
-        findCoordinatesWhereSettlementCanBeFound();
-        setArrayOfMoveOptions();
-    }
+//    public void findPossibleMoves() {
+//        resetMoveFlags();
+//        findCoordinateWhereTotoroCanBePlaced();
+//        findCoordinateWhereTigerCanBePlaced();
+//        findPlaceWhereSettlementCanBeExpanded();
+//        findCoordinatesWhereSettlementCanBeFound();
+//        setArrayOfMoveOptions();
+//    }
 
-    public void resetMoveFlags() {
-        tileMove = false;
-        totoroMove = false;
-        tigerMove = false;
-        expandMove = false;
-        foundMove = false;
-    }
+//    public void resetMoveFlags() {
+//        tileMove = false;
+//        totoroMove = false;
+//        tigerMove = false;
+//        expandMove = false;
+//        foundMove = false;
+//    }
 
     public void findCoordinateWhereTotoroCanBePlaced() {
         visitedCoordinates = new HashSet<>();
@@ -102,13 +102,13 @@ public class AIHelper {
         }
     }
 
-    private void setArrayOfMoveOptions() {
-        moves[0] = tileMove;
-        moves[1] = totoroMove;
-        moves[2] = tigerMove;
-        moves[3] = expandMove;
-        moves[4] = foundMove;
-    }
+//    private void setArrayOfMoveOptions() {
+//        moves[0] = tileMove;
+//        moves[1] = totoroMove;
+//        moves[2] = tigerMove;
+//        moves[3] = expandMove;
+//        moves[4] = foundMove;
+//    }
 
     private boolean settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(int id) {
         return map.getSettlements().get(id).getSize() >= 5

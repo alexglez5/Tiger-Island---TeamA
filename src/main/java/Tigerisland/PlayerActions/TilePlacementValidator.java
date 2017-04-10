@@ -10,7 +10,7 @@ public class TilePlacementValidator extends TilePlacer{
                 && atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge());
     }
 
-    private boolean tileExistsBelow() {
+    private boolean  tileExistsBelow() {
         return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate)
                 || gameBoard.containsKey(locator.mainTerrainCoordinate)
                 ||gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
