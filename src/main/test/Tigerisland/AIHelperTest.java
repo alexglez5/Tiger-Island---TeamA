@@ -143,8 +143,11 @@ public class AIHelperTest{
     @Test
     public void testAICanFoundSettlement(){
         helper.findCoordinatesWhereSettlementCanBeFound();
-        System.out.println(helper.getPlaceWhereSettlementCanBeFound());
+        System.out.println(helper.getPlaceWhereSettlementCanBeFound().getXCoordinate());
+        System.out.println(helper.getPlaceWhereSettlementCanBeFound().getYCoordinate());
         Assert.assertTrue(helper.getPlaceWhereSettlementCanBeFound() != null);
+        helper.map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
+        Assert.assertTrue(helper.map.getBoard().get(helper.getPlaceWhereSettlementCanBeFound()).hasVillager());
     }
 
     @After
