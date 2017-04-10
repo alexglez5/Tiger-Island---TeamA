@@ -161,7 +161,7 @@ public class tournamentClient {
                         userMoveInformation = game2AI.placeAIMove();
                     }
 
-                    outgoingMessage.println("GAME" + gid + "MOVE" + moveNumber + " " + userMoveInformation);
+                    outgoingMessage.println("GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
                     System.out.println("GAME" + " " + gid + " " + "MOVE" + " " + moveNumber + " " + userMoveInformation);
                     break;
                 }
