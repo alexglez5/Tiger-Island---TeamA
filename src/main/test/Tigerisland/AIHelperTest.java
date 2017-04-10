@@ -93,7 +93,12 @@ public class AIHelperTest{
         helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
                 new Coordinate(-1,-1), Orientation.FromTopLeft);
 
+        helper.map.switchPlayers();
+        helper.map.foundNewSettlement(new Coordinate(-1, 1));
+        helper.map.expandSettlement(new Coordinate(-1,1), TerrainType.LAKE);
+
         Assert.assertEquals(helper.getVisitedCoordinates().size(), 16);
+        Assert.assertEquals(helper.map.getSettlements().size(), 2);
     }
 
     @Test
