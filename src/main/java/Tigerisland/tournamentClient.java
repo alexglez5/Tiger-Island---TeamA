@@ -154,6 +154,7 @@ public class tournamentClient {
                     if(gid.equals("A")) {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game1AI.placeAIMove();
+                       // System.out.println(userMoveInformation);
                     }
                     else if(gid.equals("B")){
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
@@ -161,6 +162,7 @@ public class tournamentClient {
                     }
 
                     outgoingMessage.println("GAME" + gid + "MOVE" + moveNumber + " " + userMoveInformation);
+                    System.out.println("GAME" + gid + "MOVE" + moveNumber + " " + userMoveInformation);
                     break;
                 }
                 //Getting opponents move placed on our board

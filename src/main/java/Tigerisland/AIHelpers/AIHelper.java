@@ -72,8 +72,8 @@ public class AIHelper {
                     break;
                 case 2:
                     for (Coordinate c : map.getBoard().keySet()) {
-                        if (c.getYCoordinate() > maxY) {
-                            maxY = c.getYCoordinate();
+                        if (c.getYCoordinate() < minY) {
+                            minY = c.getYCoordinate();
                             coordinate = c;
                         }
                     }
@@ -90,8 +90,8 @@ public class AIHelper {
                     break;
                 case 4:
                     for (Coordinate c : map.getBoard().keySet()) {
-                        if (c.getYCoordinate() < minY) {
-                            minY = c.getYCoordinate();
+                        if (c.getYCoordinate() > maxY) {
+                            maxY = c.getYCoordinate();
                             coordinate = c;
                         }
                     }
