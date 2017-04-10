@@ -129,6 +129,35 @@ public class SettlementSplitTest {
         Assert.assertEquals(map.getSettlements().size(), 2);
     }
 
+    @Test
+    public void testSplitWithTwoPlayers() {
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+                new Coordinate(0,0), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+                new Coordinate(-1,2), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+                new Coordinate(1,1), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+                new Coordinate(2,-1), Orientation.FromBottomLeft);
+
+        map.foundNewSettlement(new Coordinate(-1,0));
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.foundNewSettlement(new Coordinate(-2,2));
+
+        map.switchPlayers();
+        map.foundNewSettlement(new Coordinate(0,2));
+        map.foundNewSettlement(new Coordinate(0,1));
+        map.foundNewSettlement(new Coordinate(1,0));
+
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+                new Coordinate(-1,2), Orientation.FromTop);
+
+        Assert.assertEquals(map.getSettlements().size(), 4);
+
+    }
+
+
     @After
     public void teardown() {
         map.resetGame();
