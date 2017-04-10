@@ -105,9 +105,9 @@ public class AI {
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
         message = "";
-        helper.findPossibleMoves();
+
         boolean[] moves = helper.getMoves();
-        if(moves[0]){
+        if(helper.getPlaceWhereTileCanBePlaced() != null){
             helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced();
             map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
@@ -121,21 +121,22 @@ public class AI {
                     + " " + x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal()
                     + " ";
         }
-        if(moves[1]) {
+        helper.findPossibleMoves();
+        if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
             int z = -1 * x - y;
             map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
             message += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
         }
-        else if(moves[2]) {
+        else if(helper.getPlaceWhereTigerCanBePlaced() != null) {
             int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
             int z = -1 * x - y;
             map.placeTotoro(helper.getPlaceWhereTigerCanBePlaced());
             message += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
-        else if (moves[3]) {
+        else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
             ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
             Coordinate coordinate = parameters.getCoordinate();
             int x = coordinate.getXCoordinate();
@@ -144,7 +145,7 @@ public class AI {
             map.expandSettlement(coordinate, parameters.getTerrainType());
             message += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
         }
-        else if(moves[4]) {
+        else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
             int y = helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
             int z = -1 * x - y;

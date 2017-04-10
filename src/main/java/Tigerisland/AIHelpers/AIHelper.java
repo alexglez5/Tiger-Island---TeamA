@@ -47,6 +47,7 @@ public class AIHelper {
                    for(Orientation orientation : Orientation.getOrientations()){
                        if(map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), coordinate, orientation)){
                            placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, coordinate, orientation);
+                           tileMove = true;
                            break;
                        }
                    }
