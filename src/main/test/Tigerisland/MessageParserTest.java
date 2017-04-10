@@ -20,4 +20,6 @@ public class MessageParserTest {
         ai.setServerMessage(message);
 //        ai.placeOpponentMove();
     }
+
+
 }

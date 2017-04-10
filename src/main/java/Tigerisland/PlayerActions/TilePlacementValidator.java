@@ -12,8 +12,8 @@ public class TilePlacementValidator extends TilePlacer{
 
     private boolean tileExistsBelow() {
         return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate)
-                && gameBoard.containsKey(locator.mainTerrainCoordinate)
-                && gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
+                || gameBoard.containsKey(locator.mainTerrainCoordinate)
+                || gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge() {

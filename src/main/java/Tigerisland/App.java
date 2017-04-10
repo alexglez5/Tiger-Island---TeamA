@@ -1,5 +1,7 @@
 package Tigerisland;
 
+import Tigerisland.AIHelpers.Choice;
+
 public class App {
 
     Boolean isBoardEmpty = true;
