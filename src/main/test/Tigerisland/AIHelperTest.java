@@ -14,23 +14,23 @@ public class AIHelperTest{
     @Before
     public void initializeGameBoard() throws Exception {
         helper = new AIHelper();
-        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(0, 0), Orientation.FromBottom);
     }
 
     @Test
     public void shouldReturnCoordinateWhereTotoroCanBePlaced() throws Exception {
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(2, 1), Orientation.FromBottom);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
                 new Coordinate(1, 3), Orientation.FromBottomLeft);
 
         helper.map.foundNewSettlement(new Coordinate(1, 1));
-        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCKY);
+        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCK);
         helper.findCoordinateWhereTotoroCanBePlaced();
         Assert.assertTrue(helper.map.totoroCanBePlaced(helper.getPlaceWhereTotoroCanBePlaced()));
     }
@@ -38,11 +38,11 @@ public class AIHelperTest{
     // test also checks that other player settlement is not taken into account
     @Test
     public void shouldCoordinateWhereTigerCanBePlaced() throws Exception {
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(2, 1), Orientation.FromBottom);
 
         helper.map.foundNewSettlement(new Coordinate(1,1));
@@ -74,24 +74,24 @@ public class AIHelperTest{
 
     @Test
     public void shouldReturnCoordinateWhereTotoroCanBePlacedTwoPlayers() throws Exception {
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(2, 1), Orientation.FromBottom);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.JUNGLE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
                 new Coordinate(1, 3), Orientation.FromBottomLeft);
 
         helper.map.foundNewSettlement(new Coordinate(1, 1));
-        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCKY);
+        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCK);
         helper.findCoordinateWhereTotoroCanBePlaced();
         Assert.assertTrue(helper.map.totoroCanBePlaced(helper.getPlaceWhereTotoroCanBePlaced()));
         Assert.assertEquals(helper.getVisitedCoordinates().size(), 16);
 
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.ROCK),
                 new Coordinate(-1,0), Orientation.FromBottomLeft);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.ROCK),
                 new Coordinate(-1,-1), Orientation.FromTopLeft);
 
         helper.map.switchPlayers();
@@ -104,13 +104,13 @@ public class AIHelperTest{
 
     @Test
     public void findSettlementToExandReturnsAnExpandableSettlement() throws Exception{
-        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(0,0), Orientation.FromBottom);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(2,1), Orientation.FromBottom);
         helper.map.foundNewSettlement(new Coordinate(1,1));
         helper.findPlaceWhereSettlementCanBeExpanded();
@@ -120,19 +120,19 @@ public class AIHelperTest{
 
     @Test
     public void makeAIPlaceTileTest(){
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.GRASSLANDS),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.GRASSLANDS, TerrainType.ROCKY),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCKY, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(2, 1), Orientation.FromBottom);
 
-        helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS);
+        helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS);
 
-        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS) != null);
-        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getLeftTerrainType(),
-                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getMainTerrainCoordinate(),
-                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCKY,TerrainType.GRASSLANDS).getOrientattion());
+        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS) != null);
+        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getLeftTerrainType(),
+                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getMainTerrainCoordinate(),
+                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getOrientattion());
         Tile tile = new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType());
         System.out.println(parameters.getMainTerrainCoordinate().getXCoordinate());
         System.out.println(parameters.getMainTerrainCoordinate().getYCoordinate());
