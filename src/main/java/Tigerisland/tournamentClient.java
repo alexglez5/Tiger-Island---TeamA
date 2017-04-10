@@ -242,11 +242,12 @@ public class tournamentClient {
                         System.out.println("************************");
                         System.out.println("Opponent A move");
                         System.out.println("************************");
-                        //winTheTournament();
+
                         System.out.println("********AAAAAAA********");
                         game1AI.helper.map.printGameBoard();
                         System.out.println("\n************************");
-                        opponentMoves();
+                        winTheTournament();
+                        //opponentMoves();
                     }
                     else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
