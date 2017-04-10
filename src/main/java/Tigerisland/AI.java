@@ -110,15 +110,15 @@ public class AI {
         TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
-        message = "";
-        if (helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null) {
+        String outMessage = "";
+        if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
             int y = parameters.getMainTerrainCoordinate().getYCoordinate();
             int z = -1 * x - y;
-            message += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
+            outMessage += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
         helper.setMap(getMap());
         if (helper.getPlaceWhereTotoroCanBePlaced() != null) {
