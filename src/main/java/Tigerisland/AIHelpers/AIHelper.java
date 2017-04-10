@@ -22,6 +22,14 @@ public class AIHelper {
     private TileParameters placeWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
 
+    public Game getMap() {
+        return map;
+    }
+
+    public void setMap(Game map) {
+        this.map = map;
+    }
+
 //    public void findPossibleMoves() {
 //        resetMoveFlags();
 //        findCoordinateWhereTotoroCanBePlaced();
@@ -39,13 +47,9 @@ public class AIHelper {
 //        foundMove = false;
 //    }
 
-    public void findCoordinateWhereTotoroCanBePlaced() {
-        visitedCoordinates = new HashSet<>();
-        for (int id : map.getSettlements().keySet())
-            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id)
-                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
-                for (Coordinate coordinate : map.getSettlements().get(id).bfs())
-                    findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
+    public Coordinate getPlaceWhereTigerCanBePlaced() {
+        findCoordinateWhereTigerCanBePlaced();
+        return placeWhereTigerCanBePlaced;
     }
 
     public void findCoordinateWhereTigerCanBePlaced() {
@@ -56,6 +60,48 @@ public class AIHelper {
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
 
+    }
+
+    private boolean settlementDoesNotContainTiger(int id) {
+        return !map.getSettlements().get(id).hasTiger();
+    }
+
+    private void findNeighborsOfCoordinateWhereTigerCanBePlaced(Coordinate coordinate) {
+        map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+        for (Coordinate neighborCoordinate : map.locator.surroundingCoordinates) {
+            if (tigerCanBePlacedInCoordinate(neighborCoordinate)) {
+                placeWhereTigerCanBePlaced = neighborCoordinate;
+                tigerMove = true;
+            }
+            visitedCoordinates.add(neighborCoordinate);
+        }
+    }
+
+//    private void setArrayOfMoveOptions() {
+//        moves[0] = tileMove;
+//        moves[1] = totoroMove;
+//        moves[2] = tigerMove;
+//        moves[3] = expandMove;
+//        moves[4] = foundMove;
+//    }
+
+    private boolean tigerCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
+        return !visitedCoordinates.contains(neighborCoordinate) && map.tigerCanBePlaced(neighborCoordinate);
+    }
+
+    //todo
+    /*
+    - functions that will return lists of coordinates for all the places
+    one can:
+        - place a tile in level one
+        - nuke a tile at level n, n-1... 1
+        - expand a settlement
+        - found a settlement
+    */
+
+    public ExpandingParameters getPlaceWhereSettlementCanBeExpanded() {
+        findPlaceWhereSettlementCanBeExpanded();
+        return placeWhereSettlementCanBeExpanded;
     }
 
     public void findPlaceWhereSettlementCanBeExpanded() {
@@ -82,6 +128,11 @@ public class AIHelper {
             placeWhereSettlementCanBeExpanded = movesWithScores.get(scores.last());
     }
 
+    public Coordinate getPlaceWhereSettlementCanBeFound() {
+        findCoordinatesWhereSettlementCanBeFound();
+        return placeWhereSettlementCanBeFound;
+    }
+
     public void findCoordinatesWhereSettlementCanBeFound() {
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
@@ -102,28 +153,24 @@ public class AIHelper {
         }
     }
 
-//    private void setArrayOfMoveOptions() {
-//        moves[0] = tileMove;
-//        moves[1] = totoroMove;
-//        moves[2] = tigerMove;
-//        moves[3] = expandMove;
-//        moves[4] = foundMove;
-//    }
+    public Coordinate getPlaceWhereTotoroCanBePlaced() {
+        findCoordinateWhereTotoroCanBePlaced();
+        return placeWhereTotoroCanBePlaced;
+    }
+
+    public void findCoordinateWhereTotoroCanBePlaced() {
+        visitedCoordinates = new HashSet<>();
+        for (int id : map.getSettlements().keySet())
+            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id)
+                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
+                for (Coordinate coordinate : map.getSettlements().get(id).bfs())
+                    findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
+    }
 
     private boolean settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(int id) {
         return map.getSettlements().get(id).getSize() >= 5
                 && !map.getSettlements().get(id).hasTotoro();
     }
-
-    //todo
-    /*
-    - functions that will return lists of coordinates for all the places
-    one can:
-        - place a tile in level one
-        - nuke a tile at level n, n-1... 1
-        - expand a settlement
-        - found a settlement
-    */
 
     private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
         map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
@@ -136,27 +183,13 @@ public class AIHelper {
         }
     }
 
-    private boolean settlementDoesNotContainTiger(int id) {
-        return !map.getSettlements().get(id).hasTiger();
-    }
-
-    private void findNeighborsOfCoordinateWhereTigerCanBePlaced(Coordinate coordinate) {
-        map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-        for (Coordinate neighborCoordinate : map.locator.surroundingCoordinates) {
-            if (tigerCanBePlacedInCoordinate(neighborCoordinate)) {
-                placeWhereTigerCanBePlaced = neighborCoordinate;
-                tigerMove = true;
-            }
-            visitedCoordinates.add(neighborCoordinate);
-        }
-    }
-
     private boolean totoroCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
         return !visitedCoordinates.contains(neighborCoordinate) && map.totoroCanBePlaced(neighborCoordinate);
     }
 
-    private boolean tigerCanBePlacedInCoordinate(Coordinate neighborCoordinate) {
-        return !visitedCoordinates.contains(neighborCoordinate) && map.tigerCanBePlaced(neighborCoordinate);
+    public TileParameters getPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
+        findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
+        return placeWhereTileCanBePlaced;
     }
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
@@ -165,8 +198,8 @@ public class AIHelper {
                     && map.getSettlements().get(id).getSize() > 3) {
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs()) {
                     map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
-                    for(Coordinate tempCoordinate : map.locator.surroundingCoordinates) {
-                        if(map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
+                    for (Coordinate tempCoordinate : map.locator.surroundingCoordinates) {
+                        if (map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
                             for (Orientation orientation : Orientation.getOrientations()) {
                                 if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)) {
                                     System.out.println("IN NUKE IF LOOP");
@@ -243,31 +276,6 @@ public class AIHelper {
             }
         }
         tileMove = true;
-    }
-
-    public Coordinate getPlaceWhereTigerCanBePlaced() {
-        findCoordinateWhereTigerCanBePlaced();
-        return placeWhereTigerCanBePlaced;
-    }
-
-    public ExpandingParameters getPlaceWhereSettlementCanBeExpanded() {
-        findPlaceWhereSettlementCanBeExpanded();
-        return placeWhereSettlementCanBeExpanded;
-    }
-
-    public Coordinate getPlaceWhereSettlementCanBeFound() {
-        findCoordinatesWhereSettlementCanBeFound();
-        return placeWhereSettlementCanBeFound;
-    }
-
-    public Coordinate getPlaceWhereTotoroCanBePlaced() {
-        findCoordinateWhereTotoroCanBePlaced();
-        return placeWhereTotoroCanBePlaced;
-    }
-
-    public TileParameters getPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain){
-        findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
-        return placeWhereTileCanBePlaced;
     }
 
     public boolean[] getMoves() {

@@ -9,15 +9,16 @@ import Tigerisland.AIHelpers.TileParameters;
  * Created by Alexander Gonzalez on 4/1/2017.
  */
 public class AI {
+    public Game map = new Game();
     public AIHelper helper = new AIHelper();
     private String message;
 
-    public void setServerMessage(String message){
+    public void setServerMessage(String message) {
         this.message = message;
     }
 
     public void placeOpponentMove() {
-        helper.map.setCurrentPlayer(2);
+        map.setCurrentPlayer(2);
         String[] split = message.split(" ");
         String xTile = split[9];
         String yTile = split[11];
@@ -51,7 +52,7 @@ public class AI {
         }
 
         Orientation orientation;
-        switch(Integer.parseInt(intOrientation)) {
+        switch (Integer.parseInt(intOrientation)) {
             case 1:
                 orientation = Orientation.FromTop;
                 break;
@@ -74,11 +75,11 @@ public class AI {
                 orientation = Orientation.FromBottom;
         }
 
-        helper.map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
+        map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
                 , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
                 , orientation);
 
-        switch (move){
+        switch (move) {
             case FOUNDED:
                 helper.map.foundNewSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
@@ -86,63 +87,70 @@ public class AI {
                 helper.map.expandSettlement(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)), TerrainType.valueOf(terrainType));
                 break;
             case TOTORO:
-                helper. map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
+                helper.map.placeTotoro(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
             case TIGER:
                 helper.map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
         }
+        helper.setMap(getMap());
     }
 
-    public String placeAIMove(){
-        helper.map.setCurrentPlayer(1);
+    public Game getMap() {
+        return map;
+    }
+
+    public void setMap(Game map) {
+        this.map = map;
+    }
+
+    public String placeAIMove() {
+        map.setCurrentPlayer(1);
         String[] terrains = message.split(" ");
         TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
         message = "";
-        if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
+        if (helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null) {
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
-            helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
+            map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
             int y = parameters.getMainTerrainCoordinate().getYCoordinate();
             int z = -1 * x - y;
             message += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
-        if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
+        helper.setMap(getMap());
+        if (helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
             int z = -1 * x - y;
-            helper.map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
+            map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
             message += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
-        }
-        else if(helper.getPlaceWhereTigerCanBePlaced() != null) {
+        } else if (helper.getPlaceWhereTigerCanBePlaced() != null) {
             int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
             int y = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
             int z = -1 * x - y;
-            helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
+            map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             message += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
-        }
-        else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
+        } else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
             ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
             Coordinate coordinate = parameters.getCoordinate();
             int x = coordinate.getXCoordinate();
             int y = coordinate.getYCoordinate();
             int z = -1 * x - y;
-            helper.map.expandSettlement(coordinate, parameters.getTerrainType());
+            map.expandSettlement(coordinate, parameters.getTerrainType());
             message += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
-        }
-        else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
+        } else if (helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
             int y = helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
             int z = -1 * x - y;
-            helper.map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
+            map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
             message += "FOUND SETTLEMENT AT " + x + " " + y + " " + z;
-        }
-        else
+        } else
             message += "UNABLE TO BUILD";
 
+        helper.setMap(getMap());
         return message;
     }
 }

@@ -113,7 +113,6 @@ public class Game {
         return types;
     }
 
-    // todo: Let's separate the validation and actual placing of tile in gameboard
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.updtateComponents(this.getComponents());
         tileValidator.updtateComponents(this.getComponents());
