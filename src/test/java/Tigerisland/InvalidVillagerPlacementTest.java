@@ -39,7 +39,7 @@ public class InvalidVillagerPlacementTest {
     @Then("^the player cannot place (\\d+) villager at \\((\\d+),(\\d+)\\)$")
     public void the_player_cannot_place_villager_at(int numberOfVillagers, int coordinateX, int coordinateY) throws Throwable {
         game.foundNewSettlement(cord);
-        if(!game.settlementCanBeFound(cord)) {
+        if(game.getSettlements().isEmpty()) {
             throw new Error("the hex has villagers despite incorrect terrain");
         }
     }
