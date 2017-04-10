@@ -158,7 +158,7 @@ public class tournamentClient {
                     if (gid.equals("A")) {
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game1AI.placeAIMove();
-                        System.out.println("make move A");
+                        //System.out.println("make move A");
                     } else if (gid.equals("B")) {
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
@@ -191,13 +191,13 @@ public class tournamentClient {
                         if(gid.equals("A")){
                             game1AI.helper.map.resetGame();
                             System.out.println("over A");
-                            winTheTournament();
+                            opponentMoves();
                         }
                         else if(gid.equals("B")){
                             game2AI.helper.map.resetGame();
 
                             System.out.println("over B");
-                            winTheTournament();
+                            waitForTournamentToBegin();
                         }
                     }
                     else if(gid.equals("A") && opponentspid.equals(ourPid)) {
