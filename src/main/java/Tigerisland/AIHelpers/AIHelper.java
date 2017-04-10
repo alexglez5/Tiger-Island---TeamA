@@ -5,6 +5,7 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class AIHelper {
@@ -121,7 +122,8 @@ public class AIHelper {
     public void findCoordinateWhereTotoroCanBePlaced() {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
-            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id))
+            if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id)
+                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
     }
@@ -129,7 +131,8 @@ public class AIHelper {
     public void findCoordinateWhereTigerCanBePlaced() {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
-            if (settlementDoesNotContainTiger(id))
+            if (settlementDoesNotContainTiger(id)
+                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
 
@@ -212,14 +215,15 @@ public class AIHelper {
         TreeSet<Integer> scores = new TreeSet<>();
         HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
         for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == map.getCurrentPlayerId()) {
+            if (map.getSettlements().get(id).getPlayerID() == map.getCurrentPlayerId()
+                    && !map.getSettlements().get(id).hasTotoro()
+                    && !map.getSettlements().get(id).hasTiger()) {
                 for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
                     ExpandingParameters parameters = new ExpandingParameters(
                             map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
-                    if (map.settlementCanBeExpanded(map.getAnyCoordinateOfSameTerrainTypeInSettlement(id,
-                            terrainType), terrainType)) {
-                        movesWithScores.put(map.getPointsSettlementExpansionWouldProduce(map.
-                                getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType), parameters);
+                    int points = map.getPointsSettlementExpansionWouldProduce(parameters.getCoordinate(), parameters.getTerrainType());
+                    if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType())){
+                        movesWithScores.put(points, parameters);
                         expandMove = true;
                     }
                 }
@@ -234,9 +238,14 @@ public class AIHelper {
         visitedCoordinates = new HashSet<>();
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
-                placeWhereSettlementCanBeFound = c;
-                foundMove = true;
-                break;
+                map.builder.getDifferentSettlementIDsAroundCoordinate(c);
+                for(int id : map.builder.differentSettlementIDsAroundCoordinate){
+                    if(!map.getSettlements().containsKey(id)){
+                        placeWhereSettlementCanBeFound = c;
+                        foundMove = true;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -264,4 +273,6 @@ public class AIHelper {
     public boolean[] getMoves() {
         return moves;
     }
+
+    public Set<Coordinate> getVisitedCoordinates() { return visitedCoordinates; }
 }

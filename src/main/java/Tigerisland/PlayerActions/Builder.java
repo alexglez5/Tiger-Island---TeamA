@@ -13,7 +13,7 @@ public class Builder {
     protected Coordinate coordinate;
     protected TerrainType terrainType;
     protected int settlementID;
-    protected Set<Integer> differentSettlementIDsAroundCoordinate;
+    public Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
     protected Player player = new Player();
@@ -43,7 +43,6 @@ public class Builder {
     public void foundNewSettlement(Coordinate coordinate) {
         gameBoard.get(coordinate).placeVillagers();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
         settlements.put(settlementID, new Settlement(coordinate));
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.addPoints(1);
@@ -133,19 +132,16 @@ public class Builder {
         findIdOfSettlementTigerCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
         settlements.get(settlementID).addToSettlement(coordinate);
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.addPoints(pointsForTigerPlacement);
         player.useTiger();
     }
 
-
     private void placeTotoroAtGivenCoordinate() {
         findIdOfSettlementTotoroCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
         settlements.get(settlementID).addToSettlement(coordinate);
         settlements.get(settlementID).placeTotoro();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
@@ -174,7 +170,6 @@ public class Builder {
         for (Coordinate coordinateToExpand : visitedCoordinates) {
             gameBoard.get(coordinateToExpand).placeVillagers();
             gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
-            gameBoard.get(coordinate).setPlayerID(player.getPlayerID());
             settlements.get(settlementID).addToSettlement(coordinateToExpand);
         }
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
