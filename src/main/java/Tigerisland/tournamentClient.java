@@ -180,32 +180,32 @@ public class tournamentClient {
                         System.out.println("********AAAAAAA********");
                         game1AI.helper.map.printGameBoard();
                         System.out.println("\n************************");
-                        outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
-                        System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
-
-                        opponentMoves();
+//                        outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+//                                + tileDrawn + " AT " + userMoveInformation);
+//                        System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+//                                + tileDrawn + " AT " + userMoveInformation);
+//
+//                        opponentMoves();
                     } else if (gid.equals("B")) {
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
                         userMoveInformation = game2AI.placeAIMove();
                         System.out.println("********BBBBBB********");
                         game2AI.helper.map.printGameBoard();
                         System.out.println("\n************************");
-                        outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
-                        System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
-
-                        opponentMoves();
+//                        outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+//                                + tileDrawn + " AT " + userMoveInformation);
+//                        System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+//                                + tileDrawn + " AT " + userMoveInformation);
+//
+//                        opponentMoves();
                     }
 
-//                    outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-//                            + tileDrawn + " AT " + userMoveInformation);
-//                    System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-//                            + tileDrawn + " AT " + userMoveInformation);
-//
-//                    opponentMoves();
+                    outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+                            + tileDrawn + " AT " + userMoveInformation);
+                    System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
+                            + tileDrawn + " AT " + userMoveInformation);
+
+                    opponentMoves();
                     break;
                 }
             }
@@ -222,9 +222,9 @@ public class tournamentClient {
         try {
             while ((serverMessage = incomingMessage.readLine()) != null) {
                 if(serverMessage.startsWith("GAME")){
-                    System.out.println("********OPPOMOVE********");
-                    System.out.println(serverMessage);
-                    System.out.println("************************");
+//                    System.out.println("********OUR MOVE********");
+//                    System.out.println(serverMessage);
+//                    System.out.println("************************");
                     String[] split = serverMessage.split(" ");
                     gid = split[1];
                     opponentspid = split[5];

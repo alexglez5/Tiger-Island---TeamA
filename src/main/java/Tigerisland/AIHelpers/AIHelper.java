@@ -86,18 +86,18 @@ public class AIHelper {
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
                 map.builder.getDifferentSettlementIDsAroundCoordinate(c);
-                if (map.getSettlements().size() == 0) {
+                //if (map.getSettlements().size() == 0) {
                     placeWhereSettlementCanBeFound = c;
                     foundMove = true;
                     break;
-                }
-                for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
-                    if (!map.getSettlements().containsKey(id)) {
-                        placeWhereSettlementCanBeFound = c;
-                        foundMove = true;
-                        break;
-                    }
-                }
+                //}
+//                for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
+//                    //if (!map.getSettlements().containsKey(id)) {
+//                        placeWhereSettlementCanBeFound = c;
+//                        foundMove = true;
+//                        break;
+//                   // }
+//                }
             }
         }
     }
