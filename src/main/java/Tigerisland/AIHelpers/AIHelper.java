@@ -85,7 +85,7 @@ public class AIHelper {
     public void findCoordinatesWhereSettlementCanBeFound() {
         for (Coordinate c : map.getBoard().keySet()) {
             if (map.settlementCanBeFound(c)) {
-                map.builder.getDifferentSettlementIDsAroundCoordinate(c);
+                //map.builder.getDifferentSettlementIDsAroundCoordinate(c);
                 //if (map.getSettlements().size() == 0) {
                     placeWhereSettlementCanBeFound = c;
                     foundMove = true;

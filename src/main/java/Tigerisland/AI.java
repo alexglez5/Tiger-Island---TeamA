@@ -103,6 +103,7 @@ public class AI {
         TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
         String outMessage = "";
+        helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
         if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
             TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),

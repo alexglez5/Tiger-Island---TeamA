@@ -93,7 +93,7 @@ public class Game {
     public void printGameBoard(){
         System.out.print("GameBoard size: " + getBoard().size() + " ==> ");
         for(Coordinate c : getBoard().keySet()){
-            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + " | ");
+            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
         }
     }
 
