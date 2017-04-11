@@ -1,5 +1,7 @@
 package Tigerisland;
 
+import java.util.Random;
+
 public enum Orientation {
     FromBottom(4), FromBottomRight(3), FromTopRight(2),
     FromTop(1), FromTopLeft(6), FromBottomLeft(5);
@@ -22,20 +24,18 @@ public enum Orientation {
         orientations[3] = FromBottom;
         orientations[4] = FromBottomLeft;
         orientations[5] = FromTopLeft;
+        shuffleArray(orientations);
         return orientations;
     }
 
-//
-//    public enum EXIT_CODE {
-//        A(104), B(203);
-//
-//        private int numVal;
-//
-//        EXIT_CODE(int numVal) {
-//            this.numVal = numVal;
-//        }
-//
-//        public int getNumVal() {
-//            return numVal;
-//        }
+    // Implementing Fisher–Yates shuffle
+    static void shuffleArray(Orientation[] ar) {
+        Random rnd = new Random();
+        for (int i = ar.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            Orientation a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+    }
 }
