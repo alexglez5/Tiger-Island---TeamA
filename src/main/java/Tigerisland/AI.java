@@ -109,21 +109,21 @@ public class AI {
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
-            int y = -1 * x - y;
             int z = parameters.getMainTerrainCoordinate().getYCoordinate();
+            int y = -1 * x - z;
             outMessage += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
         if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
-            int y = -1 * x - y;
             int z = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
+            int y = -1 * x - z;
             helper.map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
             outMessage += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
         }
         else if(helper.getPlaceWhereTigerCanBePlaced() != null) {
             int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
-            int y = -1 * x - y;
             int z = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
+            int y = -1 * x - z;
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
@@ -131,15 +131,15 @@ public class AI {
             ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
             Coordinate coordinate = parameters.getCoordinate();
             int x = coordinate.getXCoordinate();
-            int y = -1 * x - y;
             int z = coordinate.getYCoordinate();
+            int y = -1 * x - z;
             helper.map.expandSettlement(coordinate, parameters.getTerrainType());
             message += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
         }
         else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
-            int y = -1 * x - y;
             int z =  helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
+            int y = -1 * x - z;
             helper.map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
             outMessage += "FOUND SETTLEMENT AT " + x + " " + y + " " + z;
         }
