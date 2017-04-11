@@ -23,15 +23,17 @@ public class AIHelper {
     private HashSet<Coordinate> visitedCoordinates;
 
     public void findCoordinateWhereTotoroCanBePlaced() {
+        placeWhereTotoroCanBePlaced = null;
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
             if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id)
-                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
+                    && map.getSettlements().get(id).getPlayerID() == 1)
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
     }
 
     public void findCoordinateWhereTigerCanBePlaced() {
+        placeWhereTigerCanBePlaced = null;
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
             if (settlementDoesNotContainTiger(id)
@@ -42,6 +44,7 @@ public class AIHelper {
     }
 
     public void findPlaceWhereSettlementCanBeExpanded() {
+        placeWhereSettlementCanBeExpanded = null;
         TreeSet<Integer> scores = new TreeSet<>();
         HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
         for (int id : map.getSettlements().keySet()) {
@@ -66,20 +69,22 @@ public class AIHelper {
     }
 
     public void findCoordinatesWhereSettlementCanBeFound() {
+        placeWhereSettlementCanBeFound = null;
         for (Coordinate c : map.getBoard().keySet()) {
+            map.builder.getDifferentSettlementIDsAroundCoordinate(c);
+
             for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
-                if (!map.getSettlements().containsKey(id)) {
+                if (!map.getSettlements().containsKey(id) && map.getSettlements().get(id).getPlayerID() == 1 && map.settlementCanBeFound(c)) {
                     placeWhereSettlementCanBeFound = c;
                     foundMove = true;
                     break;
                 }
             }
             if (map.settlementCanBeFound(c)) {
-                    placeWhereSettlementCanBeFound = c;
-                    foundMove = true;
-                    break;
+                placeWhereSettlementCanBeFound = c;
+                foundMove = true;
+                break;
             }
-
         }
     }
 
