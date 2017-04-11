@@ -181,6 +181,16 @@ public class AIHelperTest{
                 parameters.getMainTerrainCoordinate().getYCoordinate())).getLevel(),2);
     }
 
+    @Test
+    public void testNukingIncreasesLevel() {
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(1, 0), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(0, 0), Orientation.FromBottomRight);
+
+        Assert.assertEquals(helper.map.getBoard().get(new Coordinate(0,0)).getLevel(), 2);
+    }
+
     @After
     public void deallocateHexesInMap() throws Exception {
         helper.map.resetGame();
