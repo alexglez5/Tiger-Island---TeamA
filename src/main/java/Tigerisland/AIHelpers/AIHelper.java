@@ -48,7 +48,7 @@ public class AIHelper {
         TreeSet<Integer> scores = new TreeSet<>();
         HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
         for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == map.getCurrentPlayerId()
+            if (map.getSettlements().get(id).getPlayerID() == 1
                     && !map.getSettlements().get(id).hasTotoro()
                     && !map.getSettlements().get(id).hasTiger()) {
                 for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
@@ -70,11 +70,28 @@ public class AIHelper {
 
     public void findCoordinatesWhereSettlementCanBeFound() {
         placeWhereSettlementCanBeFound = null;
+        visitedCoordinates = new HashSet<>();
+        for (int id : map.getSettlements().keySet()) {
+            if (map.getSettlements().get(id).getPlayerID() == 1) {
+                for(Coordinate tempCoordinate : map.getSettlements().get(id).bfs()){
+                    map.locator.findCounterClockwiseCoordinatesAroundCoordinate(tempCoordinate);
+                    for(Coordinate c : map.locator.surroundingCoordinates){
+                        if(!visitedCoordinates.contains(c) && map.settlementCanBeFound(c)){
+                            placeWhereSettlementCanBeFound = c;
+                            break;
+                        }
+                        visitedCoordinates.add(c);
+                    }
+                }
+            }
+        }
+
         for (Coordinate c : map.getBoard().keySet()) {
             map.builder.getDifferentSettlementIDsAroundCoordinate(c);
 
             for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
-                if (!map.getSettlements().containsKey(id) && map.getSettlements().get(id).getPlayerID() == 1 && map.settlementCanBeFound(c)) {
+                if (!map.getSettlements().containsKey(id) && map.getSettlements().get(id).getPlayerID() == 1
+                        && map.settlementCanBeFound(c)) {
                     placeWhereSettlementCanBeFound = c;
                     foundMove = true;
                     break;

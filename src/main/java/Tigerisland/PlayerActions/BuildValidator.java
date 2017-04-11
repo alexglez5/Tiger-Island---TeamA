@@ -33,7 +33,6 @@ public class BuildValidator extends Builder{
     }
 
     private boolean thereIsAVillagerLeft() {
-        System.out.println(player.getNumberOfVillagersLeft());
         return player.getNumberOfVillagersLeft() > 0;
     }
 
