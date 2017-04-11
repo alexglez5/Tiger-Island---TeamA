@@ -85,9 +85,6 @@ public class tournamentClient {
             }
             //If match is going to start go to correct function
             else if (serverMessage.startsWith("NEW MATCH")) { //Should only get called once
-//                System.out.println("************************");
-//                System.out.println(serverMessage);
-//                System.out.println("************************");
 
                 game1AI = new AI();
                 game2AI = new AI();
@@ -103,25 +100,12 @@ public class tournamentClient {
             }
 
             else if (serverMessage.startsWith("MAKE YOUR MOVE IN GAME")) {
-//                System.out.println("************************");
-//                System.out.println(serverMessage);
-//                System.out.println("************************");
                 String[] split = serverMessage.split(" ");
                 gid = split[5];
                 moveNumber = split[10];
                 tileDrawn = split[12];
                 String[] tileSplit = tileDrawn.split("[+]");
                 tileToAI = tileSplit[0] + " " + tileSplit[1];              //Check this!!!
-//                System.out.println("************************");
-//                System.out.println(tileToAI);
-//                System.out.println("************************");
-
-//                System.out.println("\n*********Game A******\n");
-//                game1AI.helper.map.printGameBoard();
-//
-//                System.out.println("\n*********Game B******\n");
-//                game2AI.helper.map.printGameBoard();
-//                System.out.println("\n");
 
                 if (gid.equals("A")) {
                     game1AI.setServerMessage(tileToAI);  //send to thread for AI
@@ -130,7 +114,7 @@ public class tournamentClient {
                             + tileDrawn + " AT " + userMoveInformation);
                     System.out.println("OURS: ************");
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                            + tileDrawn + " AT " + userMoveInformation + "\n");
+                            + tileDrawn + " AT " + userMoveInformation);
                 }
                 else if (gid.equals("B")) {
                     game2AI.setServerMessage(tileToAI);  //send to thread for AI
@@ -139,12 +123,8 @@ public class tournamentClient {
                             + tileDrawn + " AT " + userMoveInformation);
                     System.out.println("OURS: ************");
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                            + tileDrawn + " AT " + userMoveInformation + "\n");
+                            + tileDrawn + " AT " + userMoveInformation);
                 }
-//                System.out.println("\n*********AFTER******\n");
-//                game1AI.helper.map.printGameBoard();
-//                System.out.println("\n*********B******\n");
-//                game2AI.helper.map.printGameBoard();
             }
             else if(serverMessage.startsWith("GAME")){
                 String[] split = serverMessage.split(" ");

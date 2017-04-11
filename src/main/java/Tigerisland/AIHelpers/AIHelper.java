@@ -22,23 +22,6 @@ public class AIHelper {
     private TileParameters placeWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
 
-//    public void findPossibleMoves() {
-//        resetMoveFlags();
-//        findCoordinateWhereTotoroCanBePlaced();
-//        findCoordinateWhereTigerCanBePlaced();
-//        findPlaceWhereSettlementCanBeExpanded();
-//        findCoordinatesWhereSettlementCanBeFound();
-//        setArrayOfMoveOptions();
-//    }
-
-//    public void resetMoveFlags() {
-//        tileMove = false;
-//        totoroMove = false;
-//        tigerMove = false;
-//        expandMove = false;
-//        foundMove = false;
-//    }
-
     public void findCoordinateWhereTotoroCanBePlaced() {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
@@ -84,31 +67,21 @@ public class AIHelper {
 
     public void findCoordinatesWhereSettlementCanBeFound() {
         for (Coordinate c : map.getBoard().keySet()) {
-            if (map.settlementCanBeFound(c)) {
-                //map.builder.getDifferentSettlementIDsAroundCoordinate(c);
-                //if (map.getSettlements().size() == 0) {
+            for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
+                if (!map.getSettlements().containsKey(id)) {
                     placeWhereSettlementCanBeFound = c;
                     foundMove = true;
                     break;
-                //}
-//                for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
-//                    //if (!map.getSettlements().containsKey(id)) {
-//                        placeWhereSettlementCanBeFound = c;
-//                        foundMove = true;
-//                        break;
-//                   // }
-//                }
+                }
             }
+            if (map.settlementCanBeFound(c)) {
+                    placeWhereSettlementCanBeFound = c;
+                    foundMove = true;
+                    break;
+            }
+
         }
     }
-
-//    private void setArrayOfMoveOptions() {
-//        moves[0] = tileMove;
-//        moves[1] = totoroMove;
-//        moves[2] = tigerMove;
-//        moves[3] = expandMove;
-//        moves[4] = foundMove;
-//    }
 
     private boolean settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(int id) {
         return map.getSettlements().get(id).getSize() >= 5

@@ -91,10 +91,12 @@ public class Game {
     }
 
     public void printGameBoard(){
-        System.out.print("GameBoard size: " + getBoard().size() + " ==> ");
-        for(Coordinate c : getBoard().keySet()){
-            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
-        }
+        //System.out.print("GameBoard size: " + getBoard().size() + " ==> ");
+//        for(Coordinate c : getBoard().keySet()){
+//            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
+//        }
+        System.out.println("p1" + player1.getNumberOfVillagersLeft() + "\n");
+        System.out.println("p1" + player1.getNumberOfVillagersLeft() + "\n");
     }
 
     public Coordinate getAnyCoordinateOfSameTerrainTypeInSettlement(int settlementID, TerrainType terrainType){
