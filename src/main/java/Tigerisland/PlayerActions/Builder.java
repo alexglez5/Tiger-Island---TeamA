@@ -51,8 +51,14 @@ public class Builder {
 
     private void mergeSettlementsThatCanBeMerged(Coordinate coordinate) {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
-        for (int id : differentSettlementIDsAroundCoordinate)
+        for (int id : differentSettlementIDsAroundCoordinate) {
+            if (settlements.get(id).hasTotoro())
+                settlements.get(settlementID).placeTotoro();
+            if (settlements.get(id).hasTiger())
+                settlements.get(settlementID).placeTiger();
+
             mergeSettlementsIntoASingleSettlement(id);
+        }
     }
 
     public void getDifferentSettlementIDsAroundCoordinate(Coordinate coordinate) {
