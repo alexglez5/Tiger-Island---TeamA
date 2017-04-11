@@ -116,33 +116,35 @@ public class tournamentClient {
 //                System.out.println(tileToAI);
 //                System.out.println("************************");
 
-                System.out.println("\n*********Game A******\n");
-                game1AI.helper.map.printGameBoard();
-
-                System.out.println("\n*********Game B******\n");
-                game2AI.helper.map.printGameBoard();
-                System.out.println("\n");
+//                System.out.println("\n*********Game A******\n");
+//                game1AI.helper.map.printGameBoard();
+//
+//                System.out.println("\n*********Game B******\n");
+//                game2AI.helper.map.printGameBoard();
+//                System.out.println("\n");
 
                 if (gid.equals("A")) {
                     game1AI.setServerMessage(tileToAI);  //send to thread for AI
                     userMoveInformation = game1AI.placeAIMove();
                     outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
+                    System.out.println("OURS: ************");
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                            + tileDrawn + " AT " + userMoveInformation);
+                            + tileDrawn + " AT " + userMoveInformation + "\n");
                 }
                 else if (gid.equals("B")) {
                     game2AI.setServerMessage(tileToAI);  //send to thread for AI
                     userMoveInformation = game2AI.placeAIMove();
                     outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
+                    System.out.println("OURS: ************");
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                            + tileDrawn + " AT " + userMoveInformation);
+                            + tileDrawn + " AT " + userMoveInformation + "\n");
                 }
-                System.out.println("\n*********AFTER******\n");
-                game1AI.helper.map.printGameBoard();
-                System.out.println("\n*********B******\n");
-                game2AI.helper.map.printGameBoard();
+//                System.out.println("\n*********AFTER******\n");
+//                game1AI.helper.map.printGameBoard();
+//                System.out.println("\n*********B******\n");
+//                game2AI.helper.map.printGameBoard();
             }
             else if(serverMessage.startsWith("GAME")){
                 String[] split = serverMessage.split(" ");

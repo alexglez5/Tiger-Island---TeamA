@@ -134,7 +134,7 @@ public class AI {
             int z = coordinate.getYCoordinate();
             int y = -1 * x - z;
             helper.map.expandSettlement(coordinate, parameters.getTerrainType());
-            message += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
+            outMessage += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
         }
         else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
