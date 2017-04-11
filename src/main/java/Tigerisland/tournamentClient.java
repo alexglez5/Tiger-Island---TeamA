@@ -85,9 +85,9 @@ public class tournamentClient {
             }
             //If match is going to start go to correct function
             else if (serverMessage.startsWith("NEW MATCH")) { //Should only get called once
-                System.out.println("************************");
-                System.out.println(serverMessage);
-                System.out.println("************************");
+//                System.out.println("************************");
+//                System.out.println(serverMessage);
+//                System.out.println("************************");
 
                 game1AI = new AI();
                 game2AI = new AI();
@@ -103,28 +103,29 @@ public class tournamentClient {
             }
 
             else if (serverMessage.startsWith("MAKE YOUR MOVE IN GAME")) {
-                System.out.println("************************");
-                System.out.println(serverMessage);
-                System.out.println("************************");
+//                System.out.println("************************");
+//                System.out.println(serverMessage);
+//                System.out.println("************************");
                 String[] split = serverMessage.split(" ");
                 gid = split[5];
                 moveNumber = split[10];
                 tileDrawn = split[12];
                 String[] tileSplit = tileDrawn.split("[+]");
                 tileToAI = tileSplit[0] + " " + tileSplit[1];              //Check this!!!
-                System.out.println("************************");
-                System.out.println(tileToAI);
-                System.out.println("************************");
+//                System.out.println("************************");
+//                System.out.println(tileToAI);
+//                System.out.println("************************");
 
+                System.out.println("\n*********Game A******\n");
                 game1AI.helper.map.printGameBoard();
+
+                System.out.println("\n*********Game B******\n");
                 game2AI.helper.map.printGameBoard();
+                System.out.println("\n");
 
                 if (gid.equals("A")) {
                     game1AI.setServerMessage(tileToAI);  //send to thread for AI
                     userMoveInformation = game1AI.placeAIMove();
-                    System.out.println("********AAAAAAA********");
-                    game1AI.helper.map.printGameBoard();
-                    System.out.println("\n************************");
                     outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
@@ -133,22 +134,17 @@ public class tournamentClient {
                 else if (gid.equals("B")) {
                     game2AI.setServerMessage(tileToAI);  //send to thread for AI
                     userMoveInformation = game2AI.placeAIMove();
-                    System.out.println("********BBBBBB********");
-                    game2AI.helper.map.printGameBoard();
-                    System.out.println("\n************************");
                     outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
                     System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                             + tileDrawn + " AT " + userMoveInformation);
                 }
-                System.out.println("\n*********AFTER******");
+                System.out.println("\n*********AFTER******\n");
                 game1AI.helper.map.printGameBoard();
+                System.out.println("\n*********B******\n");
                 game2AI.helper.map.printGameBoard();
             }
             else if(serverMessage.startsWith("GAME")){
-                System.out.println("********OUR MOVE********");
-                System.out.println(serverMessage);
-                System.out.println("************************");
                 String[] split = serverMessage.split(" ");
                 gid = split[1];
                 opponentspid = split[5];
@@ -156,34 +152,18 @@ public class tournamentClient {
                 if(split[2].equals("OVER")){ //Resetting the game if they have ended
                     if(gid.equals("A")){
                         game1AI.helper.map.resetGame();
-                        System.out.println("************************");
-                        System.out.println("Game A Over");
-                        System.out.println("************************");
                     }
                     else if(gid.equals("B")){
                         game2AI.helper.map.resetGame();
-                        System.out.println("************************");
-                        System.out.println("Game B Over");
-                        System.out.println("************************");
                     }
                 }
                 else if(gid.equals("A") && !opponentspid.equals(ourPid)) {
                     game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                     game1AI.placeOpponentMove();
-                    System.out.println("************************");
-                    System.out.println("Opponent A move");
-                    System.out.println("************************");
-
-                    System.out.println("********AAAAAAA********");
-                    game1AI.helper.map.printGameBoard();
-                    System.out.println("\n************************");
                 }
                 else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                     game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                     game2AI.placeOpponentMove();
-                    System.out.println("************************");
-                    System.out.println("Opponent B move");
-                    System.out.println("************************");
                 }
             }
             else if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){

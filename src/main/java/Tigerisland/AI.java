@@ -28,8 +28,8 @@ public class AI {
         String terrainType = "";
 
         Choice move = Choice.TIGER;
-        String xBuild = split[9];
-        String yBuild = split[11];
+        String xBuild = split[16];
+        String yBuild = split[18];
 
         if (split[13].equals("FOUNDED")) {
             move = Choice.FOUNDED;
@@ -109,21 +109,21 @@ public class AI {
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
-            int y = parameters.getMainTerrainCoordinate().getYCoordinate();
-            int z = -1 * x - y;
+            int y = -1 * x - y;
+            int z = parameters.getMainTerrainCoordinate().getYCoordinate();
             outMessage += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
         if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
-            int y = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
-            int z = -1 * x - y;
+            int y = -1 * x - y;
+            int z = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
             helper.map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
             outMessage += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
         }
         else if(helper.getPlaceWhereTigerCanBePlaced() != null) {
             int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
-            int y = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
-            int z = -1 * x - y;
+            int y = -1 * x - y;
+            int z = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
@@ -131,15 +131,15 @@ public class AI {
             ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
             Coordinate coordinate = parameters.getCoordinate();
             int x = coordinate.getXCoordinate();
-            int y = coordinate.getYCoordinate();
-            int z = -1 * x - y;
+            int y = -1 * x - y;
+            int z = coordinate.getYCoordinate();
             helper.map.expandSettlement(coordinate, parameters.getTerrainType());
             message += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
         }
         else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
-            int y = helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
-            int z = -1 * x - y;
+            int y = -1 * x - y;
+            int z =  helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
             helper.map.foundNewSettlement(helper.getPlaceWhereSettlementCanBeFound());
             outMessage += "FOUND SETTLEMENT AT " + x + " " + y + " " + z;
         }
