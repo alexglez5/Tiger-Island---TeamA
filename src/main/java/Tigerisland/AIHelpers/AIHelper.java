@@ -9,12 +9,6 @@ import java.util.TreeSet;
 
 public class AIHelper {
     public Game map = new Game();
-    private boolean tileMove;
-    private boolean totoroMove;
-    private boolean tigerMove;
-    private boolean expandMove;
-    private boolean foundMove;
-    private boolean[] moves = new boolean[5];
     private Coordinate placeWhereTotoroCanBePlaced;
     private Coordinate placeWhereTigerCanBePlaced;
     private ExpandingParameters placeWhereSettlementCanBeExpanded;
@@ -57,7 +51,6 @@ public class AIHelper {
                     int points = map.getPointsSettlementExpansionWouldProduce(parameters.getCoordinate(), parameters.getTerrainType());
                     if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType())) {
                         movesWithScores.put(points, parameters);
-                        expandMove = true;
                     }
                 }
             }
@@ -78,7 +71,7 @@ public class AIHelper {
                     for(Coordinate c : map.locator.surroundingCoordinates){
                         if(!visitedCoordinates.contains(c) && map.settlementCanBeFound(c)){
                             placeWhereSettlementCanBeFound = c;
-                            break;
+                            return;
                         }
                         visitedCoordinates.add(c);
                     }
@@ -93,14 +86,12 @@ public class AIHelper {
                 if (!map.getSettlements().containsKey(id) && map.getSettlements().get(id).getPlayerID() == 1
                         && map.settlementCanBeFound(c)) {
                     placeWhereSettlementCanBeFound = c;
-                    foundMove = true;
-                    break;
+                    return;
                 }
             }
             if (map.settlementCanBeFound(c)) {
                 placeWhereSettlementCanBeFound = c;
-                foundMove = true;
-                break;
+                return;
             }
         }
     }
@@ -110,22 +101,12 @@ public class AIHelper {
                 && !map.getSettlements().get(id).hasTotoro();
     }
 
-    //todo
-    /*
-    - functions that will return lists of coordinates for all the places
-    one can:
-        - place a tile in level one
-        - nuke a tile at level n, n-1... 1
-        - expand a settlement
-        - found a settlement
-    */
 
     private void findNeighborsOfCoordinateWhereTotoroCanBePlaced(Coordinate coordinate) {
         map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
         for (Coordinate neighborCoordinate : map.locator.surroundingCoordinates) {
             if (totoroCanBePlacedInCoordinate(neighborCoordinate)) {
                 placeWhereTotoroCanBePlaced = neighborCoordinate;
-                totoroMove = true;
             }
             visitedCoordinates.add(neighborCoordinate);
         }
@@ -140,7 +121,6 @@ public class AIHelper {
         for (Coordinate neighborCoordinate : map.locator.surroundingCoordinates) {
             if (tigerCanBePlacedInCoordinate(neighborCoordinate)) {
                 placeWhereTigerCanBePlaced = neighborCoordinate;
-                tigerMove = true;
             }
             visitedCoordinates.add(neighborCoordinate);
         }
@@ -165,7 +145,6 @@ public class AIHelper {
                             for (Orientation orientation : Orientation.getOrientations()) {
                                 if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)) {
                                     placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, tempCoordinate, orientation);
-                                    tileMove = true;
                                     return;
                                 }
                             }
@@ -175,7 +154,7 @@ public class AIHelper {
             }
         }
 
-        if (placeWhereTileCanBePlaced == null) {
+        if (true) {
             int maxX = -1000, maxY = -1000;
             int minX = 1000, minY = 1000;
             Coordinate coordinate = new Coordinate(-1000, -1000);
@@ -236,7 +215,6 @@ public class AIHelper {
                 }
             }
         }
-        tileMove = true;
     }
 
     public Coordinate getPlaceWhereTigerCanBePlaced() {
@@ -262,10 +240,6 @@ public class AIHelper {
     public TileParameters getPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain){
         findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
         return placeWhereTileCanBePlaced;
-    }
-
-    public boolean[] getMoves() {
-        return moves;
     }
 
     public Set<Coordinate> getVisitedCoordinates() {
