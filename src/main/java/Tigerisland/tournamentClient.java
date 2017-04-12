@@ -161,34 +161,37 @@ public class tournamentClient {
         String serverMessage;
 
         try {
-            while ((serverMessage = incomingMessage.readLine()) != null) {
+            while ((serverMessage = incomingMessage.readLine()) != null) { //This will parse inbound messages from server
 
                 System.out.println("S: " + serverMessage + "\n");
                 //This is for our move to be created
-                if (serverMessage.startsWith("MAKE YOUR MOVE IN GAME")) {
-                    String[] split = serverMessage.split(" ");
-                    gid = split[5];
-                    moveNumber = split[10];
-                    tileDrawn = split[12];
-                    String[] tileSplit = tileDrawn.split("[+]");
-                    tileToAI = tileSplit[0] + " " + tileSplit[1];              //Check this!!!
+                if (serverMessage.startsWith("MAKE YOUR MOVE IN GAME")) { //Here we check if the game has asked us to make a move
+                    String[] split = serverMessage.split(" "); //begin parsing with splitting the string into pieces
+                    gid = split[5]; //6th word that the server gives us which is the game ID
+                    moveNumber = split[10]; //11th word that the server gives us which is the move number
+                    tileDrawn = split[12]; //13th word that the server gives us which is the tile type
+                    String[] tileSplit = tileDrawn.split("[+]"); //parse the tile terrains
+                    tileToAI = tileSplit[0] + " " + tileSplit[1]; //The tile arguements given to AI
 
-                    if (gid.equals("A")) {
+                    if (gid.equals("A")) { //If the game ID is the first one
                         game1AI.setServerMessage(tileToAI);  //send to thread for AI
-                        userMoveInformation = game1AI.placeAIMove();
+                        userMoveInformation = game1AI.placeAIMove(); //Tell game1's AI to make a move on client's side (place tile, Build)
                         outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
+                                + tileDrawn + " AT " + userMoveInformation); //Tell Server what we did
+                        //Debug
                         System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
+                                + tileDrawn + " AT " + userMoveInformation); //Output for debugging
 
-                        opponentMoves();
-                    } else if (gid.equals("B")) {
+                        opponentMoves(); //Handler for opponent move
+                    }
+                    else if (gid.equals("B")) { //This is the second game
                         game2AI.setServerMessage(tileToAI);  //send to thread for AI
-                        userMoveInformation = game2AI.placeAIMove();
+                        userMoveInformation = game2AI.placeAIMove(); //Tell game2's AI to make a move on client's side (place tile, Build)
                         outgoingMessage.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
+                                + tileDrawn + " AT " + userMoveInformation); //Tell Server what we did
+                        //Debug
                         System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
-                                + tileDrawn + " AT " + userMoveInformation);
+                                + tileDrawn + " AT " + userMoveInformation); //Debug output
 
                         opponentMoves();
                     }
@@ -206,7 +209,7 @@ public class tournamentClient {
         String serverMessage;
 
         try {
-            while ((serverMessage = incomingMessage.readLine()) != null) {
+            while ((serverMessage = incomingMessage.readLine()) != null) { // Recieve server messages
                 System.out.println("S: " + serverMessage + "\n");
                 if(serverMessage.startsWith("GAME")){
                     String[] split = serverMessage.split(" ");
