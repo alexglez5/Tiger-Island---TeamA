@@ -1,7 +1,6 @@
 package Tigerisland.PlayerActions;
 
 import Tigerisland.Coordinate;
-import Tigerisland.Game;
 import Tigerisland.Orientation;
 
 public class ActionHelper {

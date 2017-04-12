@@ -7,7 +7,7 @@ public class ExpandingParameters {
     private Coordinate coordinate;
     private TerrainType terrainType;
 
-    public ExpandingParameters(Coordinate coordinate, TerrainType terrainType){
+    public ExpandingParameters(Coordinate coordinate, TerrainType terrainType) {
         this.coordinate = coordinate;
         this.terrainType = terrainType;
     }

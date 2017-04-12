@@ -14,7 +14,7 @@ public class TileParameters {
             TerrainType leftTerrainType,
             TerrainType rightTerrainType,
             Coordinate mainTerrainCoordinate,
-            Orientation orientattion){
+            Orientation orientattion) {
         this.leftTerrainType = leftTerrainType;
         this.rightTerrainType = rightTerrainType;
         this.mainTerrainCoordinate = mainTerrainCoordinate;

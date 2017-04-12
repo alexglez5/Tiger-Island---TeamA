@@ -1,8 +1,10 @@
 package Tigerisland.PlayerActions;
 
-import Tigerisland.*;
+import Tigerisland.Coordinate;
+import Tigerisland.Settlement;
+import Tigerisland.TerrainType;
 
-public class TilePlacementValidator extends TilePlacer{
+public class TilePlacementValidator extends TilePlacer {
 
     public boolean tileCanBePlacedOnLevelOne() {
         return gameBoard.size() == 0
@@ -10,10 +12,10 @@ public class TilePlacementValidator extends TilePlacer{
                 && atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge());
     }
 
-    private boolean  tileExistsBelow() {
+    private boolean tileExistsBelow() {
         return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate)
                 || gameBoard.containsKey(locator.mainTerrainCoordinate)
-                ||gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
+                || gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
     }
 
     private boolean atLeastOneEdgeIsTouchingAnyPreviouslyPlacedTileEdge() {
@@ -73,22 +75,6 @@ public class TilePlacementValidator extends TilePlacer{
                 && coordinateDoesNotContainTiger(locator.rightOfMainTerrainCoordinate);
     }
 
-    private boolean hexesOfTileAreOccupied() {
-        return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate) &&
-                gameBoard.containsKey(locator.mainTerrainCoordinate) &&
-                gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
-    }
-
-    private boolean coordinateDoesNotContainTotoro(Coordinate terrainCoordinate) {
-        return !(gameBoard.containsKey(terrainCoordinate)
-                && gameBoard.get(terrainCoordinate).hasTotoro());
-    }
-
-    private boolean coordinateDoesNotContainTiger(Coordinate terrainCoordinate) {
-        return !(gameBoard.containsKey(terrainCoordinate)
-                && gameBoard.get(terrainCoordinate).hasTiger());
-    }
-
     public boolean tileCompletelyWipesOutASettlement() {
 
         getDifferentSettlementIDsOfATile();
@@ -123,6 +109,22 @@ public class TilePlacementValidator extends TilePlacer{
 
         // if none of the above conditions are met, tile does not completely wipe out settlement
         return false;
+    }
+
+    private boolean hexesOfTileAreOccupied() {
+        return gameBoard.containsKey(locator.leftOfMainTerrainCoordinate) &&
+                gameBoard.containsKey(locator.mainTerrainCoordinate) &&
+                gameBoard.containsKey(locator.rightOfMainTerrainCoordinate);
+    }
+
+    private boolean coordinateDoesNotContainTotoro(Coordinate terrainCoordinate) {
+        return !(gameBoard.containsKey(terrainCoordinate)
+                && gameBoard.get(terrainCoordinate).hasTotoro());
+    }
+
+    private boolean coordinateDoesNotContainTiger(Coordinate terrainCoordinate) {
+        return !(gameBoard.containsKey(terrainCoordinate)
+                && gameBoard.get(terrainCoordinate).hasTiger());
     }
 
     public boolean checkForSplit(Settlement s) {

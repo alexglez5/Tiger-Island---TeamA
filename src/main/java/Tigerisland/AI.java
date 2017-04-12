@@ -74,6 +74,11 @@ public class AI {
                 orientation = Orientation.FromBottom;
         }
 
+        if (helper.map.tileCanNukeOtherTiles(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
+                , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
+                , orientation))
+            helper.flagOpponentNukes();
+
         helper.map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
                 , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
                 , orientation);
@@ -97,15 +102,15 @@ public class AI {
     }
 
     public String placeAIMove(){
-        helper.map.setCurrentPlayer(1); //make the current move our move
-        String[] terrains = message.split(" "); //split the terrains by the space
-        TerrainType leftTerrain = TerrainType.valueOf(terrains[0]); //parse the left terrain
-        TerrainType rightTerrain = TerrainType.valueOf(terrains[1]); //parse the right terrain
+        helper.map.setCurrentPlayer(1);
+        String[] terrains = message.split(" ");
+        TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
+        TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
 
         String outMessage = "";
-        helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain); //This will find all available placements
-        if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){ //if available placements can be found
-            TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain); //
+        helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
+        if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
+            TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();
@@ -127,15 +132,15 @@ public class AI {
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
-//        else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
-//            ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
-//            Coordinate coordinate = parameters.getCoordinate();
-//            int x = coordinate.getXCoordinate();
-//            int z = coordinate.getYCoordinate();
-//            int y = -1 * x - z;
-//            helper.map.expandSettlement(coordinate, parameters.getTerrainType());
-//            outMessage += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
-//        }
+        else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
+            ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
+            Coordinate coordinate = parameters.getCoordinate();
+            int x = coordinate.getXCoordinate();
+            int z = coordinate.getYCoordinate();
+            int y = -1 * x - z;
+            helper.map.expandSettlement(coordinate, parameters.getTerrainType());
+            outMessage += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
+        }
         else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
             int z =  helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();

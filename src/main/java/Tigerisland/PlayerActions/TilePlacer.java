@@ -82,13 +82,6 @@ public class TilePlacer {
         gameBoard.get(locator.rightOfMainTerrainCoordinate).setLevel(previousLevel + 1);
     }
 
-    public boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
-        return gameBoard.containsKey(terrainCoordinate)
-                && (gameBoard.get(terrainCoordinate).hasVillager()
-                || gameBoard.get(terrainCoordinate).hasTotoro()
-                || gameBoard.get(terrainCoordinate).hasTiger());
-    }
-
     private void removeFromSettlement() {
         for (int sid : settlementIdsOfHexesUnderTile) {
             // for each settlementId, check if the underlying coordinate is a part of that settlement
@@ -101,7 +94,7 @@ public class TilePlacer {
     }
 
     public void splitSettlements() {
-        for (int sid: settlementIdsOfHexesUnderTile) {
+        for (int sid : settlementIdsOfHexesUnderTile) {
             // for each settlement id, while the bfs does not return the full size, get all the coordinates of that
             // bfs and put it in its own settlement.
 
@@ -119,8 +112,8 @@ public class TilePlacer {
                     settlements.get(sid).removeFromSettlement(firstCord);
 
                     // found a new settlement with it (with a unique id) and update the hex settlementID
-                    settlements.put(firstCord.hashCode()+1200, new Settlement(firstCord));
-                    gameBoard.get(firstCord).setSettlementID(firstCord.hashCode()+1200);
+                    settlements.put(firstCord.hashCode() + 1200, new Settlement(firstCord));
+                    gameBoard.get(firstCord).setSettlementID(firstCord.hashCode() + 1200);
 
                     // iterate through the rest of the connected component, remove from current settlement, add to
                     // this new settlement, and update the gameboard
@@ -128,8 +121,8 @@ public class TilePlacer {
                     while (i.hasNext()) {
                         Coordinate nextCord = i.next();
                         settlements.get(sid).removeFromSettlement(nextCord);
-                        settlements.get(firstCord.hashCode()+1200).addToSettlement(nextCord);
-                        gameBoard.get(nextCord).setSettlementID(firstCord.hashCode()+1200);
+                        settlements.get(firstCord.hashCode() + 1200).addToSettlement(nextCord);
+                        gameBoard.get(nextCord).setSettlementID(firstCord.hashCode() + 1200);
 
                         // make sure to set the flags for totoro and tiger in newly split settlement and remove
                         // from the original split settlement
@@ -148,5 +141,12 @@ public class TilePlacer {
                 }
             }
         }
+    }
+
+    public boolean terrainContainsAPiece(Coordinate terrainCoordinate) {
+        return gameBoard.containsKey(terrainCoordinate)
+                && (gameBoard.get(terrainCoordinate).hasVillager()
+                || gameBoard.get(terrainCoordinate).hasTotoro()
+                || gameBoard.get(terrainCoordinate).hasTiger());
     }
 }

@@ -16,7 +16,7 @@ public class ComponentsDTO {
     public ComponentsDTO(
             HashMap<Coordinate, Hex> gameBoard,
             HashMap<Integer, Settlement> settlements,
-            Player player, ActionHelper locator){
+            Player player, ActionHelper locator) {
         this.gameBoard = gameBoard;
         this.settlements = settlements;
         this.player = player;

@@ -7,13 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Builder {
-    protected ActionHelper locator = new ActionHelper();
     private final int pointsForTigerPlacement = 75;
     public HashSet<Coordinate> visitedCoordinates;
+    public Set<Integer> differentSettlementIDsAroundCoordinate;
+    protected ActionHelper locator = new ActionHelper();
     protected Coordinate coordinate;
     protected TerrainType terrainType;
     protected int settlementID;
-    public Set<Integer> differentSettlementIDsAroundCoordinate;
     protected int possiblePointsAdded;
     protected int possibleVillagersPlaced;
     protected Player player = new Player();
@@ -221,7 +221,7 @@ public class Builder {
         possibleVillagersPlaced += level;
     }
 
-    public void setSettlementID(int settlementID){
+    public void setSettlementID(int settlementID) {
         this.settlementID = settlementID;
     }
 }

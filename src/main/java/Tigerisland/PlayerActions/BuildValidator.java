@@ -1,10 +1,8 @@
 package Tigerisland.PlayerActions;
 
-import Tigerisland.*;
+import Tigerisland.TerrainType;
 
-import java.util.HashMap;
-
-public class BuildValidator extends Builder{
+public class BuildValidator extends Builder {
 
     public boolean settlementCanBeFound() {
         return terrainIsOnMap()
