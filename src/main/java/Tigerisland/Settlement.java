@@ -1,6 +1,7 @@
 package Tigerisland;
 
 import Tigerisland.PlayerActions.ActionHelper;
+import sun.jvm.hotspot.oops.Array;
 
 import java.util.*;
 
@@ -99,4 +100,9 @@ public class Settlement {
     public int getPlayerID() {
         return playerID;
     }
+
+    public ArrayList<Coordinate> getEdgesFromCoordinate(Coordinate c) {
+        return edges.get(c);
+    }
+
 }

@@ -87,4 +87,10 @@ public class ActionHelper {
         surroundingCoordinates[4] = overAndToTheLeftOfMain(terrainCoordinate);
         surroundingCoordinates[5] = toTheLeftOfMain(terrainCoordinate);
     }
+
+    public void setMainCoordinateAndOrientation(Coordinate c, Orientation o) {
+        mainTerrainCoordinate = c;
+        orientation = o;
+    }
+
 }

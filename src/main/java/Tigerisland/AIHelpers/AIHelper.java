@@ -2,10 +2,7 @@ package Tigerisland.AIHelpers;
 
 import Tigerisland.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class AIHelper {
     public Game map = new Game();
@@ -145,6 +142,50 @@ public class AIHelper {
     }
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
+
+        for (int id : map.getSettlements().keySet()) {
+            // check if we can nuke our own totoro settlement to cause an advantageous split
+            if (map.getSettlements().get(id).getPlayerID() == 1
+                    && map.getSettlements().get(id).hasTotoro()
+                    && map.getSettlements().get(id).getSize() > 4) {
+
+                Coordinate totoro = new Coordinate(0,0);
+                Coordinate toNuke = new Coordinate(0,0);
+                // find the coordinate that has the totoro
+                for (Coordinate t : map.getSettlements().get(id).bfs()) {
+                    if (map.getBoard().get(t).hasTotoro())
+                        totoro = t;
+                }
+                // look at the surrounding coordinates of the totoro, and check if there is only one connecting hex
+                ArrayList<Coordinate> edgesNextToTotoro = map.getSettlements().get(id).getEdgesFromCoordinate(totoro);
+                if (edgesNextToTotoro.size() == 1) {
+                    // get the coordinate to nuke
+                    toNuke = edgesNextToTotoro.get(0);
+
+                    // get the surrounding coordinates of this one
+                    map.locator.findCounterClockwiseCoordinatesAroundCoordinate(toNuke);
+
+                    // check all surrounding coordinates to find an orientation that can nuke our toNuke coordinate
+                    for (Coordinate tempCoordinate : map.locator.surroundingCoordinates) {
+                        if (map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
+                            // find the orientation that would nuke the toNuke coordinate
+                            for (Orientation orientation : Orientation.getOrientations()) {
+                                map.locator.setMainCoordinateAndOrientation(tempCoordinate, orientation);
+                                map.locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                                if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)
+                                        && (map.locator.leftOfMainTerrainCoordinate.equals(toNuke)
+                                        || map.locator.rightOfMainTerrainCoordinate.equals(toNuke))) {
+                                    placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, tempCoordinate, orientation);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         for (int id : map.getSettlements().keySet()) {
             if (map.getSettlements().get(id).getPlayerID() == 2
                     && map.getSettlements().get(id).getSize() > 3) {

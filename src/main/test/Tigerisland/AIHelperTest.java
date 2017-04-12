@@ -173,6 +173,29 @@ public class AIHelperTest{
     }
 
     @Test
+    public void testIntentionalTotoroNuking() {
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+                new Coordinate(1, 1), Orientation.FromTop);
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+                new Coordinate(-1, 2), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+                new Coordinate(2, 1), Orientation.FromBottom);
+        helper.map.setCurrentPlayer(1);
+        helper.map.foundNewSettlement(new Coordinate(-1,3));
+        helper.map.expandSettlement(new Coordinate(-1,3), TerrainType.ROCK);
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(-1,3)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0,2)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1,2)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(1,0)).hasVillager());
+        Assert.assertTrue(helper.map.getBoard().get(new Coordinate(0,1)).hasVillager());
+        helper.map.placeTotoro(new Coordinate(2,0));
+        Assert.assertEquals(helper.map.getSettlements().get((new Coordinate(-1,3)).hashCode()).getSize(), 6);
+        TileParameters place = helper.getPlaceWhereTileCanBePlaced(TerrainType.GRASS, TerrainType.JUNGLE);
+        Assert.assertEquals(place.getMainTerrainCoordinate(), new Coordinate(1,1));
+        Assert.assertEquals(place.getOrientattion(), Orientation.FromTopLeft);
+    }
+
+    @Test
     public void testNukingIncreasesLevel() {
         helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);
