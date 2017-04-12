@@ -39,7 +39,7 @@ public class AIHelper {
 
     public void findPlaceWhereSettlementCanBeExpanded() {
         placeWhereSettlementCanBeExpanded = null;
-        TreeSet<Integer> scores = new TreeSet<>();
+        TreeSet<Integer> sizes = new TreeSet<>();
         HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
         for (int id : map.getSettlements().keySet()) {
             if (map.getSettlements().get(id).getPlayerID() == 1
@@ -48,17 +48,27 @@ public class AIHelper {
                 for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
                     ExpandingParameters parameters = new ExpandingParameters(
                             map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
-                    int points = map.getPointsSettlementExpansionWouldProduce(parameters.getCoordinate(), parameters.getTerrainType());
+                    int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
                     if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType())) {
-                        movesWithScores.put(points, parameters);
+                        movesWithScores.put(size, parameters);
                     }
                 }
             }
         }
-        for (int score : movesWithScores.keySet())
-            scores.add(score);
-        if (scores.size() != 0)
-            placeWhereSettlementCanBeExpanded = movesWithScores.get(scores.last());
+        for (int size : movesWithScores.keySet())
+            sizes.add(size);
+        if(sizes.contains(3)) {
+            placeWhereSettlementCanBeExpanded = movesWithScores.get(3);
+            return;
+        }
+        else if(sizes.contains(2)) {
+            placeWhereSettlementCanBeExpanded = movesWithScores.get(2);
+            return;
+        }
+        else if(sizes.contains(1)) {
+            placeWhereSettlementCanBeExpanded = movesWithScores.get(1);
+            return;
+        }
     }
 
     public void findCoordinatesWhereSettlementCanBeFound() {
@@ -153,7 +163,6 @@ public class AIHelper {
                 }
             }
         }
-
 
         int maxX = -1000, maxY = -1000;
         int minX = 1000, minY = 1000;

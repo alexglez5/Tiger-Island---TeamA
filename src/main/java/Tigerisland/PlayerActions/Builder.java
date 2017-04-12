@@ -9,7 +9,7 @@ import java.util.Set;
 public class Builder {
     protected ActionHelper locator = new ActionHelper();
     private final int pointsForTigerPlacement = 75;
-    public Set<Coordinate> visitedCoordinates;
+    public HashSet<Coordinate> visitedCoordinates;
     protected Coordinate coordinate;
     protected TerrainType terrainType;
     protected int settlementID;

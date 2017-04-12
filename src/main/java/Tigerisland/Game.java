@@ -19,7 +19,6 @@ public class Game {
     private int currentPlayerId = 1;
 
     public Game() {
-        //placeStartingTile();
         player1.setPlayerID(1);
         player2.setPlayerID(2);
     }
@@ -115,7 +114,6 @@ public class Game {
         return types;
     }
 
-    // todo: Let's separate the validation and actual placing of tile in gameboard
     public void placeTile(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
         placer.updtateComponents(this.getComponents());
         tileValidator.updtateComponents(this.getComponents());
@@ -223,13 +221,13 @@ public class Game {
         return buildValidator.atLeastOneAdjacentSettlementDoesNotContainATiger();
     }
 
-    public int getPointsSettlementExpansionWouldProduce(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
+    public HashSet<Coordinate> getCoordinatesOfPossibleSettlementExpansion(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
         builder.updtateComponents(this.getComponents());
         buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         buildValidator.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         builder.findCoordinatesOfPossibleSettlementExpansion();
-        return builder.getPossiblePointsAdded();
+        return builder.visitedCoordinates;
     }
 
     public void splitSettlements() {
