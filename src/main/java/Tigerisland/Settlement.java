@@ -92,6 +92,10 @@ public class Settlement {
         this.hasTiger = true;
     }
 
+    public void removeTotoro() { this.hasTotoro = false; }
+
+    public void removeTiger() { this.hasTiger = false; }
+
     public int getPlayerID() {
         return playerID;
     }
