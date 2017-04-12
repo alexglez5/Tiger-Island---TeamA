@@ -53,7 +53,7 @@ public class Settlement {
         size--;
     }
 
-    public Set<Coordinate> bfs() {
+    public Set<Coordinate> bfs() { //breath first search
         // set up bfs
         Set<Coordinate> visited = new HashSet<Coordinate>();
         Set<Coordinate> elements = edges.keySet();

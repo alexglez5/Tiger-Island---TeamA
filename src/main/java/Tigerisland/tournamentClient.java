@@ -240,7 +240,7 @@ public class tournamentClient {
                     }
                     else if(gid.equals("A") && !opponentspid.equals(ourPid) && !split[6].equals("LOST") ) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
-                        game1AI.placeOpponentMove();
+                        game1AI.placeOpponentMove(); // make opponent move relevant to the state of our board
                         winTheTournament();
                     }
                     else if(gid.equals("B") && !opponentspid.equals(ourPid) && !split[6].equals("LOST")){
