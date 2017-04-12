@@ -3,9 +3,6 @@ package Tigerisland.AIHelpers;
 import Tigerisland.Coordinate;
 import Tigerisland.TerrainType;
 
-/**
- * Created by Alexander Gonzalez on 4/9/2017.
- */
 public class ExpandingParameters {
     private Coordinate coordinate;
     private TerrainType terrainType;
@@ -17,10 +14,6 @@ public class ExpandingParameters {
 
     public TerrainType getTerrainType() {
         return terrainType;
-    }
-
-    public void setTerrainType(TerrainType terrainType) {
-        this.terrainType = terrainType;
     }
 
     public Coordinate getCoordinate() {

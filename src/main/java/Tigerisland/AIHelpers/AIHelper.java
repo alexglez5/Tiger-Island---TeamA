@@ -166,8 +166,8 @@ public class AIHelper {
 
         int maxX = -1000, maxY = -1000;
         int minX = 1000, minY = 1000;
-        Coordinate coordinate = new Coordinate(-1000, -1000);
-        Coordinate possibleCoordinate = map.locator.overAndToTheLeftOfMain(coordinate);
+        Coordinate coordinate = new Coordinate();
+        Coordinate possibleCoordinate = new Coordinate();
         int randomDirection = (int) (Math.random() * 3) + 1;
         switch (randomDirection) {
             case 1:
@@ -219,8 +219,6 @@ public class AIHelper {
 
         for (Orientation orientation : Orientation.getOrientations()) {
             if (map.tileCanBePlacedOnLevelOne(new Tile(leftTerrain, rightTerrain), possibleCoordinate, orientation)) {
-                System.out.println(possibleCoordinate.getXCoordinate() + "," + possibleCoordinate.getYCoordinate()
-                + " " + orientation);
                 placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, possibleCoordinate, orientation);
                 return;
             }
@@ -248,7 +246,7 @@ public class AIHelper {
     }
 
     public TileParameters getPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain){
-        findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain); //call a function to find a location to place a tile
+        findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
         return placeWhereTileCanBePlaced;
     }
 

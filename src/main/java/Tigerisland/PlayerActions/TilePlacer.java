@@ -34,14 +34,6 @@ public class TilePlacer {
         this.player = player;
     }
 
-    public HashMap<Integer, Settlement> getSettlements() {
-        return this.settlements;
-    }
-
-    public void setSettlements(HashMap<Integer, Settlement> settlements) {
-        this.settlements = settlements;
-    }
-
     public void placeOneStartingTile() {
         gameBoard.put(new Coordinate(0, -1), new Hex(TerrainType.JUNGLE, 1));
         gameBoard.put(new Coordinate(1, -1), new Hex(TerrainType.LAKE, 1));
@@ -75,7 +67,6 @@ public class TilePlacer {
             settlementIdsOfHexesUnderTile.add(gameBoard.get(locator.mainTerrainCoordinate).getSettlementID());
         if (terrainContainsAPiece(locator.rightOfMainTerrainCoordinate))
             settlementIdsOfHexesUnderTile.add(gameBoard.get(locator.rightOfMainTerrainCoordinate).getSettlementID());
-
         return settlementIdsOfHexesUnderTile;
     }
 

@@ -7,9 +7,6 @@ import Tigerisland.Settlement;
 
 import java.util.HashMap;
 
-/**
- * Created by Alexander Gonzalez on 4/8/2017.
- */
 public class ComponentsDTO {
     private Player player = new Player();
     private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
@@ -42,15 +39,7 @@ public class ComponentsDTO {
         return settlements;
     }
 
-    public void setSettlements(HashMap<Integer, Settlement> settlements) {
-        this.settlements = settlements;
-    }
-
     public ActionHelper getLocator() {
         return locator;
-    }
-
-    public void setLocator(ActionHelper locator) {
-        this.locator = locator;
     }
 }

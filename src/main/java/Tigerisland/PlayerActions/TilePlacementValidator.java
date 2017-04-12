@@ -89,25 +89,6 @@ public class TilePlacementValidator extends TilePlacer{
                 && gameBoard.get(terrainCoordinate).hasTiger());
     }
 
-    private boolean coordinateHasAPieceThatWillBeWipedOut(Coordinate terrainCoordinate) {
-        return terrainContainsAPiece(terrainCoordinate)
-                && settlementIdsOfHexesUnderTile.contains(gameBoard.get(terrainCoordinate).getSettlementID());
-    }
-
-    private boolean isOneOfTheCoordinatesThatWouldBeLeftThatBelongToTheSameSettlement(
-            Coordinate tempCoordinate, int idOfSettlementThanMightBeWipeOut) {
-        return terrainContainsAPiece(tempCoordinate)
-                && gameBoard.get(tempCoordinate).getSettlementID()
-                == idOfSettlementThanMightBeWipeOut
-                && isNotOneOfCoordinatesThatWillBeWipedOut(tempCoordinate);
-    }
-
-    private boolean isNotOneOfCoordinatesThatWillBeWipedOut(Coordinate tempCoordinate) {
-        return tempCoordinate == locator.leftOfMainTerrainCoordinate
-                || tempCoordinate == locator.mainTerrainCoordinate
-                || tempCoordinate == locator.rightOfMainTerrainCoordinate;
-    }
-
     public boolean tileCompletelyWipesOutASettlement() {
 
         getDifferentSettlementIDsOfATile();
@@ -150,12 +131,4 @@ public class TilePlacementValidator extends TilePlacer{
         else
             return false;
     }
-
-//    public void processParameters(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-//        locator.mainTerrainCoordinate = mainTerrainCoordinate;
-//        locator.orientation = terrainsOrientation;
-//        this.tile = tile;
-//        locator.updateXAndYCoordinateOfCurrentTerrain(mainTerrainCoordinate);
-//        locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
-//    }
 }

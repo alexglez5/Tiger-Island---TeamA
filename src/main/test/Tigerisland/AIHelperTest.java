@@ -138,7 +138,6 @@ public class AIHelperTest{
     @Test
     public void testAICanFoundSettlement(){
         helper.findCoordinatesWhereSettlementCanBeFound();
-        System.out.println(helper.getPlaceWhereSettlementCanBeFound());
         Assert.assertTrue(helper.getPlaceWhereSettlementCanBeFound() != null);
     }
 
@@ -168,9 +167,6 @@ public class AIHelperTest{
                 helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getMainTerrainCoordinate(),
                 helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getOrientattion());
         Tile tile = new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType());
-        System.out.println(parameters.getMainTerrainCoordinate().getXCoordinate());
-        System.out.println(parameters.getMainTerrainCoordinate().getYCoordinate());
-        System.out.println(parameters.getOrientattion());
         helper.map.placeTile(tile, parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
         Assert.assertEquals(helper.map.getBoard().get(new Coordinate(parameters.getMainTerrainCoordinate().getXCoordinate(),
                 parameters.getMainTerrainCoordinate().getYCoordinate())).getLevel(),2);
