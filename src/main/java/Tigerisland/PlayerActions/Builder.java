@@ -166,6 +166,8 @@ public class Builder {
     public void findCoordinatesOfPossibleSettlementExpansion() {
         visitedCoordinates = new HashSet<>();
         expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType();
+        if(possibleVillagersPlaced > player.getNumberOfVillagersLeft())
+            visitedCoordinates = null;
     }
 
     private void completeSettlementExpansion() {
@@ -189,6 +191,7 @@ public class Builder {
             locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
             expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
         }
+
     }
 
     private void expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited() {

@@ -36,7 +36,8 @@ public class BuildValidator extends Builder {
 
     public boolean settlementCanBeExpanded() {
         findCoordinatesOfPossibleSettlementExpansion();
-        return thereIsAtLeastOneEmptyHexToExpand()
+        return visitedCoordinates != null
+                && thereIsAtLeastOneEmptyHexToExpand()
                 && thereAreEnoughVillagersToExpand();
     }
 
