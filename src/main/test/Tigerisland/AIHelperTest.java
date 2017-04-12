@@ -118,27 +118,22 @@ public class AIHelperTest{
         Assert.assertTrue(helper.map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()));
     }
 
-//    @Test
-//    public void makeAIPlaceTileTest(){
-//        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-//                new Coordinate(1, 0), Orientation.FromBottomRight);
-//        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-//                new Coordinate(-1, 2), Orientation.FromBottomRight);
-//        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-//                new Coordinate(2, 1), Orientation.FromBottom);
-//
-//        helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS);
-//
-//        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS) != null);
-//        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getLeftTerrainType(),
-//                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getMainTerrainCoordinate(),
-//                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getOrientattion());
-//        Tile tile = new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType());
-//        System.out.println(parameters.getMainTerrainCoordinate().getXCoordinate());
-//        System.out.println(parameters.getMainTerrainCoordinate().getYCoordinate());
-//        System.out.println(parameters.getOrientattion());
-//        Assert.assertTrue(helper.map.tileCanBePlacedOnLevelOne(tile, parameters.getMainTerrainCoordinate(), parameters.getOrientattion()));
-//    }
+    @Test
+    public void makeAIPlaceTileTest(){
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(1, 0), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+                new Coordinate(-1, 2), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+                new Coordinate(2, 1), Orientation.FromBottom);
+
+        helper.findPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS);
+
+        Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS) != null);
+        TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS);
+        Assert.assertTrue(helper.map.tileCanBePlacedOnLevelOne(new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType()),
+                parameters.getMainTerrainCoordinate(), parameters.getOrientattion()));
+    }
 
     @Test
     public void testAICanFoundSettlement(){

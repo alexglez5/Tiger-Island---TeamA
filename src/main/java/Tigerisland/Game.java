@@ -177,7 +177,7 @@ public class Game {
         tileValidator.updtateComponents(this.getComponents());
         placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
         tileValidator.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        return tileValidator.tileCanNukeOtherTiles() && tileValidator.tileCanBePlacedOnLevelOne();
+        return tileValidator.tileCanNukeOtherTiles() || tileValidator.tileCanBePlacedOnLevelOne();
     }
 
 
