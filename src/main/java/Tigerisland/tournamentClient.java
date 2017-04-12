@@ -216,10 +216,10 @@ public class tournamentClient {
                     String[] split = serverMessage.split(" ");
                     gid = split[1]; // get a new game ID
                     opponentspid = split[5];  //get a player ID for our opponent
-                    if(split[6].equals("FORFEITED:")) { //When the other player forfeits
+                    if(split[6].equals("FORFEITED")) { //When the other player forfeits
                         waitForTournamentToBegin(); // if current match is over start a new one
                     }
-                    else if(split[6].equals("LOST:")){ //When the other player lost
+                    else if(split[6].equals("LOST:") || split[6].equals("FORFEITED:")){ //When the other player lost
                         opponentMoves(); //recursively call opponentMoves to handle the next server message
                     }
                     if(split[2].equals("OVER")){ //Resetting the game if they have ended
