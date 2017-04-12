@@ -41,6 +41,13 @@ public class BuildValidator extends Builder {
                 && thereAreEnoughVillagersToExpand();
     }
 
+    public int getVillagersUsedInPossibleSettlementExpansion(){
+        if(settlementCanBeExpanded())
+            return visitedCoordinates.size();
+        else
+            return 0;
+    }
+
     private boolean thereIsAtLeastOneEmptyHexToExpand() {
         return visitedCoordinates.size() > 0;
     }

@@ -90,7 +90,7 @@ public class AIHelper {
                 for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
                     ExpandingParameters parameters = new ExpandingParameters(
                             map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
-                    int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
+                    int size = map.getVillagersUsedInPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType());
                     if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()))
                         movesWithSizes.put(size, parameters);
                 }

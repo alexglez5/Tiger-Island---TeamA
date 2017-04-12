@@ -221,13 +221,13 @@ public class Game {
         return buildValidator.atLeastOneAdjacentSettlementDoesNotContainATiger();
     }
 
-    public HashSet<Coordinate> getCoordinatesOfPossibleSettlementExpansion(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
+    public int getVillagersUsedInPossibleSettlementExpansion(Coordinate coordinateOfAnyHexInSettlement, TerrainType terrainType) {
         builder.updtateComponents(this.getComponents());
         buildValidator.updtateComponents(this.getComponents());
         builder.processParameters(coordinateOfAnyHexInSettlement, terrainType);
         buildValidator.processParameters(coordinateOfAnyHexInSettlement, terrainType);
-        builder.findCoordinatesOfPossibleSettlementExpansion();
-        return builder.visitedCoordinates;
+        return buildValidator.getVillagersUsedInPossibleSettlementExpansion();
+//        return buildValidator.g;
     }
 
     public void splitSettlements() {
