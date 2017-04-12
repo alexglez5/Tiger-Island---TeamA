@@ -139,6 +139,17 @@ public class TilePlacer {
                         settlements.get(sid).removeFromSettlement(nextCord);
                         settlements.get(firstCord.hashCode()+1200).addToSettlement(nextCord);
                         gameBoard.get(nextCord).setSettlementID(firstCord.hashCode()+1200);
+
+                        // make sure to set the flags for totoro and tiger in newly split settlement and remove
+                        // from the original split settlement
+                        if (gameBoard.get(nextCord).hasTotoro()) {
+                            settlements.get(firstCord.hashCode() + 1200).placeTotoro();
+                            settlements.get(sid).removeTotoro();
+                        }
+                        if (gameBoard.get(nextCord).hasTiger()) {
+                            settlements.get(firstCord.hashCode() + 1200).placeTiger();
+                            settlements.get(sid).removeTiger();
+                        }
                     }
 
                     // run another bfs to test for while condition

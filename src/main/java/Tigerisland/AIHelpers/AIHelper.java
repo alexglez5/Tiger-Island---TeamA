@@ -145,15 +145,19 @@ public class AIHelper {
     }
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
-        for (int id : map.getSettlements().keySet()) {
+        for (int id : map.getSettlements().keySet()) {  //gets all the settlement and iterate through them all
             if (map.getSettlements().get(id).getPlayerID() == 2
-                    && map.getSettlements().get(id).getSize() > 3) {
-                for (Coordinate coordinate : map.getSettlements().get(id).bfs()) {
-                    map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
+                    && map.getSettlements().get(id).getSize() > 3) { //if player2 has a settlement of size 3 or bigger nuke em
+                for (Coordinate coordinate : map.getSettlements().get(id).bfs()) {  //perform breath first search on the settlement
+                    map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate); //finds all coordinates counterclockwise
                     for (Coordinate tempCoordinate : map.locator.surroundingCoordinates) {
+                        //this if  statement will find a volcano in the surrounding coordinates so that we can erupt it to nuke the settlement
                         if (map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
+                            //if volcano is found
                             for (Orientation orientation : Orientation.getOrientations()) {
+                                //determine a orientation
                                 if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)) {
+                                    //place it
                                     placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, tempCoordinate, orientation);
                                     return;
                                 }
@@ -247,7 +251,7 @@ public class AIHelper {
     }
 
     public TileParameters getPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain){
-        findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
+        findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain); //call a function to find a location to place a tile
         return placeWhereTileCanBePlaced;
     }
 

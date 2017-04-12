@@ -97,15 +97,15 @@ public class AI {
     }
 
     public String placeAIMove(){
-        helper.map.setCurrentPlayer(1);
-        String[] terrains = message.split(" ");
-        TerrainType leftTerrain = TerrainType.valueOf(terrains[0]);
-        TerrainType rightTerrain = TerrainType.valueOf(terrains[1]);
+        helper.map.setCurrentPlayer(1); //make the current move our move
+        String[] terrains = message.split(" "); //split the terrains by the space
+        TerrainType leftTerrain = TerrainType.valueOf(terrains[0]); //parse the left terrain
+        TerrainType rightTerrain = TerrainType.valueOf(terrains[1]); //parse the right terrain
 
         String outMessage = "";
-        helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
-        if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){
-            TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain);
+        helper.findPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain); //This will find all available placements
+        if(helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain) != null){ //if available placements can be found
+            TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(leftTerrain, rightTerrain); //
             helper.map.placeTile(new Tile(parameters.getLeftTerrainType(), parameters.getRightTerrainType()),
                     parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
             int x = parameters.getMainTerrainCoordinate().getXCoordinate();

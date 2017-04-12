@@ -209,37 +209,38 @@ public class tournamentClient {
         String serverMessage;
 
         try {
-            while ((serverMessage = incomingMessage.readLine()) != null) { // Recieve server messages
-                System.out.println("S: " + serverMessage + "\n");
+            while ((serverMessage = incomingMessage.readLine()) != null) { // Receive server messages for other client's move
+                //Will be told forfeited by server if other team makes an illegal move
+                System.out.println("S: " + serverMessage + "\n"); //Debug, we need to see what the server told us
                 if(serverMessage.startsWith("GAME")){
                     String[] split = serverMessage.split(" ");
-                    gid = split[1];
-                    opponentspid = split[5];
-                    if(split[6].equals("FORFEITED:")) {
-                        waitForTournamentToBegin();
+                    gid = split[1]; // get a new game ID
+                    opponentspid = split[5];  //get a player ID for our opponent
+                    if(split[6].equals("FORFEITED:")) { //When the other player forfeits
+                        waitForTournamentToBegin(); // if current match is over start a new one
                     }
-                    else if(split[6].equals("LOST:")){
-                        opponentMoves();
+                    else if(split[6].equals("LOST:")){ //When the other player lost
+                        opponentMoves(); //recursively call opponentMoves to handle the next server message
                     }
                     if(split[2].equals("OVER")){ //Resetting the game if they have ended
                         if(gid.equals("A")){
-                            game1AI.helper.map.resetGame();
-                            opponentMoves();
+                            game1AI.helper.map.resetGame(); // reset game 1
+                            opponentMoves(); //recursively call opponentMoves to handle the next server message
                         }
                         else if(gid.equals("B")){
-                            game2AI.helper.map.resetGame();
-                            waitForTournamentToBegin();
+                            game2AI.helper.map.resetGame(); // reset game 2
+                            waitForTournamentToBegin(); //Start a new game
                         }
                     }
                     else if(gid.equals("A") && opponentspid.equals(ourPid)) {
-                        opponentMoves();
+                        opponentMoves(); //handle server repeat messages
                     }
                     else if(gid.equals("B") && opponentspid.equals(ourPid)) {
-                        opponentMoves();
+                        opponentMoves(); //handle server repeat messages
                     }
                     else if(gid.equals("A") && !opponentspid.equals(ourPid) && !split[6].equals("LOST") ) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
-                        game1AI.placeOpponentMove();
+                        game1AI.placeOpponentMove(); // make opponent move relevant to the state of our board
                         winTheTournament();
                     }
                     else if(gid.equals("B") && !opponentspid.equals(ourPid) && !split[6].equals("LOST")){

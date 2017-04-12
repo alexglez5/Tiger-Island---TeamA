@@ -79,7 +79,8 @@ public class ActionHelper {
     }
 
     public void findCounterClockwiseCoordinatesAroundCoordinate(Coordinate terrainCoordinate) {
-        surroundingCoordinates = new Coordinate[sidesOfAHex];
+        surroundingCoordinates = new Coordinate[sidesOfAHex]; // create an array of all surrounding coordinates starting from the below left
+        //and ending at left vertical side
         surroundingCoordinates[0] = belowAndToTheLeftOfMain(terrainCoordinate);
         surroundingCoordinates[1] = belowAndToTheRightOfMain(terrainCoordinate);
         surroundingCoordinates[2] = toTheRightOfMain(terrainCoordinate);

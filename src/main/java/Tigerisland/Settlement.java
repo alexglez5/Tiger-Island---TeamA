@@ -53,7 +53,7 @@ public class Settlement {
         size--;
     }
 
-    public Set<Coordinate> bfs() {
+    public Set<Coordinate> bfs() { //breath first search
         // set up bfs
         Set<Coordinate> visited = new HashSet<Coordinate>();
         Set<Coordinate> elements = edges.keySet();
@@ -91,6 +91,10 @@ public class Settlement {
     public void placeTiger() {
         this.hasTiger = true;
     }
+
+    public void removeTotoro() { this.hasTotoro = false; }
+
+    public void removeTiger() { this.hasTiger = false; }
 
     public int getPlayerID() {
         return playerID;
