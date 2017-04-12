@@ -14,9 +14,9 @@ public class App {
     public App() {
     }
 
-    public static void main(String[] args) {
-        System.out.println("random change");
-    }
+//    public static void main(String[] args) {
+//        System.out.println("random change");
+//    }
 
     public void placeTile(String orientation, int xcoordinate, int ycoordinate) {
         isBoardEmpty = false;
