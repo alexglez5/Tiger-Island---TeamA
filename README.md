@@ -1,4 +1,8 @@
 ## Tiger-Island---TeamA
-Reed modify readme attempt.
-Modify readme attempt.
-Julia modify attempt 
+# In Order to Run 
+git checkout LastBranch
+git pull 
+
+Build project in intellij
+leftclick tournamentClientMain.java
+control + shift + F10
