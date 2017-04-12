@@ -1,9 +1,18 @@
-## Tiger-Island---TeamA
-# In Order to Run to Accept Server Communication
+# Tiger-Island---TeamA
+## In Order to Run to Accept Server Communication
+### Obtain the .java files and project directory
 
-git checkout LastBranch
+From GitShell
 
-git pull
+1. `git checkout LastBranch`
+
+2. `git pull`
+
+From Downloaded Zip
+
+unzip 
+
+
 
 1. Open Project from folder named `Tiger-Island---TeamA`
 
