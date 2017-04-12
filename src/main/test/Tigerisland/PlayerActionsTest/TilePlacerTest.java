@@ -1,6 +1,7 @@
 package Tigerisland.PlayerActionsTest;
 
 import Tigerisland.*;
+import com.sun.javafx.iio.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,9 +10,11 @@ import org.junit.Test;
 public class TilePlacerTest {
     Game map;
 
+
     @Before
     public void initializeGameBoard() throws Exception{
         map = new Game();
+
     }
 
     @Test
