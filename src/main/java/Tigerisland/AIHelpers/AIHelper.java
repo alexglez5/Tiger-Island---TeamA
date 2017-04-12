@@ -159,7 +159,7 @@ public class AIHelper {
             int minX = 1000, minY = 1000;
             Coordinate coordinate = new Coordinate(-1000, -1000);
             Coordinate possibleCoordinate = map.locator.overAndToTheLeftOfMain(coordinate);
-            int randomDirection = (int) (Math.random() * 3) + 1;
+            int randomDirection = (int) (Math.random() * 4) + 1;
             switch (randomDirection) {
                 case 1:
                     for (Coordinate c : map.getBoard().keySet()) {
