@@ -94,8 +94,8 @@ public class Game {
 //        for(Coordinate c : getBoard().keySet()){
 //            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
 //        }
-        System.out.println("p1" + player1.getNumberOfVillagersLeft() + "\n");
-        System.out.println("p1" + player1.getNumberOfVillagersLeft() + "\n");
+        System.out.println(player1.getPoints() + "\n");
+        System.out.println(player2.getPoints() + "\n");
     }
 
     public Coordinate getAnyCoordinateOfSameTerrainTypeInSettlement(int settlementID, TerrainType terrainType){

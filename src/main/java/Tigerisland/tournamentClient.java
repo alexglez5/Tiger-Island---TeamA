@@ -211,7 +211,6 @@ public class tournamentClient {
                     clientSocket.close();
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
                     System.err.println("Server Sent Goodbye");
-                    System.exit(1);
                 } else {
                     break;
                 }
