@@ -7,6 +7,8 @@ import java.util.*;
 public class AIHelper {
     public Game map = new Game();
     public boolean opponentNukes = false;
+    public int leftSettlementId;
+    public int rightSettlementId;
     TreeSet<Integer> sizes = new TreeSet<>();
     HashMap<Integer, ExpandingParameters> movesWithSizes = new HashMap<>();
     private Coordinate placeWhereTotoroCanBePlaced;
@@ -16,8 +18,10 @@ public class AIHelper {
     private TileParameters placeWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
 
-    public void flagOpponentNukes() {
+    public void flagOpponentNukes(int leftSettlementId, int rightSettlementId) {
         opponentNukes = true;
+        this.leftSettlementId = leftSettlementId;
+        this.rightSettlementId = rightSettlementId;
         System.out.println("Opponents is nuking");
     }
 
@@ -62,10 +66,12 @@ public class AIHelper {
 
     public void findPlaceWhereSettlementCanBeExpanded() {
         placeWhereSettlementCanBeExpanded = null;
-        findAllPossiblePairsOfSizeAndExpansionLocations();
-        if (opponentNukes && sizes.size() > 0) {
-            placeWhereSettlementCanBeExpanded = movesWithSizes.get(sizes.last());
+        sizes = new TreeSet<>();
+        movesWithSizes = new HashMap<>();
+        if (opponentNukes) {
+            tryToExpandGreatestSettlementNuked();
         } else {
+            findAllPossiblePairsOfSizeAndExpansionLocations();
             if (sizes.contains(3))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
             else if (sizes.contains(2))
@@ -75,24 +81,59 @@ public class AIHelper {
         }
     }
 
-    private void findAllPossiblePairsOfSizeAndExpansionLocations() {
+    private void tryToExpandGreatestSettlementNuked() {
+        ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(leftSettlementId);
+        int maxInLeftSettlement = 0;
+        ExpandingParameters maxExpansionInLeftSettlement = new ExpandingParameters();
+        if (sizes.size() != 0) {
+            maxInLeftSettlement = sizes.last();
+            maxExpansionInLeftSettlement = movesWithSizes.get(sizes.last());
+        }
+
         sizes = new TreeSet<>();
         movesWithSizes = new HashMap<>();
-        for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == 1
-                    && !map.getSettlements().get(id).hasTotoro()
-                    && !map.getSettlements().get(id).hasTiger()) {
-                for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
-                    ExpandingParameters parameters = new ExpandingParameters(
-                            map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
-                    int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
-                    if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()))
-                        movesWithSizes.put(size, parameters);
-                }
-            }
+        ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(rightSettlementId);
+        int maxInRightSettlement = 0;
+        ExpandingParameters maxExpansionInRightSettlement = new ExpandingParameters();
+        if (sizes.size() != 0) {
+            maxInRightSettlement = sizes.last();
+            maxExpansionInRightSettlement = movesWithSizes.get(sizes.last());
         }
+
+        if (maxInLeftSettlement > maxInRightSettlement)
+            placeWhereSettlementCanBeExpanded = maxExpansionInLeftSettlement;
+        else
+            placeWhereSettlementCanBeExpanded = movesWithSizes.get(maxInRightSettlement);
+
+        unflagOpponentNuking();
+    }
+
+    private void findAllPossiblePairsOfSizeAndExpansionLocations() {
+        for (int id : map.getSettlements().keySet())
+            ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(id);
         for (int size : movesWithSizes.keySet())
             sizes.add(size);
+    }
+
+    private void ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(int id) {
+        if (map.getSettlements().containsKey(id)
+                && map.getSettlements().get(id).getPlayerID() == 1
+                && !map.getSettlements().get(id).hasTotoro()
+                && !map.getSettlements().get(id).hasTiger()) {
+            for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
+                ExpandingParameters parameters = new ExpandingParameters(
+                        map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
+                int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
+                if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()))
+                    movesWithSizes.put(size, parameters);
+            }
+        }
+    }
+
+    private void unflagOpponentNuking() {
+        opponentNukes = false;
+        leftSettlementId = -1;
+        rightSettlementId = -1;
     }
 
     public Coordinate getPlaceWhereSettlementCanBeFound() {
@@ -175,9 +216,7 @@ public class AIHelper {
     }
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
-
         for (int id : map.getSettlements().keySet()) {
-            // check if we can nuke our own totoro settlement to cause an advantageous split
             if (map.getSettlements().get(id).getPlayerID() == 1
                     && map.getSettlements().get(id).hasTotoro()
                     && map.getSettlements().get(id).getSize() > 4) {

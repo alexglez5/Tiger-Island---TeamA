@@ -73,12 +73,23 @@ public class AI {
             default:
                 orientation = Orientation.FromBottom;
         }
-        if(helper.map.getBoard().containsKey(new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))))
-            helper.flagOpponentNukes();
 
         helper.map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
                 , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
                 , orientation);
+
+        if(helper.map.getBoard().containsKey(new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile)))){
+            helper.map.locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+            Coordinate leftCoordinate = helper.map.locator.leftOfMainTerrainCoordinate;
+            Coordinate rightCoordinate = helper.map.locator.rightOfMainTerrainCoordinate;
+            int leftSettlementId = 0;
+            int rightSettlementId = 0;
+            if(helper.map.getBoard().containsKey(leftCoordinate))
+                leftSettlementId =  helper.map.getBoard().get(leftCoordinate).getSettlementID();
+            if(helper.map.getBoard().containsKey(rightCoordinate))
+                rightSettlementId =  helper.map.getBoard().get(rightCoordinate).getSettlementID();
+            helper.flagOpponentNukes(leftSettlementId, rightSettlementId);
+        }
 
         switch (move){
             case FOUNDED:
