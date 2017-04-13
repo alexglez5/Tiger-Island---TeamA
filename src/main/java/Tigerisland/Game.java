@@ -172,15 +172,6 @@ public class Game {
         return tileValidator.tileCanNukeOtherTiles();
     }
 
-    public boolean tileCanBePlaced(Tile tile, Coordinate mainTerrainCoordinate, Orientation terrainsOrientation) {
-        placer.updtateComponents(this.getComponents());
-        tileValidator.updtateComponents(this.getComponents());
-        placer.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        tileValidator.processParameters(tile, mainTerrainCoordinate, terrainsOrientation);
-        return tileValidator.tileCanNukeOtherTiles() || tileValidator.tileCanBePlacedOnLevelOne();
-    }
-
-
     public boolean settlementCanBeFound(Coordinate coordinate) {
         builder.updtateComponents(this.getComponents());
         buildValidator.updtateComponents(this.getComponents());

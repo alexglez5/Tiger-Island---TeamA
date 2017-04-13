@@ -5,6 +5,14 @@ import Tigerisland.*;
 import java.util.*;
 
 public class AIHelper {
+//    public Game map = new Game();
+//    private Coordinate placeWhereTotoroCanBePlaced;
+//    private Coordinate placeWhereTigerCanBePlaced;
+//    private ExpandingParameters placeWhereSettlementCanBeExpanded;
+//    private Coordinate placeWhereSettlementCanBeFound;
+//    private TileParameters placeWhereTileCanBePlaced;
+//    private HashSet<Coordinate> visitedCoordinates;
+
     public Game map = new Game();
     private Coordinate placeWhereTotoroCanBePlaced;
     private Coordinate placeWhereTigerCanBePlaced;
@@ -12,6 +20,14 @@ public class AIHelper {
     private Coordinate placeWhereSettlementCanBeFound;
     private TileParameters placeWhereTileCanBePlaced;
     private HashSet<Coordinate> visitedCoordinates;
+    public boolean opponentNukes = false;
+    TreeSet<Integer> sizes = new TreeSet<>();
+    HashMap<Integer, ExpandingParameters> movesWithSizes = new HashMap<>();
+
+    public void flagOpponentNukes(){
+        opponentNukes = true;
+        System.out.println("Opponents is nuking");
+    }
 
     public void findCoordinateWhereTotoroCanBePlaced() {
         placeWhereTotoroCanBePlaced = null;
@@ -28,7 +44,7 @@ public class AIHelper {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
             if (settlementDoesNotContainTiger(id)
-                    && map.getSettlements().get(id).getPlayerID() == map.getPlayer().getPlayerID())
+                    && map.getSettlements().get(id).getPlayerID() == 1)
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTigerCanBePlaced(coordinate);
 
@@ -36,8 +52,23 @@ public class AIHelper {
 
     public void findPlaceWhereSettlementCanBeExpanded() {
         placeWhereSettlementCanBeExpanded = null;
-        TreeSet<Integer> sizes = new TreeSet<>();
-        HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
+        findAllPossiblePairsOfSizeAndExpansionLocations();
+        if(opponentNukes && sizes.size() > 0){
+            placeWhereSettlementCanBeExpanded = movesWithSizes.get(sizes.last());
+        }
+        else {
+            if (sizes.contains(3))
+                placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
+            else if (sizes.contains(2))
+                placeWhereSettlementCanBeExpanded = movesWithSizes.get(2);
+            else if (sizes.contains(1))
+                placeWhereSettlementCanBeExpanded = movesWithSizes.get(1);
+        }
+    }
+
+    private void findAllPossiblePairsOfSizeAndExpansionLocations() {
+        sizes = new TreeSet<>();
+        movesWithSizes = new HashMap<>();
         for (int id : map.getSettlements().keySet()) {
             if (map.getSettlements().get(id).getPlayerID() == 1
                     && !map.getSettlements().get(id).hasTotoro()
@@ -46,27 +77,48 @@ public class AIHelper {
                     ExpandingParameters parameters = new ExpandingParameters(
                             map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
                     int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
-                    if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType())) {
-                        movesWithScores.put(size, parameters);
-                    }
+                    if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()))
+                        movesWithSizes.put(size, parameters);
                 }
             }
         }
-        for (int size : movesWithScores.keySet())
+        for (int size : movesWithSizes.keySet())
             sizes.add(size);
-        if(sizes.contains(3)) {
-            placeWhereSettlementCanBeExpanded = movesWithScores.get(3);
-            return;
-        }
-        else if(sizes.contains(2)) {
-            placeWhereSettlementCanBeExpanded = movesWithScores.get(2);
-            return;
-        }
-        else if(sizes.contains(1)) {
-            placeWhereSettlementCanBeExpanded = movesWithScores.get(1);
-            return;
-        }
     }
+
+//    public void findPlaceWhereSettlementCanBeExpanded() {
+//        placeWhereSettlementCanBeExpanded = null;
+//        TreeSet<Integer> sizes = new TreeSet<>();
+//        HashMap<Integer, ExpandingParameters> movesWithScores = new HashMap<>();
+//        for (int id : map.getSettlements().keySet()) {
+//            if (map.getSettlements().get(id).getPlayerID() == 1
+//                    && !map.getSettlements().get(id).hasTotoro()
+//                    && !map.getSettlements().get(id).hasTiger()) {
+//                for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
+//                    ExpandingParameters parameters = new ExpandingParameters(
+//                            map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
+//                    int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
+//                    if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType())) {
+//                        movesWithScores.put(size, parameters);
+//                    }
+//                }
+//            }
+//        }
+//        for (int size : movesWithScores.keySet())
+//            sizes.add(size);
+//        if(sizes.contains(3)) {
+//            placeWhereSettlementCanBeExpanded = movesWithScores.get(3);
+//            return;
+//        }
+//        else if(sizes.contains(2)) {
+//            placeWhereSettlementCanBeExpanded = movesWithScores.get(2);
+//            return;
+//        }
+//        else if(sizes.contains(1)) {
+//            placeWhereSettlementCanBeExpanded = movesWithScores.get(1);
+//            return;
+//        }
+//    }
 
     public void findCoordinatesWhereSettlementCanBeFound() {
         placeWhereSettlementCanBeFound = null;

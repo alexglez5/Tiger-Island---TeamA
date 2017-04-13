@@ -73,6 +73,8 @@ public class AI {
             default:
                 orientation = Orientation.FromBottom;
         }
+        if(helper.map.getBoard().containsKey(new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))))
+            helper.flagOpponentNukes();
 
         helper.map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
                 , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
