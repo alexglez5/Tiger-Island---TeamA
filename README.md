@@ -22,4 +22,9 @@ unzip
 
 4. `control + shift + F10`
 
-complilation from commandlind is impossible, MUST be through intellij
+### Command Line 
+1. Build in intellij
+
+2. cd in command line to <folder path>/target/class
+
+3. Run java Tigerisland.tournamentClientMain <ip> <port> <tournamentPassword> <username> <password>
