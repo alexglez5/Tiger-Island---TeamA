@@ -222,7 +222,7 @@ public class tournamentClient {
                     else if(split[6].equals("LOST:") || split[6].equals("FORFEITED:")){ //When the other player lost
                         opponentMoves(); //recursively call opponentMoves to handle the next server message
                     }
-                    if(split[2].equals("OVER")){ //Resetting the game if they have ended
+                    else if(split[2].equals("OVER")){ //Resetting the game if they have ended
                         if(gid.equals("A")){
                             game1AI.helper.map.resetGame(); // reset game 1
                             opponentMoves(); //recursively call opponentMoves to handle the next server message
