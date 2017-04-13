@@ -110,7 +110,7 @@ public class tournamentClient {
                 System.out.println("S: " + serverMessage + "\n");
 
                 if(prevServerMessage.equals(serverMessage)){ //ignoring the duplicate messages
-                    System.out.println("***Duplicate message received***");
+                    System.out.println("***Duplicate message received***\n");
                     break;
                 }
 
@@ -188,13 +188,13 @@ public class tournamentClient {
                         //tournamentMessageHandler();
                         break;
                     }
-                    else if(gid.equals("A") && !opponentspid.equals(ourPid) && !split[6].equals("LOST") ) {
+                    else if(gid.equals("A") && !opponentspid.equals(ourPid)) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                         game1AI.placeOpponentMove();
                         //tournamentMessageHandler();
                         break;
                     }
-                    else if(gid.equals("B") && !opponentspid.equals(ourPid) && !split[6].equals("LOST")){
+                    else if(gid.equals("B") && !opponentspid.equals(ourPid)){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                         game2AI.placeOpponentMove();
                         //tournamentMessageHandler();
@@ -210,7 +210,8 @@ public class tournamentClient {
                 else if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){
                     clientSocket.close();
                     System.out.println("THANK YOU FOR PLAYING! GOODBYE");
-                    break;
+                    System.err.println("Server Sent Goodbye");
+                    System.exit(1);
                 }
 //                else{
 //                    //tournamentMessageHandler();

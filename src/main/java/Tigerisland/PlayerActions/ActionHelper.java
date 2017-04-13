@@ -17,28 +17,28 @@ public class ActionHelper {
     public void determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation() {
         switch (orientation) {
             case FromBottom:
-                leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
+                leftOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
             case FromBottomRight:
-                leftOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
+                leftOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = belowAndToTheRightOfMain(mainTerrainCoordinate);
                 break;
             case FromTopRight:
-                leftOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
+                leftOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = toTheRightOfMain(mainTerrainCoordinate);
                 break;
             case FromTop:
-                leftOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
+                leftOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = overAndToTheRightOfMain(mainTerrainCoordinate);
                 break;
             case FromTopLeft:
-                leftOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
+                leftOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = overAndToTheLeftOfMain(mainTerrainCoordinate);
                 break;
             case FromBottomLeft:
-                leftOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
-                rightOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
+                leftOfMainTerrainCoordinate = belowAndToTheLeftOfMain(mainTerrainCoordinate);
+                rightOfMainTerrainCoordinate = toTheLeftOfMain(mainTerrainCoordinate);
                 break;
         }
     }

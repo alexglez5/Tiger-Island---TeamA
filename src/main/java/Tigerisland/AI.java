@@ -27,7 +27,7 @@ public class AI {
         String intOrientation = split[12];
         String terrainType = "";
 
-        Choice move = Choice.TIGER;
+        Choice move = Choice.FOUNDED;
         String xBuild = split[16];
         String yBuild = split[18];
 
