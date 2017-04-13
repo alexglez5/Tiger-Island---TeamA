@@ -126,15 +126,15 @@ public class AI {
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
-//        else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
-//            ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
-//            Coordinate coordinate = parameters.getCoordinate();
-//            int x = coordinate.getXCoordinate();
-//            int z = coordinate.getYCoordinate();
-//            int y = -1 * x - z;
-//            helper.map.expandSettlement(coordinate, parameters.getTerrainType());
-//            outMessage += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
-//        }
+        else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
+            ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
+            Coordinate coordinate = parameters.getCoordinate();
+            int x = coordinate.getXCoordinate();
+            int z = coordinate.getYCoordinate();
+            int y = -1 * x - z;
+            helper.map.expandSettlement(coordinate, parameters.getTerrainType());
+            outMessage += "EXPAND SETTLEMENT AT " + x + " " + y + " " + z + " " + parameters.getTerrainType().toString();
+        }
         else if(helper.getPlaceWhereSettlementCanBeFound() != null) {
             int x = helper.getPlaceWhereSettlementCanBeFound().getXCoordinate();
             int z =  helper.getPlaceWhereSettlementCanBeFound().getYCoordinate();
