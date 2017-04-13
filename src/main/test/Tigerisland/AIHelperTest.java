@@ -24,13 +24,15 @@ public class AIHelperTest{
                 new Coordinate(1, 0), Orientation.FromBottomRight);
         helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.GRASS),
                 new Coordinate(2, 1), Orientation.FromBottom);
         helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
                 new Coordinate(1, 3), Orientation.FromBottomLeft);
 
         helper.map.foundNewSettlement(new Coordinate(1, 1));
-        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCK);
+        helper.map.foundNewSettlement(new Coordinate(0, 1));
+        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.GRASS);
+
         helper.findCoordinateWhereTotoroCanBePlaced();
         Assert.assertTrue(helper.map.totoroCanBePlaced(helper.getPlaceWhereTotoroCanBePlaced()));
     }
@@ -78,13 +80,14 @@ public class AIHelperTest{
                 new Coordinate(1, 0), Orientation.FromBottomRight);
         helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.GRASS),
                 new Coordinate(2, 1), Orientation.FromBottom);
         helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
                 new Coordinate(1, 3), Orientation.FromBottomLeft);
 
         helper.map.foundNewSettlement(new Coordinate(1, 1));
-        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.ROCK);
+        helper.map.foundNewSettlement(new Coordinate(0, 1));
+        helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.GRASS);
         helper.findCoordinateWhereTotoroCanBePlaced();
         Assert.assertTrue(helper.map.totoroCanBePlaced(helper.getPlaceWhereTotoroCanBePlaced()));
         Assert.assertEquals(helper.getVisitedCoordinates().size(), 16);
@@ -96,6 +99,7 @@ public class AIHelperTest{
 
         helper.map.switchPlayers();
         helper.map.foundNewSettlement(new Coordinate(-1, 1));
+        helper.map.foundNewSettlement(new Coordinate(-1, 2));
         helper.map.expandSettlement(new Coordinate(-1,1), TerrainType.LAKE);
 
         Assert.assertEquals(helper.getVisitedCoordinates().size(), 16);

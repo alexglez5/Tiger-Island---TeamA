@@ -124,11 +124,11 @@ public class TilePlacerTest {
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(0,0), Orientation.FromBottomRight);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
-                TerrainType.ROCK);
+                TerrainType.GRASS);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,0)).getTerrainType(),
                 TerrainType.VOLCANO);
         Assert.assertEquals(map.getBoard().get(new Coordinate(1,0)).getTerrainType(),
-                TerrainType.GRASS);
+                TerrainType.ROCK);
     }
 
     @Test
