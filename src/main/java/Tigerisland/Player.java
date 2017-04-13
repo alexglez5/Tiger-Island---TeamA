@@ -26,9 +26,9 @@ public class Player {
 
     public void useVillagers(int num) { numberOfVillagersLeft -= num; }
 
-    public void useTotoro() { numberOfTotoroLeft--; }
+    public void useTotoro() { numberOfTotoroLeft -= 1; }
 
-    public void useTiger() { numberOfTigersLeft--; }
+    public void useTiger() { numberOfTigersLeft -= 1; }
 
 //    public void addSettlement(Settlement s) { getSettlements().add(s); }
 
