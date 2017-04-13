@@ -266,7 +266,11 @@ public class AIHelper {
                     for (Coordinate tempCoordinate : map.locator.surroundingCoordinates) {
                         if (map.getBoard().containsKey(tempCoordinate) && map.getBoard().get(tempCoordinate).getTerrainType() == TerrainType.VOLCANO) {
                             for (Orientation orientation : Orientation.getOrientations()) {
-                                if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation)) {
+                                map.locator.setMainCoordinateAndOrientation(tempCoordinate, orientation);
+                                map.locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                                if (map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), tempCoordinate, orientation) &&
+                                        ( map.getBoard().get(map.locator.leftOfMainTerrainCoordinate).hasVillager()
+                                                || map.getBoard().get(map.locator.rightOfMainTerrainCoordinate).hasVillager() ) ) {
                                     placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, tempCoordinate, orientation);
                                     return;
                                 }
