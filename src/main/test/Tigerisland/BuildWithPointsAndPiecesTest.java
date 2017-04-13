@@ -41,7 +41,8 @@ public class BuildWithPointsAndPiecesTest {
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(2, 1), Orientation.FromBottom);
         map.expandSettlement(new Coordinate(0, 1), TerrainType.ROCK);
-        Assert.assertEquals(map.getPlayer().getPoints(), 5);
+        Assert.assertEquals(map.getPlayer().getPoints(), 4);
+        map.foundNewSettlement(new Coordinate(2,0));
         map.placeTile(new Tile(TerrainType.GRASS, TerrainType.LAKE),
                 new Coordinate(-2, 1), Orientation.FromBottom);
         map.placeTotoro(new Coordinate(-1, 1));
