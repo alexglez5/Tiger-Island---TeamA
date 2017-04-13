@@ -30,9 +30,9 @@ public class GameTest {
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,0)).getTerrainType(),
                 TerrainType.VOLCANO);
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getTerrainType(),
-                TerrainType.LAKE);
-        Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
                 TerrainType.ROCK);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(0,1)).getTerrainType(),
+                TerrainType.LAKE);
     }
 
     @Test
@@ -40,11 +40,11 @@ public class GameTest {
         map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(0,2), Orientation.FromBottom);
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1,3)).getTerrainType(),
-                TerrainType.LAKE);
+                TerrainType.ROCK);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,2)).getTerrainType(),
                 TerrainType.VOLCANO);
         Assert.assertEquals(map.getBoard().get(new Coordinate(0,3)).getTerrainType(),
-                TerrainType.ROCK);
+                TerrainType.LAKE);
     }
 
     @After
