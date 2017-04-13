@@ -43,10 +43,9 @@ public class ATLevel2Placement {
 
     @Then("^the gameboard should accept the tile at \\((-?\\d+),(-?\\d+)\\) at level (\\d+)$")
     public void the_gameboard_should_accept_the_tile_at_at_level(int coordinateX, int coordinateY, int level) throws Throwable {
-//        if(!game.getBoard().get(new Coordinate(coordinateX,coordinateY)).equals(tile.getMainTerrain())){
-//            throw new Error("Tile is not on correct level");
-//        }
-        throw new PendingException();
+        if(game.getBoard().get(new Coordinate(coordinateX,coordinateY)).equals(tile.getMainTerrain())){
+            throw new Error("Tile is not on correct level");
+        }
     }
 
     //Illegal
@@ -77,8 +76,10 @@ public class ATLevel2Placement {
 
     }
 
-    @Then("^the gameboard should not accept the tile at \\((\\d+),-(\\d+)\\) at level (\\d+)$")public void the_gameboard_should_not_accept_the_tile_at_at_level(int arg1, int arg2, int arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^the gameboard should not accept the tile at \\((\\d+),-(\\d+)\\) at level (\\d+)$")
+    public void the_gameboard_should_not_accept_the_tile_at_at_level(int coordinateX, int coordinateY, int arg3) throws Throwable {
+        if(game.getBoard().get(new Coordinate(coordinateX,coordinateY)).equals(tile.getMainTerrain())){
+            throw new Error("Tile is not on correct level");
+        }
     }
 }
