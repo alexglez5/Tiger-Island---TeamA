@@ -14,7 +14,7 @@ public class AIHelperTest{
     @Before
     public void initializeGameBoard() throws Exception {
         helper = new AIHelper();
-        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(0, 0), Orientation.FromBottom);
     }
 
@@ -90,7 +90,7 @@ public class AIHelperTest{
         helper.map.expandSettlement(new Coordinate(1, 1), TerrainType.GRASS);
         helper.findCoordinateWhereTotoroCanBePlaced();
         Assert.assertTrue(helper.map.totoroCanBePlaced(helper.getPlaceWhereTotoroCanBePlaced()));
-        Assert.assertEquals(helper.getVisitedCoordinates().size(), 16);
+        Assert.assertEquals(helper.getVisitedCoordinates().size(), 17);
 
         helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.ROCK),
                 new Coordinate(-1,0), Orientation.FromBottomLeft);
@@ -102,7 +102,7 @@ public class AIHelperTest{
         helper.map.foundNewSettlement(new Coordinate(-1, 2));
         helper.map.expandSettlement(new Coordinate(-1,1), TerrainType.LAKE);
 
-        Assert.assertEquals(helper.getVisitedCoordinates().size(), 16);
+        Assert.assertEquals(helper.getVisitedCoordinates().size(), 17);
         Assert.assertEquals(helper.map.getSettlements().size(), 2);
     }
 
@@ -147,11 +147,11 @@ public class AIHelperTest{
 
     @Test
     public void nukeTest(){
-        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
-                new Coordinate(1, 0), Orientation.FromBottomRight);
         helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+                new Coordinate(1, 0), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(2, 1), Orientation.FromBottom);
         helper.map.setCurrentPlayer(2);
         helper.map.foundNewSettlement(new Coordinate(-1,3));
@@ -167,9 +167,7 @@ public class AIHelperTest{
         Assert.assertEquals(helper.map.getCurrentPlayerId(),1);
         helper.findPlaceWhereTileCanBePlaced(TerrainType.GRASS, TerrainType.JUNGLE);
         Assert.assertTrue(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS) != null);
-        TileParameters parameters = new TileParameters(helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getLeftTerrainType(),
-                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getRightTerrainType(),helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getMainTerrainCoordinate(),
-                helper.getPlaceWhereTileCanBePlaced(TerrainType.ROCK,TerrainType.GRASS).getOrientattion());
+        TileParameters parameters = helper.getPlaceWhereTileCanBePlaced(TerrainType.GRASS, TerrainType.JUNGLE);
         Tile tile = new Tile(parameters.getLeftTerrainType() ,parameters.getRightTerrainType());
         helper.map.placeTile(tile, parameters.getMainTerrainCoordinate(), parameters.getOrientattion());
         Assert.assertEquals(helper.map.getBoard().get(new Coordinate(parameters.getMainTerrainCoordinate().getXCoordinate(),
@@ -178,11 +176,11 @@ public class AIHelperTest{
 
     @Test
     public void testIntentionalTotoroNuking() {
-        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 1), Orientation.FromTop);
-        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(-1, 2), Orientation.FromBottomRight);
-        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(2, 1), Orientation.FromBottom);
         helper.map.setCurrentPlayer(1);
         helper.map.foundNewSettlement(new Coordinate(-1,3));
