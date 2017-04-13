@@ -12,7 +12,7 @@ public class BuilderTest {
     @Before
     public void initializeGameBoard() throws Exception{
         map = new Game();
-        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
                 new Coordinate(0,0), Orientation.FromBottom);
     }
 
@@ -40,9 +40,9 @@ public class BuilderTest {
     public void testSettlementFullyExpands() throws Exception{
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(2,1), Orientation.FromBottom);
         map.foundNewSettlement(new Coordinate(1,1));
         map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
@@ -61,8 +61,8 @@ public class BuilderTest {
                 new Coordinate(1,0), Orientation.FromBottomRight);
         map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.foundNewSettlement(new Coordinate(1,1));
-        map.expandSettlement(new Coordinate(1,1), TerrainType.ROCK);
+        map.foundNewSettlement(new Coordinate(2,0));
+        map.expandSettlement(new Coordinate(2,0), TerrainType.GRASS);
 
         // this is quite long to find the size of a settlement, see if we can refactor later
         Assert.assertEquals(map.getSettlements().get(map.getBoard().get(new Coordinate(1,1)).getSettlementID()).getSize(), 3);
@@ -96,11 +96,11 @@ public class BuilderTest {
     public void testTotoroIsProperlyPlaced() throws Exception{
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(2,1), Orientation.FromBottom);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.ROCK),
                 new Coordinate(1,3), Orientation.FromBottomLeft);
 
         map.foundNewSettlement(new Coordinate(1,1));
@@ -108,6 +108,7 @@ public class BuilderTest {
         map.placeTotoro(new Coordinate(-1,3));
 
         Assert.assertTrue(map.getBoard().get(new Coordinate(-1 ,3)).hasTotoro());
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(1,1).hashCode()).getSize(), 7);
     }
 
     @Test
@@ -146,9 +147,9 @@ public class BuilderTest {
     public void testTotoroIsNotPlaceIfThereIsAnotherTotoroInSettlement() throws Exception{
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
                 new Coordinate(2,1), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
                 new Coordinate(1,3), Orientation.FromBottomLeft);
@@ -166,11 +167,11 @@ public class BuilderTest {
     public void testSettlementsAreMergedWhenTotoroIsPlacedBetweenThem() throws Exception{
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1,0), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
-                new Coordinate(-1,2), Orientation.FromBottomRight);
-        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
-                new Coordinate(2,1), Orientation.FromBottom);
         map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(-1,2), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
+                new Coordinate(2,1), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
                 new Coordinate(1,3), Orientation.FromBottomLeft);
         map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.ROCK),
                 new Coordinate(-2,2), Orientation.FromBottom);
