@@ -135,6 +135,7 @@ public class Builder {
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
         settlements.get(settlementID).addToSettlement(coordinate);
+        settlements.get(settlementID).placeTiger();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.addPoints(pointsForTigerPlacement);
         player.useTiger();

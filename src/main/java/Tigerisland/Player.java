@@ -30,26 +30,6 @@ public class Player {
 
     public void useTiger() { numberOfTigersLeft -= 1; }
 
-//    public void addSettlement(Settlement s) { getSettlements().add(s); }
-
-//    public void removeSettlement(Settlement s) { settlements.remove(s); }
-
-//    public Settlement findSettlement(int sid) {
-//        for (Settlement s : settlements) {
-//            if (s.getSettlementID() == sid)
-//                return s;
-//        }
-//        return null;
-//    }
-
-//    public ArrayList<Settlement> getSettlements() {
-//        return settlements;
-//    }
-
-//    public boolean containsKey(int id){
-//        return findSettlement(id) != null;
-//    }
-
     public int getPlayerID() {
         return playerID;
     }

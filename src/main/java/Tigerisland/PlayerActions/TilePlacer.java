@@ -2,10 +2,7 @@ package Tigerisland.PlayerActions;
 
 import Tigerisland.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class TilePlacer {
     protected ActionHelper locator = new ActionHelper();
@@ -104,7 +101,6 @@ public class TilePlacer {
         for (int sid: settlementIdsOfHexesUnderTile) {
             // for each settlement id, while the bfs does not return the full size, get all the coordinates of that
             // bfs and put it in its own settlement.
-
             Set<Coordinate> connectedComponent = settlements.get(sid).bfs();
 
             while (connectedComponent.size() != settlements.get(sid).getSize()) {
@@ -115,31 +111,37 @@ public class TilePlacer {
 
                     Coordinate firstCord = i.next();
 
-                    // remove it from the current settlement
-                    settlements.get(sid).removeFromSettlement(firstCord);
+                    // first check if the firstCord of this connected component was the original settlement id.
+                    // If it was, then set a flag to skip this iteration entirely, and get another random ordering
+                    // where the firstCord wont be picked first
+                    if (firstCord.hashCode() != sid) {
 
-                    // found a new settlement with it (with a unique id) and update the hex settlementID
-                    settlements.put(firstCord.hashCode()+1200, new Settlement(firstCord));
-                    gameBoard.get(firstCord).setSettlementID(firstCord.hashCode()+1200);
+                        // remove it from the current settlement
+                        settlements.get(sid).removeFromSettlement(firstCord);
 
-                    // iterate through the rest of the connected component, remove from current settlement, add to
-                    // this new settlement, and update the gameboard
-                    // Iterator<Coordinate> i = connectedComponent.iterator();
-                    while (i.hasNext()) {
-                        Coordinate nextCord = i.next();
-                        settlements.get(sid).removeFromSettlement(nextCord);
-                        settlements.get(firstCord.hashCode()+1200).addToSettlement(nextCord);
-                        gameBoard.get(nextCord).setSettlementID(firstCord.hashCode()+1200);
+                        // found a new settlement with it (with a unique id) and update the hex settlementID
+                        settlements.put(firstCord.hashCode(), new Settlement(firstCord));
+                        gameBoard.get(firstCord).setSettlementID(firstCord.hashCode());
 
-                        // make sure to set the flags for totoro and tiger in newly split settlement and remove
-                        // from the original split settlement
-                        if (gameBoard.get(nextCord).hasTotoro()) {
-                            settlements.get(firstCord.hashCode() + 1200).placeTotoro();
-                            settlements.get(sid).removeTotoro();
-                        }
-                        if (gameBoard.get(nextCord).hasTiger()) {
-                            settlements.get(firstCord.hashCode() + 1200).placeTiger();
-                            settlements.get(sid).removeTiger();
+                        // iterate through the rest of the connected component, remove from current settlement, add to
+                        // this new settlement, and update the gameboard
+                        // Iterator<Coordinate> i = connectedComponent.iterator();
+                        while (i.hasNext()) {
+                            Coordinate nextCord = i.next();
+                            settlements.get(sid).removeFromSettlement(nextCord);
+                            settlements.get(firstCord.hashCode()).addToSettlement(nextCord);
+                            gameBoard.get(nextCord).setSettlementID(firstCord.hashCode());
+
+                            // make sure to set the flags for totoro and tiger in newly split settlement and remove
+                            // from the original split settlement
+                            if (gameBoard.get(nextCord).hasTotoro()) {
+                                settlements.get(firstCord.hashCode()).placeTotoro();
+                                settlements.get(sid).removeTotoro();
+                            }
+                            if (gameBoard.get(nextCord).hasTiger()) {
+                                settlements.get(firstCord.hashCode()).placeTiger();
+                                settlements.get(sid).removeTiger();
+                            }
                         }
                     }
 

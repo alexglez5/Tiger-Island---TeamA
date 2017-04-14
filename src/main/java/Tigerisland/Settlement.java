@@ -1,6 +1,7 @@
 package Tigerisland;
 
 import Tigerisland.PlayerActions.ActionHelper;
+import sun.jvm.hotspot.oops.Array;
 
 import java.util.*;
 
@@ -56,7 +57,11 @@ public class Settlement {
     public Set<Coordinate> bfs() { //breath first search
         // set up bfs
         Set<Coordinate> visited = new HashSet<Coordinate>();
-        Set<Coordinate> elements = edges.keySet();
+        ArrayList<Coordinate> elements = new ArrayList<>(edges.keySet());
+
+        // shuffle the list to pick a random element
+        Collections.shuffle(elements);
+
         ArrayDeque<Coordinate> queue = new ArrayDeque<>();
         if (!elements.isEmpty())
             queue.add(elements.iterator().next());
