@@ -18,9 +18,19 @@ unzip
 
 2. `Build` project in intellij
 
-3. leftclick `tournamentClientMain.java`
+3. In `run` dropdown menu select `Edit Configurations...` 
 
-4. `control + shift + F10`
+4. Add to the `program arguements` an input similar to `localhost 4444 heygang A A` 
+
+    1.`IP` of the server
+    2.`port` of the server
+    3.`Password` of the server
+    4.`Username` of your team
+    5.`Password` of your team
+
+5. leftclick `tournamentClientMain.java`
+
+6. `control + shift + F10`
 
 ### Command Line 
 1. Build in intellij
