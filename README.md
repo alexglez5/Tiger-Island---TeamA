@@ -37,13 +37,17 @@ unzip
 6. `control + shift + F10`
 
 ### Command Line 
+
 1. Build in intellij
 
 2. cd in command line to <folder path>/target/class
 
 3. Run java Tigerisland.tournamentClientMain <ip> <port> <tournamentPassword> <username> <password>
 
-## Features Implemented
+### Features Implemented
 
-`Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuke Enemy Settlements`, `Points`, `Client Debug Info`, `Client Socket`, `Terrain`, `Tile`, `Server Message Handler`, `Merge Settlments`, `Enter Parameters to change IP, pass`, `All necessary functionality to finish a game`
+`Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuke Enemy Settlements`, `Points`, `Client Socket`, `Terrain`, `Tile`, `Server Message Handler`, `Merge Settlments`, `Enter Parameters to change IP, pass`
+
+### Known Bugs
+    - Occasional, Random timeouts(exception being thrown somewhere)
 
