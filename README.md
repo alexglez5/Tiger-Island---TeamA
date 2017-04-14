@@ -49,5 +49,5 @@ unzip
 `Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuke Enemy Settlements`, `Points`, `Client Socket`, `Terrain`, `Tile`, `Server Message Handler`, `Merge Settlments`, `Enter Parameters to change IP, pass`
 
 ### Known Bugs
-    - Occasional, Random timeouts(exception being thrown somewhere)
+    - 'Occasional, Random timeouts(exception being thrown somewhere)'
 
