@@ -94,8 +94,16 @@ public class Game {
 //        for(Coordinate c : getBoard().keySet()){
 //            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
 //        }
-        System.out.println(player1.getPoints() + "\n");
-        System.out.println(player2.getPoints() + "\n");
+        System.out.println("************************** Player1: " + player1.getPoints() +
+                " | " + "Player2: " + player2.getPoints()+ "     ******************************\n");
+    }
+
+    public void printCurrentPlayerScores(){
+        System.out.println("****** Player1:" + player1.getPoints() + "  #Villagers:" + player1.getNumberOfVillagersLeft()
+                + "  #Totoros:" + player1.getNumberOfTotoroLeft() + "  #Tigers:" + player1.getNumberOfTigersLeft()
+                + "    <=|=>    " + " Player2:" + player2.getPoints()+ "  #Villagers:" + player2.getNumberOfVillagersLeft()
+                + "  #Totoros:" + player2.getNumberOfTotoroLeft() + "  #Tigers:" + player2.getNumberOfTigersLeft()
+                + "  *********\n");
     }
 
     public Coordinate getAnyCoordinateOfSameTerrainTypeInSettlement(int settlementID, TerrainType terrainType){

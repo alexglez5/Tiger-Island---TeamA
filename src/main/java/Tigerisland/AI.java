@@ -74,10 +74,6 @@ public class AI {
                 orientation = Orientation.FromBottom;
         }
 
-        helper.map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
-                , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
-                , orientation);
-
         if(helper.map.getBoard().containsKey(new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile)))){
             helper.map.locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
             Coordinate leftCoordinate = helper.map.locator.leftOfMainTerrainCoordinate;
@@ -90,6 +86,11 @@ public class AI {
                 rightSettlementId =  helper.map.getBoard().get(rightCoordinate).getSettlementID();
             helper.flagOpponentNukes(leftSettlementId, rightSettlementId);
         }
+
+        helper.map.placeTile(new Tile(TerrainType.valueOf(leftTerrainType), TerrainType.valueOf(rightTerrainType))
+                , new Coordinate(Integer.parseInt(xTile), Integer.parseInt(yTile))
+                , orientation);
+
 
         switch (move){
             case FOUNDED:
@@ -106,7 +107,7 @@ public class AI {
                 break;
         }
 
-
+        helper.map.printCurrentPlayerScores();
     }
 
     public String placeAIMove(){
