@@ -47,5 +47,9 @@ unzip
 
 `Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuking of Enemy Settlements`, `Points`, `Client Socket`, `Terrains`, `Tile`, `Server Message Handler`, `Merge Settlments`, `Enter Parameters to change IP, pass`
 
+### Features Left Out
+
+'We do not have working cucumber acceptance tests.  Please use the test directory under src/main/test.'
+
 ### Known Bugs
     - Rare Timeout issue (exception being thrown)
