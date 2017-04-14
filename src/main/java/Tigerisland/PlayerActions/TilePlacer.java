@@ -101,7 +101,6 @@ public class TilePlacer {
         for (int sid: settlementIdsOfHexesUnderTile) {
             // for each settlement id, while the bfs does not return the full size, get all the coordinates of that
             // bfs and put it in its own settlement.
-
             Set<Coordinate> connectedComponent = settlements.get(sid).bfs();
 
             while (connectedComponent.size() != settlements.get(sid).getSize()) {
