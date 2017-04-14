@@ -2,13 +2,12 @@
 ## In Order to Run to Accept Server Communication
 ### Obtain the .java files and project directory
 
-From GitShell
+### From Command line
 
-1. `git checkout LastBranch`
+1. 'git clone https://github.com/alexglez5/Tiger-Island---TeamA.git'
+2. 'git pull'
 
-2. `git pull`
-
-From Downloaded Zip
+### From Downloaded Zip
 
 unzip 
 
@@ -46,8 +45,7 @@ unzip
 
 ### Features Implemented
 
-`Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuke Enemy Settlements`, `Points`, `Client Socket`, `Terrain`, `Tile`, `Server Message Handler`, `Merge Settlments`, `Enter Parameters to change IP, pass`
+`Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuking of Enemy Settlements`, `Points`, `Client Socket`, `Terrains`, `Tile`, `Server Message Handler`, `Merge Settlments`, `Enter Parameters to change IP, pass`
 
 ### Known Bugs
     - Rare Timeout issue (exception being thrown)
-
