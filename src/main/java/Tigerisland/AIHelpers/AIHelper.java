@@ -257,7 +257,6 @@ public class AIHelper {
             }
         }
 
-
         for (int id : map.getSettlements().keySet()) {
             if (map.getSettlements().get(id).getPlayerID() == 2
                     && map.getSettlements().get(id).getSize() > 3) {
