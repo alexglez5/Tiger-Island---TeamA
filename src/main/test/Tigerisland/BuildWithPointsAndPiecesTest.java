@@ -87,7 +87,7 @@ public class BuildWithPointsAndPiecesTest {
         map.foundNewSettlement(new Coordinate(-1, 1));
         Assert.assertEquals(map.getBoard().get(new Coordinate(-1, 1)).getSettlementID(), map.getBoard().get(new Coordinate(0, 1)).getSettlementID());
     }
-//
+    
 //    @Test
 //    public void testSettlementsAreNotMergedWhenDifferentPlayerIDs() throws Exception {
 //        map.getPlayer().setPlayerID(4);
