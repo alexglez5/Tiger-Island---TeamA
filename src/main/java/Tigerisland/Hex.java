@@ -15,6 +15,10 @@ public class Hex {
         level = 1;
     }
 
+    public boolean hasPiece(){
+        return hasTotoro() || hasVillager() || hasTiger();
+    }
+
     public void placeVillagers() {
         this.hasVillagers = true;
     }

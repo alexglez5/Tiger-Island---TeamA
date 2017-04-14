@@ -101,7 +101,6 @@ public class tournamentClient {
                 //Print to console we are about to beat some players!!!
                 System.out.println("Login was a success. PID: " + ourPid);
                 waitForTournamentToBegin();
-                break;
             }
 
             if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
@@ -137,7 +136,6 @@ public class tournamentClient {
                     game2AI = new AI();
                     game2AI.helper.map.placeStartingTile();
                     winTheTournament();
-                    break;
                 }
                 //If server says goodbye then everything is over or we got kicked
                 if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {
@@ -147,7 +145,6 @@ public class tournamentClient {
                 }
                 if (serverMessage.equals("END OF CHALLENGES")) {
                     System.out.println("Challenges over!");
-                    break;
                 }
             }
         } catch (IOException e) {
@@ -181,7 +178,7 @@ public class tournamentClient {
 
                         System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                                 + tileDrawn + " AT " + userMoveInformation + "\n");
-
+                        
                         opponentMoves();
                     }
                     else if (gid.equals("B")) {
@@ -195,7 +192,6 @@ public class tournamentClient {
 
                         opponentMoves();
                     }
-                    break;
                 }
             }
         } catch (IOException e) {
@@ -222,15 +218,13 @@ public class tournamentClient {
                     else if(split[6].equals("LOST:") || split[6].equals("FORFEITED:")){
                         opponentMoves();
                     }
-                    else if(split[2].equals("OVER")){
-                        if(gid.equals("A")){
-                            game1AI.helper.map.resetGame();
-                            opponentMoves();
-                        }
-                        else if(gid.equals("B")){
-                            game2AI.helper.map.resetGame(); // reset game 2
-                            waitForTournamentToBegin(); //Start a new game
-                        }
+                    else if(split[2].equals("OVER") && gid.equals("A")) {
+                        //game1AI.helper.map.resetGame();
+                        opponentMoves();
+                    }
+                    else if(split[2].equals("OVER") && gid.equals("B")){
+                        //game2AI.helper.map.resetGame(); // reset game 2
+                        waitForTournamentToBegin(); //Start a new game
                     }
                     else if(gid.equals("A") && opponentspid.equals(ourPid)) {
                         opponentMoves();
@@ -241,16 +235,18 @@ public class tournamentClient {
                     else if(gid.equals("A") && !opponentspid.equals(ourPid) && !split[6].equals("LOST") ) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                         game1AI.placeOpponentMove();
+                        System.out.println("****Game A****\n");
+                        game1AI.helper.map.printCurrentPlayerScores();
                         winTheTournament();
                     }
                     else if(gid.equals("B") && !opponentspid.equals(ourPid) && !split[6].equals("LOST")){
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                         game2AI.placeOpponentMove();
+                        System.out.println("****Game B****\n");
+                        game2AI.helper.map.printCurrentPlayerScores();
                         winTheTournament();
                     }
 
-
-                    //break;
                 }
                 //If server says goodbye then everything is over or we got kicked
                 else if(serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")){

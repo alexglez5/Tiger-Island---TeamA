@@ -107,7 +107,7 @@ public class AI {
                 break;
         }
 
-        helper.map.printCurrentPlayerScores();
+
     }
 
     public String placeAIMove(){

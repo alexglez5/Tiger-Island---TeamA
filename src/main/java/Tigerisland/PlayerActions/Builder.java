@@ -134,7 +134,11 @@ public class Builder {
         findIdOfSettlementTigerCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        settlements.get(settlementID).addToSettlement(coordinate);
+        if(!settlements.containsKey(settlementID))
+            settlements.put(settlementID, new Settlement(coordinate));
+        else
+            settlements.get(settlementID).addToSettlement(coordinate);
+
         settlements.get(settlementID).placeTiger();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.addPoints(pointsForTigerPlacement);
@@ -145,7 +149,11 @@ public class Builder {
         findIdOfSettlementTotoroCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        settlements.get(settlementID).addToSettlement(coordinate);
+
+        if(!settlements.containsKey(settlementID))
+            settlements.put(settlementID, new Settlement(coordinate));
+        else
+            settlements.get(settlementID).addToSettlement(coordinate);
         settlements.get(settlementID).placeTotoro();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.useTotoro();
@@ -202,7 +210,7 @@ public class Builder {
         return gameBoard.containsKey(neighborCoordinate)
                 && gameBoard.get(neighborCoordinate).getTerrainType() == terrainType
                 && !visitedCoordinates.contains(neighborCoordinate)
-                && !gameBoard.get(neighborCoordinate).hasVillager();
+                && !gameBoard.get(neighborCoordinate).hasPiece();
     }
 
     private void expandAsLongAsThereIsAnAdjacentTerrainOfTheSameTipe(Coordinate neighborCoordinate) {
