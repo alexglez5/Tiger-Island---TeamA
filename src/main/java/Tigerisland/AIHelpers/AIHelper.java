@@ -24,7 +24,6 @@ public class AIHelper {
         opponentNukes = true;
         this.leftSettlementId = leftSettlementId;
         this.rightSettlementId = rightSettlementId;
-        System.out.println("Opponents is nuking");
     }
 
     public Coordinate getPlaceWhereTigerCanBePlaced() {
