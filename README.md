@@ -28,3 +28,8 @@ unzip
 2. cd in command line to <folder path>/target/class
 
 3. Run java Tigerisland.tournamentClientMain <ip> <port> <tournamentPassword> <username> <password>
+
+## Features Implemented
+
+`Totoro`, `Tiger Playgrounds`, `Villagers`, `AI place tiles`, `AI all build options`, `Nuking`, `AI Nuke Enemy Settlements`, `Points` 
+
