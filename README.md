@@ -23,9 +23,13 @@ unzip
 4. Add to the `program arguements` an input similar to `localhost 4444 heygang A A` 
 
     1.`IP` of the server
+    
     2.`port` of the server
+    
     3.`Password` of the server
+    
     4.`Username` of your team
+    
     5.`Password` of your team
 
 5. leftclick `tournamentClientMain.java`
