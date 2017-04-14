@@ -90,12 +90,9 @@ public class Game {
     }
 
     public void printGameBoard(){
-        //System.out.print("GameBoard size: " + getBoard().size() + " ==> ");
-//        for(Coordinate c : getBoard().keySet()){
-//            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
-//        }
-        System.out.println("************************** Player1: " + player1.getPoints() +
-                " | " + "Player2: " + player2.getPoints()+ "     ******************************\n");
+        System.out.print("GameBoard size: " + getBoard().size() + " ==> ");
+        for(Coordinate c : getBoard().keySet())
+            System.out.print(c.getXCoordinate() + ", " + c.getYCoordinate() + getBoard().get(c).hasVillager() +" | " );
     }
 
     public void printCurrentPlayerScores(){

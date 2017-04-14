@@ -123,6 +123,21 @@ public class AIHelperTest{
     }
 
     @Test
+    public void findPositionOfFoundingReturnsValidPosition() throws Exception{
+        helper.map.placeTile(new Tile(TerrainType.LAKE, TerrainType.ROCK),
+                new Coordinate(0,0), Orientation.FromBottom);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(1,0), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.GRASS, TerrainType.ROCK),
+                new Coordinate(-1,2), Orientation.FromBottomRight);
+        helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.LAKE),
+                new Coordinate(2,1), Orientation.FromBottom);
+//        helper.findCoordinatesWhereSettlementCanBeFound();
+//        ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
+        Assert.assertTrue(helper.map.settlementCanBeFound(helper.getPlaceWhereSettlementCanBeFound()));
+    }
+
+    @Test
     public void makeAIPlaceTileTest(){
         helper.map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
                 new Coordinate(1, 0), Orientation.FromBottomRight);

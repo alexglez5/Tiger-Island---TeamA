@@ -5,6 +5,8 @@ import Tigerisland.*;
 import java.util.*;
 
 public class AIHelper {
+    private final int AIPlayerId = 1;
+    private final int opponentPlayerID = 2;
     public Game map = new Game();
     public boolean opponentNukes = false;
     public int leftSettlementId;
@@ -144,8 +146,9 @@ public class AIHelper {
     public void findCoordinatesWhereSettlementCanBeFound() {
         placeWhereSettlementCanBeFound = null;
         visitedCoordinates = new HashSet<>();
-        for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == 1) {
+
+        for (int id : idOfSettlementsInDecreasingSize()) {
+            if (map.getSettlements().get(id).getPlayerID() == AIPlayerId) {
                 for (Coordinate tempCoordinate : map.getSettlements().get(id).bfs()) {
                     map.locator.findCounterClockwiseCoordinatesAroundCoordinate(tempCoordinate);
                     for (Coordinate c : map.locator.surroundingCoordinates) {
@@ -161,9 +164,8 @@ public class AIHelper {
 
         for (Coordinate c : map.getBoard().keySet()) {
             map.builder.getDifferentSettlementIDsAroundCoordinate(c);
-
             for (int id : map.builder.differentSettlementIDsAroundCoordinate) {
-                if (!map.getSettlements().containsKey(id) && map.getSettlements().get(id).getPlayerID() == 1
+                if (!map.getSettlements().containsKey(id) && map.getSettlements().get(id).getPlayerID() == AIPlayerId
                         && map.settlementCanBeFound(c)) {
                     placeWhereSettlementCanBeFound = c;
                     return;
@@ -176,6 +178,27 @@ public class AIHelper {
         }
     }
 
+    public ArrayList<Integer> idOfSettlementsInDecreasingSize(){
+        HashMap<Integer, Integer> sizeIdPairs = new HashMap<>();
+        TreeSet<Integer> sizes = new TreeSet<>(Collections.reverseOrder());
+        for (int id : map.getSettlements().keySet()){
+            sizeIdPairs.put(map.getSettlements().get(id).getSize(), id);
+            sizes.add(map.getSettlements().get(id).getSize());
+        }
+        ArrayList<Integer> sortedBySizeSettlements = new ArrayList<>();
+        int i = 0;
+        for(int size : sizes){
+            if(size < 5) {
+                sortedBySizeSettlements.add(i, sizeIdPairs.get(size));
+                i++;
+            }
+            else {
+                sortedBySizeSettlements.add(sizeIdPairs.get(size));
+            }
+        }
+        return sortedBySizeSettlements;
+    }
+
     public Coordinate getPlaceWhereTotoroCanBePlaced() {
         findCoordinateWhereTotoroCanBePlaced();
         return placeWhereTotoroCanBePlaced;
@@ -186,7 +209,7 @@ public class AIHelper {
         visitedCoordinates = new HashSet<>();
         for (int id : map.getSettlements().keySet())
             if (settlementIsAtLeastSizeFiveAndDoesNotContainTotoro(id)
-                    && map.getSettlements().get(id).getPlayerID() == 1)
+                    && map.getSettlements().get(id).getPlayerID() == AIPlayerId)
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs())
                     findNeighborsOfCoordinateWhereTotoroCanBePlaced(coordinate);
     }
@@ -217,7 +240,7 @@ public class AIHelper {
 
     public void findPlaceWhereTileCanBePlaced(TerrainType leftTerrain, TerrainType rightTerrain) {
         for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == 1
+            if (map.getSettlements().get(id).getPlayerID() == AIPlayerId
                     && map.getSettlements().get(id).hasTotoro()
                     && map.getSettlements().get(id).getSize() > 4) {
 
@@ -258,7 +281,7 @@ public class AIHelper {
         }
 
         for (int id : map.getSettlements().keySet()) {
-            if (map.getSettlements().get(id).getPlayerID() == 2
+            if (map.getSettlements().get(id).getPlayerID() == opponentPlayerID
                     && map.getSettlements().get(id).getSize() > 3) {
                 for (Coordinate coordinate : map.getSettlements().get(id).bfs()) {
                     map.locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinate);
