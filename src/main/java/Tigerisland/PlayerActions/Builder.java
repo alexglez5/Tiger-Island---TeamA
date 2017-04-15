@@ -77,7 +77,8 @@ public class Builder {
     private void mergeSettlementsIntoASingleSettlement(int id) {
         if (id != settlementID) {
             for (Coordinate coordinatesToBeMoved : settlements.get(id).bfs()) {
-                gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
+                if(gameBoard.containsKey(coordinatesToBeMoved))
+                    gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
                 settlements.get(settlementID).addToSettlement(coordinatesToBeMoved);
             }
             removeSettlementThatWasMerged(id);

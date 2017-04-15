@@ -73,9 +73,9 @@ public class AIHelper {
             tryToExpandGreatestSettlementNuked();
         } else {
             findAllPossiblePairsOfSizeAndExpansionLocations();
-            if (sizes.contains(3))
-                placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
-            else if (sizes.contains(2))
+//            if (sizes.contains(3))
+//                placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
+            if (sizes.contains(2))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(2);
             else if (sizes.contains(1))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(1);
@@ -252,7 +252,7 @@ public class AIHelper {
                 }
                 // look at the surrounding coordinates of the totoro, and check if there is only one connecting hex
                 ArrayList<Coordinate> edgesNextToTotoro = map.getSettlements().get(id).getEdgesFromCoordinate(totoro);
-                if (edgesNextToTotoro.size() == 1) {
+                if (edgesNextToTotoro != null && edgesNextToTotoro.size() == 1) {
                     // get the coordinate to nuke
                     toNuke = edgesNextToTotoro.get(0);
 
