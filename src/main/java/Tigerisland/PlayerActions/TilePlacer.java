@@ -48,7 +48,9 @@ public class TilePlacer {
     }
 
     public void nuke() {
-        int level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
+        int level = 0;
+        if(gameBoard.containsKey(locator.mainTerrainCoordinate))
+            level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
         getDifferentSettlementIDsOfATile();
         placeTileOnMap();
         increaseLevel(level);

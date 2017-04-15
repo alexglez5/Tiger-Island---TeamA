@@ -37,7 +37,11 @@ public class Builder {
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
-        gameBoard.get(coordinate).placeVillagers();
+        if(gameBoard.containsKey(coordinate))
+            gameBoard.get(coordinate).placeVillagers();
+        else
+            gameBoard.put(coordinate, new Hex());
+
         gameBoard.get(coordinate).setSettlementID(settlementID);
         settlements.put(settlementID, new Settlement(coordinate));
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
@@ -105,7 +109,7 @@ public class Builder {
     protected void findIdOfSettlementTotoroCouldBeAdjacentTo() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for (int id : differentSettlementIDsAroundCoordinate) {
-            if (settlements.get(id).getSize() >= 5
+            if (settlements.containsKey(id) && settlements.get(id).getSize() >= 5
                     && !settlements.get(id).hasTotoro()) {
                 setSettlementID(id);
                 return;
@@ -117,7 +121,7 @@ public class Builder {
     public void findIdOfSettlementTigerCouldBeAdjacentTo() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for (int id : differentSettlementIDsAroundCoordinate) {
-            if (!settlements.get(id).hasTiger()) {
+            if (settlements.containsKey(id) && !settlements.get(id).hasTiger()) {
                 setSettlementID(id);
                 return;
             }
@@ -154,6 +158,7 @@ public class Builder {
             settlements.put(settlementID, new Settlement(coordinate));
         else
             settlements.get(settlementID).addToSettlement(coordinate);
+
         settlements.get(settlementID).placeTotoro();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.useTotoro();
@@ -166,7 +171,10 @@ public class Builder {
     }
 
     public void processParameters(Coordinate coordinate, TerrainType terrainType) {
-        this.settlementID = gameBoard.get(coordinate).getSettlementID();
+        if(gameBoard.containsKey(coordinate))
+            this.settlementID = gameBoard.get(coordinate).getSettlementID();
+        else
+            gameBoard.put(coordinate, new Hex());
         this.terrainType = terrainType;
         possibleVillagersPlaced = 0;
         possiblePointsAdded = 0;
@@ -179,11 +187,15 @@ public class Builder {
 
     private void completeSettlementExpansion() {
         for (Coordinate coordinateToExpand : visitedCoordinates) {
-            gameBoard.get(coordinateToExpand).placeVillagers();
-            gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
-            settlements.get(settlementID).addToSettlement(coordinateToExpand);
+            if(gameBoard.containsKey(coordinateToExpand)){
+                gameBoard.get(coordinateToExpand).placeVillagers();
+                gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
+                if(settlements.containsKey(settlementID))
+                    settlements.get(settlementID).addToSettlement(coordinateToExpand);
+            }
         }
-        settlements.get(settlementID).setPlayerID(player.getPlayerID());
+        if(settlements.containsKey(settlementID))
+            settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.useVillagers(possibleVillagersPlaced);
         player.addPoints(possiblePointsAdded);
     }
@@ -194,9 +206,11 @@ public class Builder {
     }
 
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-        for (Coordinate coordinateInSettlement : settlements.get(settlementID).bfs()) {
-            locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
-            expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
+        if(settlements.containsKey(settlementID)){
+            for (Coordinate coordinateInSettlement : settlements.get(settlementID).bfs()) {
+                locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
+                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
+            }
         }
     }
 
