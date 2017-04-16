@@ -134,6 +134,7 @@ public class TilePlacer {
 
                         // found a new settlement with it (with a unique id) and update the hex settlementID
                         settlements.put(firstCord.hashCode(), new Settlement(firstCord));
+                        settlements.get(firstCord.hashCode()).setPlayerID(settlements.get(sid).getPlayerID());
                         gameBoard.get(firstCord).setSettlementID(firstCord.hashCode());
 
                         // check the coordinate for tiger or totoro to set flag in new settlement
