@@ -354,7 +354,7 @@ public class AIHelper {
         for(Coordinate neighborCoordinate : map.locator.surroundingCoordinates){
             if(map.getBoard().containsKey(neighborCoordinate)
                     && map.getSettlements().containsKey(map.getBoard().get(neighborCoordinate).getSettlementID())
-                    && map.getSettlements().get(map.getBoard().get(neighborCoordinate)).getPlayerID() == 1){
+                    && map.getSettlements().get(map.getBoard().get(neighborCoordinate).getSettlementID()).getPlayerID() == 1){
                 return true;
             }
         }
