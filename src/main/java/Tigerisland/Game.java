@@ -33,6 +33,10 @@ public class Game {
         return currentPlayerId;
     }
 
+    public Player getPlayer1(){
+        return player1;
+    }
+
     public void setCurrentPlayer(int pid) {
         currentPlayerId = pid;
     }
