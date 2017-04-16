@@ -126,19 +126,19 @@ public class AI {
             int y = -1 * x - z;
             outMessage += x + " " + y + " " + z + " " + parameters.getOrientattion().getOrientationVal() + " ";
         }
-        if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
-            int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
-            int z = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
-            int y = -1 * x - z;
-            helper.map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
-            outMessage += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
-        }
-        else if(helper.getPlaceWhereTigerCanBePlaced() != null) {
+        if(helper.getPlaceWhereTigerCanBePlaced() != null) {
             int x = helper.getPlaceWhereTigerCanBePlaced().getXCoordinate();
             int z = helper.getPlaceWhereTigerCanBePlaced().getYCoordinate();
             int y = -1 * x - z;
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
+        }
+        else if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
+            int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
+            int z = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
+            int y = -1 * x - z;
+            helper.map.placeTotoro(helper.getPlaceWhereTotoroCanBePlaced());
+            outMessage += "BUILD TOTORO SANCTUARY AT " + x + " " + y + " " + z;
         }
         else if (helper.getPlaceWhereSettlementCanBeExpanded() != null) {
             ExpandingParameters parameters = helper.getPlaceWhereSettlementCanBeExpanded();
