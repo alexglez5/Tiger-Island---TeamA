@@ -14,6 +14,12 @@ public class Game {
     private BuildValidator buildValidator = new BuildValidator();
     private HashMap<Coordinate, Hex> gameBoard = new HashMap<>();
     private HashMap<Integer, Settlement> settlements = new HashMap<>();
+
+    public ArrayList<Coordinate> getVolcanos() {
+        return volcanos;
+    }
+
+    private ArrayList<Coordinate> volcanos = new ArrayList<>();
     private Player player1 = new Player();
     private Player player2 = new Player();
     private int currentPlayerId = 1;
@@ -65,6 +71,7 @@ public class Game {
         placer.updtateComponents(this.getComponents());
         placer.placeOneStartingTile();
         this.updateComponents(placer.getComponents());
+        volcanos.add(new Coordinate(0,0));
     }
 
     public Player getPlayer() {
@@ -131,6 +138,7 @@ public class Game {
             placer.nuke();
         }
         this.updateComponents(tileValidator.getComponents());
+        volcanos.add(mainTerrainCoordinate);
     }
 
     public void foundNewSettlement(Coordinate coordinate) {

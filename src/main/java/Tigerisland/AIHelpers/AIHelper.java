@@ -302,6 +302,19 @@ public class AIHelper {
             }
         }
 
+        for(Coordinate volcanoCoordinate : map.getVolcanos()){
+            if(neighborsBelongToAISettlement(volcanoCoordinate)){
+                for (Orientation orientation : Orientation.getOrientations()) {
+                    map.locator.setMainCoordinateAndOrientation(volcanoCoordinate, orientation);
+                    map.locator.determineCoordinatesOfTerrainsNextToMainTerrainBasedOnTheirOrientation();
+                    if (!isNukingAISettlement() && map.tileCanNukeOtherTiles(new Tile(leftTerrain, rightTerrain), volcanoCoordinate, orientation)) {
+                        placeWhereTileCanBePlaced = new TileParameters(leftTerrain, rightTerrain, volcanoCoordinate, orientation);
+                        return;
+                    }
+                }
+            }
+        }
+
         int maxX = -1000, maxY = -1000;
         int minX = 1000, minY = 1000;
         Coordinate coordinate = new Coordinate();
@@ -361,6 +374,25 @@ public class AIHelper {
                 return;
             }
         }
+    }
+
+    private boolean neighborsBelongToAISettlement(Coordinate volcanoCoordinate){
+        map.locator.findCounterClockwiseCoordinatesAroundCoordinate(volcanoCoordinate);
+        for(Coordinate neighborCoordinate : map.locator.surroundingCoordinates){
+            if(map.getBoard().containsKey(neighborCoordinate)
+                    && map.getSettlements().containsKey(map.getBoard().get(neighborCoordinate).getSettlementID())
+                    && map.getSettlements().get(map.getBoard().get(neighborCoordinate)).getPlayerID() == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isNukingAISettlement(){
+        return (map.getBoard().containsKey(map.locator.leftOfMainTerrainCoordinate)
+                && map.getBoard().get(map.locator.leftOfMainTerrainCoordinate).getSettlementID() == 1)
+                || (map.getBoard().containsKey(map.locator.rightOfMainTerrainCoordinate)
+                && map.getBoard().get(map.locator.rightOfMainTerrainCoordinate).getSettlementID() == 1);
     }
 
     public Set<Coordinate> getVisitedCoordinates() {
