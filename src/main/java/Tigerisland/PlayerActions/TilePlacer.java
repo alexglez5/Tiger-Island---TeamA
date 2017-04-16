@@ -103,18 +103,31 @@ public class TilePlacer {
             // bfs and put it in its own settlement.
             Set<Coordinate> connectedComponent = settlements.get(sid).bfs();
 
+            boolean componentContainsCoordinateHashCode = false;
+
             while (connectedComponent.size() != settlements.get(sid).getSize()) {
                 // get the first coordinate of the connected component
                 Iterator<Coordinate> i = connectedComponent.iterator();
 
                 if (i.hasNext()) {
 
+                    Coordinate checkComp = i.next();
+
+                    // first check if the connected component has the coordinate that the settlement ID hashcode corresponds to
+                    do {
+                        if (checkComp.hashCode() == sid)
+                            componentContainsCoordinateHashCode = true;
+                        if (i.hasNext())
+                            checkComp = i.next();
+                    } while (i.hasNext());
+
+                    // get another iterator to the connected component and move past firstCord
+                    i = connectedComponent.iterator();
                     Coordinate firstCord = i.next();
 
-                    // first check if the firstCord of this connected component was the original settlement id.
-                    // If it was, then set a flag to skip this iteration entirely, and get another random ordering
-                    // where the firstCord wont be picked first
-                    if (firstCord.hashCode() != sid) {
+                    // if the connected component has the coordinate whose hashcode is the settlement ID,
+                    // we don't want to change that connected component
+                    if (!componentContainsCoordinateHashCode) {
 
                         // remove it from the current settlement
                         settlements.get(sid).removeFromSettlement(firstCord);
@@ -122,6 +135,16 @@ public class TilePlacer {
                         // found a new settlement with it (with a unique id) and update the hex settlementID
                         settlements.put(firstCord.hashCode(), new Settlement(firstCord));
                         gameBoard.get(firstCord).setSettlementID(firstCord.hashCode());
+
+                        // check the coordinate for tiger or totoro to set flag in new settlement
+                        if (gameBoard.get(firstCord).hasTotoro()) {
+                            settlements.get(firstCord.hashCode()).placeTotoro();
+                            settlements.get(sid).removeTotoro();
+                        }
+                        if (gameBoard.get(firstCord).hasTiger()) {
+                            settlements.get(firstCord.hashCode()).placeTiger();
+                            settlements.get(sid).removeTiger();
+                        }
 
                         // iterate through the rest of the connected component, remove from current settlement, add to
                         // this new settlement, and update the gameboard
@@ -147,6 +170,7 @@ public class TilePlacer {
 
                     // run another bfs to test for while condition
                     connectedComponent = settlements.get(sid).bfs();
+                    componentContainsCoordinateHashCode = false;
                 }
             }
         }

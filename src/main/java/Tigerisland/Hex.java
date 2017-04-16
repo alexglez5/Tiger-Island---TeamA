@@ -13,6 +13,7 @@ public class Hex {
         this.terrainType = terrainType;
         this.tileID = tileID;
         level = 1;
+        settlementID = 0;
     }
 
     public boolean hasPiece(){

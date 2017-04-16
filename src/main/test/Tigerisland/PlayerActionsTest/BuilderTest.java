@@ -267,6 +267,67 @@ public class BuilderTest {
     }
 
     @Test
+    public void integrationTestForSettlementManagement() {
+        map.foundNewSettlement(new Coordinate(-1,1));
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(1,1), Orientation.FromTop);
+        map.foundNewSettlement(new Coordinate(2,0));
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.GRASS),
+                new Coordinate(1,1), Orientation.FromTopLeft);
+        map.expandSettlement(new Coordinate(2,0), TerrainType.GRASS);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE),
+                new Coordinate(-2,1), Orientation.FromTop);
+        map.foundNewSettlement(new Coordinate(-1, 0));
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE),
+                new Coordinate(-2,2), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.GRASS, TerrainType.GRASS),
+                new Coordinate(-2,2), Orientation.FromTop);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1, 0).hashCode()).getSize(), 1);
+        map.expandSettlement(new Coordinate(-1,0), TerrainType.GRASS);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1, 0).hashCode()).getSize(), 3);
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE),
+                new Coordinate(-1,2), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE),
+                new Coordinate(0,2), Orientation.FromBottomRight);
+        map.placeTile(new Tile(TerrainType.JUNGLE, TerrainType.JUNGLE),
+                new Coordinate(0,2), Orientation.FromBottomLeft);
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.LAKE),
+                new Coordinate(-2, 2), Orientation.FromTopRight);
+        Assert.assertEquals(map.getBoard().get(new Coordinate(-1,1)).getLevel(), 3);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1, 0).hashCode()).getSize(), 2);
+        map.expandSettlement(new Coordinate(-2,1), TerrainType.JUNGLE);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1, 0).hashCode()).getSize(), 9);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.LAKE),
+                new Coordinate(0,-1), Orientation.FromTop);
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.JUNGLE),
+                new Coordinate(0,0), Orientation.FromTopLeft);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1, 0).hashCode()).getSize(), 8);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        map.placeTotoro(new Coordinate(-1,0));
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1, 0).hashCode()).getSize(), 9);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        map.expandSettlement(new Coordinate(2,0), TerrainType.ROCK);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(2,0).hashCode()).getSize(), 3);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        map.placeTiger(new Coordinate(-1,1));
+        Assert.assertEquals(map.getSettlements().size(), 1);
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1,0).hashCode()).getSize(), 13);
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.LAKE),
+                new Coordinate(-4,3), Orientation.FromBottom);
+        map.placeTile(new Tile(TerrainType.ROCK, TerrainType.ROCK),
+                new Coordinate(-4,3), Orientation.FromTopRight);
+        Assert.assertEquals(map.getSettlements().size(), 2);
+        Assert.assertNotNull(map.getSettlements().get(new Coordinate(-1,0).hashCode()));
+        Assert.assertEquals(map.getSettlements().get(new Coordinate(-1,0).hashCode()).getSize(), 7);
+        map.placeTile(new Tile(TerrainType.LAKE, TerrainType.LAKE),
+                new Coordinate(0,0), Orientation.FromBottomRight);
+        Assert.assertEquals(map.getSettlements().size(), 3);
+    }
+
+    @Test
     public void cannotPlaceTigerInHexThatHasPieces() throws Exception {
         map.foundNewSettlement(new Coordinate(-1,1));
         map.getBoard().get(new Coordinate(0,1)).setLevel(3);
