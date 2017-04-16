@@ -226,7 +226,7 @@ public class AIHelper {
                 }
                 // look at the surrounding coordinates of the totoro, and check if there is only one connecting hex
                 ArrayList<Coordinate> edgesNextToTotoro = map.getSettlements().get(id).getEdgesFromCoordinate(totoro);
-                if (edgesNextToTotoro != null && edgesNextToTotoro.size() == 1) {
+                if (edgesNextToTotoro.size() == 1) {
                     // get the coordinate to nuke
                     toNuke = edgesNextToTotoro.get(0);
 

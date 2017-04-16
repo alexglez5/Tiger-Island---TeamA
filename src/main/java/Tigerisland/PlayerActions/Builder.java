@@ -37,11 +37,8 @@ public class Builder {
     }
 
     public void foundNewSettlement(Coordinate coordinate) {
-        if(gameBoard.containsKey(coordinate))
-            gameBoard.get(coordinate).placeVillagers();
-        else
-            gameBoard.put(coordinate, new Hex());
 
+        gameBoard.get(coordinate).placeVillagers();
         gameBoard.get(coordinate).setSettlementID(settlementID);
         settlements.put(settlementID, new Settlement(coordinate));
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
@@ -77,8 +74,7 @@ public class Builder {
     private void mergeSettlementsIntoASingleSettlement(int id) {
         if (id != settlementID) {
             for (Coordinate coordinatesToBeMoved : settlements.get(id).bfs()) {
-                if(gameBoard.containsKey(coordinatesToBeMoved))
-                    gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
+                gameBoard.get(coordinatesToBeMoved).setSettlementID(settlementID);
                 settlements.get(settlementID).addToSettlement(coordinatesToBeMoved);
             }
             removeSettlementThatWasMerged(id);
@@ -110,7 +106,7 @@ public class Builder {
     protected void findIdOfSettlementTotoroCouldBeAdjacentTo() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for (int id : differentSettlementIDsAroundCoordinate) {
-            if (settlements.containsKey(id) && settlements.get(id).getSize() >= 5
+            if (settlements.get(id).getSize() >= 5
                     && !settlements.get(id).hasTotoro()) {
                 setSettlementID(id);
                 return;
@@ -122,7 +118,7 @@ public class Builder {
     public void findIdOfSettlementTigerCouldBeAdjacentTo() {
         getDifferentSettlementIDsAroundCoordinate(coordinate);
         for (int id : differentSettlementIDsAroundCoordinate) {
-            if (settlements.containsKey(id) && !settlements.get(id).hasTiger()) {
+            if (!settlements.get(id).hasTiger()) {
                 setSettlementID(id);
                 return;
             }
@@ -139,10 +135,8 @@ public class Builder {
         findIdOfSettlementTigerCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        if(!settlements.containsKey(settlementID))
-            settlements.put(settlementID, new Settlement(coordinate));
-        else
-            settlements.get(settlementID).addToSettlement(coordinate);
+
+        settlements.get(settlementID).addToSettlement(coordinate);
 
         settlements.get(settlementID).placeTiger();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
@@ -155,10 +149,7 @@ public class Builder {
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
 
-        if(!settlements.containsKey(settlementID))
-            settlements.put(settlementID, new Settlement(coordinate));
-        else
-            settlements.get(settlementID).addToSettlement(coordinate);
+        settlements.get(settlementID).addToSettlement(coordinate);
 
         settlements.get(settlementID).placeTotoro();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
@@ -172,10 +163,7 @@ public class Builder {
     }
 
     public void processParameters(Coordinate coordinate, TerrainType terrainType) {
-        if(gameBoard.containsKey(coordinate))
-            this.settlementID = gameBoard.get(coordinate).getSettlementID();
-        else
-            gameBoard.put(coordinate, new Hex());
+        this.settlementID = gameBoard.get(coordinate).getSettlementID();
         this.terrainType = terrainType;
         possibleVillagersPlaced = 0;
         possiblePointsAdded = 0;
@@ -188,15 +176,11 @@ public class Builder {
 
     private void completeSettlementExpansion() {
         for (Coordinate coordinateToExpand : visitedCoordinates) {
-            if(gameBoard.containsKey(coordinateToExpand)){
-                gameBoard.get(coordinateToExpand).placeVillagers();
-                gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
-                if(settlements.containsKey(settlementID))
-                    settlements.get(settlementID).addToSettlement(coordinateToExpand);
-            }
+            gameBoard.get(coordinateToExpand).placeVillagers();
+            gameBoard.get(coordinateToExpand).setSettlementID(settlementID);
+            settlements.get(settlementID).addToSettlement(coordinateToExpand);
         }
-        if(settlements.containsKey(settlementID))
-            settlements.get(settlementID).setPlayerID(player.getPlayerID());
+        settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.useVillagers(possibleVillagersPlaced);
         player.addPoints(possiblePointsAdded);
     }
@@ -207,11 +191,9 @@ public class Builder {
     }
 
     private void expandToAllEmptyAdjacentToSettlementSpacesOfTheSpecifiedType() {
-        if(settlements.containsKey(settlementID)){
-            for (Coordinate coordinateInSettlement : settlements.get(settlementID).bfs()) {
-                locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
-                expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
-            }
+        for (Coordinate coordinateInSettlement : settlements.get(settlementID).bfs()) {
+            locator.findCounterClockwiseCoordinatesAroundCoordinate(coordinateInSettlement);
+            expandToAnyOfTheCoordinatesThatHaveTheSameTypeAndHasNotBeenVisited();
         }
     }
 

@@ -9,8 +9,6 @@ public class Hex {
     private int tileID;
     private int level;
 
-    public Hex(){}
-
     public Hex(TerrainType terrainType, int tileID){
         this.terrainType = terrainType;
         this.tileID = tileID;

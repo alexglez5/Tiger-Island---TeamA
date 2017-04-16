@@ -23,10 +23,9 @@ public class BuildValidator extends Builder{
     }
 
     private boolean hexContainsAPiece() {
-        return gameBoard.containsKey(coordinate) &&
-                (gameBoard.get(coordinate).hasTiger()
+        return gameBoard.get(coordinate).hasTiger()
                 || gameBoard.get(coordinate).hasTotoro()
-                || gameBoard.get(coordinate).hasVillager());
+                || gameBoard.get(coordinate).hasVillager();
     }
 
     private boolean terrainIsInLevelOne() {
@@ -78,8 +77,7 @@ public class BuildValidator extends Builder{
     }
 
     private boolean levelIsAtLeastThree() {
-        return gameBoard.containsKey(coordinate)
-                && gameBoard.get(coordinate).getLevel() > 2;
+        return gameBoard.get(coordinate).getLevel() > 2;
     }
 
     public boolean atLeastOneAdjacentSettlementDoesNotContainATiger() {
