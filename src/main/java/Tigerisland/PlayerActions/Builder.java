@@ -134,10 +134,10 @@ public class Builder {
         findIdOfSettlementTigerCouldBeAdjacentTo();
         gameBoard.get(coordinate).placeTiger();
         gameBoard.get(coordinate).setSettlementID(settlementID);
-        if(!settlements.containsKey(settlementID))
-            settlements.put(settlementID, new Settlement(coordinate));
-        else
-            settlements.get(settlementID).addToSettlement(coordinate);
+//        if(!settlements.containsKey(settlementID))
+//            settlements.put(settlementID, new Settlement(coordinate));
+//        else
+        settlements.get(settlementID).addToSettlement(coordinate);
 
         settlements.get(settlementID).placeTiger();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
@@ -150,10 +150,10 @@ public class Builder {
         gameBoard.get(coordinate).placeTotoro();
         gameBoard.get(coordinate).setSettlementID(settlementID);
 
-        if(!settlements.containsKey(settlementID))
-            settlements.put(settlementID, new Settlement(coordinate));
-        else
-            settlements.get(settlementID).addToSettlement(coordinate);
+//        if(!settlements.containsKey(settlementID))
+//            settlements.put(settlementID, new Settlement(coordinate));
+//        else
+        settlements.get(settlementID).addToSettlement(coordinate);
         settlements.get(settlementID).placeTotoro();
         settlements.get(settlementID).setPlayerID(player.getPlayerID());
         player.useTotoro();
