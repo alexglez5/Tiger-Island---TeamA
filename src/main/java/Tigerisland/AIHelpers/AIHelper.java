@@ -70,11 +70,12 @@ public class AIHelper {
         sizes = new TreeSet<>();
         movesWithSizes = new HashMap<>();
         if (opponentNukes) {
-            tryToExpandGreatestSettlementNuked();
+            getParametersWhereSettlementCanBeExpanded(leftSettlementId);
+            if(placeWhereSettlementCanBeExpanded == null)
+                getParametersWhereSettlementCanBeExpanded(rightSettlementId);
+            unflagOpponentNuking();
         } else {
             findAllPossiblePairsOfSizeAndExpansionLocations();
-//            if (sizes.contains(3))
-//                placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
             if (sizes.contains(2))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(2);
             else if (sizes.contains(1))
@@ -82,41 +83,14 @@ public class AIHelper {
         }
     }
 
-    private void tryToExpandGreatestSettlementNuked() {
-        ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(leftSettlementId);
-        int maxInLeftSettlement = 0;
-        ExpandingParameters maxExpansionInLeftSettlement = new ExpandingParameters();
-        if (sizes.size() != 0) {
-            maxInLeftSettlement = sizes.last();
-            maxExpansionInLeftSettlement = movesWithSizes.get(sizes.last());
-        }
-
-        sizes = new TreeSet<>();
-        movesWithSizes = new HashMap<>();
-        ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(rightSettlementId);
-        int maxInRightSettlement = 0;
-        ExpandingParameters maxExpansionInRightSettlement = new ExpandingParameters();
-        if (sizes.size() != 0) {
-            maxInRightSettlement = sizes.last();
-            maxExpansionInRightSettlement = movesWithSizes.get(sizes.last());
-        }
-
-        if (maxInLeftSettlement > maxInRightSettlement)
-            placeWhereSettlementCanBeExpanded = maxExpansionInLeftSettlement;
-        else
-            placeWhereSettlementCanBeExpanded = movesWithSizes.get(maxInRightSettlement);
-
-        unflagOpponentNuking();
-    }
-
     private void findAllPossiblePairsOfSizeAndExpansionLocations() {
         for (int id : map.getSettlements().keySet())
-            ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(id);
+            getParametersWhereSettlementCanBeExpanded(id);
         for (int size : movesWithSizes.keySet())
             sizes.add(size);
     }
 
-    private void ifThatSettlementCanBeExpandedGetSizeAndParametersOfExpansion(int id) {
+    private void getParametersWhereSettlementCanBeExpanded(int id) {
         if (map.getSettlements().containsKey(id)
                 && map.getSettlements().get(id).getPlayerID() == 1
                 && !map.getSettlements().get(id).hasTotoro()
@@ -124,9 +98,8 @@ public class AIHelper {
             for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
                 ExpandingParameters parameters = new ExpandingParameters(
                         map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
-                int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
                 if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()))
-                    movesWithSizes.put(size, parameters);
+                    placeWhereSettlementCanBeExpanded = parameters;
             }
         }
     }
