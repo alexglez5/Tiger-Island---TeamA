@@ -24,6 +24,10 @@ public class Game {
     private Player player2 = new Player();
     private int currentPlayerId = 1;
 
+    public Player getPlayer1(){
+        return player1;
+    }
+
     public Game() {
         player1.setPlayerID(1);
         player2.setPlayerID(2);

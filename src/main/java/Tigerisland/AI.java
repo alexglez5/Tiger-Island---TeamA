@@ -133,7 +133,7 @@ public class AI {
             helper.map.placeTiger(helper.getPlaceWhereTigerCanBePlaced());
             outMessage += "BUILD TIGER PLAYGROUND AT " + x + " " + y + " " + z;
         }
-        else if(helper.getPlaceWhereTotoroCanBePlaced() != null) {
+        else if(helper.map.getPlayer1().getNumberOfTigersLeft() != 0 && helper.getPlaceWhereTotoroCanBePlaced() != null) {
             int x = helper.getPlaceWhereTotoroCanBePlaced().getXCoordinate();
             int z = helper.getPlaceWhereTotoroCanBePlaced().getYCoordinate();
             int y = -1 * x - z;
