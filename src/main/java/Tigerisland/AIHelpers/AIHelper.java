@@ -77,7 +77,7 @@ public class AIHelper {
         }
         if (placeWhereSettlementCanBeExpanded == null){
             findAllPossiblePairsOfSizeAndExpansionLocations();
-            if(map.getPlayer1().getNumberOfTigersLeft() == 0)
+            if(map.getPlayer1().getNumberOfTigersLeft() == 0 || map.getPlayer1().getNumberOfTotoroLeft() == 0)
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get((sizes.last()));
             else if (sizes.contains(3))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
@@ -103,8 +103,9 @@ public class AIHelper {
             for (TerrainType terrainType : map.getDifferentTerrainTypesInSettlement(id)) {
                 ExpandingParameters parameters = new ExpandingParameters(
                         map.getAnyCoordinateOfSameTerrainTypeInSettlement(id, terrainType), terrainType);
+                int size = map.getCoordinatesOfPossibleSettlementExpansion(parameters.getCoordinate(), parameters.getTerrainType()).size();
                 if (map.settlementCanBeExpanded(parameters.getCoordinate(), parameters.getTerrainType()))
-                    placeWhereSettlementCanBeExpanded = parameters;
+                    movesWithSizes.put(size, parameters);
             }
         }
     }
