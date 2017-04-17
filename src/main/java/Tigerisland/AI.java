@@ -106,8 +106,8 @@ public class AI {
                 helper.map.placeTiger(new Coordinate(Integer.parseInt(xBuild), Integer.parseInt(yBuild)));
                 break;
         }
-
-
+        tempSplit = new String[0];
+        split = new String[0];
     }
 
     public String placeAIMove(){

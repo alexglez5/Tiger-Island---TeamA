@@ -23,7 +23,8 @@ public class BuildValidator extends Builder{
     }
 
     private boolean hexContainsAPiece() {
-        return gameBoard.get(coordinate).hasTiger()
+        return gameBoard.containsKey(coordinate)
+                && gameBoard.get(coordinate).hasTiger()
                 || gameBoard.get(coordinate).hasTotoro()
                 || gameBoard.get(coordinate).hasVillager();
     }

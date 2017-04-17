@@ -48,7 +48,9 @@ public class TilePlacer {
     }
 
     public void nuke() {
-        int level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
+        int level = 0;
+        if(gameBoard.containsKey(locator.mainTerrainCoordinate))
+            level = gameBoard.get(locator.mainTerrainCoordinate).getLevel();
         getDifferentSettlementIDsOfATile();
         placeTileOnMap();
         increaseLevel(level);
@@ -90,10 +92,12 @@ public class TilePlacer {
         for (int sid : settlementIdsOfHexesUnderTile) {
             // for each settlementId, check if the underlying coordinate is a part of that settlement
             // then, delete it if it exists.
-            if (settlements.get(sid).contains(locator.leftOfMainTerrainCoordinate))
-                settlements.get(sid).removeFromSettlement(locator.leftOfMainTerrainCoordinate);
-            if (settlements.get(sid).contains(locator.rightOfMainTerrainCoordinate))
-                settlements.get(sid).removeFromSettlement(locator.rightOfMainTerrainCoordinate);
+            if(settlements.containsKey(sid)){
+                if (settlements.get(sid).contains(locator.leftOfMainTerrainCoordinate))
+                    settlements.get(sid).removeFromSettlement(locator.leftOfMainTerrainCoordinate);
+                if (settlements.get(sid).contains(locator.rightOfMainTerrainCoordinate))
+                    settlements.get(sid).removeFromSettlement(locator.rightOfMainTerrainCoordinate);
+            }
         }
     }
 
@@ -101,7 +105,11 @@ public class TilePlacer {
         for (int sid: settlementIdsOfHexesUnderTile) {
             // for each settlement id, while the bfs does not return the full size, get all the coordinates of that
             // bfs and put it in its own settlement.
-            Set<Coordinate> connectedComponent = settlements.get(sid).bfs();
+            Set<Coordinate> connectedComponent = new HashSet<>();
+            if(settlements.containsKey(sid))
+                connectedComponent = settlements.get(sid).bfs();
+            else
+                return;
 
             boolean componentContainsCoordinateHashCode = false;
 
@@ -153,16 +161,18 @@ public class TilePlacer {
                         while (i.hasNext()) {
                             Coordinate nextCord = i.next();
                             settlements.get(sid).removeFromSettlement(nextCord);
-                            settlements.get(firstCord.hashCode()).addToSettlement(nextCord);
-                            gameBoard.get(nextCord).setSettlementID(firstCord.hashCode());
+                            if(settlements.containsKey(firstCord.hashCode()))
+                                settlements.get(firstCord.hashCode()).addToSettlement(nextCord);
+                            if(gameBoard.containsKey(nextCord))
+                                gameBoard.get(nextCord).setSettlementID(firstCord.hashCode());
 
                             // make sure to set the flags for totoro and tiger in newly split settlement and remove
                             // from the original split settlement
-                            if (gameBoard.get(nextCord).hasTotoro()) {
+                            if (gameBoard.containsKey(nextCord) && gameBoard.get(nextCord).hasTotoro()) {
                                 settlements.get(firstCord.hashCode()).placeTotoro();
                                 settlements.get(sid).removeTotoro();
                             }
-                            if (gameBoard.get(nextCord).hasTiger()) {
+                            if (gameBoard.containsKey(nextCord) && gameBoard.get(nextCord).hasTiger()) {
                                 settlements.get(firstCord.hashCode()).placeTiger();
                                 settlements.get(sid).removeTiger();
                             }

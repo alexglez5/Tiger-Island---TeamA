@@ -129,7 +129,7 @@ public class tournamentClient {
                     game1AI.helper.map.placeStartingTile();
                     game2AI = new AI();
                     game2AI.helper.map.placeStartingTile();
-                    winTheTournament();
+                    //winTheTournament();
                 }
                 else if (serverMessage.startsWith("MAKE YOUR MOVE IN GAME")) {
                     String[] split = serverMessage.split(" ");
@@ -146,7 +146,7 @@ public class tournamentClient {
                                 + tileDrawn + " AT " + userMoveInformation);
                         System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                                 + tileDrawn + " AT " + userMoveInformation + "\n");
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (gid.equals("B")) {
                         game2AI.setServerMessage(tileToAI);
                         userMoveInformation = game2AI.placeAIMove();
@@ -155,38 +155,38 @@ public class tournamentClient {
 
                         System.out.println("GAME " + gid + " MOVE " + moveNumber + " PLACE "
                                 + tileDrawn + " AT " + userMoveInformation + "\n");
-                        winTheTournament();
+                        //winTheTournament();
                     }
                 } else if (serverMessage.startsWith("GAME")) {
                     String[] split = serverMessage.split(" ");
                     gid = split[1];
                     opponentspid = split[5];
                     if (split[6].equals("FORFEITED")) {
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (split[6].equals("LOST:") || split[6].equals("FORFEITED:")) {
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (split[2].equals("OVER") && gid.equals("A")) {
                         game1AI.helper.map.resetGame();
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (split[2].equals("OVER") && gid.equals("B")) {
                         game2AI.helper.map.resetGame(); // reset game 2
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (gid.equals("A") && opponentspid.equals(ourPid)) {
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (gid.equals("B") && opponentspid.equals(ourPid)) {
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (gid.equals("A") && !opponentspid.equals(ourPid) && !split[6].equals("LOST")) {
                         game1AI.setServerMessage(serverMessage);  //game 1 for opponent
                         game1AI.placeOpponentMove();
                         System.out.println("****Game A****\n");
                         game1AI.helper.map.printCurrentPlayerScores();
-                        winTheTournament();
+                        //winTheTournament();
                     } else if (gid.equals("B") && !opponentspid.equals(ourPid) && !split[6].equals("LOST")) {
                         game2AI.setServerMessage(serverMessage);  //game 2 for opponent
                         game2AI.placeOpponentMove();
                         System.out.println("****Game B****\n");
                         game2AI.helper.map.printCurrentPlayerScores();
-                        winTheTournament();
+                        //winTheTournament();
                     }
 
                 } else if (serverMessage.equals("THANK YOU FOR PLAYING! GOODBYE")) {

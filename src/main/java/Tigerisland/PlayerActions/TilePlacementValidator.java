@@ -103,20 +103,20 @@ public class TilePlacementValidator extends TilePlacer{
 
                 // check if the bfs of the underlying settlement is greater than 2
                 int settlementIdToCheck = settlementIdsOfHexesUnderTile.iterator().next();
-                if (settlements.get(settlementIdToCheck).bfs().size() <= 2)
+                if (settlements.containsKey(settlementIdToCheck) && settlements.get(settlementIdToCheck).bfs().size() <= 2)
                     return true;
             }
             // only one is occupied
             else {
                 // check if bfs of underlying settlement is greater than 1
                 int settlementIdToCheck = settlementIdsOfHexesUnderTile.iterator().next();
-                if (settlements.get(settlementIdToCheck).bfs().size() == 1)
+                if (settlements.containsKey(settlementIdToCheck) && settlements.get(settlementIdToCheck).bfs().size() == 1)
                     return true;
             }
-        } else if (settlementIdsOfHexesUnderTile.size() == 2) {
+        } else if (!settlementIdsOfHexesUnderTile.isEmpty() && settlementIdsOfHexesUnderTile.size() == 2) {
             // make sure that each underlying settlement has a bfs of greater than 1
             for (int sid : settlementIdsOfHexesUnderTile) {
-                if (settlements.get(sid).bfs().size() == 1)
+                if (settlements.containsKey(sid) && settlements.get(sid).bfs().size() == 1)
                     return true;
             }
         }
@@ -126,7 +126,7 @@ public class TilePlacementValidator extends TilePlacer{
     }
 
     public boolean checkForSplit(Settlement s) {
-        if (s.bfs().size() < s.getSize())
+        if (!s.bfs().isEmpty() && s.bfs().size() < s.getSize())
             return true;
         else
             return false;

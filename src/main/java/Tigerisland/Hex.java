@@ -15,6 +15,8 @@ public class Hex {
         level = 1;
     }
 
+    public Hex(){}
+
     public boolean hasPiece(){
         return hasTotoro() || hasVillager() || hasTiger();
     }
