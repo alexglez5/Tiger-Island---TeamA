@@ -77,7 +77,6 @@ public class AIHelper {
         }
         if (placeWhereSettlementCanBeExpanded == null){
             findAllPossiblePairsOfSizeAndExpansionLocations();
-
             if (sizes.contains(3))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
             else if (sizes.contains(2))
