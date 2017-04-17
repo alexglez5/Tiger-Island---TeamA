@@ -77,7 +77,11 @@ public class AIHelper {
         }
         if (placeWhereSettlementCanBeExpanded == null){
             findAllPossiblePairsOfSizeAndExpansionLocations();
-            if (sizes.contains(3))
+            if(map.getPlayer1().getNumberOfTigersLeft() == 0 && sizes.contains(5))
+                placeWhereSettlementCanBeExpanded = movesWithSizes.get(5);
+            else if(map.getPlayer1().getNumberOfTigersLeft() == 0 && sizes.contains(4))
+                placeWhereSettlementCanBeExpanded = movesWithSizes.get(4);
+            else if (sizes.contains(3))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(3);
             else if (sizes.contains(2))
                 placeWhereSettlementCanBeExpanded = movesWithSizes.get(2);
